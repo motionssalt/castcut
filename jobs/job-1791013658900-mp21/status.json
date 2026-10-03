@@ -6,7 +6,7 @@
   "expires_at": "2026-10-04T09:39:05Z",
   "state": "clips_exporting",
   "message": "Building ordered character cut and running final compression",
-  "updated_at_epoch": 1791020534,
-  "updated_at": "2026-10-03T09:42:14Z",
-  "workflow_run_url": "https://github.com/motionssalt/castcut/actions/runs/37113905956"
+  "updated_at_epoch": 1791021149,
+  "updated_at": "2026-10-03T09:52:29Z",
+  "workflow_run_url": "https://github.com/motionssalt/castcut/actions/runs/37114483558"
 }
