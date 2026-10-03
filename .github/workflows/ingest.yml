@@ -73,7 +73,9 @@ jobs:
               # of failing the job. This is a single-line pipeline module —
               # no inline heredocs anywhere in the workflows.
               echo "::warning::source upload failed — falling back to the exclusion path"
-              python -m pipeline.mark_excluded "${{ inputs.job_id }}"
+              if ! python -m pipeline.mark_excluded "${{ inputs.job_id }}"; then
+                echo "::warning::mark_excluded itself failed, but the job must not be killed — continuing"
+              fi
               exit 0
             fi
           else
