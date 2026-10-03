@@ -1,0 +1,70 @@
+name: Mode 2 — Scene export
+
+on:
+  workflow_dispatch:
+    inputs:
+      job_id: { required: true, type: string }
+
+permissions:
+  contents: write
+
+concurrency:
+  group: castcut-sceneexport-${{ inputs.job_id }}
+  cancel-in-progress: false
+
+jobs:
+  export:
+    runs-on: ubuntu-latest
+    timeout-minutes: 240
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - run: |
+          sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
+          python -m pip install -q requests
+
+      - name: Status — exporting
+        run: |
+          python -m pipeline.status "${{ inputs.job_id }}" --state scene_exporting \
+            --message "Cutting at full quality and joining with hard cuts" \
+            --workflow-run-url "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git pull --rebase --autostash || true
+          git add "jobs/${{ inputs.job_id }}/"
+          git commit -m "castcut: scene exporting ${{ inputs.job_id }}" || true
+          for i in 1 2 3; do git push && break; git pull --rebase --autostash; sleep 2; done
+
+      - name: Fetch source
+        env: { GH_TOKEN: "${{ secrets.GITHUB_TOKEN }}" }
+        run: |
+          mkdir -p work
+          gh release download "castcut-${{ inputs.job_id }}" --repo "$GITHUB_REPOSITORY" --dir work --pattern 'source.*' --clobber
+
+      - name: Export
+        run: python -m pipeline.scene_export "${{ inputs.job_id }}"
+
+      - name: Upload final to release
+        env: { GH_TOKEN: "${{ secrets.GITHUB_TOKEN }}" }
+        run: gh release upload "castcut-${{ inputs.job_id }}" work/castcut-scene-*.mp4 --clobber
+
+      - name: Status — done
+        if: success()
+        run: |
+          python -m pipeline.status "${{ inputs.job_id }}" --state scene_ready \
+            --message "Scene file ready. Download from the release." \
+            --set-json "$(cat jobs/${{ inputs.job_id }}/scene/export.json)"
+          git add "jobs/${{ inputs.job_id }}/"
+          git commit -m "castcut: scene ready ${{ inputs.job_id }}" || true
+          for i in 1 2 3; do git push && break; git pull --rebase --autostash; sleep 2; done
+
+      - name: Status — failed
+        if: failure()
+        run: |
+          python -m pipeline.status "${{ inputs.job_id }}" --state scene_failed \
+            --message "Scene export failed; see the validation.json or workflow log."
+          git add "jobs/${{ inputs.job_id }}/"
+          git commit -m "castcut: scene export failed ${{ inputs.job_id }}" || true
+          for i in 1 2 3; do git push && break; git pull --rebase --autostash; sleep 2; done

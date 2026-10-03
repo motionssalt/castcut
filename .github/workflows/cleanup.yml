@@ -1,0 +1,36 @@
+name: Cleanup expired jobs
+
+on:
+  schedule:
+    - cron: "17 * * * *"   # hourly
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - name: Sweep
+        run: python -m pipeline.cleanup
+      - name: Delete expired releases
+        env: { GH_TOKEN: "${{ secrets.GITHUB_TOKEN }}" }
+        run: |
+          if [ -f jobs/.expired.json ]; then
+            python -c "import json; [print(j) for j in json.load(open('jobs/.expired.json'))]" | while read j; do
+              [ -n "$j" ] && gh release delete "castcut-$j" --yes --cleanup-tag || true
+            done
+          fi
+      - name: Commit sweep
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add jobs/
+          git commit -m "castcut: hourly cleanup sweep" || true
+          for i in 1 2 3; do git push && break; git pull --rebase --autostash; sleep 2; done

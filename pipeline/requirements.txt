@@ -1,0 +1,13 @@
+# Base deps for all CastCut workflows
+requests>=2.32,<3
+
+# Mode 1 (faces) — installed only in faces.yml:
+# torch --index-url https://download.pytorch.org/whl/cpu
+# anime-face-detector   (hysts, YOLOv3 anime face detector)
+# imgutils[metrics]     (deepghs CCIP character embeddings)
+# opencv-python-headless
+# pillow
+# numpy
+
+# Mode 2 (scene) — installed only in scene-analyze.yml:
+# faster-whisper

@@ -1,0 +1,73 @@
+name: Mode 1 — Faces analyze
+
+on:
+  workflow_dispatch:
+    inputs:
+      job_id: { required: true, type: string }
+      sample_fps: { required: false, type: string, default: "1.0" }
+
+permissions:
+  contents: write
+
+concurrency:
+  group: castcut-faces-${{ inputs.job_id }}
+  cancel-in-progress: false
+
+jobs:
+  faces:
+    runs-on: ubuntu-latest
+    timeout-minutes: 300
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - name: Deps
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq ffmpeg
+          python -m pip install --upgrade pip -q
+          python -m pip install -q requests opencv-python-headless pillow numpy
+          python -m pip install -q --index-url https://download.pytorch.org/whl/cpu "torch==2.3.1"
+          python -m pip install -q "openmim"
+          mim install -q "mmengine" "mmcv>=2.0.0,<2.2" "mmdet>=3,<4" "mmpose>=1,<2" || true
+          python -m pip install -q anime-face-detector || true
+          python -m pip install -q "imgutils[metrics]" || python -m pip install -q dghs-imgutils || true
+
+      - name: Status — faces running
+        run: |
+          python -m pipeline.status "${{ inputs.job_id }}" --state faces_running \
+            --message "Sampling frames and clustering unique faces" \
+            --workflow-run-url "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git pull --rebase --autostash || true
+          git add "jobs/${{ inputs.job_id }}/"
+          git commit -m "castcut: faces running ${{ inputs.job_id }}" || true
+          for i in 1 2 3; do git push && break; git pull --rebase --autostash; sleep 2; done
+
+      - name: Fetch source from release
+        env: { GH_TOKEN: "${{ secrets.GITHUB_TOKEN }}" }
+        run: |
+          mkdir -p work
+          gh release download "castcut-${{ inputs.job_id }}" --repo "$GITHUB_REPOSITORY" --dir work --pattern 'source.*' --clobber
+
+      - name: Analyze faces
+        run: python -m pipeline.faces "${{ inputs.job_id }}" --fps ${{ inputs.sample_fps }}
+
+      - name: Commit face manifest
+        run: |
+          python -m pipeline.status "${{ inputs.job_id }}" --state faces_ready \
+            --message "Face gallery ready. Pick characters in the UI."
+          git add "jobs/${{ inputs.job_id }}/"
+          git commit -m "castcut: faces ready ${{ inputs.job_id }}" || true
+          for i in 1 2 3; do git push && break; git pull --rebase --autostash; sleep 2; done
+
+      - name: Status — failed
+        if: failure()
+        run: |
+          python -m pipeline.status "${{ inputs.job_id }}" --state faces_failed \
+            --message "Face analysis failed; see workflow log."
+          git add "jobs/${{ inputs.job_id }}/"
+          git commit -m "castcut: faces failed ${{ inputs.job_id }}" || true
+          for i in 1 2 3; do git push && break; git pull --rebase --autostash; sleep 2; done

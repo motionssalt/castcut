@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0b0f1a">
+<title>CastCut</title>
+<link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+<header>
+  <h1>CastCut <span class="dim" id="whoami"></span></h1>
+  <button id="btnLogout" class="ghost" hidden>sign out</button>
+</header>
+
+<main id="app">
+  <!-- Gate -->
+  <section id="gate" hidden>
+    <h2>sign in</h2>
+    <p class="dim">Private tool. Paste the owner's GitHub PAT (<code>repo</code> + <code>workflow</code> scopes). It stays in this browser only.</p>
+    <input id="patInput" type="password" placeholder="github_pat_..." autocomplete="off" spellcheck="false">
+    <button id="btnLogin">unlock</button>
+    <p id="gateErr" class="err"></p>
+  </section>
+
+  <!-- Home -->
+  <section id="home" hidden>
+    <h2>new job</h2>
+    <label>source</label>
+    <select id="srcKind">
+      <option value="direct_url">direct https video URL</option>
+      <option value="gdrive">Google Drive share link</option>
+      <option value="magnet">magnet URI</option>
+      <option value="torrent_file">.torrent file</option>
+    </select>
+    <input id="srcUrl" type="text" placeholder="paste URL / magnet here">
+    <input id="srcFile" type="file" accept=".torrent" hidden>
+    <input id="jobTitle" type="text" placeholder="optional title">
+    <button id="btnIngest">ingest</button>
+    <p id="homeErr" class="err"></p>
+    <h3>jobs</h3>
+    <div id="jobList"></div>
+  </section>
+
+  <!-- Job view -->
+  <section id="job" hidden>
+    <button id="btnBack" class="ghost">← back</button>
+    <h2 id="jobTitleH"></h2>
+    <p class="dim" id="jobMeta"></p>
+    <p id="jobState" class="state"></p>
+    <div id="modePicker" hidden>
+      <button id="btnModeClips">Mode 1 · Clips</button>
+      <button id="btnModeScene">Mode 2 · Scene</button>
+    </div>
+
+    <!-- Mode 1 -->
+    <div id="mClips" hidden>
+      <h3>Clips</h3>
+      <label>sample fps (0.5–2.0)</label>
+      <input id="sampleFps" type="number" min="0.5" max="2.0" step="0.1" value="1.0">
+      <button id="btnFaces">analyze faces</button>
+      <div id="gallery" class="gallery"></div>
+      <div id="gallerySelected" class="selected-row" hidden></div>
+      <div id="galleryActions" hidden>
+        <label>merge gap (s)</label>
+        <input id="gapSec" type="number" min="0" max="10" step="0.5" value="2">
+        <label>pad (s)</label>
+        <input id="padSec" type="number" min="0" max="2" step="0.1" value="0.4">
+        <button id="btnMerge" class="ghost">merge selected as one</button>
+        <button id="btnIgnore" class="ghost">ignore selected</button>
+        <button id="btnExportClips">export clips</button>
+      </div>
+    </div>
+
+    <!-- Mode 2 -->
+    <div id="mScene" hidden>
+      <h3>Scene</h3>
+      <label>scene request (optional — leave blank to let the AI pick)</label>
+      <textarea id="sceneReq" rows="3" placeholder="e.g. the intro for an edit about character X"></textarea>
+      <button id="btnSceneAnalyze">analyze</button>
+      <div id="sceneAgent" hidden>
+        <h4>agent prompt</h4>
+        <textarea id="agentPrompt" rows="12" readonly></textarea>
+        <button id="btnCopyPrompt">copy prompt</button>
+        <h4>paste production JSON back</h4>
+        <textarea id="prodJson" rows="10" placeholder='{"version":1,"segments":[{"start":12.5,"end":27}]}'></textarea>
+        <button id="btnScenePush">cut & export</button>
+        <pre id="validationOut" class="err"></pre>
+      </div>
+    </div>
+
+    <h3>download</h3>
+    <div id="downloads"></div>
+  </section>
+</main>
+
+<script src="/app.js" type="module"></script>
+</body>
+</html>

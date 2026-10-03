@@ -1,0 +1,83 @@
+name: Mode 2 — Scene analyze + agent prompt
+
+on:
+  workflow_dispatch:
+    inputs:
+      job_id: { required: true, type: string }
+
+permissions:
+  contents: write
+
+concurrency:
+  group: castcut-scene-${{ inputs.job_id }}
+  cancel-in-progress: false
+
+jobs:
+  analyze:
+    runs-on: ubuntu-latest
+    timeout-minutes: 240
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq ffmpeg zip
+          python -m pip install -q requests faster-whisper
+
+      - name: Status — analyzing
+        run: |
+          python -m pipeline.status "${{ inputs.job_id }}" --state scene_analyzing \
+            --message "Transcribing and detecting scene boundaries" \
+            --workflow-run-url "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git pull --rebase --autostash || true
+          git add "jobs/${{ inputs.job_id }}/"
+          git commit -m "castcut: scene analyzing ${{ inputs.job_id }}" || true
+          for i in 1 2 3; do git push && break; git pull --rebase --autostash; sleep 2; done
+
+      - name: Fetch source
+        env: { GH_TOKEN: "${{ secrets.GITHUB_TOKEN }}" }
+        run: |
+          mkdir -p work
+          gh release download "castcut-${{ inputs.job_id }}" --repo "$GITHUB_REPOSITORY" --dir work --pattern 'source.*' --clobber
+
+      - name: Analyze
+        run: python -m pipeline.scene_analyze "${{ inputs.job_id }}"
+
+      - name: Generate agent prompt
+        run: python -m pipeline.scene_prompt "${{ inputs.job_id }}"
+
+      - name: Zip screenshots
+        run: |
+          if [ -d work/shots ]; then (cd work && zip -q -r screenshots.zip shots) ; fi
+          ls -l work/screenshots.zip || true
+
+      - name: Upload scene bundle to release
+        env: { GH_TOKEN: "${{ secrets.GITHUB_TOKEN }}" }
+        run: |
+          files=(jobs/${{ inputs.job_id }}/scene/transcript.json
+                 jobs/${{ inputs.job_id }}/scene/scene_index.json
+                 jobs/${{ inputs.job_id }}/scene/agent_prompt.txt)
+          [ -f work/screenshots.zip ] && files+=(work/screenshots.zip)
+          gh release upload "castcut-${{ inputs.job_id }}" "${files[@]}" --clobber
+
+      - name: Status — awaiting JSON
+        if: success()
+        run: |
+          python -m pipeline.status "${{ inputs.job_id }}" --state scene_awaiting_json \
+            --message "Agent prompt ready. Copy, run in your AI, paste the JSON back."
+          git add "jobs/${{ inputs.job_id }}/"
+          git commit -m "castcut: scene awaiting json ${{ inputs.job_id }}" || true
+          for i in 1 2 3; do git push && break; git pull --rebase --autostash; sleep 2; done
+
+      - name: Status — failed
+        if: failure()
+        run: |
+          python -m pipeline.status "${{ inputs.job_id }}" --state scene_failed \
+            --message "Scene analysis failed; see workflow log."
+          git add "jobs/${{ inputs.job_id }}/"
+          git commit -m "castcut: scene failed ${{ inputs.job_id }}" || true
+          for i in 1 2 3; do git push && break; git pull --rebase --autostash; sleep 2; done

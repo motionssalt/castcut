@@ -1,0 +1,18 @@
+{
+  "project": "castcut",
+  "repo": "motionssalt/castcut",
+  "updated_at": "2026-10-02T00:00:00Z",
+  "phases": [
+    {"id": 1, "name": "repo + secrets + auto-deploy", "status": "in_progress", "notes": "Private repo created via API. Cloudflare Pages project 'castcut' created (castcut.pages.dev). Secrets + deploy workflow being wired."},
+    {"id": 2, "name": "research + ingestion (copy ClipForge)", "status": "in_progress", "notes": "ClipForge Stage A pattern studied: request file in jobs/<id>/ + workflow_dispatch + aria2/requests download + release asset storage + status.json. Porting."},
+    {"id": 3, "name": "auth gate (PAT)", "status": "in_progress", "notes": "Pages Function /api/* validates owner PAT server-side against GitHub /user (login must be motionssalt) on every request. Token lives only in browser localStorage."},
+    {"id": 4, "name": "mode 1: faces pipeline", "status": "in_progress", "notes": "hysts/anime-face-detector (YOLOv3) + deepghs CCIP embeddings (imgutils) + online centroid clustering. lbpcascade_animeface fallback."},
+    {"id": 5, "name": "mode 1: gallery UI + export", "status": "in_progress", "notes": "Single-JSON manifest with embedded 112px WebP thumbs. Ordered multi-select, merge groups, ignore. Hard-cut concat + x264 CRF slow compress pass."},
+    {"id": 6, "name": "mode 2: scene pipeline", "status": "in_progress", "notes": "faster-whisper transcript + ffmpeg scdet scene index + screenshots + agent prompt with embedded strict JSON schema."},
+    {"id": 7, "name": "mode 2: UI + JSON import + export", "status": "in_progress", "notes": "Paste JSON -> jsonschema validation with numbered errors -> full-quality cut (CRF 14) -> one file."},
+    {"id": 8, "name": "polish, size checks, README", "status": "in_progress", "notes": "README documents setup, modes, JSON schema, resume protocol, TTL (24h)."}
+  ],
+  "decisions": [],
+  "known_issues": [],
+  "next_action": "Push full codebase, set repo secrets (sealed box), verify push->deploy, then mark phases done."
+}

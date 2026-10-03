@@ -1,0 +1,81 @@
+name: Ingest source video
+
+on:
+  workflow_dispatch:
+    inputs:
+      job_id:
+        description: "Job id (jobs/<job_id>/ingest-request.json must exist)"
+        required: true
+        type: string
+
+permissions:
+  contents: write
+
+concurrency:
+  group: castcut-ingest-${{ inputs.job_id }}
+  cancel-in-progress: false
+
+jobs:
+  ingest:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+
+      - name: System deps
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq ffmpeg aria2
+          python -m pip install -q requests
+
+      - name: Status — running
+        run: |
+          python -m pipeline.status "${{ inputs.job_id }}" \
+            --state ingest_running \
+            --message "Downloading source" \
+            --release-tag "castcut-${{ inputs.job_id }}" \
+            --workflow-run-url "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git pull --rebase --autostash || true
+          git add "jobs/${{ inputs.job_id }}/"
+          git commit -m "castcut: ingest running ${{ inputs.job_id }}" || true
+          for i in 1 2 3; do git push && break; git pull --rebase --autostash; sleep 2; done
+
+      - name: Ingest
+        id: ingest
+        run: python -m pipeline.ingest "${{ inputs.job_id }}"
+
+      - name: Publish release with source video
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          tag="castcut-${{ inputs.job_id }}"
+          gh release delete "$tag" --yes --cleanup-tag || true
+          gh release create "$tag" --repo "$GITHUB_REPOSITORY" \
+            --title "castcut $tag" \
+            --notes "Ephemeral source for job ${{ inputs.job_id }} (24h TTL)."
+          gh release upload "$tag" work/source.* --clobber
+
+      - name: Status — done
+        if: success()
+        run: |
+          python -m pipeline.status "${{ inputs.job_id }}" \
+            --state ingested \
+            --message "Source ready. Pick a mode (Clips or Scene)."
+          git add "jobs/${{ inputs.job_id }}/"
+          git commit -m "castcut: ingested ${{ inputs.job_id }}" || true
+          for i in 1 2 3; do git push && break; git pull --rebase --autostash; sleep 2; done
+
+      - name: Status — failed
+        if: failure()
+        run: |
+          python -m pipeline.status "${{ inputs.job_id }}" \
+            --state ingest_failed --message "Ingest failed. See the workflow run log."
+          git add "jobs/${{ inputs.job_id }}/"
+          git commit -m "castcut: ingest failed ${{ inputs.job_id }}" || true
+          for i in 1 2 3; do git push && break; git pull --rebase --autostash; sleep 2; done
