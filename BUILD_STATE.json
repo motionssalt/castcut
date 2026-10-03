@@ -1,7 +1,7 @@
 {
   "project": "castcut",
   "repo": "motionssalt/castcut",
-  "updated_at": "2026-10-03T00:50:52Z",
+  "updated_at": "2026-10-03T01:20:00Z",
   "phases": [
     {
       "id": 1,
@@ -61,10 +61,11 @@
     "Storage: GitHub release castcut-<job_id> per job; 24h TTL, hourly cleanup.yml deletes expired releases.",
     "Mode 1 export: ordered per-character, no interleave, no duplicated ranges, hard cuts only, x264 CRF 23 slow final pass (sizes logged).",
     "Mode 2 export: full quality (CRF 14), hard cuts, strict JSON schema v1 with numbered validation errors.",
-    "Auth: Pages middleware checks GitHub /user login==motionssalt on every /api/* call; PAT stays client-side."
+    "Auth: Pages middleware checks GitHub /user login==motionssalt on every /api/* call; PAT stays client-side.",
+    "fix_round_2 oversized-source fallback: copied from ClipForge bug-69 design — pipeline/stage_a/release_gate.py (2 GiB per-asset LIMIT_BYTES gate, verified vs GitHub docs 2026-10: 2 GiB per release asset, no total-release cap) and pipeline/stage_a/refetch_source.py (re-fetch from the durably committed ingest request, reusing the same ingest downloaders incl. saved torrent file indices). CastCut adaptation: ingest.py decides BEFORE upload using the real on-disk size with a 128 MiB safety margin (CASTCUT_RELEASE_LIMIT_BYTES env override for testing), records video_in_release:false + re-fetch info in jobs/<id>/ingest.json; pipeline/refetch.py re-downloads into work/ before every downstream step (faces, scene_analyze, clips_export, scene_export); workflow keeps an upload-error safety net that falls back to the exclusion path."
   ],
   "known_issues": [],
-  "next_action": "fix_round_1 complete. Live-test on the phone: (1) multi-video .torrent -> checkbox list -> only selected files download; (2) magnet -> selecting -> awaiting_selection -> confirm -> ingest; (3) cancel a running ingest -> badge flips to cancelled; (4) delete a job -> release+files gone.",
+  "next_action": "fix_round_2 in progress: size gate module next.",
   "fix_round_1": {
     "started_at": "2026-10-03T00:37:08Z",
     "status": "done",
@@ -99,5 +100,67 @@
       }
     ],
     "finished_at": "2026-10-03T00:50:52Z"
+  },
+  "fix_round_2": {
+    "started_at": "2026-10-03T01:20:00Z",
+    "status": "in_progress",
+    "tasks": [
+      {
+        "id": "1",
+        "name": "study ClipForge approach + record decisions",
+        "status": "done",
+        "notes": "ClipForge: release_gate.py LIMIT_BYTES=2GiB classifies oversized source; manifest source_omitted:true; refetch_source.py re-downloads from stage-a-request.json reusing ingest downloaders and saved torrent_file_index. CastCut equivalent: ingest-request.json + selection.json are the durable source refs.",
+        "next_action": "none"
+      },
+      {
+        "id": "2",
+        "name": "pipeline/release_size.py — shared size gate",
+        "status": "in_progress",
+        "notes": "",
+        "next_action": "write module, commit, push"
+      },
+      {
+        "id": "3",
+        "name": "ingest.py size check + exclusion record",
+        "status": "pending",
+        "notes": "",
+        "next_action": "add video_in_release decision + refetch info to ingest.json"
+      },
+      {
+        "id": "4",
+        "name": "pipeline/refetch.py — re-download from original source",
+        "status": "pending",
+        "notes": "",
+        "next_action": "port refetch_source.py; disk-space check + logging; same file selection"
+      },
+      {
+        "id": "5",
+        "name": "workflows: conditional upload + refetch steps + final-output check + cleanup",
+        "status": "pending",
+        "notes": "",
+        "next_action": "ingest.yml, faces.yml, scene-analyze.yml, clips-export.yml, scene-export.yml"
+      },
+      {
+        "id": "6",
+        "name": "UI note for excluded video",
+        "status": "pending",
+        "notes": "",
+        "next_action": "app.js badge 'Large video: will be re-downloaded when processing'"
+      },
+      {
+        "id": "7",
+        "name": "test with simulated small limit; verify release only gets final output",
+        "status": "pending",
+        "notes": "",
+        "next_action": "local unit test with CASTCUT_RELEASE_LIMIT_BYTES override"
+      },
+      {
+        "id": "8",
+        "name": "README + mark fix_round_2 done",
+        "status": "pending",
+        "notes": "",
+        "next_action": "document the fallback flow"
+      }
+    ]
   }
 }
