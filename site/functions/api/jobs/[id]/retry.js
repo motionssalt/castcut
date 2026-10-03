@@ -26,6 +26,7 @@ export async function onRequest({ request, params, data }) {
   let workflow = null;
   let inputs = { job_id: id };
   if (/select/.test(from)) workflow = "select.yml";
+  else if (/hybrid/.test(from)) workflow = "hybrid-analyze.yml";
   else if (/clips_export/.test(from) || (clipsSel && /clips/.test(from))) workflow = "clips-export.yml";
   else if (/scene_export/.test(from) || (production && /scene/.test(from))) workflow = "scene-export.yml";
   else if (/scene/.test(from) || sceneReq) workflow = production ? "scene-export.yml" : "scene-analyze.yml";
