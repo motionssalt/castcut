@@ -3,11 +3,11 @@
   "title": "",
   "created_at_epoch": 1790989177,
   "created_at": "2026-10-03T00:59:37Z",
-  "updated_at": "2026-10-03T01:00:12Z",
-  "updated_at_epoch": 1790989212,
+  "updated_at": "2026-10-03T01:00:30Z",
+  "updated_at_epoch": 1790989230,
   "expires_at_epoch": 1791075577,
-  "state": "cancelled",
-  "message": "Run cancelled.",
+  "state": "queued",
+  "message": "Retrying — ingest dispatched.",
   "selected_files": [
     {
       "index": 3,
