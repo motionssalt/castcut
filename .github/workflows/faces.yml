@@ -61,6 +61,9 @@ jobs:
         run: |
           python -m pipeline.status "${{ inputs.job_id }}" --state faces_ready \
             --message "Face gallery ready. Pick characters in the UI."
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git pull --rebase --autostash || true
           git add "jobs/${{ inputs.job_id }}/"
           git commit -m "castcut: faces ready ${{ inputs.job_id }}" || true
           for i in 1 2 3; do git push && break; git pull --rebase --autostash; sleep 2; done
@@ -69,7 +72,11 @@ jobs:
         if: failure()
         run: |
           python -m pipeline.status "${{ inputs.job_id }}" --state faces_failed \
-            --message "Face analysis failed; see workflow log."
+            --message "Face analysis failed; see workflow log: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" \
+            --workflow-run-url "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git pull --rebase --autostash || true
           git add "jobs/${{ inputs.job_id }}/"
           git commit -m "castcut: faces failed ${{ inputs.job_id }}" || true
           for i in 1 2 3; do git push && break; git pull --rebase --autostash; sleep 2; done
