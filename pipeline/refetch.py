@@ -69,15 +69,15 @@ def ensure_source(job_id: str, jobs_root: str = "jobs", work_dir: str = "work",
         if repo:
             cmd += ["--repo", repo]
         print("+ " + " ".join(cmd), flush=True)
-        subprocess.run(cmd, check=True)
+        res = subprocess.run(cmd, capture_output=True, text=True)
         missing = [n for n in names
                    if not os.path.exists(os.path.join(work_dir, n))]
-        if missing:
-            raise RuntimeError(
-                f"release {tag} is missing expected assets: {missing}")
-        print(f"[refetch] video_in_release=true — fetched {names} "
-              f"from release {tag}", flush=True)
-        return {"mode": "release", "files": names}
+        if res.returncode == 0 and not missing:
+            print(f"[refetch] video_in_release=true — fetched {names} "
+                  f"from release {tag}", flush=True)
+            return {"mode": "release", "files": names}
+        print(f"[refetch note] Source video not found in release {tag} ({res.stderr.strip()}); "
+              "falling back to re-download from original source reference...", flush=True)
 
     # ---------------- re-download from the original source ----------------
     req = _load_json(os.path.join(job_dir, "ingest-request.json"))
