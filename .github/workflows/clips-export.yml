@@ -23,7 +23,7 @@ jobs:
       - uses: actions/setup-python@v5
         with: { python-version: "3.12" }
       - run: |
-          sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
+          sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg aria2
           python -m pip install -q requests
 
       - name: Status — exporting
@@ -38,14 +38,20 @@ jobs:
           git commit -m "castcut: clips exporting ${{ inputs.job_id }}" || true
           for i in 1 2 3; do git push && break; git pull --rebase --autostash; sleep 2; done
 
-      - name: Fetch source
+      - name: Fetch source (release, or re-download when excluded)
         env: { GH_TOKEN: "${{ secrets.GITHUB_TOKEN }}" }
         run: |
           mkdir -p work
-          gh release download "castcut-${{ inputs.job_id }}" --repo "$GITHUB_REPOSITORY" --dir work --pattern 'source.*' --clobber
+          df -h .
+          python -m pipeline.refetch "${{ inputs.job_id }}" --release-tag "castcut-${{ inputs.job_id }}"
 
       - name: Export
         run: python -m pipeline.clips_export "${{ inputs.job_id }}"
+
+      - name: Check final output fits the release limit
+        env:
+          CASTCUT_RELEASE_LIMIT_BYTES: ${{ vars.CASTCUT_RELEASE_LIMIT_BYTES }}
+        run: python -m pipeline.release_size --check 'work/castcut-clips-*.mp4'
 
       - name: Upload final video to release
         env: { GH_TOKEN: "${{ secrets.GITHUB_TOKEN }}" }

@@ -304,6 +304,11 @@ function renderJob(r) {
   $("jobMeta").textContent = ing
     ? `source ${(ing.duration || 0).toFixed(1)}s · ${ing.width}×${ing.height} · ${humanSize(ing.size_bytes)}${(ing.sources || []).length > 1 ? ` · ${ing.sources.length} files` : ""}`
     : "";
+  if (ing && ing.video_in_release === false) {
+    // fix_round_2: informational note, not an error — the source was too
+    // large for the release and is re-downloaded automatically later.
+    $("jobMeta").textContent += " · large video: will be re-downloaded when processing";
+  }
 
   // failed / cancelled panel
   const isFailed = cls === "failed", isCancelled = cls === "cancelled";

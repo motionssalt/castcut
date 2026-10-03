@@ -230,6 +230,29 @@ def main() -> None:
     }
     if selected_indices:
         rec["selected_indices"] = selected_indices
+
+    # fix_round_2 (port of ClipForge's release_gate): decide BEFORE any
+    # upload whether the source video(s) fit within GitHub's per-asset
+    # release limit — real on-disk sizes, safety margin, env-overridable
+    # limit for testing.
+    from . import release_size
+    all_paths = source_paths or [source_path]
+    rec["asset_sizes"] = {os.path.basename(p): os.path.getsize(p) for p in all_paths}
+    rec["video_in_release"] = all(
+        release_size.fits(s) for s in rec["asset_sizes"].values())
+    if not rec["video_in_release"]:
+        rec["video_excluded_reason"] = (
+            "source video exceeds the per-asset release size limit; excluded "
+            "from the release — it will be re-downloaded from the original "
+            "source when processing starts (pipeline.refetch)")
+        rec["refetch"] = {
+            "request_path": f"jobs/{args.job_id}/ingest-request.json",
+            "selection_path": (f"jobs/{args.job_id}/selection.json"
+                               if selected_indices else None),
+            "selected_indices": selected_indices or [],
+        }
+        print("SOURCE EXCLUDED FROM RELEASE (oversized): "
+              + json.dumps(rec["asset_sizes"]), flush=True)
     with open(os.path.join(args.jobs_root, args.job_id, "ingest.json"), "w", encoding="utf-8") as fh:
         json.dump(rec, fh, indent=2)
     print(json.dumps(rec, indent=2), flush=True)

@@ -150,3 +150,30 @@ phase and sub-step so a cold restart is safe.
   `source.<ext>`, `source.2.<ext>`, … (the first is the pipeline's primary).
 - The hourly `cleanup.yml` workflow deletes any release whose
   `status.expires_at_epoch` is past (24h TTL).
+
+## Oversized source videos (> ~1.9 GiB)
+
+GitHub caps each release asset at 2 GiB. CastCut handles this automatically
+(ported from ClipForge's bug-69 design):
+
+1. **Ingestion** measures the real on-disk size of the downloaded source and
+   compares it against `limit (2 GiB) - 128 MiB safety margin`
+   (`pipeline/release_size.py`; override via the repo variable
+   `CASTCUT_RELEASE_LIMIT_BYTES`). If it does not fit, the video is **not**
+   uploaded and this is **not an error**: `jobs/<id>/ingest.json` records
+   `video_in_release: false` plus the refetch info (ingest request path and,
+   for torrents, the selected file indices). A failed upload at publish time
+   falls back to the same exclusion path as a safety net.
+2. **Every downstream step** (faces, scene analysis, clips export, scene
+   export) calls `pipeline/refetch.py`, which downloads `source.*` from the
+   release when present, or **re-downloads from the original source** (direct
+   URL / Google Drive / magnet / .torrent with the saved `--select-file`
+   indices) when it was excluded. Runner free disk is logged and checked
+   first; the aria2 working directory is deleted right after copying the
+   payload out.
+3. **The final output** is checked against the same limit before upload; if
+   even the joined video would not fit, the run fails with a clear message.
+4. The UI shows an informational note ("large video: will be re-downloaded
+   when processing") in the job meta line - not an error badge.
+5. Delete-job and 24h TTL cleanup are unaffected (they remove the release,
+   tag and job files regardless of whether the video was in the release).
