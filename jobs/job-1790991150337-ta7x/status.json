@@ -3,11 +3,11 @@
   "title": "",
   "created_at_epoch": 1790991150,
   "created_at": "2026-10-03T01:32:30Z",
-  "updated_at": "2026-10-03T01:38:29Z",
-  "updated_at_epoch": 1790991509,
+  "updated_at": "2026-10-03T07:45:57Z",
+  "updated_at_epoch": 1791013557,
   "expires_at_epoch": 1791077550,
-  "state": "ingested",
-  "message": "Source ready — large video: it will be re-downloaded automatically when processing starts. Pick a mode (Clips or Scene).",
+  "state": "faces_running",
+  "message": "Sampling frames and clustering unique faces",
   "video_in_release": false,
   "selected_files": [
     {
@@ -17,5 +17,5 @@
     }
   ],
   "release_tag": "castcut-job-1790991150337-ta7x",
-  "workflow_run_url": "https://github.com/motionssalt/castcut/actions/runs/37086495062"
+  "workflow_run_url": "https://github.com/motionssalt/castcut/actions/runs/37107205858"
 }
