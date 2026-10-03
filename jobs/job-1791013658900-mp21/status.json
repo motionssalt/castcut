@@ -3,11 +3,11 @@
   "title": "",
   "created_at_epoch": 1791013658,
   "created_at": "2026-10-03T07:47:38Z",
-  "updated_at": "2026-10-03T08:10:58Z",
-  "updated_at_epoch": 1791015058,
+  "updated_at": "2026-10-03T08:40:01Z",
+  "updated_at_epoch": 1791016801,
   "expires_at_epoch": 1791100058,
-  "state": "faces_running",
-  "message": "Sampling frames and clustering unique faces",
+  "state": "faces_ready",
+  "message": "Face gallery ready. Pick characters in the UI.",
   "selected_files": [
     {
       "index": 6,

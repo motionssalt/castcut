@@ -1,0 +1,1 @@
+{"version":1,"job_id":"job-1791013658900-mp21","detector":"anime-face-detector(yolov3)","embedder":"hsv-histogram(fallback)","sample_fps":1.0,"presence_gap":3.0,"duration":1422.0,"width":1920,"height":1080,"characters":[]}
