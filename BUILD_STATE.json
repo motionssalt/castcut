@@ -1,7 +1,7 @@
 {
   "project": "castcut",
   "repo": "motionssalt/castcut",
-  "updated_at": "2026-10-03T07:00:00Z",
+  "updated_at": "2026-10-03T07:40:00Z",
   "phases": [
     {
       "id": 1,
@@ -66,7 +66,7 @@
     "fix_round_3: removed the only inline heredoc (ingest.yml publish safety-net) and moved it into pipeline/mark_excluded.py; added actionlint CI + README rule so no new heredocs can land."
   ],
   "known_issues": [],
-  "next_action": "fix_round_2 complete. Live-check: ingest a >2GiB source (or set repo variable CASTCUT_RELEASE_LIMIT_BYTES to a small value) and confirm the release holds everything except source.*, faces/scene still run, and the export release gains only the final mp4.",
+  "next_action": "fix_round_3 complete. All heredocs removed from workflows, mark_excluded safety net robust, actionlint CI and workflow hygiene checks added, oversized path verified end-to-end, and stuck job reconciled to ingested.",
   "fix_round_1": {
     "started_at": "2026-10-03T00:37:08Z",
     "status": "done",
@@ -167,7 +167,7 @@
   },
   "fix_round_3": {
     "started_at": "2026-10-03T06:56:40Z",
-    "status": "in_progress",
+    "status": "done",
     "tasks": [
       {
         "id": "A",
@@ -193,21 +193,21 @@
       {
         "id": "E",
         "name": "End-to-end verification of the oversized path",
-        "status": "in_progress",
-        "notes": "Trigger (or simulate with tiny CASTCUT_RELEASE_LIMIT_BYTES on a small file) an ingest run and confirm: video excluded -> release created with only small artifacts -> job reaches ingested (not ingest_failed) -> UI shows the large-video note, not an error. After a selection, confirm pipeline.refetch re-downloads exactly the selected file (index in refetch.selected_indices) and processing proceeds. Confirm a normal small video still goes into the release.",
-        "next_action": "Run simulation recipe with tiny CASTCUT_RELEASE_LIMIT_BYTES and normal limit to verify exclusion, release publish safety net with mark_excluded, refetch, and job state transitions."
+        "status": "done",
+        "notes": "Verified end-to-end with local HTTP server + test video: under simulated tiny CASTCUT_RELEASE_LIMIT_BYTES=262144, ingest excluded video and wrote video_in_release=false + refetch info; mark_excluded preserved refetch and updated reason; pipeline.refetch successfully re-downloaded byte-identical video from the original source; under default limit (2 GiB), normal video had video_in_release=true; verified shell publish step logic and UI status message format.",
+        "next_action": "none"
       },
       {
         "id": "D",
         "name": "Handle the stuck job job-1790991150337-ta7x",
-        "status": "pending",
-        "notes": "Job is ingest_failed but ingest.json is valid and source correctly excluded (video_in_release:false, refetch.selected_indices=[3]). Simplest safe recovery: one-time reconcile that sets status.json state to 'ingested' with the large-video-ready message, because the video will be re-downloaded from the saved refetch info when processing starts. Alternative: delete job (DELETE /api/jobs/<id> implemented) and re-create.",
-        "next_action": "Rewrite jobs/job-1790991150337-ta7x/status.json via GitHub Contents API: keep all fields, set state=ingested, set message to the large-video-ready text (matching the Status — done message for video_in_release=false). Do this AFTER the ingest.yml fix is merged so the job definition is correct. Then confirm the UI would show 'Source ready' + large-video note."
+        "status": "done",
+        "notes": "Reconciled job-1790991150337-ta7x status.json to state='ingested' with large-video message and video_in_release=false. Release tag castcut-job-1790991150337-ta7x is already created with 24h TTL; ingest.json and refetch metadata with selected_indices=[3] are valid. The job is now ready for mode selection (Clips or Scene), and downstream processing will re-download the selected file via pipeline.refetch.",
+        "next_action": "none"
       }
     ],
     "decisions": [
       "Heredoc safety net removed from ingest.yml and moved into pipeline/mark_excluded.py; workflows must never contain << heredocs — use pipeline/ modules called as single-line commands. actionlint CI added to prevent regression."
     ],
-    "finished_at": null
+    "finished_at": "2026-10-03T07:40:00Z"
   }
 }
