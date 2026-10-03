@@ -72,6 +72,9 @@ jobs:
         run: |
           python -m pipeline.status "${{ inputs.job_id }}" --state scene_failed \
             --message "Scene export failed; see the validation.json or workflow log."
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git pull --rebase --autostash || true
           git add "jobs/${{ inputs.job_id }}/"
           git commit -m "castcut: scene export failed ${{ inputs.job_id }}" || true
           for i in 1 2 3; do git push && break; git pull --rebase --autostash; sleep 2; done
