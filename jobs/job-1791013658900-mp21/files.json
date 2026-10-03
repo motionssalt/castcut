@@ -1,0 +1,220 @@
+{
+  "version": 1,
+  "job_id": "job-1791013658900-mp21",
+  "source_kind": "torrent_file",
+  "torrent_name": "High School of the Dead S01 + OAV (2010) MULTi 1080p 10bits BluRay AV1 Opus -Punisher694",
+  "file_count": 30,
+  "files": [
+    {
+      "index": 1,
+      "path": "Cover S01.png",
+      "length": 1900208,
+      "is_video": false
+    },
+    {
+      "index": 2,
+      "path": "Cover Specials.png",
+      "length": 2051434,
+      "is_video": false
+    },
+    {
+      "index": 3,
+      "path": "Cover.png",
+      "length": 2475973,
+      "is_video": false
+    },
+    {
+      "index": 4,
+      "path": "High School of the Dead S00E01 (OAV) VOSTFR 1080p 10bits BluRay AV1 Opus -Punisher694.mkv",
+      "length": 275766313,
+      "is_video": true
+    },
+    {
+      "index": 5,
+      "path": "High School of the Dead S01 + OAV (2010).sfv",
+      "length": 1327,
+      "is_video": false
+    },
+    {
+      "index": 6,
+      "path": "High School of the Dead S01E01 MULTi 1080p 10bits BluRay AV1 Opus -Punisher694.mkv",
+      "length": 480412256,
+      "is_video": true
+    },
+    {
+      "index": 7,
+      "path": "High School of the Dead S01E02 MULTi 1080p 10bits BluRay AV1 Opus -Punisher694.mkv",
+      "length": 369080294,
+      "is_video": true
+    },
+    {
+      "index": 8,
+      "path": "High School of the Dead S01E03 MULTi 1080p 10bits BluRay AV1 Opus -Punisher694.mkv",
+      "length": 443009229,
+      "is_video": true
+    },
+    {
+      "index": 9,
+      "path": "High School of the Dead S01E04 MULTi 1080p 10bits BluRay AV1 Opus -Punisher694.mkv",
+      "length": 382630495,
+      "is_video": true
+    },
+    {
+      "index": 10,
+      "path": "High School of the Dead S01E05 MULTi 1080p 10bits BluRay AV1 Opus -Punisher694.mkv",
+      "length": 396143790,
+      "is_video": true
+    },
+    {
+      "index": 11,
+      "path": "High School of the Dead S01E06 MULTi 1080p 10bits BluRay AV1 Opus -Punisher694.mkv",
+      "length": 385410020,
+      "is_video": true
+    },
+    {
+      "index": 12,
+      "path": "High School of the Dead S01E07 MULTi 1080p 10bits BluRay AV1 Opus -Punisher694.mkv",
+      "length": 333317614,
+      "is_video": true
+    },
+    {
+      "index": 13,
+      "path": "High School of the Dead S01E08 MULTi 1080p 10bits BluRay AV1 Opus -Punisher694.mkv",
+      "length": 434282400,
+      "is_video": true
+    },
+    {
+      "index": 14,
+      "path": "High School of the Dead S01E09 MULTi 1080p 10bits BluRay AV1 Opus -Punisher694.mkv",
+      "length": 368734552,
+      "is_video": true
+    },
+    {
+      "index": 15,
+      "path": "High School of the Dead S01E10 MULTi 1080p 10bits BluRay AV1 Opus -Punisher694.mkv",
+      "length": 328030996,
+      "is_video": true
+    },
+    {
+      "index": 16,
+      "path": "High School of the Dead S01E11 MULTi 1080p 10bits BluRay AV1 Opus -Punisher694.mkv",
+      "length": 323754804,
+      "is_video": true
+    },
+    {
+      "index": 17,
+      "path": "High School of the Dead S01E12 MULTi 1080p 10bits BluRay AV1 Opus -Punisher694.mkv",
+      "length": 428055057,
+      "is_video": true
+    },
+    {
+      "index": 18,
+      "path": "Bonus/NCED (EP.01) Kimi to Taiyou ga Shinda hi [4A7CF927].mkv",
+      "length": 40176734,
+      "is_video": true
+    },
+    {
+      "index": 19,
+      "path": "Bonus/NCED (EP.02) Color Me Dark [90321478].mkv",
+      "length": 38176951,
+      "is_video": true
+    },
+    {
+      "index": 20,
+      "path": "Bonus/NCED (EP.03) Return to Destiny [04284CBF].mkv",
+      "length": 34348478,
+      "is_video": true
+    },
+    {
+      "index": 21,
+      "path": "Bonus/NCED (EP.04) Cold Bullet Blues [723449B1].mkv",
+      "length": 34327452,
+      "is_video": true
+    },
+    {
+      "index": 22,
+      "path": "Bonus/NCED (EP.05) Memories of Days Gone By [A1C57D12].mkv",
+      "length": 32488400,
+      "is_video": true
+    },
+    {
+      "index": 23,
+      "path": "Bonus/NCED (EP.06) Under The Honey Shine [E930A62F].mkv",
+      "length": 32392224,
+      "is_video": true
+    },
+    {
+      "index": 24,
+      "path": "Bonus/NCED (EP.07) fuss fuzz [8D530E11].mkv",
+      "length": 28557535,
+      "is_video": true
+    },
+    {
+      "index": 25,
+      "path": "Bonus/NCED (EP.08) The place of hope [D1D59FD5].mkv",
+      "length": 32828438,
+      "is_video": true
+    },
+    {
+      "index": 26,
+      "path": "Bonus/NCED (EP.09) Houseki no Spy [8D507735].mkv",
+      "length": 32434388,
+      "is_video": true
+    },
+    {
+      "index": 27,
+      "path": "Bonus/NCED (EP.10) THE last pain [075CFCC0].mkv",
+      "length": 30452995,
+      "is_video": true
+    },
+    {
+      "index": 28,
+      "path": "Bonus/NCED (EP.11) Hollow Men [37DAEC58].mkv",
+      "length": 36230536,
+      "is_video": true
+    },
+    {
+      "index": 29,
+      "path": "Bonus/NCED (EP.12) The Eternal Song [CD146D2D].mkv",
+      "length": 42871401,
+      "is_video": true
+    },
+    {
+      "index": 30,
+      "path": "Bonus/NCOP HIGHSCHOOL OF THE DEAD [5ECDBFF6].mkv",
+      "length": 78335862,
+      "is_video": true
+    }
+  ],
+  "video_indices": [
+    4,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30
+  ],
+  "single_video": false,
+  "fetched_at_epoch": 1791013658,
+  "total_bytes": 5448678156
+}
