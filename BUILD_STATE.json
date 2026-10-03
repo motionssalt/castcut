@@ -209,5 +209,43 @@
       "Heredoc safety net removed from ingest.yml and moved into pipeline/mark_excluded.py; workflows must never contain << heredocs — use pipeline/ modules called as single-line commands. actionlint CI added to prevent regression."
     ],
     "finished_at": "2026-10-03T07:40:00Z"
+  },
+  "fix_round_4": {
+    "started_at": "2026-10-03T08:42:00Z",
+    "status": "in_progress",
+    "tasks": [
+      {
+        "id": "1",
+        "name": "Fix bbox unpacking and safe-guard _thumb in pipeline/faces.py",
+        "status": "in_progress",
+        "notes": "anime_face_detector returns bbox as [x0, y0, x1, y1, score] (5 elements). Unpacking into (x0, y0, x1, y1) crashed every detected face frame with 'too many values to unpack (expected 4)'. Fix: safely parse len >= 5 and len == 4 bboxes.",
+        "next_action": "Update pipeline/faces.py detect() and _thumb() box parsing."
+      },
+      {
+        "id": "2",
+        "name": "Bundle lbpcascade_animeface.xml and add imgutils.detect ONNX detector",
+        "status": "pending",
+        "notes": "Add pipeline/cascades/lbpcascade_animeface.xml to the repo so cascade fallback is offline. Add imgutils.detect.detect_faces as a robust ONNX detector ladder option.",
+        "next_action": "Bundle cascade file and add imgutils detector fallback in _load_detector."
+      },
+      {
+        "id": "3",
+        "name": "Update faces.yml dependencies and verify workflows",
+        "status": "pending",
+        "notes": "Add onnxruntime to faces.yml pip install and run scripts/lint_workflows.py.",
+        "next_action": "Update faces.yml and lint workflows."
+      },
+      {
+        "id": "4",
+        "name": "End-to-end test face detection and manifest generation",
+        "status": "pending",
+        "notes": "Test detector parsing on 4-element, 5-element, and cascade detections on test video to confirm characters are detected and manifest.json is created.",
+        "next_action": "Run test script and record results."
+      }
+    ],
+    "decisions": [
+      "anime_face_detector outputs 5-element bboxes [x0, y0, x1, y1, score]; faces.py now parses both 4- and 5-element bboxes cleanly; added imgutils.detect ONNX as an additional modern detector option and bundled lbpcascade_animeface.xml."
+    ],
+    "finished_at": null
   }
 }
