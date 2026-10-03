@@ -210,7 +210,7 @@
     ],
     "finished_at": "2026-10-03T07:40:00Z"
   },
-  "fix_round_4": {
+  "fix_round_3b_faces": {
     "started_at": "2026-10-03T08:42:00Z",
     "status": "done",
     "tasks": [
@@ -248,42 +248,92 @@
     ],
     "finished_at": "2026-10-03T08:45:00Z"
   },
-  "fix_round_5": {
+  "fix_round_3c_concat_segments": {
     "started_at": "2026-10-03T09:50:00Z",
-    "status": "in_progress",
+    "status": "done",
     "tasks": [
       {
         "id": "1",
         "name": "Add concat_segments() in pipeline/utils.py",
-        "status": "in_progress",
-        "notes": "Replace 72-way filter_complex filtergraph with chunk-based concat demuxer to eliminate RAM explosion and runner shutdown (exit code 143).",
-        "next_action": "Add concat_segments() to pipeline/utils.py."
+        "status": "done",
+        "notes": "Replaced 72-way filter_complex filtergraph with chunk-based concat demuxer to eliminate RAM explosion and runner shutdown (exit code 143).",
+        "next_action": "none"
       },
       {
         "id": "2",
         "name": "Update clips_export.py and scene_export.py",
-        "status": "pending",
-        "notes": "Switch both export pipelines to use concat_segments() with fast-seeking and stream copy concat.",
-        "next_action": "Update clips_export.py and scene_export.py."
+        "status": "done",
+        "notes": "Switched both export pipelines to use concat_segments() with fast-seeking and stream copy concat.",
+        "next_action": "none"
       },
       {
         "id": "3",
         "name": "Fix git identity in export workflows and lint",
-        "status": "pending",
-        "notes": "Ensure git config is set in Status — failed and Status — cancelled steps across export workflows.",
-        "next_action": "Update workflows and run lint_workflows.py."
+        "status": "done",
+        "notes": "Ensured git config is set in Status — failed and Status — cancelled steps across export workflows.",
+        "next_action": "none"
       },
       {
         "id": "4",
         "name": "End-to-end verification and job recovery",
-        "status": "pending",
-        "notes": "Verify multi-segment concat on test video and trigger clips-export workflow for job-1791013658900-mp21.",
-        "next_action": "Test and dispatch export workflow."
+        "status": "done",
+        "notes": "Export succeeded (15m 56s, 72 segments concatted and compressed), but Status - done crashed on write_status due to duplicate job_id in --set-json. Addressed in fix_round_4.",
+        "next_action": "none"
       }
     ],
     "decisions": [
       "Replaced multi-branch filter_complex in export pipelines with chunk-based fast-seek extraction + concat demuxer stream copy to prevent OOM / runner shutdown (exit code 143) on dozens of segments."
     ],
+    "finished_at": "2026-10-03T10:15:00Z"
+  },
+  "fix_round_4": {
+    "started_at": "2026-10-03T11:00:00Z",
+    "status": "in_progress",
+    "tasks": [
+      {
+        "id": "A",
+        "name": "Status crash: fix write_status, audit workflow calls, tests, truthful failure, recover job-1791013658900-mp21",
+        "status": "in_progress",
+        "notes": "Diagnosis confirmed: write_status() passed job_id positionally while --set-json also contained job_id, causing TypeError: write_status() got multiple values for argument 'job_id'. Fixing write_status signature, sanitizing extra kwargs, auditing all workflow status invocations, adding resilience and truthful failure, recovering job-1791013658900-mp21.",
+        "next_action": "Implement status.py fixes, recover job-1791013658900-mp21, commit and push."
+      },
+      {
+        "id": "B",
+        "name": "Hybrid project model (core change)",
+        "status": "pending",
+        "notes": "One automatic hybrid analysis pipeline replaces separate modes (runs ingest, face analysis, scene analysis). Project page is hub with always-available Clips and AI sections. Exports list with unlimited exports per project, persistence until project deletion, release overflow handling (castcut-job-<id>-out-N), full delete project, concurrent exports support, and backward-compatible migration.",
+        "next_action": "Pending Task A and C completion."
+      },
+      {
+        "id": "C",
+        "name": "Pipeline robustness & automated tests",
+        "status": "pending",
+        "notes": "Add automated tests: pytest in tests/ for pipeline.status with every state/arg combination; workflow contract test extracting and verifying all python -m pipeline.* CLI calls; local dry-run selftest; CI workflow running tests and actionlint.",
+        "next_action": "Pending Task A completion."
+      },
+      {
+        "id": "D",
+        "name": "Live feedback and UI/UX redesign",
+        "status": "pending",
+        "notes": "Immediate button feedback (spinners, disabled state), live progress indicators (stage, step, elapsed, percent/indeterminate), clear done/failed states with run links, toasts/snackbars, mobile-first redesign for 360px Android browser, project list view.",
+        "next_action": "Pending Task B completion."
+      },
+      {
+        "id": "E",
+        "name": "Verification",
+        "status": "pending",
+        "notes": "Run test suite, workflow contract test, actionlint, dry-run selftest; test full flow (project creation -> hybrid analysis -> clips export -> AI export -> persistence -> delete); test oversized source fallback and back-to-back exports.",
+        "next_action": "Pending Task D completion."
+      },
+      {
+        "id": "F",
+        "name": "Documentation and wrap-up",
+        "status": "pending",
+        "notes": "Update README.md covering hybrid project model, exports, release overflow, migration, no-heredoc rule, contract tests; record final decisions in BUILD_STATE.json; push.",
+        "next_action": "Pending Task E completion."
+      }
+    ],
+    "decisions": [],
     "finished_at": null
   }
 }
