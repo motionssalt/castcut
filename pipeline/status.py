@@ -9,10 +9,32 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import sys
 import time
 from datetime import datetime, timezone
 
 DEFAULT_TTL_SECONDS = 86400  # 24h — see cleanup.yml / README
+
+SUCCESS_STATES = frozenset({
+    "clips_ready",
+    "scene_ready",
+    "ready",
+    "done",
+    "hybrid_ready",
+    "ingested",
+    "awaiting_selection",
+    "faces_ready",
+    "scene_awaiting_json",
+})
+
+FAILURE_STATES = frozenset({
+    "failed",
+    "clips_failed",
+    "scene_failed",
+    "ingest_failed",
+    "faces_failed",
+    "select_failed",
+})
 
 
 def _iso(ts: float) -> str:
@@ -31,10 +53,50 @@ def read_status(job_id: str, jobs_root: str = "jobs") -> dict:
         return {}
 
 
-def write_status(job_id: str, state: str, message: str = "", ttl_seconds: int | None = None,
-                 jobs_root: str = "jobs", **extra) -> dict:
+def write_status(
+    *args,
+    message: str = "",
+    ttl_seconds: int | None = None,
+    jobs_root: str = "jobs",
+    force: bool = False,
+    **extra,
+) -> dict:
+    # Resolve job_id and state from args or kwargs/extra without collision
+    resolved_job_id = args[0] if len(args) >= 1 else extra.pop("job_id", None)
+    extra.pop("job_id", None)
+    resolved_state = args[1] if len(args) >= 2 else extra.pop("state", None)
+    extra.pop("state", None)
+
+    if not resolved_job_id:
+        raise ValueError("write_status requires job_id (positional or keyword)")
+    if not resolved_state:
+        raise ValueError("write_status requires state (positional or keyword)")
+
+    if len(args) >= 3 and not message:
+        message = str(args[2])
+
+    job_id = str(resolved_job_id)
+    state = str(resolved_state)
+
     rec = read_status(job_id, jobs_root)
     now = time.time()
+
+    # Guard: never overwrite a terminal successful export/ready state with a failure
+    # unless explicitly forced (prevents failed status step from masking real work success).
+    current_state = rec.get("state")
+    if (
+        not force
+        and state in FAILURE_STATES
+        and current_state in {"clips_ready", "scene_ready", "ready", "done", "hybrid_ready"}
+    ):
+        print(
+            f"[status guard] Ignoring failure state '{state}' for {job_id} "
+            f"because it already reached successful terminal state '{current_state}'.",
+            file=sys.stderr,
+            flush=True,
+        )
+        return rec
+
     if not rec:
         ttl = int(ttl_seconds or DEFAULT_TTL_SECONDS)
         rec = {
@@ -44,41 +106,105 @@ def write_status(job_id: str, state: str, message: str = "", ttl_seconds: int | 
             "expires_at_epoch": int(now + ttl),
             "expires_at": _iso(now + ttl),
         }
-    rec.update({"state": state, "message": message,
-                "updated_at_epoch": int(now), "updated_at": _iso(now)})
+
+    rec["state"] = state
+    rec["message"] = message
+    rec["updated_at_epoch"] = int(now)
+    rec["updated_at"] = _iso(now)
+
+    # Sanitize and safely merge extra fields
+    # Never allow extra to re-inject job_id, state, message, or internal controls
+    for forbidden in ("job_id", "state", "ttl_seconds", "jobs_root", "force"):
+        extra.pop(forbidden, None)
+
     for key, value in extra.items():
         if value is not None:
-            rec[key] = value
+            try:
+                # Test json serializability of value
+                json.dumps(value)
+                rec[key] = value
+            except (TypeError, ValueError) as err:
+                print(
+                    f"[status warning] Omitting non-serializable extra key '{key}': {err}",
+                    file=sys.stderr,
+                    flush=True,
+                )
+
     os.makedirs(os.path.join(jobs_root, job_id), exist_ok=True)
     tmp = status_path(jobs_root, job_id) + ".tmp"
     with open(tmp, "w", encoding="utf-8") as fh:
         json.dump(rec, fh, indent=2, ensure_ascii=False)
+        fh.flush()
+        os.fsync(fh.fileno())
     os.replace(tmp, status_path(jobs_root, job_id))
     print(f"[status] {job_id}: {state} — {message}", flush=True)
     return rec
 
 
 def main() -> None:
-    ap = argparse.ArgumentParser()
-    ap.add_argument("job_id")
-    ap.add_argument("--state", required=True)
-    ap.add_argument("--message", default="")
-    ap.add_argument("--ttl-seconds", type=int, default=None)
-    ap.add_argument("--jobs-root", default="jobs")
-    ap.add_argument("--release-tag", default=None)
-    ap.add_argument("--workflow-run-url", default=None)
-    ap.add_argument("--set-json", default=None, help="extra JSON object merged into the record")
+    ap = argparse.ArgumentParser(description="CastCut status writer")
+    ap.add_argument("job_id", help="Job / Project ID")
+    ap.add_argument("--state", required=True, help="Status state string")
+    ap.add_argument("--message", default="", help="Status message")
+    ap.add_argument("--ttl-seconds", type=int, default=None, help="TTL in seconds (default 24h)")
+    ap.add_argument("--jobs-root", default="jobs", help="Jobs directory root")
+    ap.add_argument("--release-tag", default=None, help="Release tag")
+    ap.add_argument("--workflow-run-url", default=None, help="GitHub Actions run URL")
+    ap.add_argument("--step", default=None, help="Current step name")
+    ap.add_argument("--percent", type=float, default=None, help="Progress percentage (0-100)")
+    ap.add_argument("--failed-step", default=None, help="Name of failing step")
+    ap.add_argument("--set-json", default=None, help="Extra JSON object merged into record")
+    ap.add_argument("--force", action="store_true", help="Force overwrite even if guard triggers")
     args = ap.parse_args()
+
     extra = {}
-    if args.release_tag:
+    if args.release_tag is not None:
         extra["release_tag"] = args.release_tag
-    if args.workflow_run_url:
+    if args.workflow_run_url is not None:
         extra["workflow_run_url"] = args.workflow_run_url
+    if args.step is not None:
+        extra["step"] = args.step
+    if args.percent is not None:
+        extra["percent"] = args.percent
+    if args.failed_step is not None:
+        extra["failed_step"] = args.failed_step
+
     if args.set_json:
-        extra.update(json.loads(args.set_json))
-    write_status(args.job_id, args.state, args.message,
-                 ttl_seconds=args.ttl_seconds, jobs_root=args.jobs_root, **extra)
+        try:
+            parsed = json.loads(args.set_json)
+            if isinstance(parsed, dict):
+                # Remove protected keys from user/caller provided JSON
+                for k in ("job_id", "state", "ttl_seconds", "jobs_root", "force"):
+                    parsed.pop(k, None)
+                extra.update(parsed)
+            else:
+                print(
+                    f"[status warning] --set-json was not a JSON object: {type(parsed)}",
+                    file=sys.stderr,
+                    flush=True,
+                )
+        except Exception as exc:
+            print(
+                f"[status warning] Could not parse --set-json ({exc}); ignoring extra metadata",
+                file=sys.stderr,
+                flush=True,
+            )
+
+    # Clean extra dictionary defensively before passing
+    for k in ("job_id", "state", "ttl_seconds", "jobs_root", "force"):
+        extra.pop(k, None)
+
+    write_status(
+        args.job_id,
+        args.state,
+        message=args.message,
+        ttl_seconds=args.ttl_seconds,
+        jobs_root=args.jobs_root,
+        force=args.force,
+        **extra,
+    )
 
 
 if __name__ == "__main__":
     main()
+
