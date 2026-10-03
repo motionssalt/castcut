@@ -31,6 +31,7 @@ from .utils import merge_intervals, probe_video, run
 
 
 def _load_detector():
+    # 1. anime-face-detector (hysts YOLOv3)
     try:
         from anime_face_detector import create_detector  # type: ignore
 
@@ -40,31 +41,88 @@ def _load_detector():
             preds = det(img_bgr)
             out = []
             for p in preds:
-                x0, y0, x1, y1 = p["bbox"]
-                out.append((float(x0), float(y0), float(x1), float(y1), float(p.get("score", 1.0))))
+                bbox = p.get("bbox") if isinstance(p, dict) else p
+                if hasattr(bbox, "tolist"):
+                    bbox = bbox.tolist()
+                elif hasattr(bbox, "__iter__") and not isinstance(bbox, (str, bytes)):
+                    bbox = list(bbox)
+                else:
+                    continue
+
+                if len(bbox) >= 5:
+                    x0, y0, x1, y1 = bbox[:4]
+                    score = bbox[4]
+                elif len(bbox) == 4:
+                    x0, y0, x1, y1 = bbox
+                    score = p.get("score", 1.0) if isinstance(p, dict) else 1.0
+                else:
+                    continue
+                out.append((float(x0), float(y0), float(x1), float(y1), float(score)))
             return out
 
         return detect, "anime-face-detector(yolov3)"
-    except Exception as exc:  # pragma: no cover
-        print(f"[faces] anime_face_detector unavailable ({exc}); falling back to LBP cascade", flush=True)
-        import cv2
-        import urllib.request
+    except Exception as exc1:  # pragma: no cover
+        print(f"[faces] anime_face_detector unavailable ({exc1}); trying imgutils.detect", flush=True)
 
-        cascade_path = os.path.join(os.path.dirname(__file__), "cascades", "lbpcascade_animeface.xml")
-        if not os.path.exists(cascade_path):
-            os.makedirs(os.path.dirname(cascade_path), exist_ok=True)
+    # 2. imgutils (deepghs ONNX anime face detector)
+    try:
+        from imgutils.detect import detect_faces  # type: ignore
+        from PIL import Image
+        import cv2
+
+        def detect(img_bgr):
+            rgb = cv2.cvtColor(img_bgr, cv2.COLOR_BGR2RGB)
+            pil_img = Image.fromarray(rgb)
+            results = detect_faces(pil_img)
+            out = []
+            for item in results:
+                if isinstance(item, (list, tuple)):
+                    if len(item) == 3:
+                        box, cat, score = item
+                    elif len(item) == 2:
+                        box, score = item
+                    else:
+                        box, score = item[0], 1.0
+                elif isinstance(item, dict):
+                    box = item.get("bbox", item.get("box", []))
+                    score = item.get("score", 1.0)
+                else:
+                    continue
+                if hasattr(box, "tolist"):
+                    box = box.tolist()
+                x0, y0, x1, y1 = box[:4]
+                out.append((float(x0), float(y0), float(x1), float(y1), float(score)))
+            return out
+
+        return detect, "imgutils(detect_faces)"
+    except Exception as exc2:
+        print(f"[faces] imgutils.detect unavailable ({exc2}); falling back to LBP cascade", flush=True)
+
+    # 3. LBP Cascade fallback
+    import cv2
+    import urllib.request
+
+    cascade_path = os.path.join(os.path.dirname(__file__), "cascades", "lbpcascade_animeface.xml")
+    if not os.path.exists(cascade_path):
+        os.makedirs(os.path.dirname(cascade_path), exist_ok=True)
+        try:
             urllib.request.urlretrieve(
                 "https://raw.githubusercontent.com/motionssalt/clipforge/main/pipeline/stage_b/cascades/lbpcascade_animeface.xml",
                 cascade_path,
             )
-        cascade = cv2.CascadeClassifier(cascade_path)
+        except Exception as e:
+            print(f"[faces] warning: could not download cascade XML: {e}", flush=True)
 
-        def detect(img_bgr):
-            gray = cv2.cvtColor(img_bgr, cv2.COLOR_BGR2GRAY)
-            boxes = cascade.detectMultiScale(gray, scaleFactor=1.1, minNeighbors=4, minSize=(32, 32))
-            return [(float(x), float(y), float(x + w), float(y + h), 0.5) for (x, y, w, h) in boxes]
+    cascade = cv2.CascadeClassifier(cascade_path) if os.path.exists(cascade_path) else None
 
-        return detect, "lbpcascade_animeface(fallback)"
+    def detect(img_bgr):
+        if cascade is None or cascade.empty():
+            return []
+        gray = cv2.cvtColor(img_bgr, cv2.COLOR_BGR2GRAY)
+        boxes = cascade.detectMultiScale(gray, scaleFactor=1.1, minNeighbors=4, minSize=(32, 32))
+        return [(float(x), float(y), float(x + w), float(y + h), 0.5) for (x, y, w, h) in boxes]
+
+    return detect, "lbpcascade_animeface(fallback)"
 
 
 def _load_embedder():
@@ -110,7 +168,7 @@ def _thumb(img_bgr, box, size=112, pad_ratio=0.25) -> str:
     import cv2
 
     h, w = img_bgr.shape[:2]
-    x0, y0, x1, y1 = box
+    x0, y0, x1, y1 = [int(v) for v in box[:4]]
     bw, bh = (x1 - x0), (y1 - y0)
     side = max(bw, bh) * (1 + pad_ratio)
     cx, cy = (x0 + x1) / 2, (y0 + y1) / 2
@@ -120,8 +178,11 @@ def _thumb(img_bgr, box, size=112, pad_ratio=0.25) -> str:
     yb = min(h, int(cy + side / 2))
     crop = img_bgr[ya:yb, xa:xb]
     if crop.size == 0:
-        crop = img_bgr[max(0, int(y0)):min(h, int(y1)), max(0, int(x0)):min(w, int(x1))]
-    crop = cv2.resize(crop, (size, size), interpolation=cv2.INTER_AREA)
+        crop = img_bgr[max(0, y0):min(h, y1), max(0, x0):min(w, x1)]
+    if crop.size == 0:
+        crop = cv2.resize(img_bgr, (size, size))
+    else:
+        crop = cv2.resize(crop, (size, size), interpolation=cv2.INTER_AREA)
     ok, buf = cv2.imencode(".webp", crop, [cv2.IMWRITE_WEBP_QUALITY, 78])
     if not ok:
         ok, buf = cv2.imencode(".jpg", crop, [cv2.IMWRITE_JPEG_QUALITY, 75])
@@ -182,9 +243,14 @@ def main() -> None:
             print(f"[faces] detect failed on frame {idx}: {exc}", flush=True)
             continue
         for (x0, y0, x1, y1, score) in boxes:
-            if (x1 - x0) < 20 or (y1 - y0) < 20:
+            h, w = img.shape[:2]
+            ix0 = max(0, min(w - 1, int(x0)))
+            iy0 = max(0, min(h - 1, int(y0)))
+            ix1 = max(0, min(w, int(x1)))
+            iy1 = max(0, min(h, int(y1)))
+            if (ix1 - ix0) < 20 or (iy1 - iy0) < 20:
                 continue
-            face = img[max(0, int(y0)):int(y1), max(0, int(x0)):int(x1)]
+            face = img[iy0:iy1, ix0:ix1]
             if face.size == 0:
                 continue
             try:
@@ -202,16 +268,20 @@ def main() -> None:
                 cl["count"] += 1
                 cl["times"].append(t)
                 if score > cl["best_score"]:
-                    cl.update(best_score=score, best_frame=frame_path, best_box=(x0, y0, x1, y1))
+                    cl.update(best_score=score, best_frame=frame_path, best_box=(ix0, iy0, ix1, iy1))
             else:
                 clusters.append({
                     "centroid": vec, "count": 1, "times": [t],
-                    "best_score": score, "best_frame": frame_path, "best_box": (x0, y0, x1, y1),
+                    "best_score": score, "best_frame": frame_path, "best_box": (ix0, iy0, ix1, iy1),
                 })
         if idx % 60 == 0:
             print(f"[faces] frame {idx}/{len(frames)} — {len(clusters)} clusters", flush=True)
 
-    clusters = [c for c in clusters if c["count"] >= args.min_appearances]
+    valid_clusters = [c for c in clusters if c["count"] >= args.min_appearances]
+    if not valid_clusters and clusters:
+        print(f"[faces] No clusters reached min_appearances={args.min_appearances}; keeping {len(clusters)} clusters with count >= 1", flush=True)
+        valid_clusters = clusters
+    clusters = valid_clusters
     clusters.sort(key=lambda c: c["count"], reverse=True)
 
     characters = []
