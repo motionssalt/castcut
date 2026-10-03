@@ -5,12 +5,12 @@ export const REPO_NAME = "castcut";
 export const REPO = `${REPO_OWNER}/${REPO_NAME}`;
 
 const UA = "castcut-pages/1.0";
-const JOB_WORKFLOWS = ["ingest.yml", "select.yml", "faces.yml", "scene-analyze.yml", "clips-export.yml", "scene-export.yml"];
+const JOB_WORKFLOWS = ["ingest.yml", "select.yml", "faces.yml", "scene-analyze.yml", "hybrid-analyze.yml", "clips-export.yml", "scene-export.yml"];
 const ACTIVE_RUN_STATES = new Set(["queued", "in_progress", "waiting", "requested", "pending"]);
 // job states that mean "a workflow run should be active right now"
 const BUSY_JOB_STATES = new Set([
   "created", "queued", "queued_for_ingest", "selecting", "ingest_running",
-  "faces_running", "scene_analyzing", "clips_exporting", "scene_exporting",
+  "faces_running", "scene_analyzing", "hybrid_analyzing", "clips_exporting", "scene_exporting",
 ]);
 
 export async function gh(pat, path, { method = "GET", body = null, raw = false, acceptRaw = false } = {}) {
@@ -86,6 +86,40 @@ export async function getRelease(pat, tag) {
     if (String(e.message).includes("-> 404")) return null;
     throw e;
   }
+}
+
+export async function listAllReleases(pat) {
+  try {
+    const list = await gh(pat, `/repos/${REPO}/releases?per_page=100`);
+    return Array.isArray(list) ? list : [];
+  } catch (e) {
+    return [];
+  }
+}
+
+export async function getProjectReleases(pat, jobId) {
+  const all = await listAllReleases(pat);
+  const matching = all.filter(r => {
+    const tag = r.tag_name || "";
+    return tag === `castcut-${jobId}` ||
+           tag === `castcut-job-${jobId}` ||
+           tag.startsWith(`castcut-${jobId}-`) ||
+           tag.startsWith(`castcut-job-${jobId}-`);
+  });
+  const assets = [];
+  for (const rel of matching) {
+    for (const a of (rel.assets || [])) {
+      assets.push({
+        id: a.id,
+        name: a.name,
+        size: a.size,
+        browser_download_url: a.browser_download_url,
+        release_tag: rel.tag_name,
+        created_at: a.created_at,
+      });
+    }
+  }
+  return { releases: matching, assets };
 }
 
 export async function listJobs(pat) {
@@ -191,6 +225,20 @@ export async function deleteReleaseAndTag(pat, tag) {
     try { await gh(pat, `/repos/${REPO}/releases/${rel.id}`, { method: "DELETE" }); } catch { /* best effort */ }
   }
   try { await gh(pat, `/repos/${REPO}/git/refs/tags/${encodeURIComponent(tag)}`, { method: "DELETE" }); } catch { /* 404 ok */ }
+}
+
+// Delete every release and tag associated with a project (including overflow releases)
+export async function deleteProjectReleasesAndTags(pat, jobId) {
+  const { releases } = await getProjectReleases(pat, jobId);
+  for (const rel of releases) {
+    try { await gh(pat, `/repos/${REPO}/releases/${rel.id}`, { method: "DELETE" }); } catch { /* best effort */ }
+    try { await gh(pat, `/repos/${REPO}/git/refs/tags/${encodeURIComponent(rel.tag_name)}`, { method: "DELETE" }); } catch { /* 404 ok */ }
+  }
+  // Also proactively attempt deletion of canonical tags in case release object wasn't found
+  const canonicalTags = [`castcut-${jobId}`, `castcut-job-${jobId}`];
+  for (const tag of canonicalTags) {
+    try { await deleteReleaseAndTag(pat, tag); } catch { /* ok */ }
+  }
 }
 
 // Delete every committed file under jobs/<jobId>/ (recursive via git trees).
