@@ -6,8 +6,9 @@
   "updated_at": "2026-10-03T01:38:29Z",
   "updated_at_epoch": 1790991509,
   "expires_at_epoch": 1791077550,
-  "state": "ingest_failed",
-  "message": "Ingest failed — https://github.com/motionssalt/castcut/actions/runs/37086495062",
+  "state": "ingested",
+  "message": "Source ready — large video: it will be re-downloaded automatically when processing starts. Pick a mode (Clips or Scene).",
+  "video_in_release": false,
   "selected_files": [
     {
       "index": 3,
