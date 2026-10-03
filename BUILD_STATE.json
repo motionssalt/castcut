@@ -1,7 +1,7 @@
 {
   "project": "castcut",
   "repo": "motionssalt/castcut",
-  "updated_at": "2026-10-03T00:15:08Z",
+  "updated_at": "2026-10-03T00:37:08Z",
   "phases": [
     {
       "id": 1,
@@ -53,7 +53,7 @@
     }
   ],
   "decisions": [
-    "Face detector: hysts/anime-face-detector YOLOv3 (CPU) over RetinaFace/FasterRCNN \u2014 best accuracy-per-second on free runners; lbpcascade_animeface is fallback only.",
+    "Face detector: hysts/anime-face-detector YOLOv3 (CPU) over RetinaFace/FasterRCNN — best accuracy-per-second on free runners; lbpcascade_animeface is fallback only.",
     "Embeddings: deepghs CCIP via imgutils (512-d), cosine threshold 0.35; HSV histogram fallback if model download fails.",
     "Clustering: online nearest-centroid, no sklearn dependency.",
     "Sampling: 1 fps default (tunable 0.5-2), frames scaled to 480p; capped at 3600 frames for long videos.",
@@ -64,5 +64,39 @@
     "Auth: Pages middleware checks GitHub /user login==motionssalt on every /api/* call; PAT stays client-side."
   ],
   "known_issues": [],
-  "next_action": "All 8 phases done. To operate: open https://castcut.pages.dev, paste owner PAT, ingest a source, pick Clips or Scene. If a phase regresses, set it back to in_progress in this file and push."
+  "next_action": "All 8 phases done. To operate: open https://castcut.pages.dev, paste owner PAT, ingest a source, pick Clips or Scene. If a phase regresses, set it back to in_progress in this file and push.",
+  "fix_round_1": {
+    "started_at": "2026-10-03T00:37:08Z",
+    "status": "in_progress",
+    "tasks": [
+      {
+        "id": "A",
+        "name": "torrent/magnet file selection",
+        "status": "in_progress",
+        "notes": "Port ClipForge stage_a selection: bencode inspect, magnet metadata-only aria2 fetch, files.json, awaiting_selection park, --select-file download.",
+        "next_action": "write pipeline/torrents.py + pipeline/select.py + select.yml + selection endpoint + ingest.py --select-file"
+      },
+      {
+        "id": "B",
+        "name": "failed/cancelled indicators, retry, cancel",
+        "status": "pending",
+        "notes": "",
+        "next_action": "canonical status map, reconcile vs Actions runs, cancelled() workflow steps, cancel/retry endpoints"
+      },
+      {
+        "id": "C",
+        "name": "delete job (+ delete all finished)",
+        "status": "pending",
+        "notes": "",
+        "next_action": "DELETE /api/jobs/<id>: cancel run, delete release+tag, delete jobs/<id> tree"
+      },
+      {
+        "id": "D",
+        "name": "mobile-first UI overhaul",
+        "status": "pending",
+        "notes": "",
+        "next_action": "rewrite index.html/styles.css/app.js at 360px, status badges, selection UI, sticky bars"
+      }
+    ]
+  }
 }
