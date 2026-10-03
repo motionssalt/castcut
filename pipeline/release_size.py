@@ -29,7 +29,14 @@ MARGIN_BYTES = 128 * 1024 ** 2  # 128 MiB
 
 
 def limit_bytes() -> int:
-    """Effective per-asset limit (env override for testing)."""
+    """Effective per-asset limit (env override for testing).
+
+    An empty or unset ``CASTCUT_RELEASE_LIMIT_BYTES`` is treated as unset and
+    falls back to the documented GitHub per-asset limit. This is what the
+    workflow passes when the repo variable is not configured
+    (``vars.CASTCUT_RELEASE_LIMIT_BYTES`` renders as the empty string), so the
+    size gate must never parse an empty value as zero or crash.
+    """
     raw = os.environ.get("CASTCUT_RELEASE_LIMIT_BYTES", "").strip()
     if raw:
         try:
