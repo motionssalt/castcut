@@ -28,7 +28,7 @@ jobs:
           sudo apt-get update -qq
           sudo apt-get install -y -qq ffmpeg aria2
           python -m pip install --upgrade pip -q
-          python -m pip install -q requests opencv-python-headless pillow numpy
+          python -m pip install -q requests opencv-python-headless pillow numpy onnxruntime
           python -m pip install -q --index-url https://download.pytorch.org/whl/cpu "torch==2.3.1"
           python -m pip install -q "openmim"
           mim install -q "mmengine" "mmcv>=2.0.0,<2.2" "mmdet>=3,<4" "mmpose>=1,<2" || true
