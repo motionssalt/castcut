@@ -5,12 +5,13 @@ on:
   workflow_dispatch:
     inputs:
       job_id: { required: true, type: string }
+      export_id: { required: false, type: string, default: "" }
 
 permissions:
   contents: write
 
 concurrency:
-  group: castcut-sceneexport-${{ inputs.job_id }}
+  group: castcut-sceneexport-${{ inputs.job_id }}-${{ inputs.export_id || 'default' }}
   cancel-in-progress: false
 
 jobs:
@@ -46,22 +47,33 @@ jobs:
           python -m pipeline.refetch "${{ inputs.job_id }}" --release-tag "castcut-${{ inputs.job_id }}"
 
       - name: Export
-        run: python -m pipeline.scene_export "${{ inputs.job_id }}"
+        run: |
+          if [ -n "${{ inputs.export_id }}" ]; then
+            python -m pipeline.scene_export "${{ inputs.job_id }}" --export-id "${{ inputs.export_id }}"
+          else
+            python -m pipeline.scene_export "${{ inputs.job_id }}"
+          fi
 
       - name: Check final output fits the release limit
         env:
           CASTCUT_RELEASE_LIMIT_BYTES: ${{ vars.CASTCUT_RELEASE_LIMIT_BYTES }}
-        run: python -m pipeline.release_size --check 'work/castcut-scene-*.mp4'
+        run: python -m pipeline.release_size --check work/castcut-*.mp4
 
       - name: Upload final to release
         env: { GH_TOKEN: "${{ secrets.GITHUB_TOKEN }}" }
-        run: gh release upload "castcut-${{ inputs.job_id }}" work/castcut-scene-*.mp4 --clobber
+        run: |
+          out_file=$(ls work/castcut-export-*.mp4 work/castcut-scene-*.mp4 2>/dev/null | head -n 1)
+          target_tag=$(python -m pipeline.releases --project-id "${{ inputs.job_id }}" --asset "$out_file")
+          echo "Target release tag: $target_tag"
+          gh release upload "$target_tag" "$out_file" --clobber
+          echo "TARGET_RELEASE_TAG=$target_tag" >> "$GITHUB_ENV"
 
       - name: Status — done
         if: success()
         run: |
           python -m pipeline.status "${{ inputs.job_id }}" --state scene_ready \
             --message "Scene file ready. Download from the release." \
+            --release-tag "$TARGET_RELEASE_TAG" \
             --set-json "$(cat jobs/${{ inputs.job_id }}/scene/export.json 2>/dev/null || echo '{}')"
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -73,7 +85,7 @@ jobs:
       - name: Status — failed
         if: failure()
         run: |
-          if [ -f "jobs/${{ inputs.job_id }}/scene/export.json" ] && [ -n "$(find work -name 'castcut-scene-*.mp4' 2>/dev/null)" ]; then
+          if [ -f "jobs/${{ inputs.job_id }}/scene/export.json" ] && [ -n "$(find work -name 'castcut-*.mp4' 2>/dev/null)" ]; then
             echo "::warning::Step failed after export succeeded; preserving scene_ready state"
             python -m pipeline.status "${{ inputs.job_id }}" --state scene_ready \
               --message "Scene file ready. Download from the release." \
