@@ -3,11 +3,11 @@
   "title": "",
   "created_at_epoch": 1791013658,
   "created_at": "2026-10-03T07:47:38Z",
-  "updated_at": "2026-10-03T07:48:32Z",
-  "updated_at_epoch": 1791013712,
+  "updated_at": "2026-10-03T07:50:30Z",
+  "updated_at_epoch": 1791013830,
   "expires_at_epoch": 1791100058,
-  "state": "ingest_running",
-  "message": "Downloading source",
+  "state": "ingested",
+  "message": "Source ready. Pick a mode (Clips or Scene).",
   "selected_files": [
     {
       "index": 6,
@@ -16,5 +16,6 @@
     }
   ],
   "release_tag": "castcut-job-1791013658900-mp21",
-  "workflow_run_url": "https://github.com/motionssalt/castcut/actions/runs/37107528552"
+  "workflow_run_url": "https://github.com/motionssalt/castcut/actions/runs/37107528552",
+  "video_in_release": true
 }

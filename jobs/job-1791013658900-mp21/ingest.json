@@ -1,0 +1,24 @@
+{
+  "version": 1,
+  "job_id": "job-1791013658900-mp21",
+  "source_kind": "torrent_file",
+  "title": "",
+  "asset_name": "source.mkv",
+  "size_bytes": 480412256,
+  "duration": 1421.972,
+  "width": 1920,
+  "height": 1080,
+  "fps": 23.976,
+  "has_audio": true,
+  "ingested_at_epoch": 1791013811,
+  "sources": [
+    "source.mkv"
+  ],
+  "selected_indices": [
+    6
+  ],
+  "asset_sizes": {
+    "source.mkv": 480412256
+  },
+  "video_in_release": true
+}
