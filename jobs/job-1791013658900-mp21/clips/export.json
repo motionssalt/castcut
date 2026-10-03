@@ -1,0 +1,33 @@
+{
+  "version": 1,
+  "job_id": "job-1791013658900-mp21",
+  "order": [
+    "char3",
+    "char4",
+    "char11",
+    "char12",
+    "char15",
+    "char13",
+    "char19",
+    "char23",
+    "char47"
+  ],
+  "per_char_segments": {
+    "char3": 14,
+    "char4": 15,
+    "char11": 8,
+    "char12": 5,
+    "char15": 5,
+    "char13": 13,
+    "char19": 5,
+    "char23": 6,
+    "char47": 1
+  },
+  "total_segments": 72,
+  "total_duration": 296.4,
+  "size_before_bytes": 167063129,
+  "size_after_bytes": 100647923,
+  "size_before_human": "159.3 MB",
+  "size_after_human": "96.0 MB",
+  "asset_name": "castcut-clips-job-1791013658900-mp21.mp4"
+}
