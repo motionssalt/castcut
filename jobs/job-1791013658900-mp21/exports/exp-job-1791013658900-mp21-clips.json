@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "export_id": "exp-job-1791013658900-mp21-clips",
+  "project_id": "job-1791013658900-mp21",
+  "job_id": "job-1791013658900-mp21",
+  "type": "clips",
+  "label": "char3, char4, char11 (+6 others)",
+  "created_at": "2026-10-03T09:39:05Z",
+  "created_at_epoch": 1791020345,
+  "status": "done",
+  "size_bytes": 100647923,
+  "size_human": "96.0 MB",
+  "asset_name": "castcut-clips-job-1791013658900-mp21.mp4",
+  "release_tag": "castcut-job-1791013658900-mp21",
+  "total_segments": 72,
+  "total_duration": 296.4
+}
