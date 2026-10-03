@@ -3,11 +3,11 @@
   "title": "",
   "created_at_epoch": 1790989177,
   "created_at": "2026-10-03T00:59:37Z",
-  "updated_at": "2026-10-03T01:00:30Z",
-  "updated_at_epoch": 1790989230,
+  "updated_at": "2026-10-03T01:01:06Z",
+  "updated_at_epoch": 1790989266,
   "expires_at_epoch": 1791075577,
-  "state": "queued",
-  "message": "Retrying — ingest dispatched.",
+  "state": "ingest_running",
+  "message": "Downloading source",
   "selected_files": [
     {
       "index": 3,
@@ -15,5 +15,7 @@
       "length": 6327849439
     }
   ],
-  "cancelled_from": "queued_for_ingest"
+  "cancelled_from": "queued_for_ingest",
+  "release_tag": "castcut-job-1790989177859-5yn6",
+  "workflow_run_url": "https://github.com/motionssalt/castcut/actions/runs/37084397641"
 }
