@@ -121,6 +121,88 @@ def build_concat_filter(segments, has_audio: bool) -> str:
     return ";\n".join(lines)
 
 
+def concat_segments(
+    src: str,
+    segments: list[tuple[float, float]],
+    output_path: str,
+    has_audio: bool,
+    crf: int = 18,
+    preset: str = "veryfast",
+    temp_dir: str | None = None,
+) -> None:
+    """Extract and concatenate segments using chunk-based concat demuxer.
+
+    Prevents FFmpeg memory explosion and OOM (SIGTERM / exit code 143) caused by
+    massive multi-branch filtergraphs when dealing with dozens of cuts.
+    """
+    if not segments:
+        raise ValueError("No segments provided for concatenation")
+
+    # If only 1 segment, direct cut without concat overhead
+    if len(segments) == 1:
+        s, e = segments[0]
+        dur = max(0.01, e - s)
+        cmd = [
+            "ffmpeg", "-hide_banner", "-loglevel", "error", "-y",
+            "-ss", f"{s:.3f}", "-i", src, "-t", f"{dur:.3f}",
+            "-map", "0:v:0",
+        ]
+        if has_audio:
+            cmd += ["-map", "0:a:0?", "-c:a", "aac", "-b:a", "192k", "-ar", "48000", "-ac", "2"]
+        cmd += [
+            "-sn",
+            "-c:v", "libx264", "-crf", str(crf), "-preset", preset, "-pix_fmt", "yuv420p",
+            "-movflags", "+faststart", output_path,
+        ]
+        run(cmd)
+        return
+
+    work_base = temp_dir if temp_dir else os.path.dirname(output_path)
+    chunks_dir = os.path.join(work_base, f"_chunks_{os.getpid()}")
+    os.makedirs(chunks_dir, exist_ok=True)
+
+    chunk_files = []
+    try:
+        total = len(segments)
+        for i, (s, e) in enumerate(segments, start=1):
+            dur = max(0.01, e - s)
+            chunk_path = os.path.join(chunks_dir, f"seg_{i:05d}.ts")
+            cmd = [
+                "ffmpeg", "-hide_banner", "-loglevel", "error", "-y",
+                "-ss", f"{s:.3f}", "-i", src, "-t", f"{dur:.3f}",
+                "-map", "0:v:0",
+            ]
+            if has_audio:
+                cmd += ["-map", "0:a:0?", "-c:a", "aac", "-b:a", "192k", "-ar", "48000", "-ac", "2"]
+            cmd += [
+                "-sn",
+                "-c:v", "libx264", "-crf", str(crf), "-preset", preset, "-pix_fmt", "yuv420p",
+                chunk_path,
+            ]
+            run(cmd)
+            chunk_files.append(chunk_path)
+            if i % 10 == 0 or i == total:
+                print(f"[export] rendered segment {i}/{total} ({dur:.1f}s)", flush=True)
+
+        list_path = os.path.join(chunks_dir, "concat_list.txt")
+        with open(list_path, "w", encoding="utf-8") as fh:
+            for p in chunk_files:
+                fh.write(f"file '{os.path.abspath(p)}'\n")
+
+        print(f"[export] joining {len(chunk_files)} segments via concat demuxer...", flush=True)
+        concat_cmd = [
+            "ffmpeg", "-hide_banner", "-loglevel", "error", "-y",
+            "-f", "concat", "-safe", "0", "-i", list_path,
+            "-c", "copy", "-movflags", "+faststart", output_path,
+        ]
+        run(concat_cmd)
+        print(f"[export] successfully created {output_path} ({human_size(os.path.getsize(output_path))})", flush=True)
+    finally:
+        import shutil
+        if os.path.exists(chunks_dir):
+            shutil.rmtree(chunks_dir, ignore_errors=True)
+
+
 def human_size(n: int) -> str:
     f = float(n)
     for unit in ("B", "KB", "MB", "GB"):
