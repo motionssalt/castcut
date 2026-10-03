@@ -1,9 +1,16 @@
-"""CastCut TTL cleanup — deletes expired job releases.
+"""CastCut cleanup sweep — expiry is DISABLED for projects (fix_round_4).
 
-A job expires `expires_at_epoch` seconds after creation (TTL 24h, documented
-in the README). This script marks those jobs expired in status.json; the
-workflow deletes the matching GitHub release (source video + outputs) with
-`gh release delete`. Runs on an hourly schedule.
+Projects (hybrid model) and everything attached to them — exports, face
+manifests, thumbnails, scene-analysis data, job state — persist until the
+user explicitly deletes the project. The raw source video is always safe to
+lose because every downstream step re-downloads it via pipeline/refetch.py
+from the durably committed ingest request + selection.
+
+This sweep only touches legacy records that are BOTH non-persistent
+(persistent == false) AND in a non-ready state; every ready state
+(hybrid_ready, clips_ready, scene_ready, ingested, faces_ready,
+scene_awaiting_json) and every record without an explicit
+persistent:false flag is skipped. Runs on an hourly schedule.
 """
 from __future__ import annotations
 

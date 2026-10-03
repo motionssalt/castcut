@@ -141,7 +141,7 @@ Resume from the first phase whose `status` is not `done`; re-verify
 only the last `in_progress` phase. The file is committed after every
 phase and sub-step so a cold restart is safe.
 
-## Jobs & TTL
+## Jobs & persistence
 
 - Each ingest creates `jobs/<job_id>/` with `ingest-request.json`,
   `status.json`, and later `clips/manifest.json` / `scene/*.json`.
@@ -149,7 +149,7 @@ phase and sub-step so a cold restart is safe.
   deliverables. Jobs that select several torrent files ingest them as
   `source.<ext>`, `source.2.<ext>`, … (the first is the pipeline's primary).
 - The hourly `cleanup.yml` workflow deletes any release whose
-  `status.expires_at_epoch` is past (24h TTL).
+  `status.expires_at_epoch` is past. **fix_round_4:** auto-expiry is disabled for projects — anything persistent or in a ready state is never swept; a project's source video is always re-downloadable via `pipeline.refetch`, so losing it is harmless.
 
 ## Oversized source videos (> ~1.9 GiB)
 
@@ -175,7 +175,7 @@ GitHub caps each release asset at 2 GiB. CastCut handles this automatically
    even the joined video would not fit, the run fails with a clear message.
 4. The UI shows an informational note ("large video: will be re-downloaded
    when processing") in the job meta line - not an error badge.
-5. Delete-job and 24h TTL cleanup are unaffected (they remove the release,
+5. Delete-project and the hourly cleanup sweep are unaffected (they remove the release,
    tag and job files regardless of whether the video was in the release).
 
 ## Workflow hygiene
@@ -187,3 +187,48 @@ To keep GitHub Actions reliable and prevent shell parsing bugs across runner env
 - **Automated linting**: Workflows are automatically checked by `.github/workflows/lint-workflows.yml` on push/PR via:
   1. `scripts/lint_workflows.py`: Strictly disallows `<<` heredocs across all workflow files and runs `bash -n` on all extracted `run:` blocks to catch shell syntax errors before jobs run.
   2. `actionlint` (via `reviewdog/action-actionlint@v1`): Static analysis of workflow structures and ShellCheck verification.
+
+
+## Hybrid project model (fix_round_4)
+
+A **project** is the only unit the user creates. Creating a project picks a
+source (with torrent/magnet file selection) and runs ONE automatic hybrid
+analysis pipeline (`hybrid-analyze.yml`): ingest (incl. oversized-source
+exclusion/refetch), face detection + character clustering with thumbnails,
+and scene analysis (transcript + scene boundaries) so the agent prompt can be
+generated on demand. There is no mode choice and no "pipeline finished" state
+— a project stays usable until deleted.
+
+- **Project page hub:** Clips and AI sections are always available once
+  analysis is ready. Each export (Clips or AI) gets its own `export_id` and
+  its own state file (`jobs/<id>/exports/<export_id>.json`), so concurrent
+  exports cannot corrupt each other; output filenames carry the export id.
+- **Exports list:** every export is listed newest-first with type, label,
+  status, size, Download, Delete, and (on failure) the failing step, reason,
+  run-log link and Retry.
+- **Persistence:** no 24h auto-expiry on outputs, analysis artifacts or job
+  state. Only the raw source video may be absent — every export re-downloads
+  it via `pipeline/refetch` from the saved ingest request and file indices.
+- **Release overflow:** GitHub allows 2 GiB per release asset (verified
+  2026-10; no total-release cap). When a project's current release cannot
+  take another export, the pipeline creates `castcut-job-<id>-out-2`,
+  `-out-3`, ... and records which release holds which export in the project
+  manifest. The UI aggregates all of them into one list.
+- **Delete project:** cancels running workflow runs, deletes ALL of the
+  project's releases and tags (base + overflow), removes `jobs/<id>/` state,
+  exports, manifests and thumbnails, and removes it from the UI.
+- **Migration:** `python -m pipeline.migrate_projects` maps legacy
+  mode-based jobs (including the recovered `job-1791013658900-mp21`) into the
+  project model without losing outputs; it is idempotent.
+
+## Contract tests & CI
+
+- `tests/test_workflow_contract.py` parses every workflow file, extracts each
+  `python -m pipeline.<module>` invocation, and argument-parses it against
+  the target module's CLI — a workflow/module mismatch fails CI before a real
+  run. `tests/test_status.py` covers every status state and argument
+  combination the workflows use. `tests/test_releases.py` covers the
+  multi-release aggregation helpers.
+- `.github/workflows/ci.yml` runs lint (`scripts/lint_workflows.py`,
+  no-heredoc rule), actionlint, pytest, and `python -m pipeline.selftest`
+  (end-to-end dry-run on a tiny generated video) on every push.

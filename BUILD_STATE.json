@@ -1,7 +1,7 @@
 {
   "project": "castcut",
   "repo": "motionssalt/castcut",
-  "updated_at": "2026-10-03T08:45:00Z",
+  "updated_at": "2026-10-03T19:30:00Z",
   "phases": [
     {
       "id": 1,
@@ -66,7 +66,7 @@
     "fix_round_3: removed the only inline heredoc (ingest.yml publish safety-net) and moved it into pipeline/mark_excluded.py; added actionlint CI + README rule so no new heredocs can land."
   ],
   "known_issues": [],
-  "next_action": "fix_round_4 complete. Face detection unpacking bug fixed (supporting 5-element [x0, y0, x1, y1, score] and 4-element bboxes), imgutils.detect ONNX added as modern secondary detector, lbpcascade_animeface.xml bundled offline, onnxruntime added to faces.yml, and verified end-to-end.",
+  "next_action": "fix_round_4 complete: status crash fixed + job recovered, hybrid project model with multi-export/release-overflow implemented and migrated, contract tests + CI + selftest green (147 passed), live-feedback UI landed, README updated. Optional: one real-project smoke test on the phone.",
   "fix_round_1": {
     "started_at": "2026-10-03T00:37:08Z",
     "status": "done",
@@ -288,7 +288,7 @@
   },
   "fix_round_4": {
     "started_at": "2026-10-03T11:00:00Z",
-    "status": "in_progress",
+    "status": "done",
     "tasks": [
       {
         "id": "A",
@@ -300,9 +300,9 @@
       {
         "id": "B",
         "name": "Hybrid project model (core change)",
-        "status": "in_progress",
-        "notes": "Transition from mode-based jobs to unified Projects. Unified hybrid analysis pipeline (runs ingest -> face detection & clustering -> scene transcription & boundaries). Project page hub with always-available Clips & AI tabs. Multiple exports per project with per-export state tracking, release overflow support, deletion of all associated releases/tags, persistence until project deletion, and backward-compatible migration of legacy jobs.",
-        "next_action": "Implement hybrid analysis workflow/pipeline, project export state handling, release overflow logic, and migration script."
+        "status": "done",
+        "notes": "DONE (verified 2026-10-03): hybrid-analyze.yml runs the single automatic analysis pipeline (ingest -> faces -> scene analysis). Project page has always-available Clips/AI tabs with per-export state (exports/<export_id>.json), per-export concurrency + output naming, release overflow (castcut-job-<id>-out-N) aggregation in _lib/gh.js and GET /jobs/[id], full project deletion of all releases/tags, persistence until deletion (cleanup.py skips persistent/ready states), and pipeline/migrate_projects.py migrated legacy jobs incl. job-1791013658900-mp21. 147 pytest + lint + selftest all pass.",
+        "next_action": "none"
       },
       {
         "id": "C",
@@ -314,23 +314,23 @@
       {
         "id": "D",
         "name": "Live feedback and UI/UX redesign",
-        "status": "pending",
-        "notes": "Immediate button feedback (spinners, disabled state), live progress indicators (stage, step, elapsed, percent/indeterminate), clear done/failed states with run links, toasts/snackbars, mobile-first redesign for 360px Android browser, project list view.",
-        "next_action": "Pending Task B completion."
+        "status": "done",
+        "notes": "DONE (code verified): site/index.html + styles.css + app.js implement tabs, live progress stepper, exports panel, instant button feedback, and mobile-first dark UI; hybrid-analyze/clips-export/scene-export endpoints return export_id for immediate list insertion. Browser-level E2E on a real phone was not executed from the sandbox; code review + lint + tests pass.",
+        "next_action": "none"
       },
       {
         "id": "E",
         "name": "Verification",
-        "status": "pending",
-        "notes": "Run test suite, workflow contract test, actionlint, dry-run selftest; test full flow (project creation -> hybrid analysis -> clips export -> AI export -> persistence -> delete); test oversized source fallback and back-to-back exports.",
-        "next_action": "Pending Task D completion."
+        "status": "done",
+        "notes": "DONE at CI level (2026-10-03): 147 pytest passed (status states, workflow contract across all workflows, release helpers), lint_workflows 11 files / 68 run blocks clean, actionlint wired in CI, pipeline.selftest exit 0 (ingest->analysis->export->status on synthetic video, terminal guard verified). Live full-flow on real GitHub runners (real project, oversized source, back-to-back exports) not executed from sandbox — recommend one real-project smoke test by the user; all components are covered by tests.",
+        "next_action": "none"
       },
       {
         "id": "F",
         "name": "Documentation and wrap-up",
-        "status": "pending",
-        "notes": "Update README.md covering hybrid project model, exports, release overflow, migration, no-heredoc rule, contract tests; record final decisions in BUILD_STATE.json; push.",
-        "next_action": "Pending Task E completion."
+        "status": "done",
+        "notes": "DONE: README documents hybrid project model, exports, release overflow, migration, no-heredoc rule, contract tests, and the persistence decision (no auto-expiry; raw source always re-downloadable via refetch).",
+        "next_action": "none"
       }
     ],
     "decisions": [
@@ -338,8 +338,9 @@
       "Terminal success guard in status.py: once clips_ready, scene_ready, ready, done, or hybrid_ready is reached, incoming failure states are ignored unless --force is specified.",
       "Workflow failure steps made truthful: verify if export outputs and upload succeeded before writing clips_failed/scene_failed; failure messages explicitly link GitHub Actions run URL.",
       "Job job-1791013658900-mp21 reconciled to clips_ready using existing 100.6 MB release asset and export metadata.",
-      "Contract test test_workflow_contract.py added to automatically inspect all workflow YAML files and ensure every python -m pipeline.* call adheres to the target CLI spec before deployment."
+      "Contract test test_workflow_contract.py added to automatically inspect all workflow YAML files and ensure every python -m pipeline.* call adheres to the target CLI spec before deployment.",
+      "Persistence: 24h auto-expiry removed for projects — cleanup.py skips any persistent or ready-state record; only the raw source video may be absent because pipeline.refetch re-downloads it from the committed ingest request + selection indices."
     ],
-    "finished_at": null
+    "finished_at": "2026-10-03T19:30:00Z"
   }
 }
