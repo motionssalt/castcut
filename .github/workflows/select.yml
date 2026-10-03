@@ -1,0 +1,92 @@
+name: Torrent metadata — list files
+run-name: select — ${{ inputs.job_id }}
+
+# Lightweight step for magnet links (and a server-side re-list for .torrent):
+# fetches ONLY the torrent metadata — never any payload content — writes
+# jobs/<job_id>/files.json and parks the job in `awaiting_selection` until the
+# user picks file indices in the UI (ClipForge's awaiting_torrent_selection).
+# The UI's PUT /api/jobs/<id>/selection then dispatches ingest.yml.
+
+on:
+  workflow_dispatch:
+    inputs:
+      job_id:
+        description: "Job id (jobs/<job_id>/ingest-request.json must exist)"
+        required: true
+        type: string
+
+permissions:
+  contents: write
+
+concurrency:
+  group: castcut-select-${{ inputs.job_id }}
+  cancel-in-progress: false
+
+jobs:
+  select:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - name: System deps (aria2 only)
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq aria2
+
+      - name: Status — fetching metadata
+        run: |
+          python -m pipeline.status "${{ inputs.job_id }}" \
+            --state selecting \
+            --message "Fetching torrent metadata (listing files — no content download)" \
+            --workflow-run-url "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git pull --rebase --autostash || true
+          git add "jobs/${{ inputs.job_id }}/"
+          git commit -m "castcut: selecting ${{ inputs.job_id }}" || true
+          for i in 1 2 3; do git push && break; git pull --rebase --autostash; sleep 2; done
+
+      - name: Fetch metadata + list files (no content)
+        run: python -m pipeline.select "${{ inputs.job_id }}"
+
+      - name: Park — awaiting_selection
+        if: success()
+        run: |
+          python -m pipeline.status "${{ inputs.job_id }}" \
+            --state awaiting_selection \
+            --message "File list ready — pick which files to download."
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git pull --rebase --autostash || true
+          git add "jobs/${{ inputs.job_id }}/"
+          git commit -m "castcut: awaiting_selection ${{ inputs.job_id }}" || true
+          for i in 1 2 3; do git push && break; git pull --rebase --autostash; sleep 2; done
+
+      - name: Status — failed
+        if: failure()
+        run: |
+          python -m pipeline.status "${{ inputs.job_id }}" \
+            --state select_failed \
+            --message "Could not fetch torrent metadata — no seeds, unreachable trackers, or no video files. See the run log."
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git pull --rebase --autostash || true
+          git add "jobs/${{ inputs.job_id }}/"
+          git commit -m "castcut: select failed ${{ inputs.job_id }}" || true
+          for i in 1 2 3; do git push && break; git pull --rebase --autostash; sleep 2; done
+
+      - name: Status — cancelled
+        if: cancelled()
+        run: |
+          prev=$(python -c "import json;print(json.load(open('jobs/${{ inputs.job_id }}/status.json')).get('state',''))" 2>/dev/null || true)
+          python -m pipeline.status "${{ inputs.job_id }}" --state cancelled \
+            --message "Run cancelled." --set-json "{\"cancelled_from\":\"$prev\"}" || true
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git pull --rebase --autostash || true
+          git add "jobs/${{ inputs.job_id }}/"
+          git commit -m "castcut: cancelled ${{ inputs.job_id }}" || true
+          for i in 1 2 3; do git push && break; git pull --rebase --autostash; sleep 2; done

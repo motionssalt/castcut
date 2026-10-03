@@ -1,7 +1,7 @@
 {
   "project": "castcut",
   "repo": "motionssalt/castcut",
-  "updated_at": "2026-10-03T00:37:08Z",
+  "updated_at": "2026-10-03T00:50:52Z",
   "phases": [
     {
       "id": 1,
@@ -64,39 +64,40 @@
     "Auth: Pages middleware checks GitHub /user login==motionssalt on every /api/* call; PAT stays client-side."
   ],
   "known_issues": [],
-  "next_action": "All 8 phases done. To operate: open https://castcut.pages.dev, paste owner PAT, ingest a source, pick Clips or Scene. If a phase regresses, set it back to in_progress in this file and push.",
+  "next_action": "fix_round_1 complete. Live-test on the phone: (1) multi-video .torrent -> checkbox list -> only selected files download; (2) magnet -> selecting -> awaiting_selection -> confirm -> ingest; (3) cancel a running ingest -> badge flips to cancelled; (4) delete a job -> release+files gone.",
   "fix_round_1": {
     "started_at": "2026-10-03T00:37:08Z",
-    "status": "in_progress",
+    "status": "done",
     "tasks": [
       {
         "id": "A",
         "name": "torrent/magnet file selection",
-        "status": "in_progress",
-        "notes": "Port ClipForge stage_a selection: bencode inspect, magnet metadata-only aria2 fetch, files.json, awaiting_selection park, --select-file download.",
-        "next_action": "write pipeline/torrents.py + pipeline/select.py + select.yml + selection endpoint + ingest.py --select-file"
+        "status": "done",
+        "notes": "DONE. pipeline/torrents.py (ClipForge bencode/magnet port) + pipeline/select.py (aria2 --bt-metadata-only) + select.yml (parks in awaiting_selection) + PUT/DELETE /api/jobs/<id>/selection + ingest.py --select-file multi-file download. .torrent parsed client-side for instant list; magnet gets metadata-only Actions run. Verified: py_compile, synthetic torrent inspect/match/magnet tests pass.",
+        "next_action": "none"
       },
       {
         "id": "B",
         "name": "failed/cancelled indicators, retry, cancel",
-        "status": "pending",
-        "notes": "",
-        "next_action": "canonical status map, reconcile vs Actions runs, cancelled() workflow steps, cancel/retry endpoints"
+        "status": "done",
+        "notes": "DONE. Canonical status map + colored badges; run-name on all job workflows; if:cancelled() steps everywhere; reconcileStatus folds Actions run truth (failed step + run-log link) into GET responses; POST cancel + retry endpoints (retry infers step from failed_from/artifacts).",
+        "next_action": "none"
       },
       {
         "id": "C",
         "name": "delete job (+ delete all finished)",
-        "status": "pending",
-        "notes": "",
-        "next_action": "DELETE /api/jobs/<id>: cancel run, delete release+tag, delete jobs/<id> tree"
+        "status": "done",
+        "notes": "DONE. DELETE /api/jobs/<id> cancels runs, deletes release+tag, removes all jobs/<id>/ files. Per-job delete with confirm modal; 'Clear finished' bulk action on the job list.",
+        "next_action": "none"
       },
       {
         "id": "D",
         "name": "mobile-first UI overhaul",
-        "status": "pending",
-        "notes": "",
-        "next_action": "rewrite index.html/styles.css/app.js at 360px, status badges, selection UI, sticky bars"
+        "status": "done",
+        "notes": "DONE. Rewrote index.html/styles.css/app.js: 360px-first dark theme, one accent (#4f8cff), 48px tap targets, sticky selection/extract bars, pill source picker, mode cards, empty/loading/error states, confirm modal, toast, adaptive polling (4s active / 15s parked). No JS libraries.",
+        "next_action": "none"
       }
-    ]
+    ],
+    "finished_at": "2026-10-03T00:50:52Z"
   }
 }

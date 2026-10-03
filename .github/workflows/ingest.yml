@@ -1,4 +1,5 @@
 name: Ingest source video
+run-name: ingest — ${{ inputs.job_id }}
 
 on:
   workflow_dispatch:
@@ -75,7 +76,20 @@ jobs:
         if: failure()
         run: |
           python -m pipeline.status "${{ inputs.job_id }}" \
-            --state ingest_failed --message "Ingest failed. See the workflow run log."
+            --state ingest_failed --message "Ingest failed — ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
           git add "jobs/${{ inputs.job_id }}/"
           git commit -m "castcut: ingest failed ${{ inputs.job_id }}" || true
+          for i in 1 2 3; do git push && break; git pull --rebase --autostash; sleep 2; done
+
+      - name: Status — cancelled
+        if: cancelled()
+        run: |
+          prev=$(python -c "import json;print(json.load(open('jobs/${{ inputs.job_id }}/status.json')).get('state',''))" 2>/dev/null || true)
+          python -m pipeline.status "${{ inputs.job_id }}" --state cancelled \
+            --message "Run cancelled." --set-json "{\"cancelled_from\":\"$prev\"}" || true
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git pull --rebase --autostash || true
+          git add "jobs/${{ inputs.job_id }}/"
+          git commit -m "castcut: cancelled ${{ inputs.job_id }}" || true
           for i in 1 2 3; do git push && break; git pull --rebase --autostash; sleep 2; done

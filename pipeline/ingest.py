@@ -94,8 +94,15 @@ def _download_gdrive(url: str, dest: str) -> None:
                 fh.write(chunk)
 
 
-def _download_torrent(payload: str, is_file: bool, work_dir: str) -> str:
-    """aria2 magnet/.torrent download, seeding disabled; returns largest media file."""
+def _download_torrent(payload: str, is_file: bool, work_dir: str,
+                      select_indices: list | None = None) -> str:
+    """aria2 magnet/.torrent download, seeding disabled.
+
+    With ``select_indices`` (1-based torrent file indices — the ClipForge
+    convention) aria2 fetches ONLY those files' pieces and this returns the
+    download directory. Without it everything is downloaded and the largest
+    media file is returned (legacy fallback).
+    """
     dl_dir = os.path.join(work_dir, "torrent")
     os.makedirs(dl_dir, exist_ok=True)
     cmd = [
@@ -104,6 +111,8 @@ def _download_torrent(payload: str, is_file: bool, work_dir: str) -> str:
         "--summary-interval=15", "--max-connection-per-server=16", "--split=16",
         "--file-allocation=none", "--follow-torrent=mem",
     ]
+    if select_indices:
+        cmd.append("--select-file=" + ",".join(str(i) for i in select_indices))
     if is_file:
         cmd.append(payload)
     else:
@@ -121,6 +130,8 @@ def _download_torrent(payload: str, is_file: bool, work_dir: str) -> str:
         time.sleep(10)
     if not subprocess_ok:
         raise RuntimeError(f"aria2 failed (rc={last_rc}) — torrent may have no seeds")
+    if select_indices:
+        return dl_dir
     media = []
     for root, _dirs, files in os.walk(dl_dir):
         for name in files:
@@ -148,6 +159,8 @@ def main() -> None:
 
     tmp = os.path.join(args.work_dir, "download.bin")
     source_path = None
+    source_paths: list = []
+    selected_indices: list | None = None
 
     if kind == "direct_url":
         url = src["url"]
@@ -160,19 +173,39 @@ def main() -> None:
         ext = _pick_ext(src["url"])
         source_path = os.path.join(args.work_dir, f"source.{ext}")
         os.replace(tmp, source_path)
-    elif kind == "magnet":
-        picked = _download_torrent(src["magnet"], False, args.work_dir)
-        ext = os.path.splitext(picked)[1].lower().lstrip(".") or "mkv"
-        source_path = os.path.join(args.work_dir, f"source.{ext}")
-        shutil.copy2(picked, source_path)
-    elif kind == "torrent_file":
-        tpath = os.path.join(args.jobs_root, args.job_id, "source.torrent")
-        if not os.path.exists(tpath):
-            raise RuntimeError(f"missing {tpath} — the site must upload the .torrent first")
-        picked = _download_torrent(tpath, True, args.work_dir)
-        ext = os.path.splitext(picked)[1].lower().lstrip(".") or "mkv"
-        source_path = os.path.join(args.work_dir, f"source.{ext}")
-        shutil.copy2(picked, source_path)
+    elif kind in ("magnet", "torrent_file"):
+        from pathlib import Path
+        from .torrents import resolve_downloaded_files
+        if kind == "magnet":
+            payload, is_file = src["magnet"], False
+        else:
+            tpath = os.path.join(args.jobs_root, args.job_id, "source.torrent")
+            if not os.path.exists(tpath):
+                raise RuntimeError(f"missing {tpath} — the site must upload the .torrent first")
+            payload, is_file = tpath, True
+        # The user picks which torrent files to download BEFORE this runs
+        # (jobs/<job_id>/selection.json, written by the site's selection step).
+        sel_path = os.path.join(args.jobs_root, args.job_id, "selection.json")
+        if not os.path.exists(sel_path):
+            raise RuntimeError(
+                "no file selection — open the job in CastCut and pick which "
+                "torrent files to download first (job parks in awaiting_selection)"
+            )
+        with open(sel_path, encoding="utf-8") as fh:
+            selection = json.load(fh)
+        selected_indices = [int(i) for i in selection.get("selected_indices", [])]
+        wanted = [str(p) for p in selection.get("paths", [])]
+        if not selected_indices or len(selected_indices) != len(wanted):
+            raise RuntimeError("selection.json is missing selected_indices/paths")
+        dl_dir = _download_torrent(payload, is_file, args.work_dir, selected_indices)
+        picked_list = resolve_downloaded_files(Path(dl_dir), wanted)
+        for n, picked in enumerate(picked_list):
+            ext = os.path.splitext(picked)[1].lower().lstrip(".") or "mkv"
+            name = f"source.{ext}" if n == 0 else f"source.{n + 1}.{ext}"
+            sp = os.path.join(args.work_dir, name)
+            shutil.copy2(picked, sp)
+            source_paths.append(sp)
+        source_path = source_paths[0]
     else:
         raise RuntimeError(f"unsupported source kind: {kind!r}")
 
@@ -193,7 +226,10 @@ def main() -> None:
         "fps": info["fps"],
         "has_audio": info["has_audio"],
         "ingested_at_epoch": int(time.time()),
+        "sources": [os.path.basename(p) for p in (source_paths or [source_path])],
     }
+    if selected_indices:
+        rec["selected_indices"] = selected_indices
     with open(os.path.join(args.jobs_root, args.job_id, "ingest.json"), "w", encoding="utf-8") as fh:
         json.dump(rec, fh, indent=2)
     print(json.dumps(rec, indent=2), flush=True)

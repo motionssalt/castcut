@@ -3,97 +3,180 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#0b0f1a">
+<meta name="theme-color" content="#0d1117">
 <title>CastCut</title>
 <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
-<header>
-  <h1>CastCut <span class="dim" id="whoami"></span></h1>
-  <button id="btnLogout" class="ghost" hidden>sign out</button>
+<header class="topbar">
+  <div class="brand">🎬 CastCut <span class="dim" id="whoami"></span></div>
+  <button id="btnLogout" class="btn ghost sm" hidden>Sign out</button>
 </header>
 
 <main id="app">
-  <!-- Gate -->
+
+  <!-- ============ GATE ============ -->
   <section id="gate" hidden>
-    <h2>sign in</h2>
-    <p class="dim">Private tool. Paste the owner's GitHub PAT (<code>repo</code> + <code>workflow</code> scopes). It stays in this browser only.</p>
-    <input id="patInput" type="password" placeholder="github_pat_..." autocomplete="off" spellcheck="false">
-    <button id="btnLogin">unlock</button>
-    <p id="gateErr" class="err"></p>
+    <div class="card">
+      <h2>Sign in</h2>
+      <p class="dim">Private tool. Paste the owner's GitHub PAT (<code>repo</code> + <code>workflow</code> scopes). It stays in this browser only.</p>
+      <input id="patInput" class="field" type="password" placeholder="Paste the GitHub PAT" autocomplete="off" spellcheck="false">
+      <button id="btnLogin" class="btn primary block">Unlock</button>
+      <p id="gateErr" class="err"></p>
+    </div>
   </section>
 
-  <!-- Home -->
+  <!-- ============ HOME ============ -->
   <section id="home" hidden>
-    <h2>new job</h2>
-    <label>source</label>
-    <select id="srcKind">
-      <option value="direct_url">direct https video URL</option>
-      <option value="gdrive">Google Drive share link</option>
-      <option value="magnet">magnet URI</option>
-      <option value="torrent_file">.torrent file</option>
-    </select>
-    <input id="srcUrl" type="text" placeholder="paste URL / magnet here">
-    <input id="srcFile" type="file" accept=".torrent" hidden>
-    <input id="jobTitle" type="text" placeholder="optional title">
-    <button id="btnIngest">ingest</button>
-    <p id="homeErr" class="err"></p>
-    <h3>jobs</h3>
+    <div class="card">
+      <h2>New job</h2>
+      <div class="pillrow" id="srcKindRow">
+        <button class="pill sel" data-kind="direct_url">🔗 URL</button>
+        <button class="pill" data-kind="gdrive">📁 Drive</button>
+        <button class="pill" data-kind="magnet">🧲 Magnet</button>
+        <button class="pill" data-kind="torrent_file">📦 .torrent</button>
+      </div>
+      <div id="srcUrlWrap">
+        <input id="srcUrl" class="field" type="text" placeholder="Paste URL / magnet here" autocomplete="off" spellcheck="false">
+      </div>
+      <div id="srcFileWrap" hidden>
+        <button id="btnPickTorrent" class="btn ghost block">Choose .torrent file</button>
+        <input id="srcFile" type="file" accept=".torrent,application/x-bittorrent" hidden>
+        <p id="torrentErr" class="err"></p>
+      </div>
+      <div id="newJobFiles" hidden>
+        <h3>Pick the files to download</h3>
+        <div id="newJobFileList" class="filelist"></div>
+        <p id="newJobSelInfo" class="dim sm"></p>
+      </div>
+      <input id="jobTitle" class="field" type="text" placeholder="Title (optional)" autocomplete="off">
+      <button id="btnIngest" class="btn primary block">Start</button>
+      <p id="homeErr" class="err"></p>
+    </div>
+
+    <div class="rowhead">
+      <h2>Jobs</h2>
+      <button id="btnCleanup" class="btn ghost sm" hidden>Clear finished</button>
+    </div>
     <div id="jobList"></div>
+    <p id="jobListEmpty" class="dim center" hidden>No jobs yet — add a source above.</p>
   </section>
 
-  <!-- Job view -->
+  <!-- ============ JOB ============ -->
   <section id="job" hidden>
-    <button id="btnBack" class="ghost">← back</button>
-    <h2 id="jobTitleH"></h2>
-    <p class="dim" id="jobMeta"></p>
-    <p id="jobState" class="state"></p>
-    <div id="modePicker" hidden>
-      <button id="btnModeClips">Mode 1 · Clips</button>
-      <button id="btnModeScene">Mode 2 · Scene</button>
+    <button id="btnBack" class="btn ghost sm">← Jobs</button>
+
+    <div class="card">
+      <div class="jobhead">
+        <h2 id="jobTitleH"></h2>
+        <span id="jobBadge" class="badge"></span>
+      </div>
+      <p id="jobMsg" class="dim"></p>
+      <p id="jobMeta" class="dim sm"></p>
+      <div id="jobFailed" hidden>
+        <div class="alert fail">
+          <div id="jobFailReason"></div>
+          <a id="jobRunLink" class="btn ghost sm" target="_blank" rel="noopener" href="#">Open run log ↗</a>
+        </div>
+      </div>
+      <div class="actions">
+        <button id="btnCancel" class="btn warn" hidden>⛔ Cancel</button>
+        <button id="btnRetry" class="btn primary" hidden>↻ Retry</button>
+        <button id="btnDelete" class="btn danger">🗑 Delete</button>
+      </div>
+      <p id="jobErr" class="err"></p>
+    </div>
+
+    <!-- torrent selection -->
+    <div id="selCard" class="card" hidden>
+      <h2>Pick the files to download</h2>
+      <p class="dim sm" id="selHint">Only the checked files are downloaded.</p>
+      <div id="selList" class="filelist"></div>
+      <div class="stickybar" id="selBar">
+        <span id="selInfo" class="sm"></span>
+        <button id="btnConfirmSel" class="btn primary">Download selected</button>
+      </div>
+    </div>
+
+    <!-- mode picker -->
+    <div id="modePicker" class="card" hidden>
+      <h2>What are we making?</h2>
+      <div class="modegrid">
+        <button id="btnModeClips" class="modecard">
+          <span class="mi">🙂</span><b>Clips</b>
+          <small class="dim">Pick characters, get every scene they appear in.</small>
+        </button>
+        <button id="btnModeScene" class="modecard">
+          <span class="mi">🎞</span><b>Scene</b>
+          <small class="dim">Describe a scene; an AI writes the cut list.</small>
+        </button>
+      </div>
     </div>
 
     <!-- Mode 1 -->
-    <div id="mClips" hidden>
-      <h3>Clips</h3>
-      <label>sample fps (0.5–2.0)</label>
-      <input id="sampleFps" type="number" min="0.5" max="2.0" step="0.1" value="1.0">
-      <button id="btnFaces">analyze faces</button>
-      <div id="gallery" class="gallery"></div>
-      <div id="gallerySelected" class="selected-row" hidden></div>
-      <div id="galleryActions" hidden>
-        <label>merge gap (s)</label>
-        <input id="gapSec" type="number" min="0" max="10" step="0.5" value="2">
-        <label>pad (s)</label>
-        <input id="padSec" type="number" min="0" max="2" step="0.1" value="0.4">
-        <button id="btnMerge" class="ghost">merge selected as one</button>
-        <button id="btnIgnore" class="ghost">ignore selected</button>
-        <button id="btnExportClips">export clips</button>
+    <div id="mClips" class="card" hidden>
+      <h2>🙂 Clips</h2>
+      <div id="facesStart">
+        <label class="lbl">Sample rate (fps)</label>
+        <input id="sampleFps" class="field" type="number" min="0.5" max="2.0" step="0.1" value="1.0">
+        <button id="btnFaces" class="btn primary block">Analyze faces</button>
+      </div>
+      <div id="galleryWrap" hidden>
+        <p class="dim sm">Tap characters in the order you want them in the cut.</p>
+        <div id="gallery" class="gallery"></div>
+        <div class="rowgap">
+          <button id="btnMerge" class="btn ghost sm">Merge selected</button>
+          <button id="btnIgnore" class="btn ghost sm">Ignore selected</button>
+        </div>
+        <div class="tuners">
+          <div><label class="lbl">Merge gap (s)</label><input id="gapSec" class="field" type="number" min="0" max="10" step="0.5" value="2"></div>
+          <div><label class="lbl">Pad (s)</label><input id="padSec" class="field" type="number" min="0" max="2" step="0.1" value="0.4"></div>
+        </div>
+        <div class="stickybar" id="extractBar">
+          <span id="extractInfo" class="sm">0 selected</span>
+          <button id="btnExportClips" class="btn primary">Extract</button>
+        </div>
       </div>
     </div>
 
     <!-- Mode 2 -->
-    <div id="mScene" hidden>
-      <h3>Scene</h3>
-      <label>scene request (optional — leave blank to let the AI pick)</label>
-      <textarea id="sceneReq" rows="3" placeholder="e.g. the intro for an edit about character X"></textarea>
-      <button id="btnSceneAnalyze">analyze</button>
+    <div id="mScene" class="card" hidden>
+      <h2>🎞 Scene</h2>
+      <div id="sceneStart">
+        <label class="lbl">What scene do you need? <span class="dim">(blank = AI picks the best one)</span></label>
+        <textarea id="sceneReq" class="field" rows="3" placeholder="e.g. the fight intro where X draws the sword"></textarea>
+        <button id="btnSceneAnalyze" class="btn primary block">Analyze source</button>
+      </div>
       <div id="sceneAgent" hidden>
-        <h4>agent prompt</h4>
-        <textarea id="agentPrompt" rows="12" readonly></textarea>
-        <button id="btnCopyPrompt">copy prompt</button>
-        <h4>paste production JSON back</h4>
-        <textarea id="prodJson" rows="10" placeholder='{"version":1,"segments":[{"start":12.5,"end":27}]}'></textarea>
-        <button id="btnScenePush">cut & export</button>
-        <pre id="validationOut" class="err"></pre>
+        <h3>1 · Copy the agent prompt</h3>
+        <p class="dim sm">Paste it into your AI of choice.</p>
+        <button id="btnCopyPrompt" class="btn primary block">📋 Copy agent prompt</button>
+        <h3>2 · Paste the production JSON back</h3>
+        <textarea id="prodJson" class="field mono" rows="8" placeholder='{"version":1,"segments":[{"start":12.5,"end":27}]}'></textarea>
+        <p id="validationOut" class="err"></p>
+        <button id="btnScenePush" class="btn primary block">Cut & export</button>
       </div>
     </div>
 
-    <h3>download</h3>
-    <div id="downloads"></div>
+    <!-- downloads -->
+    <div id="dlCard" class="card" hidden>
+      <h2>Files</h2>
+      <div id="downloads"></div>
+    </div>
   </section>
 </main>
 
+<div id="confirmModal" hidden>
+  <div class="modalcard">
+    <p id="confirmText"></p>
+    <div class="rowgap">
+      <button id="confirmNo" class="btn ghost">Cancel</button>
+      <button id="confirmYes" class="btn danger">Delete</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast" hidden></div>
 <script src="/app.js" type="module"></script>
 </body>
 </html>

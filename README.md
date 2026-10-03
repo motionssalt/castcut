@@ -10,6 +10,58 @@ HD video or pick clips by hand on his phone.
 - **Storage**: ingested video + outputs live in a GitHub **release**
   (`castcut-<job_id>`), auto-deleted 24 hours after the job is created.
 
+## Torrent & magnet file selection (fix_round_1 / Task A)
+
+Multi-file torrents no longer download everything.
+
+* **`.torrent` file** — the site parses the manifest **in the browser**
+  (pure-JS bencode, mirrors `pipeline/torrents.py`) the moment you pick the
+  file. The full list shows with checkboxes; video files are highlighted and
+  pre-checked (a single-video torrent shows its one file pre-checked).
+  Confirming creates the job already holding `files.json` + `selection.json`,
+  and `ingest.yml` downloads **only** the picked files (aria2
+  `--select-file=<indices>`).
+* **Magnet** — a magnet carries no file list, so `POST /api/jobs` dispatches
+  the lightweight `select.yml` run instead of ingest: aria2 runs with
+  `--bt-metadata-only --bt-save-metadata` (**no content is ever downloaded**),
+  the metadata is parsed, `jobs/<job_id>/files.json` is committed and the job
+  parks in **`awaiting_selection`**. Pick files in the job page and confirm →
+  `PUT /api/jobs/<id>/selection` writes `selection.json` and dispatches
+  `ingest.yml` with the chosen indices.
+* Failures surface clearly: metadata timeout / no seeds / unreachable
+  trackers / no video files → state `select_failed` with the reason.
+* Selected torrent paths are matched to downloaded files by relative-path
+  suffix (`torrents.resolve_downloaded_files`), because aria2 still writes
+  boundary pieces of neighbouring files.
+
+## Job status, retry, cancel, delete (fix_round_1 / Tasks B & C)
+
+* Canonical states: `queued`, `selecting`, `awaiting_selection`,
+  `ingest_running`, `ingested`, `faces_running`/`faces_ready`,
+  `clips_exporting`/`clips_ready`, `scene_analyzing`/`scene_awaiting_json`/
+  `scene_exporting`/`scene_ready`, plus terminal `failed` and `cancelled`.
+  Each maps to a colored badge in the UI (✖ red failed, ⛔ amber cancelled).
+* Every job workflow sets `run-name` to `… — <job_id>` and has an
+  `if: cancelled()` status step. The Pages API reconciles a job whose run
+  failed/was cancelled while the user was away (`reconcileStatus` in
+  `site/functions/_lib/gh.js`), pulling the failing step name and run-log URL
+  from the Actions API.
+* **Cancel**: `POST /api/jobs/<id>/cancel` cancels active runs + marks the
+  job cancelled. **Retry**: `POST /api/jobs/<id>/retry` re-dispatches the
+  failed step, inferred from `failed_from`/`cancelled_from` and durable
+  artifacts (`selection.json`, `scene/production.json`, …).
+* **Delete**: `DELETE /api/jobs/<id>` cancels live runs, deletes the
+  `castcut-<job_id>` release **and** its tag, and removes every committed
+  file under `jobs/<id>/`. Works on running/parked jobs. The job list has a
+  per-job 🗑 button and a "Clear finished" bulk action.
+
+## UI (fix_round_1 / Task D)
+
+Mobile-first (~360 px), dark theme, one accent color (#4f8cff), ≥48 px tap
+targets, sticky confirm/extract bars, status badges everywhere, empty /
+loading / error states on every screen, and no third-party JS — the whole
+app is `index.html` + `styles.css` + `app.js`.
+
 ## Two modes
 
 ### Mode 1 — Clips (no AI)
@@ -93,7 +145,8 @@ phase and sub-step so a cold restart is safe.
 
 - Each ingest creates `jobs/<job_id>/` with `ingest-request.json`,
   `status.json`, and later `clips/manifest.json` / `scene/*.json`.
-- A GitHub release `castcut-<job_id>` holds the source video and all
-  deliverables.
+- A GitHub release `castcut-<job_id>` holds the source video(s) and all
+  deliverables. Jobs that select several torrent files ingest them as
+  `source.<ext>`, `source.2.<ext>`, … (the first is the pipeline's primary).
 - The hourly `cleanup.yml` workflow deletes any release whose
   `status.expires_at_epoch` is past (24h TTL).
