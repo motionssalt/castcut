@@ -1,7 +1,7 @@
 {
   "project": "castcut",
   "repo": "motionssalt/castcut",
-  "updated_at": "2026-10-03T06:58:00Z",
+  "updated_at": "2026-10-03T07:00:00Z",
   "phases": [
     {
       "id": 1,
@@ -179,14 +179,14 @@
       {
         "id": "B",
         "name": "Make the publish step robust",
-        "status": "in_progress",
-        "notes": "Upload failure must never kill the job: run mark_excluded and continue with exit 0. Confirm empty CASTCUT_RELEASE_LIMIT_BYTES is treated as unset (release_size.py already does: empty -> default; keep it that way). After this step the job must reach 'ingested' (ready for mode selection), not ingest_failed. Ensure Status — failed only runs on genuine failures (it already does via if: failure(), and the safety net will now exit 0 so success() is true).",
-        "next_action": "Verify release_size.limit_bytes() handles empty CASTCUT_RELEASE_LIMIT_BYTES (it does). Confirm ingest.yml publish step exits 0 on upload failure after Task A. Re-read the completed ingest.yml to confirm Status — done runs and Status — failed does not."
+        "status": "done",
+        "notes": "Upload failure must never kill the job: run mark_excluded and continue with exit 0. Confirm empty CASTCUT_RELEASE_LIMIT_BYTES is treated as unset (release_size.py already does: empty -> default; keep it that way). After this step the job must reach 'ingested' (ready for mode selection), not ingest_failed. Ensure Status — failed only runs on genuine failures (it already does via if: failure(), and the safety net will now exit 0 so success() is true). Done: publish step now calls pipeline.mark_excluded and exits 0 on upload failure (with a guard that even if mark_excluded itself fails the step still exits 0 so the job is never killed). 'Status — done' (if: success()) writes state=ingested; 'Status — failed' (if: failure()) only runs on genuine failures. Empty CASTCUT_RELEASE_LIMIT_BYTES confirmed safe (release_size.limit_bytes falls back to 2 GiB for empty/unset/whitespace/non-numeric).",
+        "next_action": "none"
       },
       {
         "id": "C",
         "name": "Prevent this class of bug (actionlint CI + README rule)",
-        "status": "pending",
+        "status": "in_progress",
         "notes": "Add a CI workflow (or script on push) that lints all .github/workflows/*.yml with actionlint and fails on syntax errors like the heredoc one. If practical, also run bash -n on extracted run: scripts. Document in README: no inline heredocs in workflows; use pipeline/ modules.",
         "next_action": "Choose actionlint install path (github-action or standalone). Add .github/workflows/lint-workflows.yml. Add README section 'Workflow hygiene'. Verify actionlint catches the original heredoc by testing against a copy."
       },
