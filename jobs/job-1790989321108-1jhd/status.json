@@ -3,11 +3,11 @@
   "title": "",
   "created_at_epoch": 1790989321,
   "created_at": "2026-10-03T01:02:01Z",
-  "updated_at": "2026-10-03T01:02:43Z",
-  "updated_at_epoch": 1790989363,
+  "updated_at": "2026-10-03T01:04:35Z",
+  "updated_at_epoch": 1790989475,
   "expires_at_epoch": 1791075721,
-  "state": "ingest_running",
-  "message": "Downloading source",
+  "state": "cancelled",
+  "message": "Cancel requested — the run is stopping.",
   "selected_files": [
     {
       "index": 3,
@@ -16,5 +16,6 @@
     }
   ],
   "release_tag": "castcut-job-1790989321108-1jhd",
-  "workflow_run_url": "https://github.com/motionssalt/castcut/actions/runs/37084509927"
+  "workflow_run_url": "https://github.com/motionssalt/castcut/actions/runs/37084509927",
+  "cancelled_from": "ingest_running"
 }
