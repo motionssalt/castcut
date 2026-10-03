@@ -247,5 +247,43 @@
       "anime_face_detector outputs 5-element bboxes [x0, y0, x1, y1, score]; faces.py now parses both 4- and 5-element bboxes cleanly; added imgutils.detect ONNX as an additional modern detector option and bundled lbpcascade_animeface.xml."
     ],
     "finished_at": "2026-10-03T08:45:00Z"
+  },
+  "fix_round_5": {
+    "started_at": "2026-10-03T09:50:00Z",
+    "status": "in_progress",
+    "tasks": [
+      {
+        "id": "1",
+        "name": "Add concat_segments() in pipeline/utils.py",
+        "status": "in_progress",
+        "notes": "Replace 72-way filter_complex filtergraph with chunk-based concat demuxer to eliminate RAM explosion and runner shutdown (exit code 143).",
+        "next_action": "Add concat_segments() to pipeline/utils.py."
+      },
+      {
+        "id": "2",
+        "name": "Update clips_export.py and scene_export.py",
+        "status": "pending",
+        "notes": "Switch both export pipelines to use concat_segments() with fast-seeking and stream copy concat.",
+        "next_action": "Update clips_export.py and scene_export.py."
+      },
+      {
+        "id": "3",
+        "name": "Fix git identity in export workflows and lint",
+        "status": "pending",
+        "notes": "Ensure git config is set in Status — failed and Status — cancelled steps across export workflows.",
+        "next_action": "Update workflows and run lint_workflows.py."
+      },
+      {
+        "id": "4",
+        "name": "End-to-end verification and job recovery",
+        "status": "pending",
+        "notes": "Verify multi-segment concat on test video and trigger clips-export workflow for job-1791013658900-mp21.",
+        "next_action": "Test and dispatch export workflow."
+      }
+    ],
+    "decisions": [
+      "Replaced multi-branch filter_complex in export pipelines with chunk-based fast-seek extraction + concat demuxer stream copy to prevent OOM / runner shutdown (exit code 143) on dozens of segments."
+    ],
+    "finished_at": null
   }
 }
