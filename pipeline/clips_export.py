@@ -18,7 +18,7 @@ import json
 import os
 import sys
 
-from .utils import (build_concat_filter, human_size, merge_intervals,
+from .utils import (concat_segments, human_size, merge_intervals,
                     pad_intervals, probe_video, run, subtract_intervals)
 
 
@@ -97,22 +97,17 @@ def main() -> None:
     print(f"[clips] total segments: {len(segments)}, total duration "
           f"{sum(e - s for s, e in segments):.1f}s", flush=True)
 
-    filt = build_concat_filter(segments, has_audio)
-    filter_path = os.path.join(args.work_dir, "concat.txt")
-    with open(filter_path, "w", encoding="utf-8") as fh:
-        fh.write(filt)
-
     # Pass 1: join with hard cuts (fast intermediate).
     joined = os.path.join(args.work_dir, "clips_joined.mp4")
-    cmd = ["ffmpeg", "-hide_banner", "-loglevel", "error", "-y", "-i", src,
-           "-filter_complex_script", filter_path, "-map", "[v]"]
-    if has_audio:
-        cmd += ["-map", "[a]"]
-    cmd += ["-c:v", "libx264", "-crf", "18", "-preset", "veryfast", "-pix_fmt", "yuv420p"]
-    if has_audio:
-        cmd += ["-c:a", "aac", "-b:a", "192k"]
-    cmd += ["-movflags", "+faststart", joined]
-    run(cmd)
+    concat_segments(
+        src=src,
+        segments=segments,
+        output_path=joined,
+        has_audio=has_audio,
+        crf=18,
+        preset="veryfast",
+        temp_dir=args.work_dir,
+    )
 
     # Pass 2: HandBrake-style visually-lossless compression (CRF 23 slow).
     final = os.path.join(args.work_dir, f"castcut-clips-{args.job_id}.mp4")
