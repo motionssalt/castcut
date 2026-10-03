@@ -94,6 +94,9 @@ jobs:
             --state ingested \
             --message "$msg" \
             --set-json "{\"video_in_release\":$vir}"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git pull --rebase --autostash || true
           git add "jobs/${{ inputs.job_id }}/"
           git commit -m "castcut: ingested ${{ inputs.job_id }}" || true
           for i in 1 2 3; do git push && break; git pull --rebase --autostash; sleep 2; done
@@ -102,7 +105,12 @@ jobs:
         if: failure()
         run: |
           python -m pipeline.status "${{ inputs.job_id }}" \
-            --state ingest_failed --message "Ingest failed — ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
+            --state ingest_failed \
+            --message "Ingest failed — ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}" \
+            --workflow-run-url "${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git pull --rebase --autostash || true
           git add "jobs/${{ inputs.job_id }}/"
           git commit -m "castcut: ingest failed ${{ inputs.job_id }}" || true
           for i in 1 2 3; do git push && break; git pull --rebase --autostash; sleep 2; done
