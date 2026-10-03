@@ -3,11 +3,11 @@
   "title": "",
   "created_at_epoch": 1790991150,
   "created_at": "2026-10-03T01:32:30Z",
-  "updated_at": "2026-10-03T01:33:50Z",
-  "updated_at_epoch": 1790991230,
+  "updated_at": "2026-10-03T01:38:29Z",
+  "updated_at_epoch": 1790991509,
   "expires_at_epoch": 1791077550,
-  "state": "ingest_running",
-  "message": "Downloading source",
+  "state": "ingest_failed",
+  "message": "Ingest failed — https://github.com/motionssalt/castcut/actions/runs/37086495062",
   "selected_files": [
     {
       "index": 3,
