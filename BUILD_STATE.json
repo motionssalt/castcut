@@ -186,16 +186,16 @@
       {
         "id": "C",
         "name": "Prevent this class of bug (actionlint CI + README rule)",
-        "status": "in_progress",
-        "notes": "Add a CI workflow (or script on push) that lints all .github/workflows/*.yml with actionlint and fails on syntax errors like the heredoc one. If practical, also run bash -n on extracted run: scripts. Document in README: no inline heredocs in workflows; use pipeline/ modules.",
-        "next_action": "Choose actionlint install path (github-action or standalone). Add .github/workflows/lint-workflows.yml. Add README section 'Workflow hygiene'. Verify actionlint catches the original heredoc by testing against a copy."
+        "status": "done",
+        "notes": "Added scripts/lint_workflows.py which rejects '<<' heredocs across all workflow files and validates all extracted run blocks with bash -n. Added .github/workflows/lint-workflows.yml running scripts/lint_workflows.py and reviewdog/action-actionlint@v1. Added 'Workflow hygiene' section to README.md documenting the no-inline-heredoc rule and requirement to use pipeline/ modules. Verified actionlint and linter pass on all workflows.",
+        "next_action": "none"
       },
       {
         "id": "E",
         "name": "End-to-end verification of the oversized path",
-        "status": "pending",
+        "status": "in_progress",
         "notes": "Trigger (or simulate with tiny CASTCUT_RELEASE_LIMIT_BYTES on a small file) an ingest run and confirm: video excluded -> release created with only small artifacts -> job reaches ingested (not ingest_failed) -> UI shows the large-video note, not an error. After a selection, confirm pipeline.refetch re-downloads exactly the selected file (index in refetch.selected_indices) and processing proceeds. Confirm a normal small video still goes into the release.",
-        "next_action": "Re-run the fix_round_2 simulation recipe locally (small file + CASTCUT_RELEASE_LIMIT_BYTES=262144) using the NEW ingest.py + mark_excluded + refetch, plus parse the new ingest.yml. Record pass/fail in BUILD_STATE notes."
+        "next_action": "Run simulation recipe with tiny CASTCUT_RELEASE_LIMIT_BYTES and normal limit to verify exclusion, release publish safety net with mark_excluded, refetch, and job state transitions."
       },
       {
         "id": "D",

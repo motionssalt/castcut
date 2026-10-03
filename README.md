@@ -177,3 +177,13 @@ GitHub caps each release asset at 2 GiB. CastCut handles this automatically
    when processing") in the job meta line - not an error badge.
 5. Delete-job and 24h TTL cleanup are unaffected (they remove the release,
    tag and job files regardless of whether the video was in the release).
+
+## Workflow hygiene
+
+To keep GitHub Actions reliable and prevent shell parsing bugs across runner environments:
+
+- **No inline heredocs in workflows**: Never use `<<`, `<<'PY'`, `<<EOF`, `<<-`, or any heredoc variant inside `.github/workflows/*.yml`. Indented heredocs in YAML `run: |` blocks fail because bash requires the delimiter to start at column 0 (unless tab-indented with `<<-`).
+- **Use `pipeline/` modules**: All non-trivial logic, JSON manipulations, fallbacks, and safety nets belong in dedicated Python modules under `pipeline/` (e.g., `pipeline/mark_excluded.py`, `pipeline/status.py`) invoked as clean single-line commands from workflow steps.
+- **Automated linting**: Workflows are automatically checked by `.github/workflows/lint-workflows.yml` on push/PR via:
+  1. `scripts/lint_workflows.py`: Strictly disallows `<<` heredocs across all workflow files and runs `bash -n` on all extracted `run:` blocks to catch shell syntax errors before jobs run.
+  2. `actionlint` (via `reviewdog/action-actionlint@v1`): Static analysis of workflow structures and ShellCheck verification.
