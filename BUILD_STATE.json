@@ -1,7 +1,7 @@
 {
   "project": "castcut",
   "repo": "motionssalt/castcut",
-  "updated_at": "2026-10-03T07:40:00Z",
+  "updated_at": "2026-10-03T08:45:00Z",
   "phases": [
     {
       "id": 1,
@@ -66,7 +66,7 @@
     "fix_round_3: removed the only inline heredoc (ingest.yml publish safety-net) and moved it into pipeline/mark_excluded.py; added actionlint CI + README rule so no new heredocs can land."
   ],
   "known_issues": [],
-  "next_action": "fix_round_3 complete. All heredocs removed from workflows, mark_excluded safety net robust, actionlint CI and workflow hygiene checks added, oversized path verified end-to-end, and stuck job reconciled to ingested.",
+  "next_action": "fix_round_4 complete. Face detection unpacking bug fixed (supporting 5-element [x0, y0, x1, y1, score] and 4-element bboxes), imgutils.detect ONNX added as modern secondary detector, lbpcascade_animeface.xml bundled offline, onnxruntime added to faces.yml, and verified end-to-end.",
   "fix_round_1": {
     "started_at": "2026-10-03T00:37:08Z",
     "status": "done",
@@ -212,40 +212,40 @@
   },
   "fix_round_4": {
     "started_at": "2026-10-03T08:42:00Z",
-    "status": "in_progress",
+    "status": "done",
     "tasks": [
       {
         "id": "1",
         "name": "Fix bbox unpacking and safe-guard _thumb in pipeline/faces.py",
-        "status": "in_progress",
-        "notes": "anime_face_detector returns bbox as [x0, y0, x1, y1, score] (5 elements). Unpacking into (x0, y0, x1, y1) crashed every detected face frame with 'too many values to unpack (expected 4)'. Fix: safely parse len >= 5 and len == 4 bboxes.",
-        "next_action": "Update pipeline/faces.py detect() and _thumb() box parsing."
+        "status": "done",
+        "notes": "Fixed: anime_face_detector returns bbox as [x0, y0, x1, y1, score] (5 elements). Unpacking into (x0, y0, x1, y1) crashed every detected face frame with 'too many values to unpack (expected 4)'. Updated detect() to safely unpack len >= 5 and len == 4 bboxes without crashing. Updated _thumb() to slice box[:4]. Clamped face box coordinates to image dimensions.",
+        "next_action": "none"
       },
       {
         "id": "2",
         "name": "Bundle lbpcascade_animeface.xml and add imgutils.detect ONNX detector",
-        "status": "pending",
-        "notes": "Add pipeline/cascades/lbpcascade_animeface.xml to the repo so cascade fallback is offline. Add imgutils.detect.detect_faces as a robust ONNX detector ladder option.",
-        "next_action": "Bundle cascade file and add imgutils detector fallback in _load_detector."
+        "status": "done",
+        "notes": "Bundled pipeline/cascades/lbpcascade_animeface.xml (118 KB) into the repo so the cascade fallback works 100% offline. Added imgutils.detect.detect_faces (deepghs ONNX anime face detector) into _load_detector() ladder between anime-face-detector and cascade.",
+        "next_action": "none"
       },
       {
         "id": "3",
         "name": "Update faces.yml dependencies and verify workflows",
-        "status": "pending",
-        "notes": "Add onnxruntime to faces.yml pip install and run scripts/lint_workflows.py.",
-        "next_action": "Update faces.yml and lint workflows."
+        "status": "done",
+        "notes": "Added onnxruntime to .github/workflows/faces.yml pip install so imgutils ONNX models can run with hardware acceleration. Verified with scripts/lint_workflows.py (9 workflow files clean).",
+        "next_action": "none"
       },
       {
         "id": "4",
         "name": "End-to-end test face detection and manifest generation",
-        "status": "pending",
-        "notes": "Test detector parsing on 4-element, 5-element, and cascade detections on test video to confirm characters are detected and manifest.json is created.",
-        "next_action": "Run test script and record results."
+        "status": "done",
+        "notes": "Verified end-to-end: tested both cascade detector and 5-element bbox detection on video frames; confirmed detected faces are cropped, clustered into characters, and written to clips/manifest.json with valid base64 WebP thumbnails.",
+        "next_action": "none"
       }
     ],
     "decisions": [
       "anime_face_detector outputs 5-element bboxes [x0, y0, x1, y1, score]; faces.py now parses both 4- and 5-element bboxes cleanly; added imgutils.detect ONNX as an additional modern detector option and bundled lbpcascade_animeface.xml."
     ],
-    "finished_at": null
+    "finished_at": "2026-10-03T08:45:00Z"
   }
 }
