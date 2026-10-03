@@ -62,9 +62,9 @@
     <p id="jobListEmpty" class="dim center" hidden>No jobs yet — add a source above.</p>
   </section>
 
-  <!-- ============ JOB ============ -->
+    <!-- ============ PROJECT ============ -->
   <section id="job" hidden>
-    <button id="btnBack" class="btn ghost sm">← Jobs</button>
+    <button id="btnBack" class="btn ghost sm">← Projects</button>
 
     <div class="card">
       <div class="jobhead">
@@ -73,6 +73,26 @@
       </div>
       <p id="jobMsg" class="dim"></p>
       <p id="jobMeta" class="dim sm"></p>
+
+      <!-- live progress stepper -->
+      <div id="liveProgress" class="progress-wrap" hidden>
+        <div class="stepper">
+          <div class="step" data-step="ingest"><span class="step-num">1</span><span class="step-lbl">Ingest</span></div>
+          <div class="step-line"></div>
+          <div class="step" data-step="analysis"><span class="step-num">2</span><span class="step-lbl">Analysis</span></div>
+          <div class="step-line"></div>
+          <div class="step" data-step="ready"><span class="step-num">3</span><span class="step-lbl">Ready</span></div>
+          <div class="step-line"></div>
+          <div class="step" data-step="export"><span class="step-num">4</span><span class="step-lbl">Export</span></div>
+          <div class="step-line"></div>
+          <div class="step" data-step="done"><span class="step-num">5</span><span class="step-lbl">Done</span></div>
+        </div>
+        <div class="live-status-row">
+          <span id="liveTicker" class="sm dim mono"></span>
+          <a id="liveRunLink" class="live-link sm" target="_blank" rel="noopener" href="#" hidden>Live run log ↗</a>
+        </div>
+      </div>
+
       <div id="jobFailed" hidden>
         <div class="alert fail">
           <div id="jobFailReason"></div>
@@ -98,70 +118,97 @@
       </div>
     </div>
 
-    <!-- mode picker -->
-    <div id="modePicker" class="card" hidden>
-      <h2>What are we making?</h2>
-      <div class="modegrid">
-        <button id="btnModeClips" class="modecard">
-          <span class="mi">🙂</span><b>Clips</b>
-          <small class="dim">Pick characters, get every scene they appear in.</small>
-        </button>
-        <button id="btnModeScene" class="modecard">
-          <span class="mi">🎞</span><b>Scene</b>
-          <small class="dim">Describe a scene; an AI writes the cut list.</small>
-        </button>
-      </div>
+    <!-- Project Tabs (always available once source is ready) -->
+    <div id="projectTabs" class="tabbar" hidden>
+      <button class="tabbtn sel" data-tab="overview">📋 Overview</button>
+      <button class="tabbtn" data-tab="clips">🙂 Clips</button>
+      <button class="tabbtn" data-tab="scene">🎞 AI Scene</button>
+      <button class="tabbtn" data-tab="exports">📦 Exports <span id="exportsBadge" class="tab-badge" hidden>0</span></button>
     </div>
 
-    <!-- Mode 1 -->
-    <div id="mClips" class="card" hidden>
-      <h2>🙂 Clips</h2>
-      <div id="facesStart">
-        <label class="lbl">Sample rate (fps)</label>
-        <input id="sampleFps" class="field" type="number" min="0.5" max="2.0" step="0.1" value="1.0">
-        <button id="btnFaces" class="btn primary block">Analyze faces</button>
-      </div>
-      <div id="galleryWrap" hidden>
-        <p class="dim sm">Tap characters in the order you want them in the cut.</p>
-        <div id="gallery" class="gallery"></div>
-        <div class="rowgap">
-          <button id="btnMerge" class="btn ghost sm">Merge selected</button>
-          <button id="btnIgnore" class="btn ghost sm">Ignore selected</button>
-        </div>
-        <div class="tuners">
-          <div><label class="lbl">Merge gap (s)</label><input id="gapSec" class="field" type="number" min="0" max="10" step="0.5" value="2"></div>
-          <div><label class="lbl">Pad (s)</label><input id="padSec" class="field" type="number" min="0" max="2" step="0.1" value="0.4"></div>
-        </div>
-        <div class="stickybar" id="extractBar">
-          <span id="extractInfo" class="sm">0 selected</span>
-          <button id="btnExportClips" class="btn primary">Extract</button>
+    <!-- Tab 1: Overview -->
+    <div id="tabOverview" class="tabpanel" hidden>
+      <div class="card">
+        <h2>Source Details</h2>
+        <div id="sourceDetails" class="details-grid"></div>
+        <div id="hybridActionCard" class="action-box" hidden>
+          <div class="ab-header">
+            <b>✨ Unified Hybrid Analysis</b>
+            <small class="dim">Runs face clustering and scene transcription together in one go.</small>
+          </div>
+          <div class="rowgap">
+            <button id="btnHybridAnalyze" class="btn primary block">Run Hybrid Analysis</button>
+          </div>
         </div>
       </div>
     </div>
 
-    <!-- Mode 2 -->
-    <div id="mScene" class="card" hidden>
-      <h2>🎞 Scene</h2>
-      <div id="sceneStart">
-        <label class="lbl">What scene do you need? <span class="dim">(blank = AI picks the best one)</span></label>
-        <textarea id="sceneReq" class="field" rows="3" placeholder="e.g. the fight intro where X draws the sword"></textarea>
-        <button id="btnSceneAnalyze" class="btn primary block">Analyze source</button>
-      </div>
-      <div id="sceneAgent" hidden>
-        <h3>1 · Copy the agent prompt</h3>
-        <p class="dim sm">Paste it into your AI of choice.</p>
-        <button id="btnCopyPrompt" class="btn primary block">📋 Copy agent prompt</button>
-        <h3>2 · Paste the production JSON back</h3>
-        <textarea id="prodJson" class="field mono" rows="8" placeholder='{"version":1,"segments":[{"start":12.5,"end":27}]}'></textarea>
-        <p id="validationOut" class="err"></p>
-        <button id="btnScenePush" class="btn primary block">Cut & export</button>
+    <!-- Tab 2: Clips -->
+    <div id="tabClips" class="tabpanel" hidden>
+      <div class="card">
+        <h2>🙂 Face Detection & Clips</h2>
+        <div id="facesStart">
+          <p class="dim sm">Extract and cluster characters in this video.</p>
+          <label class="lbl">Sample rate (fps)</label>
+          <input id="sampleFps" class="field" type="number" min="0.5" max="2.0" step="0.1" value="1.0">
+          <button id="btnFaces" class="btn primary block">Analyze faces</button>
+        </div>
+        <div id="galleryWrap" hidden>
+          <p class="dim sm">Tap characters in the order you want them in the cut.</p>
+          <div id="gallery" class="gallery"></div>
+          <div class="rowgap">
+            <button id="btnMerge" class="btn ghost sm">Merge selected</button>
+            <button id="btnIgnore" class="btn ghost sm">Ignore selected</button>
+          </div>
+          <div class="tuners">
+            <div><label class="lbl">Merge gap (s)</label><input id="gapSec" class="field" type="number" min="0" max="10" step="0.5" value="2"></div>
+            <div><label class="lbl">Pad (s)</label><input id="padSec" class="field" type="number" min="0" max="2" step="0.1" value="0.4"></div>
+          </div>
+          <div class="stickybar" id="extractBar">
+            <span id="extractInfo" class="sm">0 selected</span>
+            <button id="btnExportClips" class="btn primary">Extract video</button>
+          </div>
+        </div>
       </div>
     </div>
 
-    <!-- downloads -->
-    <div id="dlCard" class="card" hidden>
-      <h2>Files</h2>
-      <div id="downloads"></div>
+    <!-- Tab 3: Scene / AI -->
+    <div id="tabScene" class="tabpanel" hidden>
+      <div class="card">
+        <h2>🎞 Scene & AI Agent</h2>
+        <div id="sceneStart">
+          <label class="lbl">What scene do you need? <span class="dim">(blank = AI picks the best one)</span></label>
+          <textarea id="sceneReq" class="field" rows="3" placeholder="e.g. the fight intro where X draws the sword"></textarea>
+          <button id="btnSceneAnalyze" class="btn primary block">Analyze source</button>
+        </div>
+        <div id="sceneAgent" hidden>
+          <h3>1 · Copy the agent prompt</h3>
+          <p class="dim sm">Paste it into your AI of choice.</p>
+          <button id="btnCopyPrompt" class="btn primary block">📋 Copy agent prompt</button>
+          <h3>2 · Paste the production JSON back</h3>
+          <textarea id="prodJson" class="field mono" rows="8" placeholder='{"version":1,"segments":[{"start":12.5,"end":27}]}'></textarea>
+          <p id="validationOut" class="err"></p>
+          <button id="btnScenePush" class="btn primary block">Cut & export</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tab 4: Exports & Downloads -->
+    <div id="tabExports" class="tabpanel" hidden>
+      <div class="card">
+        <div class="rowhead" style="margin-top:0">
+          <h2>Project Exports</h2>
+          <span id="exportsSummary" class="dim sm"></span>
+        </div>
+        <div id="exportsList" class="exports-list"></div>
+        <p id="exportsEmpty" class="dim center" style="margin:20px 0" hidden>No exports created yet. Create one from the Clips or Scene tab.</p>
+      </div>
+
+      <!-- Additional release files -->
+      <div id="dlCard" class="card" hidden>
+        <h2>Release Assets</h2>
+        <div id="downloads"></div>
+      </div>
     </div>
   </section>
 </main>
