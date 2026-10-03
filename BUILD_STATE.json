@@ -1,7 +1,7 @@
 {
   "project": "castcut",
   "repo": "motionssalt/castcut",
-  "updated_at": "2026-10-03T01:20:00Z",
+  "updated_at": "2026-10-03T01:52:00Z",
   "phases": [
     {
       "id": 1,
@@ -65,7 +65,7 @@
     "fix_round_2 oversized-source fallback: copied from ClipForge bug-69 design — pipeline/stage_a/release_gate.py (2 GiB per-asset LIMIT_BYTES gate, verified vs GitHub docs 2026-10: 2 GiB per release asset, no total-release cap) and pipeline/stage_a/refetch_source.py (re-fetch from the durably committed ingest request, reusing the same ingest downloaders incl. saved torrent file indices). CastCut adaptation: ingest.py decides BEFORE upload using the real on-disk size with a 128 MiB safety margin (CASTCUT_RELEASE_LIMIT_BYTES env override for testing), records video_in_release:false + re-fetch info in jobs/<id>/ingest.json; pipeline/refetch.py re-downloads into work/ before every downstream step (faces, scene_analyze, clips_export, scene_export); workflow keeps an upload-error safety net that falls back to the exclusion path."
   ],
   "known_issues": [],
-  "next_action": "fix_round_2 in progress: size gate module next.",
+  "next_action": "fix_round_2 complete. Live-check: ingest a >2GiB source (or set repo variable CASTCUT_RELEASE_LIMIT_BYTES to a small value) and confirm the release holds everything except source.*, faces/scene still run, and the export release gains only the final mp4.",
   "fix_round_1": {
     "started_at": "2026-10-03T00:37:08Z",
     "status": "done",
@@ -103,7 +103,7 @@
   },
   "fix_round_2": {
     "started_at": "2026-10-03T01:20:00Z",
-    "status": "in_progress",
+    "status": "done",
     "tasks": [
       {
         "id": "1",
@@ -115,52 +115,53 @@
       {
         "id": "2",
         "name": "pipeline/release_size.py — shared size gate",
-        "status": "in_progress",
-        "notes": "",
-        "next_action": "write module, commit, push"
+        "status": "done",
+        "notes": "pipeline/release_size.py: LIMIT_BYTES=2GiB (GitHub docs, no total-release cap), 128MiB margin, CASTCUT_RELEASE_LIMIT_BYTES env override, CLI --check gate (exit 1 + clear message).",
+        "next_action": "none"
       },
       {
         "id": "3",
         "name": "ingest.py size check + exclusion record",
-        "status": "pending",
-        "notes": "",
-        "next_action": "add video_in_release decision + refetch info to ingest.json"
+        "status": "done",
+        "notes": "ingest.py: post-download gate on real on-disk sizes; records video_in_release, asset_sizes, video_excluded_reason, refetch{request_path,selection_path,selected_indices} in ingest.json.",
+        "next_action": "none"
       },
       {
         "id": "4",
         "name": "pipeline/refetch.py — re-download from original source",
-        "status": "pending",
-        "notes": "",
-        "next_action": "port refetch_source.py; disk-space check + logging; same file selection"
+        "status": "done",
+        "notes": "pipeline/refetch.py (port of ClipForge refetch_source.py): ensure_source() - release download when video_in_release, else re-download via ingest.py's own downloaders (direct_url/gdrive/magnet/torrent_file with saved selection.json indices); logs+checks free disk (1.15x source + 512MiB), deletes aria2 dir after copy, probes result. One code path for all 4 downstream steps.",
+        "next_action": "none"
       },
       {
         "id": "5",
         "name": "workflows: conditional upload + refetch steps + final-output check + cleanup",
-        "status": "pending",
-        "notes": "",
-        "next_action": "ingest.yml, faces.yml, scene-analyze.yml, clips-export.yml, scene-export.yml"
+        "status": "done",
+        "notes": "ingest.yml: create release first, upload source only if video_in_release, upload-failure safety net flips to exclusion; status message + video_in_release flag. faces/scene-analyze/clips-export/scene-export.yml: Fetch source now runs pipeline.refetch (aria2 installed, df -h logged); both export workflows gate the final output with release_size --check before upload, so the release only ever gains the final video.",
+        "next_action": "none"
       },
       {
         "id": "6",
         "name": "UI note for excluded video",
-        "status": "pending",
-        "notes": "",
-        "next_action": "app.js badge 'Large video: will be re-downloaded when processing'"
+        "status": "done",
+        "notes": "app.js job meta appends 'large video: will be re-downloaded when processing' when ingest.video_in_release===false; plain text note, not an error badge.",
+        "next_action": "none"
       },
       {
         "id": "7",
         "name": "test with simulated small limit; verify release only gets final output",
-        "status": "pending",
-        "notes": "",
-        "next_action": "local unit test with CASTCUT_RELEASE_LIMIT_BYTES override"
+        "status": "done",
+        "notes": "Simulated with CASTCUT_RELEASE_LIMIT_BYTES=262144 on a local ffmpeg-generated mp4 + local HTTP server: ingest excluded the video and wrote refetch info; refetch re-downloaded a byte-identical file (30484 bytes); release_size gate exits 1 under tiny limit and passes under the real limit; all modules py_compile clean; all workflow YAML parses.",
+        "next_action": "none"
       },
       {
         "id": "8",
         "name": "README + mark fix_round_2 done",
-        "status": "pending",
-        "notes": "",
-        "next_action": "document the fallback flow"
+        "status": "done",
+        "notes": "README documents the oversized-source flow; BUILD_STATE fix_round_2 done.",
+        "next_action": "none"
       }
-    ]
+    ],
+    "finished_at": "2026-10-03T01:52:00Z"
   }
 }
