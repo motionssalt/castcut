@@ -1,10 +1,13 @@
 {
   "job_id": "job-1790986609724-yzxq",
-  "state": "created",
-  "message": "Queued for ingest",
+  "state": "ingest_running",
+  "message": "Downloading source",
   "title": "Promised",
   "created_at_epoch": 1790986612,
   "created_at": "2026-10-03T00:16:52Z",
-  "updated_at": "2026-10-03T00:16:52Z",
-  "expires_at_epoch": 1791073012
+  "updated_at": "2026-10-03T00:17:23Z",
+  "expires_at_epoch": 1791073012,
+  "updated_at_epoch": 1790986643,
+  "release_tag": "castcut-job-1790986609724-yzxq",
+  "workflow_run_url": "https://github.com/motionssalt/castcut/actions/runs/37081392714"
 }
