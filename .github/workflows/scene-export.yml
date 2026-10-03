@@ -62,7 +62,10 @@ jobs:
         run: |
           python -m pipeline.status "${{ inputs.job_id }}" --state scene_ready \
             --message "Scene file ready. Download from the release." \
-            --set-json "$(cat jobs/${{ inputs.job_id }}/scene/export.json)"
+            --set-json "$(cat jobs/${{ inputs.job_id }}/scene/export.json 2>/dev/null || echo '{}')"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git pull --rebase --autostash || true
           git add "jobs/${{ inputs.job_id }}/"
           git commit -m "castcut: scene ready ${{ inputs.job_id }}" || true
           for i in 1 2 3; do git push && break; git pull --rebase --autostash; sleep 2; done
@@ -70,8 +73,16 @@ jobs:
       - name: Status — failed
         if: failure()
         run: |
-          python -m pipeline.status "${{ inputs.job_id }}" --state scene_failed \
-            --message "Scene export failed; see the validation.json or workflow log."
+          if [ -f "jobs/${{ inputs.job_id }}/scene/export.json" ] && [ -n "$(find work -name 'castcut-scene-*.mp4' 2>/dev/null)" ]; then
+            echo "::warning::Step failed after export succeeded; preserving scene_ready state"
+            python -m pipeline.status "${{ inputs.job_id }}" --state scene_ready \
+              --message "Scene file ready. Download from the release." \
+              --set-json "$(cat jobs/${{ inputs.job_id }}/scene/export.json 2>/dev/null || echo '{}')"
+          else
+            python -m pipeline.status "${{ inputs.job_id }}" --state scene_failed \
+              --message "Scene export failed; see workflow log: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" \
+              --workflow-run-url "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git pull --rebase --autostash || true
