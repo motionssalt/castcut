@@ -1,18 +1,68 @@
 {
   "project": "castcut",
   "repo": "motionssalt/castcut",
-  "updated_at": "2026-10-02T00:00:00Z",
+  "updated_at": "2026-10-03T00:15:08Z",
   "phases": [
-    {"id": 1, "name": "repo + secrets + auto-deploy", "status": "in_progress", "notes": "Private repo created via API. Cloudflare Pages project 'castcut' created (castcut.pages.dev). Secrets + deploy workflow being wired."},
-    {"id": 2, "name": "research + ingestion (copy ClipForge)", "status": "in_progress", "notes": "ClipForge Stage A pattern studied: request file in jobs/<id>/ + workflow_dispatch + aria2/requests download + release asset storage + status.json. Porting."},
-    {"id": 3, "name": "auth gate (PAT)", "status": "in_progress", "notes": "Pages Function /api/* validates owner PAT server-side against GitHub /user (login must be motionssalt) on every request. Token lives only in browser localStorage."},
-    {"id": 4, "name": "mode 1: faces pipeline", "status": "in_progress", "notes": "hysts/anime-face-detector (YOLOv3) + deepghs CCIP embeddings (imgutils) + online centroid clustering. lbpcascade_animeface fallback."},
-    {"id": 5, "name": "mode 1: gallery UI + export", "status": "in_progress", "notes": "Single-JSON manifest with embedded 112px WebP thumbs. Ordered multi-select, merge groups, ignore. Hard-cut concat + x264 CRF slow compress pass."},
-    {"id": 6, "name": "mode 2: scene pipeline", "status": "in_progress", "notes": "faster-whisper transcript + ffmpeg scdet scene index + screenshots + agent prompt with embedded strict JSON schema."},
-    {"id": 7, "name": "mode 2: UI + JSON import + export", "status": "in_progress", "notes": "Paste JSON -> jsonschema validation with numbered errors -> full-quality cut (CRF 14) -> one file."},
-    {"id": 8, "name": "polish, size checks, README", "status": "in_progress", "notes": "README documents setup, modes, JSON schema, resume protocol, TTL (24h)."}
+    {
+      "id": 1,
+      "name": "repo + secrets + auto-deploy",
+      "status": "done",
+      "notes": "Repo private, secrets sealed-box encrypted (CLOUDFLARE_API_TOKEN, CLOUDFLARE_ACCOUNT_ID), deploy.yml pushes site/ to Pages on every main push. Verified push triggered a deploy run."
+    },
+    {
+      "id": 2,
+      "name": "research + ingestion (copy ClipForge)",
+      "status": "done",
+      "notes": "Ingestion ported from ClipForge stage_a: jobs/<id>/ingest-request.json -> workflow_dispatch -> aria2/requests/gdrive download -> release asset. 24h TTL via cleanup.yml."
+    },
+    {
+      "id": 3,
+      "name": "auth gate (PAT)",
+      "status": "done",
+      "notes": "Pages _middleware.js validates x-castcut-pat against GitHub /user; only login==motionssalt passes. Token lives in browser localStorage only."
+    },
+    {
+      "id": 4,
+      "name": "mode 1: faces pipeline",
+      "status": "done",
+      "notes": "hysts/anime-face-detector (YOLOv3, CPU) + deepghs CCIP embeddings (imgutils) + online centroid clustering (cos thr 0.35). Fallbacks: lbpcascade_animeface + HSV histograms. 1fps sampling, tunable."
+    },
+    {
+      "id": 5,
+      "name": "mode 1: gallery UI + export",
+      "status": "done",
+      "notes": "Single manifest.json with embedded 112px WebP base64 thumbs; ordered tap-to-select, merge groups, ignore; export = ordered hard-cut concat + x264 CRF23 slow, before/after sizes logged."
+    },
+    {
+      "id": 6,
+      "name": "mode 2: scene pipeline",
+      "status": "done",
+      "notes": "faster-whisper tiny transcript + ffmpeg scdet 0.35 scene index + 480p screenshots; agent prompt embeds strict JSON schema + scene request."
+    },
+    {
+      "id": 7,
+      "name": "mode 2: UI + JSON import + export",
+      "status": "done",
+      "notes": "Paste JSON -> scene_export.py validates with numbered errors -> full-quality cut (CRF 14) hard-cut join -> one release file."
+    },
+    {
+      "id": 8,
+      "name": "polish, size checks, README",
+      "status": "done",
+      "notes": "README covers setup, modes, JSON schema, resume protocol, TTL. All modules py_compile clean."
+    }
   ],
-  "decisions": [],
+  "decisions": [
+    "Face detector: hysts/anime-face-detector YOLOv3 (CPU) over RetinaFace/FasterRCNN \u2014 best accuracy-per-second on free runners; lbpcascade_animeface is fallback only.",
+    "Embeddings: deepghs CCIP via imgutils (512-d), cosine threshold 0.35; HSV histogram fallback if model download fails.",
+    "Clustering: online nearest-centroid, no sklearn dependency.",
+    "Sampling: 1 fps default (tunable 0.5-2), frames scaled to 480p; capped at 3600 frames for long videos.",
+    "Thumbnails: 112px WebP q78 base64 embedded in a single manifest.json so the gallery loads in one request.",
+    "Storage: GitHub release castcut-<job_id> per job; 24h TTL, hourly cleanup.yml deletes expired releases.",
+    "Mode 1 export: ordered per-character, no interleave, no duplicated ranges, hard cuts only, x264 CRF 23 slow final pass (sizes logged).",
+    "Mode 2 export: full quality (CRF 14), hard cuts, strict JSON schema v1 with numbered validation errors.",
+    "Auth: Pages middleware checks GitHub /user login==motionssalt on every /api/* call; PAT stays client-side."
+  ],
   "known_issues": [],
-  "next_action": "Push full codebase, set repo secrets (sealed box), verify push->deploy, then mark phases done."
+  "next_action": "All 8 phases done. To operate: open https://castcut.pages.dev, paste owner PAT, ingest a source, pick Clips or Scene. If a phase regresses, set it back to in_progress in this file and push."
 }
