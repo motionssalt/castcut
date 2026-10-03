@@ -30,6 +30,7 @@ def main() -> None:
     ap.add_argument("--gap", type=float, default=None, help="merge gap override (s)")
     ap.add_argument("--pad", type=float, default=None, help="pad override (s)")
     ap.add_argument("--crf", type=int, default=23)
+    ap.add_argument("--export-id", default=None, help="Unique export ID for hybrid project model")
     args = ap.parse_args()
 
     clips_dir = os.path.join(args.jobs_root, args.job_id, "clips")
@@ -110,7 +111,9 @@ def main() -> None:
     )
 
     # Pass 2: HandBrake-style visually-lossless compression (CRF 23 slow).
-    final = os.path.join(args.work_dir, f"castcut-clips-{args.job_id}.mp4")
+    export_id = args.export_id or f"exp-{args.job_id}-clips"
+    asset_name = f"castcut-export-{export_id}.mp4" if args.export_id else f"castcut-clips-{args.job_id}.mp4"
+    final = os.path.join(args.work_dir, asset_name)
     cmd = ["ffmpeg", "-hide_banner", "-loglevel", "error", "-y", "-i", joined,
            "-c:v", "libx264", "-crf", str(args.crf), "-preset", "slow", "-pix_fmt", "yuv420p"]
     if has_audio:
@@ -124,10 +127,19 @@ def main() -> None:
     print(f"[clips] size after  compression: {human_size(s_after)} "
           f"({100 * s_after / max(1, s_before):.0f}% of intermediate)", flush=True)
 
+    selected_chars = [c for c in order if c in per_char_counts]
+    char_label = ", ".join(selected_chars[:3])
+    if len(selected_chars) > 3:
+        char_label += f" (+{len(selected_chars) - 3} others)"
+
     summary = {
         "version": 1,
+        "export_id": export_id,
+        "project_id": args.job_id,
         "job_id": args.job_id,
-        "order": [c for c in order if c in per_char_counts],
+        "type": "clips",
+        "label": char_label or "Selected characters",
+        "order": selected_chars,
         "per_char_segments": per_char_counts,
         "total_segments": len(segments),
         "total_duration": round(sum(e - s for s, e in segments), 1),
@@ -136,9 +148,20 @@ def main() -> None:
         "size_before_human": human_size(s_before),
         "size_after_human": human_size(s_after),
         "asset_name": os.path.basename(final),
+        "status": "done",
     }
+
+    # Write legacy clips/export.json
+    os.makedirs(clips_dir, exist_ok=True)
     with open(os.path.join(clips_dir, "export.json"), "w", encoding="utf-8") as fh:
         json.dump(summary, fh, indent=2)
+
+    # Write project exports/<export_id>.json
+    exports_dir = os.path.join(args.jobs_root, args.job_id, "exports")
+    os.makedirs(exports_dir, exist_ok=True)
+    with open(os.path.join(exports_dir, f"{export_id}.json"), "w", encoding="utf-8") as fh:
+        json.dump(summary, fh, indent=2)
+
     print(json.dumps(summary, indent=2), flush=True)
 
 

@@ -65,6 +65,7 @@ def main() -> None:
     ap.add_argument("job_id")
     ap.add_argument("--jobs-root", default="jobs")
     ap.add_argument("--work-dir", default="work")
+    ap.add_argument("--export-id", default=None, help="Unique export ID for hybrid project model")
     args = ap.parse_args()
 
     scene_dir = os.path.join(args.jobs_root, args.job_id, "scene")
@@ -94,7 +95,9 @@ def main() -> None:
     print(f"[scene-export] {len(segments)} segments, "
           f"total {sum(e - s for s, e in segments):.1f}s", flush=True)
 
-    final = os.path.join(args.work_dir, f"castcut-scene-{args.job_id}.mp4")
+    export_id = args.export_id or f"exp-{args.job_id}-scene"
+    asset_name = f"castcut-export-{export_id}.mp4" if args.export_id else f"castcut-scene-{args.job_id}.mp4"
+    final = os.path.join(args.work_dir, asset_name)
     concat_segments(
         src=src,
         segments=segments,
@@ -106,20 +109,36 @@ def main() -> None:
     )
 
     size = os.path.getsize(final)
+    ai_label = data.get("title", "") or "AI Scene Edit"
     summary = {
         "version": 1,
+        "export_id": export_id,
+        "project_id": args.job_id,
         "job_id": args.job_id,
+        "type": "ai",
+        "label": ai_label,
         "ok": True,
-        "title": data.get("title", ""),
+        "title": ai_label,
         "segments": len(segments),
         "total_duration": round(sum(e - s for s, e in segments), 1),
         "size_bytes": size,
         "size_human": human_size(size),
         "asset_name": os.path.basename(final),
         "quality": "full (x264 CRF 14, no heavy compression)",
+        "status": "done",
     }
+
+    # Write legacy scene/export.json
+    os.makedirs(scene_dir, exist_ok=True)
     with open(os.path.join(scene_dir, "export.json"), "w", encoding="utf-8") as fh:
         json.dump(summary, fh, indent=2)
+
+    # Write project exports/<export_id>.json
+    exports_dir = os.path.join(args.jobs_root, args.job_id, "exports")
+    os.makedirs(exports_dir, exist_ok=True)
+    with open(os.path.join(exports_dir, f"{export_id}.json"), "w", encoding="utf-8") as fh:
+        json.dump(summary, fh, indent=2)
+
     print(json.dumps(summary, indent=2), flush=True)
 
 
