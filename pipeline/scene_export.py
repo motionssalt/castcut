@@ -13,7 +13,8 @@ import json
 import os
 import sys
 
-from .utils import build_concat_filter, human_size, parse_time, probe_video, run
+from .utils import (concat_segments, human_size, parse_time, probe_video,
+                    run)
 
 
 def validate_production(data, duration: float) -> tuple[list, list]:
@@ -93,22 +94,16 @@ def main() -> None:
     print(f"[scene-export] {len(segments)} segments, "
           f"total {sum(e - s for s, e in segments):.1f}s", flush=True)
 
-    filt = build_concat_filter(segments, meta["has_audio"])
-    filter_path = os.path.join(args.work_dir, "scene_concat.txt")
-    with open(filter_path, "w", encoding="utf-8") as fh:
-        fh.write(filt)
-
     final = os.path.join(args.work_dir, f"castcut-scene-{args.job_id}.mp4")
-    cmd = ["ffmpeg", "-hide_banner", "-loglevel", "error", "-y", "-i", src,
-           "-filter_complex_script", filter_path, "-map", "[v]"]
-    if meta["has_audio"]:
-        cmd += ["-map", "[a]"]
-    # FULL QUALITY: CRF 14, no downscale, no fps change.
-    cmd += ["-c:v", "libx264", "-crf", "14", "-preset", "medium", "-pix_fmt", "yuv420p"]
-    if meta["has_audio"]:
-        cmd += ["-c:a", "aac", "-b:a", "192k"]
-    cmd += ["-movflags", "+faststart", final]
-    run(cmd)
+    concat_segments(
+        src=src,
+        segments=segments,
+        output_path=final,
+        has_audio=meta["has_audio"],
+        crf=14,
+        preset="medium",
+        temp_dir=args.work_dir,
+    )
 
     size = os.path.getsize(final)
     summary = {
