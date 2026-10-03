@@ -293,23 +293,23 @@
       {
         "id": "A",
         "name": "Status crash: fix write_status, audit workflow calls, tests, truthful failure, recover job-1791013658900-mp21",
-        "status": "in_progress",
-        "notes": "Diagnosis confirmed: write_status() passed job_id positionally while --set-json also contained job_id, causing TypeError: write_status() got multiple values for argument 'job_id'. Fixing write_status signature, sanitizing extra kwargs, auditing all workflow status invocations, adding resilience and truthful failure, recovering job-1791013658900-mp21.",
-        "next_action": "Implement status.py fixes, recover job-1791013658900-mp21, commit and push."
+        "status": "done",
+        "notes": "DONE: Refactored write_status with collision-proof signature (*args, **extra), defensive popping of reserved keys, terminal success guard protecting ready states from accidental failure overwrites, truthful Status - failed steps with links to workflow runs, audited all workflow status invocations, and successfully reconciled job-1791013658900-mp21 to clips_ready state.",
+        "next_action": "none"
       },
       {
         "id": "B",
         "name": "Hybrid project model (core change)",
-        "status": "pending",
-        "notes": "One automatic hybrid analysis pipeline replaces separate modes (runs ingest, face analysis, scene analysis). Project page is hub with always-available Clips and AI sections. Exports list with unlimited exports per project, persistence until project deletion, release overflow handling (castcut-job-<id>-out-N), full delete project, concurrent exports support, and backward-compatible migration.",
-        "next_action": "Pending Task A and C completion."
+        "status": "in_progress",
+        "notes": "Transition from mode-based jobs to unified Projects. Unified hybrid analysis pipeline (runs ingest -> face detection & clustering -> scene transcription & boundaries). Project page hub with always-available Clips & AI tabs. Multiple exports per project with per-export state tracking, release overflow support, deletion of all associated releases/tags, persistence until project deletion, and backward-compatible migration of legacy jobs.",
+        "next_action": "Implement hybrid analysis workflow/pipeline, project export state handling, release overflow logic, and migration script."
       },
       {
         "id": "C",
         "name": "Pipeline robustness & automated tests",
-        "status": "pending",
-        "notes": "Add automated tests: pytest in tests/ for pipeline.status with every state/arg combination; workflow contract test extracting and verifying all python -m pipeline.* CLI calls; local dry-run selftest; CI workflow running tests and actionlint.",
-        "next_action": "Pending Task A completion."
+        "status": "done",
+        "notes": "DONE: Added tests/test_status.py (26 tests for all states, duplicate kwargs, and guards), tests/test_workflow_contract.py (83 tests verifying all python -m pipeline.* invocations against module CLI definitions across all 10 workflows), pipeline/selftest.py (end-to-end dry-run harness on synthetic video), and .github/workflows/ci.yml running lint, actionlint, pytest, and selftest on every push.",
+        "next_action": "none"
       },
       {
         "id": "D",
@@ -333,7 +333,13 @@
         "next_action": "Pending Task E completion."
       }
     ],
-    "decisions": [],
+    "decisions": [
+      "status.py signature refactored to *args, **extra to be immune to positional vs keyword duplicate job_id/state collisions. Reserved keys popped defensively.",
+      "Terminal success guard in status.py: once clips_ready, scene_ready, ready, done, or hybrid_ready is reached, incoming failure states are ignored unless --force is specified.",
+      "Workflow failure steps made truthful: verify if export outputs and upload succeeded before writing clips_failed/scene_failed; failure messages explicitly link GitHub Actions run URL.",
+      "Job job-1791013658900-mp21 reconciled to clips_ready using existing 100.6 MB release asset and export metadata.",
+      "Contract test test_workflow_contract.py added to automatically inspect all workflow YAML files and ensure every python -m pipeline.* call adheres to the target CLI spec before deployment."
+    ],
     "finished_at": null
   }
 }
