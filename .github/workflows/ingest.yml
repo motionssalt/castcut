@@ -67,22 +67,14 @@ jobs:
             if gh release upload "$tag" work/source.* --clobber; then
               echo "source video uploaded to the release"
             else
-              # Safety net (fix_round_2): the pre-upload size check already
+              # Safety net (fix_round_3): the pre-upload size check already
               # prevents this, but if an upload still fails (e.g. GitHub
               # lowered the limit), fall back to the exclusion path instead
-              # of failing the job.
+              # of failing the job. This is a single-line pipeline module —
+              # no inline heredocs anywhere in the workflows.
               echo "::warning::source upload failed — falling back to the exclusion path"
-              python - <<'PY'
-              import json
-              p = "jobs/${{ inputs.job_id }}/ingest.json"
-              rec = json.load(open(p))
-              rec["video_in_release"] = False
-              rec["video_excluded_reason"] = (
-                  "source upload failed at release-publish time (size-limit "
-                  "safety net); it will be re-downloaded from the original "
-                  "source when processing starts")
-              json.dump(rec, open(p, "w"), indent=2)
-              PY
+              python -m pipeline.mark_excluded "${{ inputs.job_id }}"
+              exit 0
             fi
           else
             echo "source video excluded from the release (over the per-asset size limit) — skipping upload; it will be re-downloaded when processing"
