@@ -13,7 +13,7 @@ import sys
 import time
 from datetime import datetime, timezone
 
-DEFAULT_TTL_SECONDS = 86400  # 24h — see cleanup.yml / README
+DEFAULT_TTL_SECONDS = None  # Persistent by default (projects persist until deleted)
 
 SUCCESS_STATES = frozenset({
     "clips_ready",
@@ -98,14 +98,15 @@ def write_status(
         return rec
 
     if not rec:
-        ttl = int(ttl_seconds or DEFAULT_TTL_SECONDS)
         rec = {
             "job_id": job_id,
             "created_at_epoch": int(now),
             "created_at": _iso(now),
-            "expires_at_epoch": int(now + ttl),
-            "expires_at": _iso(now + ttl),
         }
+        ttl = ttl_seconds if ttl_seconds is not None else DEFAULT_TTL_SECONDS
+        if ttl is not None:
+            rec["expires_at_epoch"] = int(now + ttl)
+            rec["expires_at"] = _iso(now + ttl)
 
     rec["state"] = state
     rec["message"] = message

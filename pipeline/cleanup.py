@@ -36,7 +36,14 @@ def main() -> None:
             continue
         exp = rec.get("expires_at_epoch")
         state = rec.get("state", "")
-        if not exp or state in ("expired", "cleaned"):
+        # Projects and their outputs persist until deleted by the user.
+        # Active, ready, or project states never expire.
+        if (
+            not exp
+            or state in ("expired", "cleaned")
+            or rec.get("persistent", True)
+            or state in ("hybrid_ready", "clips_ready", "scene_ready", "ingested", "faces_ready", "scene_awaiting_json")
+        ):
             continue
         if now > float(exp):
             expired.append((job_id, spath, rec))
