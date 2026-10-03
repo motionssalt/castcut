@@ -1,7 +1,7 @@
 {
   "project": "castcut",
   "repo": "motionssalt/castcut",
-  "updated_at": "2026-10-03T06:56:40Z",
+  "updated_at": "2026-10-03T06:58:00Z",
   "phases": [
     {
       "id": 1,
@@ -172,14 +172,14 @@
       {
         "id": "A",
         "name": "Remove all inline heredocs from workflows",
-        "status": "in_progress",
-        "notes": "One heredoc exists: ingest.yml 'Publish release' step, python - <<'PY' ... PY, indented terminator -> bash never finds it, syntax error before any code runs (the fix_round_2 safety net). No <<- forms anywhere. Move the safety-net Python into pipeline/mark_excluded.py and call it as a single-line command. Keep behavior identical: on upload failure set video_in_release=false, same video_excluded_reason text, keep refetch intact.",
-        "next_action": "Create pipeline/mark_excluded.py (stdlib-only, reads jobs/<id>/ingest.json, sets video_in_release=false + video_excluded_reason + preserves refetch), py_compile it, then rewrite ingest.yml Publish step to call it as one line on upload failure and exit 0. Then grep all .github/workflows for << to confirm zero heredocs remain."
+        "status": "done",
+        "notes": "One heredoc exists: ingest.yml 'Publish release' step, python - <<'PY' ... PY, indented terminator -> bash never finds it, syntax error before any code runs (the fix_round_2 safety net). No <<- forms anywhere. Move the safety-net Python into pipeline/mark_excluded.py and call it as a single-line command. Keep behavior identical: on upload failure set video_in_release=false, same video_excluded_reason text, keep refetch intact. Done: created pipeline/mark_excluded.py (stdlib-only; sets video_in_release=false + upload-failure reason; preserves refetch + all other keys; idempotent). Rewrote ingest.yml publish step to call 'python -m pipeline.mark_excluded \"${{ inputs.job_id }}\"' and 'exit 0' on upload failure instead of the indented <<'PY' heredoc. Confirmed: grep finds zero << heredocs across all 8 workflow files; all 8 YAML files parse; bash -n passes on the rendered publish step (including empty CASTCUT_RELEASE_LIMIT_BYTES case).",
+        "next_action": "none"
       },
       {
         "id": "B",
         "name": "Make the publish step robust",
-        "status": "pending",
+        "status": "in_progress",
         "notes": "Upload failure must never kill the job: run mark_excluded and continue with exit 0. Confirm empty CASTCUT_RELEASE_LIMIT_BYTES is treated as unset (release_size.py already does: empty -> default; keep it that way). After this step the job must reach 'ingested' (ready for mode selection), not ingest_failed. Ensure Status — failed only runs on genuine failures (it already does via if: failure(), and the safety net will now exit 0 so success() is true).",
         "next_action": "Verify release_size.limit_bytes() handles empty CASTCUT_RELEASE_LIMIT_BYTES (it does). Confirm ingest.yml publish step exits 0 on upload failure after Task A. Re-read the completed ingest.yml to confirm Status — done runs and Status — failed does not."
       },
