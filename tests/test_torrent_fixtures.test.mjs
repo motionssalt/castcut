@@ -232,3 +232,63 @@ test("Task B: Search filtering does not lose existing selections", () => {
   assert.ok(checked.has(3), "New selection (3) added");
   assert.equal(checked.size, 2);
 });
+
+test("Task A Regression: Start flow simulation succeeds for 1-file, 50-file, magnet, and direct URL", async () => {
+  // Helper simulating Start button request builder
+  async function buildStartPayload({ srcKind, url, fileBuf, title, selectedIndices }) {
+    const body = { source: { kind: srcKind }, title: title || "" };
+    let step = "validate";
+
+    if (srcKind === "direct_url" || srcKind === "gdrive") {
+      body.source.url = url;
+      if (!body.source.url) throw new Error("Paste a URL first");
+    }
+    if (srcKind === "magnet") {
+      body.source.magnet = url;
+      if (!body.source.magnet.startsWith("magnet:?")) throw new Error("That doesn't look like a magnet:? link");
+    }
+    if (srcKind === "torrent_file") {
+      if (!fileBuf) throw new Error("Choose a .torrent file first");
+      step = "parse_torrent";
+      const t = parseTorrentFiles(fileBuf);
+      const checked = selectedIndices || (t.files.filter(f => f.is_video).length === 1 ? [1] : []);
+      if (!checked.length) throw new Error("Select at least 1 video file to start");
+
+      step = "encode_torrent";
+      body.source.torrent_b64 = bytesToBase64(fileBuf);
+      body.torrent_name = t.name;
+      body.files = t.files;
+      body.selected_indices = checked;
+    }
+    return { step: "api_post", body };
+  }
+
+  // Case 1: Direct URL
+  const direct = await buildStartPayload({ srcKind: "direct_url", url: "https://example.com/video.mp4", title: "Direct" });
+  assert.equal(direct.body.source.url, "https://example.com/video.mp4");
+  assert.equal(direct.body.title, "Direct");
+
+  // Case 2: Magnet
+  const magnet = await buildStartPayload({ srcKind: "magnet", url: "magnet:?xt=urn:btih:abcdef1234567890", title: "Magnet Job" });
+  assert.equal(magnet.body.source.magnet, "magnet:?xt=urn:btih:abcdef1234567890");
+
+  // Case 3: 1-file torrent (auto-selects single video)
+  const singleBuf = createSyntheticTorrent(1);
+  const singleRes = await buildStartPayload({ srcKind: "torrent_file", fileBuf: singleBuf, title: "Single" });
+  assert.equal(singleRes.body.selected_indices.length, 1);
+  assert.ok(singleRes.body.source.torrent_b64.length > 0);
+
+  // Case 4: 50-file torrent with 1 file selected
+  const torrent50Buf = createSyntheticTorrent(50, 4000);
+  const res50 = await buildStartPayload({
+    srcKind: "torrent_file",
+    fileBuf: torrent50Buf,
+    title: "Lelouch",
+    selectedIndices: [1],
+  });
+  assert.equal(res50.body.title, "Lelouch");
+  assert.equal(res50.body.selected_indices.length, 1);
+  assert.equal(res50.body.selected_indices[0], 1);
+  assert.equal(res50.body.files.length, 50);
+  assert.ok(res50.body.source.torrent_b64.length > 0);
+});

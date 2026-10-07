@@ -42,7 +42,9 @@ jobs:
           fail_on_error: true
 
       - name: Run automated test suite
-        run: pytest -v tests/
+        run: |
+          node tests/test_torrent_fixtures.test.mjs
+          pytest -v tests/
 
       - name: Run pipeline selftest dry-run
         run: python -m pipeline.selftest

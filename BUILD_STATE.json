@@ -350,16 +350,16 @@
       {
         "id": "A",
         "name": "Maximum call stack size exceeded on Start",
-        "status": "in_progress",
-        "notes": "Diagnosed: String.fromCharCode(...new Uint8Array(buf)) in app.js and gh.js blows stack on large torrents/files. Replacing with chunked conversion, adding error stack trace logging, copy button, and automated regression tests.",
-        "next_action": "Fix app.js and gh.js, add regression tests with 50, 200, 1000 files."
+        "status": "done",
+        "notes": "DONE: Diagnosed RangeError root cause as unchunked String.fromCharCode(...buf) during .torrent base64 encoding on large manifests (50+ episodes). Replaced with FileReader.readAsDataURL and 8KB-chunked bytesToBase64 in app.js and gh.js. Added error stack capture with 'Copy error details' button. Added automated regression tests (50, 200, 1000 files and end-to-end Start flow simulation for 1-file, 50-file, magnet, direct URL) wired into CI.",
+        "next_action": "none"
       },
       {
         "id": "B",
         "name": "Torrent file selection defaults and controls",
-        "status": "pending",
+        "status": "in_progress",
         "notes": "Select none by default if >1 video; select 1 if exactly 1 video. Add Select all, Clear, search filter box, warning on large total size, natural sorting by episode, preserve index, mirror in magnet flow.",
-        "next_action": "Update renderNewJobFiles and magnet awaiting_selection flow with default selection logic, search input, select all/clear, natural sort, and warning."
+        "next_action": "Verify and harden selection defaults, search filtering, warning threshold, natural sorting in both new-job and magnet awaiting_selection."
       },
       {
         "id": "C",
