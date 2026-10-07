@@ -12,8 +12,19 @@ export async function onRequest({ request, data }) {
     for (const id of recent) {
       const j = await readJson(pat, `jobs/${id}/status.json`);
       if (!j) { jobs.push({ job_id: id }); continue; }
+      let title = j.title || j.torrent_name || null;
+      if (!title) {
+        // Fallback for existing jobs without saved title in status.json
+        const reqDoc = await readJson(pat, `jobs/${id}/ingest-request.json`);
+        title = reqDoc?.title || reqDoc?.torrent_name || null;
+        if (!title) {
+          const filesDoc = await readJson(pat, `jobs/${id}/files.json`);
+          title = filesDoc?.torrent_name || null;
+        }
+      }
       jobs.push({
-        job_id: id, state: j.state, message: j.message, title: j.title,
+        job_id: id, state: j.state, message: j.message, title: title,
+        torrent_name: j.torrent_name || null,
         updated_at: j.updated_at, workflow_run_url: j.workflow_run_url || j.run_url || null,
       });
     }
@@ -36,8 +47,12 @@ export async function onRequest({ request, data }) {
     const now = new Date().toISOString().replace(/\.\d+Z$/, "Z");
     const epoch = Math.floor(Date.now() / 1000);
 
+    const userTitle = String(body.title || "").trim().slice(0, 200);
+    const torrentName = String(body.torrent_name || "").trim().slice(0, 255);
+    const resolvedTitle = userTitle || torrentName || "";
+
     const req = {
-      version: 1, job_id: jobId, title: String(body.title || "").slice(0, 200),
+      version: 1, job_id: jobId, title: userTitle, torrent_name: torrentName,
       source: { kind, url: body?.source?.url, magnet: body?.source?.magnet },
       created_at_epoch: epoch,
     };
@@ -47,7 +62,7 @@ export async function onRequest({ request, data }) {
     await putFile(pat, `jobs/${jobId}/ingest-request.json`, JSON.stringify(req, null, 2), `castcut: create job ${jobId}`);
 
     const status = {
-      job_id: jobId, title: req.title,
+      job_id: jobId, title: resolvedTitle, torrent_name: torrentName,
       created_at_epoch: epoch, created_at: now, updated_at: now, updated_at_epoch: epoch,
       expires_at_epoch: epoch + 86400,
     };
