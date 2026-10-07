@@ -357,16 +357,16 @@
       {
         "id": "B",
         "name": "Torrent file selection defaults and controls",
-        "status": "in_progress",
-        "notes": "Select none by default if >1 video; select 1 if exactly 1 video. Add Select all, Clear, search filter box, warning on large total size, natural sorting by episode, preserve index, mirror in magnet flow.",
-        "next_action": "Verify and harden selection defaults, search filtering, warning threshold, natural sorting in both new-job and magnet awaiting_selection."
+        "status": "done",
+        "notes": "DONE: Default selection now selects 0 files if >1 video file, or 1 file if exactly 1 video. Start button is disabled with 'Select at least 1 file to start' hint. Added case-insensitive name filter/search that preserves selections, dynamic 'Select all (N shown)' and 'Clear shown' / 'Clear', 2 GiB large-selection warning, and natural episode sorting preserving 1-based torrent file indices. Mirrored identically in magnet awaiting_selection flow.",
+        "next_action": "none"
       },
       {
         "id": "C",
         "name": "Show full names with expand controls",
-        "status": "pending",
+        "status": "in_progress",
         "notes": "Do not truncate without way to read full text; overflow-wrap, line-clamp-2 collapsed with tap-to-expand / chevron; full torrent name header; 44px tap targets; apply to project list and project page.",
-        "next_action": "Add wrapping and tap-to-expand to torrent name header, file rows, project list cards, and project view headers."
+        "next_action": "Verify and harden full-name expand controls, non-colliding tap targets, and wrapping on long titles and export labels."
       },
       {
         "id": "D",

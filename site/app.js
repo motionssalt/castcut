@@ -347,6 +347,9 @@ function renderNewJobFiles(t) {
     if (btnSelectAll) {
       btnSelectAll.textContent = q ? `Select all (${visibleVideos.length} shown)` : `Select all (${videos.length})`;
     }
+    if (btnClear) {
+      btnClear.textContent = q ? "Clear shown" : "Clear";
+    }
 
     if (!visibleFiles.length) {
       const empty = document.createElement("div");
@@ -1016,6 +1019,9 @@ function renderSelection(filesDoc, st) {
 
     if (btnSelectAll) {
       btnSelectAll.textContent = q ? `Select all (${visibleVideos.length} shown)` : `Select all (${videos.length})`;
+    }
+    if (btnClear) {
+      btnClear.textContent = q ? "Clear shown" : "Clear";
     }
 
     if (!visibleFiles.length) {
