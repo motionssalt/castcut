@@ -48,6 +48,19 @@ export async function readJson(pat, path) {
   try { return JSON.parse(txt); } catch { return null; }
 }
 
+export function bytesToBase64(bytes) {
+  if (typeof Buffer !== "undefined") {
+    return Buffer.from(bytes).toString("base64");
+  }
+  const u8 = bytes instanceof Uint8Array ? bytes : new Uint8Array(bytes);
+  const CHUNK_SIZE = 8192;
+  let binary = "";
+  for (let i = 0; i < u8.length; i += CHUNK_SIZE) {
+    binary += String.fromCharCode.apply(null, u8.subarray(i, i + CHUNK_SIZE));
+  }
+  return btoa(binary);
+}
+
 export async function putFile(pat, path, content, message) {
   let sha = null;
   try {
@@ -57,8 +70,8 @@ export async function putFile(pat, path, content, message) {
     if (!String(e.message).includes("-> 404")) throw e;
   }
   const b64 = typeof content === "string"
-    ? btoa(unescape(encodeURIComponent(content)))
-    : btoa(String.fromCharCode(...new Uint8Array(content)));
+    ? (typeof Buffer !== "undefined" ? Buffer.from(content, "utf8").toString("base64") : btoa(unescape(encodeURIComponent(content))))
+    : bytesToBase64(content);
   return gh(pat, `/repos/${REPO}/contents/${esc(path)}`, {
     method: "PUT",
     body: { message, content: b64, sha: sha || undefined },
