@@ -4,11 +4,11 @@
   "torrent_name": "[AV1ophobia] Code Geass Lelouch of the Rebellion - R1 + R2 [BD][1080p][AV1][OPUS][Dual Audio]",
   "created_at_epoch": 1791410158,
   "created_at": "2026-10-07T21:55:58Z",
-  "updated_at": "2026-10-07T21:57:32Z",
-  "updated_at_epoch": 1791410252,
+  "updated_at": "2026-10-07T21:58:05Z",
+  "updated_at_epoch": 1791410285,
   "expires_at_epoch": 1791496558,
-  "state": "ingest_running",
-  "message": "Downloading source",
+  "state": "ingested",
+  "message": "Source ready. Pick a mode (Clips or Scene).",
   "selected_files": [
     {
       "index": 50,
@@ -17,5 +17,6 @@
     }
   ],
   "release_tag": "castcut-job-1791410158245-1kwa",
-  "workflow_run_url": "https://github.com/motionssalt/castcut/actions/runs/37692830276"
+  "workflow_run_url": "https://github.com/motionssalt/castcut/actions/runs/37692830276",
+  "video_in_release": true
 }
