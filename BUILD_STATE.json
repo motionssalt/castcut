@@ -350,9 +350,9 @@
       {
         "id": "A",
         "name": "Maximum call stack size exceeded on Start",
-        "status": "pending",
-        "notes": "Diagnosed: String.fromCharCode(...new Uint8Array(buf)) in app.js and gh.js blows stack on large torrents/files. Needs chunked conversion, regression tests, stack capture, and useful error display.",
-        "next_action": "Implement chunked base64 conversion in app.js and gh.js, add regression test with 50/200/1000 file fixtures, add error stack logging and copy button."
+        "status": "in_progress",
+        "notes": "Diagnosed: String.fromCharCode(...new Uint8Array(buf)) in app.js and gh.js blows stack on large torrents/files. Replacing with chunked conversion, adding error stack trace logging, copy button, and automated regression tests.",
+        "next_action": "Fix app.js and gh.js, add regression tests with 50, 200, 1000 files."
       },
       {
         "id": "B",
