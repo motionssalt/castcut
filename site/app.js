@@ -93,6 +93,106 @@ async function withButtonLoading(btn, fn, loadingText) {
   }
 }
 
+// ---------- byte and base64 helpers (chunked to prevent Maximum call stack size exceeded) ----------
+function bytesToBase64(bytes) {
+  const u8 = bytes instanceof Uint8Array ? bytes : new Uint8Array(bytes);
+  const CHUNK_SIZE = 8192;
+  let binary = "";
+  for (let i = 0; i < u8.length; i += CHUNK_SIZE) {
+    binary += String.fromCharCode.apply(null, u8.subarray(i, i + CHUNK_SIZE));
+  }
+  return btoa(binary);
+}
+
+async function fileToBase64(file) {
+  if (typeof FileReader !== "undefined") {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => {
+        const res = reader.result;
+        const b64 = typeof res === "string" ? res.split(",")[1] || "" : "";
+        resolve(b64);
+      };
+      reader.onerror = () => reject(reader.error || new Error("Failed to read file"));
+      reader.readAsDataURL(file);
+    });
+  }
+  const buf = await file.arrayBuffer();
+  return bytesToBase64(new Uint8Array(buf));
+}
+
+function naturalSortFiles(files) {
+  return [...files].sort((a, b) => (a.path || "").localeCompare(b.path || "", undefined, { numeric: true, sensitivity: "base" }));
+}
+
+let lastHomeError = null;
+function setHomeError(err, step = "start") {
+  const wrap = $("homeErrWrap");
+  const el = $("homeErr");
+  if (!err) {
+    if (wrap) wrap.hidden = true;
+    if (el) el.textContent = "";
+    lastHomeError = null;
+    return;
+  }
+  const msg = err.message || String(err);
+  console.error(`[Start failed at step '${step}']:`, err);
+  lastHomeError = {
+    step,
+    message: msg,
+    stack: err.stack || "(no stack available)",
+    time: new Date().toISOString(),
+  };
+  if (el) el.textContent = msg;
+  if (wrap) wrap.hidden = false;
+}
+
+let lastJobError = null;
+function setJobError(err, step = "job") {
+  const wrap = $("jobErrWrap");
+  const el = $("jobErr");
+  if (!err) {
+    if (wrap) wrap.hidden = true;
+    if (el) el.textContent = "";
+    lastJobError = null;
+    return;
+  }
+  const msg = err.message || String(err);
+  console.error(`[Job operation failed at step '${step}']:`, err);
+  lastJobError = {
+    step,
+    message: msg,
+    stack: err.stack || "(no stack available)",
+    time: new Date().toISOString(),
+  };
+  if (el) el.textContent = msg;
+  if (wrap) wrap.hidden = false;
+}
+
+async function copyErrorDetails(errObj, btn) {
+  if (!errObj || !btn) return;
+  const text = `Step: ${errObj.step}\nTime: ${errObj.time}\nError: ${errObj.message}\n\nStack:\n${errObj.stack}`;
+  try {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      await navigator.clipboard.writeText(text);
+    } else {
+      const ta = document.createElement("textarea");
+      ta.value = text;
+      ta.style.position = "fixed";
+      ta.style.opacity = "0";
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand("copy");
+      document.body.removeChild(ta);
+    }
+    const orig = btn.textContent;
+    btn.textContent = "✓ Copied error details";
+    setTimeout(() => { btn.textContent = orig; }, 2000);
+  } catch (e) {
+    toast("Could not copy: " + e.message);
+  }
+}
+
 // ---------- client-side .torrent parser (bencode, mirrors pipeline/torrents.py) ----------
 function bdecode(u8) {
   let i = 0;
@@ -165,6 +265,20 @@ $("btnLogout").onclick = () => { clearPat(); location.reload(); };
 
 // ---------- home: new project ----------
 let srcKind = "direct_url";
+function updateStartButtonState() {
+  if (srcKind === "torrent_file") {
+    const t = state.newJobTorrent;
+    const hasPick = !!(t && t.checked && t.checked.size > 0);
+    const btn = $("btnIngest");
+    if (btn) btn.disabled = !hasPick;
+    show("newJobStartHint", !hasPick);
+  } else {
+    const btn = $("btnIngest");
+    if (btn) btn.disabled = false;
+    show("newJobStartHint", false);
+  }
+}
+
 $("srcKindRow").addEventListener("click", (e) => {
   const b = e.target.closest(".pill"); if (!b) return;
   srcKind = b.dataset.kind;
@@ -172,75 +286,214 @@ $("srcKindRow").addEventListener("click", (e) => {
   show("srcUrlWrap", srcKind !== "torrent_file");
   show("srcFileWrap", srcKind === "torrent_file");
   $("srcUrl").placeholder = srcKind === "magnet" ? "magnet:?xt=urn:btih:…" : srcKind === "gdrive" ? "https://drive.google.com/…" : "https://…/video.mp4";
+  updateStartButtonState();
 });
 $("btnPickTorrent").onclick = () => $("srcFile").click();
 $("srcFile").onchange = async () => {
   $("torrentErr").textContent = ""; show("newJobFiles", false); state.newJobTorrent = null;
-  const file = $("srcFile").files[0]; if (!file) return;
-  if (!file.size || file.size > 1024 * 1024) { $("torrentErr").textContent = "The .torrent must be 1 byte – 1 MB."; return; }
+  const file = $("srcFile").files[0]; if (!file) { updateStartButtonState(); return; }
+  if (!file.size || file.size > 1024 * 1024) { $("torrentErr").textContent = "The .torrent must be 1 byte – 1 MB."; updateStartButtonState(); return; }
   try {
     const t = parseTorrentFiles(await file.arrayBuffer());
     t.raw = file;
     state.newJobTorrent = t;
     renderNewJobFiles(t);
     $("btnPickTorrent").textContent = `📦 ${t.name}`;
-  } catch (e) { $("torrentErr").textContent = "Could not parse that .torrent: " + e.message; }
+  } catch (e) {
+    $("torrentErr").textContent = "Could not parse that .torrent: " + e.message;
+    updateStartButtonState();
+  }
 };
+
 function renderNewJobFiles(t) {
-  const list = $("newJobFileList"); list.innerHTML = "";
-  const videos = t.files.filter(f => f.is_video);
-  const checked = new Set(videos.map(f => f.index));
-  t.files.forEach(f => {
-    const row = document.createElement("div");
-    row.className = "frow" + (f.is_video ? " sel" : " novideo");
-    row.innerHTML = `<span class="chk">${f.is_video ? "✓" : ""}</span>
-      <span class="fi"><b>${esc(f.path)}</b><small>${humanSize(f.length)}</small></span>
-      ${f.is_video ? '<span class="vbadge">VIDEO</span>' : ""}`;
-    if (f.is_video) row.onclick = () => {
-      if (checked.has(f.index)) { checked.delete(f.index); row.classList.remove("sel"); row.querySelector(".chk").textContent = ""; }
-      else { checked.add(f.index); row.classList.add("sel"); row.querySelector(".chk").textContent = "✓"; }
-      info();
+  const sortedFiles = naturalSortFiles(t.files);
+  const videos = sortedFiles.filter(f => f.is_video);
+  if (!t.checked) {
+    // Task B requirement: exactly 1 video -> pre-select; >1 video -> select nothing by default
+    t.checked = new Set(videos.length === 1 ? [videos[0].index] : []);
+  }
+  t.expanded = t.expanded || new Set();
+
+  // Torrent header with full name and expand toggle
+  const headerNameEl = $("newJobTorrentName");
+  const headerToggleBtn = $("btnToggleTorrentName");
+  if (headerNameEl) {
+    headerNameEl.textContent = t.name;
+    headerNameEl.title = t.name;
+  }
+  if (headerToggleBtn) {
+    headerToggleBtn.onclick = (e) => {
+      e.stopPropagation();
+      const exp = headerNameEl.classList.toggle("expanded");
+      headerToggleBtn.textContent = exp ? "▴" : "▾";
     };
-    list.appendChild(row);
-  });
-  const info = () => {
-    const selBytes = t.files.filter(f => checked.has(f.index)).reduce((a, f) => a + f.length, 0);
-    $("newJobSelInfo").textContent = `${checked.size} of ${videos.length} video file(s) selected · ${humanSize(selBytes)}`;
-    t.checked = checked;
-  };
-  if (!videos.length) $("newJobSelInfo").textContent = "⚠ no video files in this torrent";
-  else info();
+  }
+
+  const list = $("newJobFileList");
+  const searchInput = $("newJobFileSearch");
+  const btnSelectAll = $("btnNewJobSelectAll");
+  const btnClear = $("btnNewJobClear");
+
+  function getQuery() {
+    return (searchInput ? searchInput.value : "").trim().toLowerCase();
+  }
+
+  function renderListRows() {
+    list.innerHTML = "";
+    const q = getQuery();
+    const visibleFiles = sortedFiles.filter(f => !q || f.path.toLowerCase().includes(q));
+    const visibleVideos = visibleFiles.filter(f => f.is_video);
+
+    if (btnSelectAll) {
+      btnSelectAll.textContent = q ? `Select all (${visibleVideos.length} shown)` : `Select all (${videos.length})`;
+    }
+
+    if (!visibleFiles.length) {
+      const empty = document.createElement("div");
+      empty.className = "dim sm center";
+      empty.style.padding = "16px";
+      empty.textContent = q ? "No files match that search." : "No files in this torrent.";
+      list.appendChild(empty);
+    } else {
+      visibleFiles.forEach(f => {
+        const row = document.createElement("div");
+        const isChecked = t.checked.has(f.index);
+        const isExpanded = t.expanded.has(f.index);
+        row.className = "frow" + (isChecked ? " sel" : "") + (f.is_video ? "" : " novideo");
+
+        row.innerHTML = `
+          <div class="chk-wrap" title="${f.is_video ? 'Toggle selection' : 'Non-video file'}">
+            <span class="chk">${isChecked ? "✓" : ""}</span>
+          </div>
+          <div class="fi">
+            <b class="name-text ${isExpanded ? 'expanded' : ''}" title="${esc(f.path)}">${esc(f.path)}</b>
+            <div class="fmeta">
+              <span class="mono">#${f.index}</span>
+              <span>·</span>
+              <span>${humanSize(f.length)}</span>
+              ${f.is_video ? '<span class="vbadge">VIDEO</span>' : '<span class="dim xs">OTHER</span>'}
+            </div>
+          </div>
+          <button type="button" class="row-expand-btn" title="Toggle full name">${isExpanded ? "▴" : "▾"}</button>
+        `;
+
+        const nameEl = row.querySelector(".name-text");
+        const expBtn = row.querySelector(".row-expand-btn");
+
+        expBtn.onclick = (e) => {
+          e.stopPropagation();
+          if (t.expanded.has(f.index)) {
+            t.expanded.delete(f.index);
+            nameEl.classList.remove("expanded");
+            expBtn.textContent = "▾";
+          } else {
+            t.expanded.add(f.index);
+            nameEl.classList.add("expanded");
+            expBtn.textContent = "▴";
+          }
+        };
+
+        if (f.is_video) {
+          row.onclick = (e) => {
+            if (e.target.closest(".row-expand-btn")) return;
+            if (t.checked.has(f.index)) {
+              t.checked.delete(f.index);
+              row.classList.remove("sel");
+              row.querySelector(".chk").textContent = "";
+            } else {
+              t.checked.add(f.index);
+              row.classList.add("sel");
+              row.querySelector(".chk").textContent = "✓";
+            }
+            updateSummary();
+          };
+        }
+        list.appendChild(row);
+      });
+    }
+    updateSummary();
+  }
+
+  function updateSummary() {
+    const selBytes = sortedFiles.filter(f => t.checked.has(f.index)).reduce((a, f) => a + f.length, 0);
+    const n = t.checked.size;
+    $("newJobSelInfo").textContent = `${n} of ${videos.length} video file(s) selected · ${humanSize(selBytes)}`;
+
+    // Show warning if total selected size >= 2 GiB
+    const warnBox = $("newJobWarnBox");
+    if (warnBox) {
+      if (selBytes >= 2 * 1024 * 1024 * 1024) {
+        warnBox.textContent = `⚠ Large selection: ${humanSize(selBytes)} — exceeds single release asset limit (2 GiB) and will be re-downloaded when processing.`;
+        warnBox.hidden = false;
+      } else {
+        warnBox.hidden = true;
+      }
+    }
+    updateStartButtonState();
+  }
+
+  if (searchInput) {
+    searchInput.oninput = () => renderListRows();
+  }
+  if (btnSelectAll) {
+    btnSelectAll.onclick = () => {
+      const q = getQuery();
+      const visibleVideos = sortedFiles.filter(f => f.is_video && (!q || f.path.toLowerCase().includes(q)));
+      visibleVideos.forEach(f => t.checked.add(f.index));
+      renderListRows();
+    };
+  }
+  if (btnClear) {
+    btnClear.onclick = () => {
+      const q = getQuery();
+      if (!q) {
+        t.checked.clear();
+      } else {
+        const visibleVideos = sortedFiles.filter(f => f.is_video && f.path.toLowerCase().includes(q));
+        visibleVideos.forEach(f => t.checked.delete(f.index));
+      }
+      renderListRows();
+    };
+  }
+
+  renderListRows();
   show("newJobFiles", true);
 }
 
 $("btnIngest").onclick = async () => {
-  $("homeErr").textContent = "";
+  setHomeError(null);
+  let step = "validate";
   await withButtonLoading($("btnIngest"), async () => {
     const body = { source: { kind: srcKind }, title: $("jobTitle").value.trim() };
     if (srcKind === "direct_url" || srcKind === "gdrive") {
       body.source.url = $("srcUrl").value.trim();
-      if (!body.source.url) throw new Error("paste a URL first");
+      if (!body.source.url) throw new Error("Paste a URL first");
     }
     if (srcKind === "magnet") {
       body.source.magnet = $("srcUrl").value.trim();
-      if (!body.source.magnet.startsWith("magnet:?")) throw new Error("that doesn't look like a magnet:? link");
+      if (!body.source.magnet.startsWith("magnet:?")) throw new Error("That doesn't look like a magnet:? link");
     }
     if (srcKind === "torrent_file") {
       const t = state.newJobTorrent;
-      if (!t) throw new Error("choose a .torrent file first");
-      const checked = [...(t.checked || [])];
-      if (!checked.length) throw new Error("tick at least one video file");
-      const buf = await t.raw.arrayBuffer();
-      body.source.torrent_b64 = btoa(String.fromCharCode(...new Uint8Array(buf)));
+      if (!t) throw new Error("Choose a .torrent file first");
+      const checked = Array.from(t.checked || []);
+      if (!checked.length) throw new Error("Select at least 1 video file to start");
+      step = "encode_torrent";
+      body.source.torrent_b64 = await fileToBase64(t.raw);
       body.torrent_name = t.name;
       body.files = t.files;
       body.selected_indices = checked;
     }
+    step = "api_post";
     const r = await api("/jobs", { method: "POST", body });
+    step = "open_job";
     $("srcUrl").value = ""; $("jobTitle").value = ""; $("srcFile").value = "";
     state.newJobTorrent = null; show("newJobFiles", false); $("btnPickTorrent").textContent = "Choose .torrent file";
+    updateStartButtonState();
     openJob(r.job_id);
-  }, "Starting…").catch(e => { $("homeErr").textContent = e.message; });
+  }, "Starting…").catch(e => {
+    setHomeError(e, step);
+  });
 };
 
 // ---------- home: project list ----------
@@ -256,11 +509,36 @@ async function refreshJobs() {
       if (FINISHED_STATES.has(j.state) || FAILED_RE.test(j.state) || j.state === "cancelled") clearable++;
       const div = document.createElement("div");
       div.className = `jobcard ${cls === "failed" ? "failed" : cls === "cancelled" ? "cancelled" : ""}`;
+
+      const displayTitle = j.title || j.torrent_name || j.job_id;
+      const isCustomTitle = !!(j.title || j.torrent_name) && (j.title || j.torrent_name) !== j.job_id;
+
       div.innerHTML = `<span class="badge ${cls}">${label}</span>
-        <span class="jt"><b>${esc(j.title || j.job_id)}</b><small>${esc(j.message || j.job_id)}</small></span>
+        <span class="jt">
+          <div class="jt-title-wrap">
+            <b class="name-text" title="${esc(displayTitle)}">${esc(displayTitle)}</b>
+            <button type="button" class="expand-btn sm row-expand-btn" title="Toggle full title">▾</button>
+          </div>
+          ${isCustomTitle ? `<span class="job-id-dim mono">${esc(j.job_id)}</span>` : ""}
+          <small>${esc(j.message || j.job_id)}</small>
+        </span>
         <button class="btn ghost sm" data-del title="Delete project">🗑</button>`;
-      div.onclick = (e) => { if (e.target.closest("[data-del]")) return; openJob(j.job_id); };
-      div.querySelector("[data-del]").onclick = () => deleteJob(j.job_id, j.title, true);
+
+      const titleEl = div.querySelector(".jt b");
+      const expandBtn = div.querySelector(".row-expand-btn");
+      if (expandBtn) {
+        expandBtn.onclick = (e) => {
+          e.stopPropagation();
+          const exp = titleEl.classList.toggle("expanded");
+          expandBtn.textContent = exp ? "▴" : "▾";
+        };
+      }
+
+      div.onclick = (e) => {
+        if (e.target.closest("[data-del]") || e.target.closest(".row-expand-btn")) return;
+        openJob(j.job_id);
+      };
+      div.querySelector("[data-del]").onclick = () => deleteJob(j.job_id, displayTitle, true);
       list.appendChild(div);
     });
     const cb = $("btnCleanup");
@@ -402,17 +680,22 @@ function renderJob(r) {
   const st = s.state || "";
   const [label, cls] = statusView(s);
 
-  $("jobTitleH").textContent = s.title || r.project_id || r.job_id;
+  const displayTitle = s.title || r.files?.torrent_name || r.project_id || r.job_id;
+  const isCustomTitle = !!(s.title || r.files?.torrent_name) && (s.title || r.files?.torrent_name) !== r.job_id;
+  $("jobTitleH").innerHTML = `<span class="name-text" title="${esc(displayTitle)}">${esc(displayTitle)}</span>`;
   const badge = $("jobBadge"); badge.className = "badge " + cls; badge.textContent = label;
   $("jobMsg").textContent = s.message || "";
 
   const ing = r.ingest;
-  $("jobMeta").textContent = ing
-    ? `source ${(ing.duration || 0).toFixed(1)}s · ${ing.width}×${ing.height} · ${humanSize(ing.size_bytes)}${(ing.sources || []).length > 1 ? ` · ${ing.sources.length} files` : ""}`
-    : "";
-  if (ing && ing.video_in_release === false) {
-    $("jobMeta").textContent += " · oversized video: refetched on demand";
+  let metaParts = [];
+  if (isCustomTitle) metaParts.push(`<span class="mono">${esc(r.job_id)}</span>`);
+  if (ing) {
+    metaParts.push(`source ${(ing.duration || 0).toFixed(1)}s · ${ing.width}×${ing.height} · ${humanSize(ing.size_bytes)}${(ing.sources || []).length > 1 ? ` · ${ing.sources.length} files` : ""}`);
+    if (ing.video_in_release === false) {
+      metaParts.push("oversized video: refetched on demand");
+    }
   }
+  $("jobMeta").innerHTML = metaParts.join(" · ");
 
   updateStepper(st);
 
@@ -686,64 +969,206 @@ function renderExportsTab(r) {
 
 // ----- torrent selection (job page) -----
 function renderSelection(filesDoc, st) {
-  const list = $("selList"); list.innerHTML = "";
-  if (!state.selChecked.size) {
-    const videos = (filesDoc.files || []).filter(f => f.is_video);
-    videos.forEach(f => state.selChecked.add(f.index));
+  const sortedFiles = naturalSortFiles(filesDoc.files || []);
+  const videos = sortedFiles.filter(f => f.is_video);
+
+  if (state.selInitialized !== filesDoc.job_id) {
+    state.selInitialized = filesDoc.job_id;
+    // Task B requirement: exactly 1 video -> pre-select; >1 video -> select nothing by default
+    state.selChecked = new Set(videos.length === 1 ? [videos[0].index] : []);
   }
-  (filesDoc.files || []).forEach(f => {
-    const on = state.selChecked.has(f.index);
-    const row = document.createElement("div");
-    row.className = "frow" + (on ? " sel" : "") + (f.is_video ? "" : " novideo");
-    row.innerHTML = `<span class="chk">${on ? "✓" : ""}</span>
-      <span class="fi"><b>${esc(f.path)}</b><small>${humanSize(f.length)}</small></span>
-      ${f.is_video ? '<span class="vbadge">VIDEO</span>' : ""}`;
-    if (f.is_video) row.onclick = () => {
-      if (state.selChecked.has(f.index)) state.selChecked.delete(f.index); else state.selChecked.add(f.index);
-      row.classList.toggle("sel"); row.querySelector(".chk").textContent = state.selChecked.has(f.index) ? "✓" : "";
-      selInfo(filesDoc);
+  state.selExpanded = state.selExpanded || new Set();
+
+  const headerEl = $("selTorrentHeader");
+  const headerNameEl = $("selTorrentName");
+  const headerToggleBtn = $("btnToggleSelTorrentName");
+  if (filesDoc.torrent_name) {
+    if (headerEl) headerEl.hidden = false;
+    if (headerNameEl) {
+      headerNameEl.textContent = filesDoc.torrent_name;
+      headerNameEl.title = filesDoc.torrent_name;
+    }
+    if (headerToggleBtn) {
+      headerToggleBtn.onclick = (e) => {
+        e.stopPropagation();
+        const exp = headerNameEl.classList.toggle("expanded");
+        headerToggleBtn.textContent = exp ? "▴" : "▾";
+      };
+    }
+  } else if (headerEl) {
+    headerEl.hidden = true;
+  }
+
+  const list = $("selList");
+  const searchInput = $("selFileSearch");
+  const btnSelectAll = $("btnSelSelectAll");
+  const btnClear = $("btnSelClear");
+
+  function getQuery() {
+    return (searchInput ? searchInput.value : "").trim().toLowerCase();
+  }
+
+  function renderListRows() {
+    list.innerHTML = "";
+    const q = getQuery();
+    const visibleFiles = sortedFiles.filter(f => !q || f.path.toLowerCase().includes(q));
+    const visibleVideos = visibleFiles.filter(f => f.is_video);
+
+    if (btnSelectAll) {
+      btnSelectAll.textContent = q ? `Select all (${visibleVideos.length} shown)` : `Select all (${videos.length})`;
+    }
+
+    if (!visibleFiles.length) {
+      const empty = document.createElement("div");
+      empty.className = "dim sm center";
+      empty.style.padding = "16px";
+      empty.textContent = q ? "No files match that search." : "No files in this torrent.";
+      list.appendChild(empty);
+    } else {
+      visibleFiles.forEach(f => {
+        const row = document.createElement("div");
+        const isChecked = state.selChecked.has(f.index);
+        const isExpanded = state.selExpanded.has(f.index);
+        row.className = "frow" + (isChecked ? " sel" : "") + (f.is_video ? "" : " novideo");
+
+        row.innerHTML = `
+          <div class="chk-wrap" title="${f.is_video ? 'Toggle selection' : 'Non-video file'}">
+            <span class="chk">${isChecked ? "✓" : ""}</span>
+          </div>
+          <div class="fi">
+            <b class="name-text ${isExpanded ? 'expanded' : ''}" title="${esc(f.path)}">${esc(f.path)}</b>
+            <div class="fmeta">
+              <span class="mono">#${f.index}</span>
+              <span>·</span>
+              <span>${humanSize(f.length)}</span>
+              ${f.is_video ? '<span class="vbadge">VIDEO</span>' : '<span class="dim xs">OTHER</span>'}
+            </div>
+          </div>
+          <button type="button" class="row-expand-btn" title="Toggle full name">${isExpanded ? "▴" : "▾"}</button>
+        `;
+
+        const nameEl = row.querySelector(".name-text");
+        const expBtn = row.querySelector(".row-expand-btn");
+
+        expBtn.onclick = (e) => {
+          e.stopPropagation();
+          if (state.selExpanded.has(f.index)) {
+            state.selExpanded.delete(f.index);
+            nameEl.classList.remove("expanded");
+            expBtn.textContent = "▾";
+          } else {
+            state.selExpanded.add(f.index);
+            nameEl.classList.add("expanded");
+            expBtn.textContent = "▴";
+          }
+        };
+
+        if (f.is_video) {
+          row.onclick = (e) => {
+            if (e.target.closest(".row-expand-btn")) return;
+            if (state.selChecked.has(f.index)) {
+              state.selChecked.delete(f.index);
+              row.classList.remove("sel");
+              row.querySelector(".chk").textContent = "";
+            } else {
+              state.selChecked.add(f.index);
+              row.classList.add("sel");
+              row.querySelector(".chk").textContent = "✓";
+            }
+            updateSummary();
+          };
+        }
+        list.appendChild(row);
+      });
+    }
+    updateSummary();
+  }
+
+  function updateSummary() {
+    const selBytes = sortedFiles.filter(f => state.selChecked.has(f.index)).reduce((a, f) => a + (f.length || 0), 0);
+    const n = state.selChecked.size;
+    $("selInfo").textContent = `${n} of ${videos.length} video file(s) selected · ${humanSize(selBytes)}`;
+
+    const warnBox = $("selWarnBox");
+    if (warnBox) {
+      if (selBytes >= 2 * 1024 * 1024 * 1024) {
+        warnBox.textContent = `⚠ Large selection: ${humanSize(selBytes)} — exceeds single release asset limit (2 GiB) and will be re-downloaded when processing.`;
+        warnBox.hidden = false;
+      } else {
+        warnBox.hidden = true;
+      }
+    }
+
+    const btn = $("btnConfirmSel");
+    if (btn) {
+      btn.disabled = st === "selecting" || n === 0;
+      btn.textContent = st === "selecting"
+        ? "Fetching metadata…"
+        : (n === 0 ? "Select at least 1 file" : `Download selected (${n})`);
+    }
+  }
+
+  if (searchInput) {
+    searchInput.oninput = () => renderListRows();
+  }
+  if (btnSelectAll) {
+    btnSelectAll.onclick = () => {
+      const q = getQuery();
+      const visibleVideos = sortedFiles.filter(f => f.is_video && (!q || f.path.toLowerCase().includes(q)));
+      visibleVideos.forEach(f => state.selChecked.add(f.index));
+      renderListRows();
     };
-    list.appendChild(row);
-  });
-  selInfo(filesDoc);
-  const btn = $("btnConfirmSel");
-  btn.disabled = st === "selecting";
-  btn.textContent = st === "selecting" ? "Fetching metadata…" : "Download selected";
+  }
+  if (btnClear) {
+    btnClear.onclick = () => {
+      const q = getQuery();
+      if (!q) {
+        state.selChecked.clear();
+      } else {
+        const visibleVideos = sortedFiles.filter(f => f.is_video && f.path.toLowerCase().includes(q));
+        visibleVideos.forEach(f => state.selChecked.delete(f.index));
+      }
+      renderListRows();
+    };
+  }
+
+  renderListRows();
 }
-function selInfo(filesDoc) {
-  const files = filesDoc.files || [];
-  const n = state.selChecked.size;
-  const bytes = files.filter(f => state.selChecked.has(f.index)).reduce((a, f) => a + (f.length || 0), 0);
-  $("selInfo").textContent = `${n} selected · ${humanSize(bytes)}`;
-}
+
 $("btnConfirmSel").onclick = async () => {
-  const indices = [...state.selChecked];
-  if (!indices.length) { toast("Tick at least one file"); return; }
+  setJobError(null);
+  const indices = Array.from(state.selChecked);
+  if (!indices.length) { toast("Select at least 1 video file to start"); return; }
   await withButtonLoading($("btnConfirmSel"), async () => {
     await api(`/jobs/${state.job}/selection`, { method: "PUT", body: { selected_indices: indices } });
     toast("Download started");
     await tickJob(); schedulePoll();
-  }, "Starting…").catch(e => { $("jobErr").textContent = e.message; });
+  }, "Starting…").catch(e => { setJobError(e, "confirm_selection"); });
 };
 
 // ----- job actions -----
 $("btnCancel").onclick = async () => {
   const ok = await confirmBox("Cancel the running workflow for this project?", "Cancel run");
   if (!ok) return;
+  setJobError(null);
   await withButtonLoading($("btnCancel"), async () => {
     await api(`/jobs/${state.job}/cancel`, { method: "POST" });
     toast("Cancelling…");
     await tickJob(); schedulePoll();
-  }, "Cancelling…").catch(e => { $("jobErr").textContent = e.message; });
+  }, "Cancelling…").catch(e => { setJobError(e, "cancel_job"); });
 };
 $("btnRetry").onclick = async () => {
+  setJobError(null);
   await withButtonLoading($("btnRetry"), async () => {
     await api(`/jobs/${state.job}/retry`, { method: "POST" });
     toast("Retry dispatched");
     await tickJob(); schedulePoll();
-  }, "Retrying…").catch(e => { $("jobErr").textContent = e.message; });
+  }, "Retrying…").catch(e => { setJobError(e, "retry_job"); });
 };
 $("btnDelete").onclick = () => deleteJob(state.job, $("jobTitleH").textContent, false);
+
+$("btnCopyHomeErr")?.addEventListener("click", () => copyErrorDetails(lastHomeError, $("btnCopyHomeErr")));
+$("btnCopyJobErr")?.addEventListener("click", () => copyErrorDetails(lastJobError, $("btnCopyJobErr")));
 
 function esc(s) { return String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c])); }
 
