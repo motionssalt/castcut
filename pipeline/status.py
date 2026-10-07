@@ -113,6 +113,34 @@ def write_status(
     rec["updated_at_epoch"] = int(now)
     rec["updated_at"] = _iso(now)
 
+    # Automatically preserve or populate title and torrent_name from ingest-request.json or files.json
+    if not rec.get("title"):
+        try:
+            req_path = os.path.join(jobs_root, job_id, "ingest-request.json")
+            if os.path.exists(req_path):
+                with open(req_path, encoding="utf-8") as fh:
+                    req_data = json.load(fh)
+                    req_title = req_data.get("title") or req_data.get("torrent_name")
+                    if req_title:
+                        rec["title"] = req_title
+                    if req_data.get("torrent_name") and not rec.get("torrent_name"):
+                        rec["torrent_name"] = req_data["torrent_name"]
+        except Exception:
+            pass
+    if not rec.get("title"):
+        try:
+            files_path = os.path.join(jobs_root, job_id, "files.json")
+            if os.path.exists(files_path):
+                with open(files_path, encoding="utf-8") as fh:
+                    files_data = json.load(fh)
+                    t_name = files_data.get("torrent_name")
+                    if t_name:
+                        rec["title"] = t_name
+                        if not rec.get("torrent_name"):
+                            rec["torrent_name"] = t_name
+        except Exception:
+            pass
+
     # Sanitize and safely merge extra fields
     # Never allow extra to re-inject job_id, state, message, or internal controls
     for forbidden in ("job_id", "state", "ttl_seconds", "jobs_root", "force"):
@@ -156,9 +184,12 @@ def main() -> None:
     ap.add_argument("--failed-step", default=None, help="Name of failing step")
     ap.add_argument("--set-json", default=None, help="Extra JSON object merged into record")
     ap.add_argument("--force", action="store_true", help="Force overwrite even if guard triggers")
+    ap.add_argument("--title", default=None, help="Job title / project name")
     args = ap.parse_args()
 
     extra = {}
+    if args.title is not None:
+        extra["title"] = args.title
     if args.release_tag is not None:
         extra["release_tag"] = args.release_tag
     if args.workflow_run_url is not None:

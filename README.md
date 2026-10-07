@@ -232,3 +232,10 @@ generated on demand. There is no mode choice and no "pipeline finished" state
 - `.github/workflows/ci.yml` runs lint (`scripts/lint_workflows.py`,
   no-heredoc rule), actionlint, pytest, and `python -m pipeline.selftest`
   (end-to-end dry-run on a tiny generated video) on every push.
+
+## Torrent selection defaults, call stack fix, long names (fix_round_5)
+
+- **Call stack RangeError fix (Task A):** Fixed `RangeError: Maximum call stack size exceeded` triggered on Start with large multi-file torrents (50+ episodes). Cause: unchunked byte spreading `String.fromCharCode(...bytes)` during base64 serialization. Resolved using `FileReader.readAsDataURL` and 8 KB chunked `bytesToBase64` across client (`app.js`) and API (`gh.js`). Added visible error reporting with stack trace and "Copy error details" button, plus regression tests for 50, 200, and 1000 file torrent fixtures.
+- **Selection defaults & search (Task B):** Torrents with multiple videos select nothing by default (Start disabled with "Select at least 1 file to start" hint); single-video torrents pre-select their 1 video. Added case-insensitive name filter/search that retains selections across queries, dynamic "Select all (N shown)" and "Clear shown" controls, 2 GiB large-selection warning, and natural episode sorting (episode 2 before episode 10). Mirrored identically in the magnet `awaiting_selection` flow.
+- **Full names with tap-to-expand (Task C):** Long file names, torrent titles, and export labels are no longer truncated without a way to read them. Collapsed state wraps and line-clamps to 2 lines; dedicated 44px chevrons (`▾`/`▴`) and text taps toggle full multi-line display with `overflow-wrap: anywhere; word-break: break-all`. Checkbox tap targets remain isolated from name expansion.
+- **Project cards show project name (Task D):** The project card in the Jobs list displays the user-typed project name as the primary title (falling back to torrent name, then job ID), with the raw job ID displayed small and secondary. Existing projects without custom names retain their format seamlessly.

@@ -327,6 +327,12 @@ function renderNewJobFiles(t) {
       const exp = headerNameEl.classList.toggle("expanded");
       headerToggleBtn.textContent = exp ? "▴" : "▾";
     };
+    if (headerNameEl) {
+      headerNameEl.onclick = (e) => {
+        e.stopPropagation();
+        headerToggleBtn.click();
+      };
+    }
   }
 
   const list = $("newJobFileList");
@@ -382,6 +388,11 @@ function renderNewJobFiles(t) {
 
         const nameEl = row.querySelector(".name-text");
         const expBtn = row.querySelector(".row-expand-btn");
+
+        nameEl.onclick = (e) => {
+          e.stopPropagation();
+          expBtn.click();
+        };
 
         expBtn.onclick = (e) => {
           e.stopPropagation();
@@ -535,6 +546,12 @@ async function refreshJobs() {
           const exp = titleEl.classList.toggle("expanded");
           expandBtn.textContent = exp ? "▴" : "▾";
         };
+        if (titleEl) {
+          titleEl.onclick = (e) => {
+            e.stopPropagation();
+            expandBtn.click();
+          };
+        }
       }
 
       div.onclick = (e) => {
@@ -997,6 +1014,12 @@ function renderSelection(filesDoc, st) {
         const exp = headerNameEl.classList.toggle("expanded");
         headerToggleBtn.textContent = exp ? "▴" : "▾";
       };
+      if (headerNameEl) {
+        headerNameEl.onclick = (e) => {
+          e.stopPropagation();
+          headerToggleBtn.click();
+        };
+      }
     }
   } else if (headerEl) {
     headerEl.hidden = true;
@@ -1055,6 +1078,11 @@ function renderSelection(filesDoc, st) {
 
         const nameEl = row.querySelector(".name-text");
         const expBtn = row.querySelector(".row-expand-btn");
+
+        nameEl.onclick = (e) => {
+          e.stopPropagation();
+          expBtn.click();
+        };
 
         expBtn.onclick = (e) => {
           e.stopPropagation();

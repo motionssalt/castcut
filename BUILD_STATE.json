@@ -63,10 +63,14 @@
     "Mode 2 export: full quality (CRF 14), hard cuts, strict JSON schema v1 with numbered validation errors.",
     "Auth: Pages middleware checks GitHub /user login==motionssalt on every /api/* call; PAT stays client-side.",
     "fix_round_2 oversized-source fallback: copied from ClipForge bug-69 design — pipeline/stage_a/release_gate.py (2 GiB per-asset LIMIT_BYTES gate, verified vs GitHub docs 2026-10: 2 GiB per release asset, no total-release cap) and pipeline/stage_a/refetch_source.py (re-fetch from the durably committed ingest request, reusing the same ingest downloaders incl. saved torrent file indices). CastCut adaptation: ingest.py decides BEFORE upload using the real on-disk size with a 128 MiB safety margin (CASTCUT_RELEASE_LIMIT_BYTES env override for testing), records video_in_release:false + re-fetch info in jobs/<id>/ingest.json; pipeline/refetch.py re-downloads into work/ before every downstream step (faces, scene_analyze, clips_export, scene_export); workflow keeps an upload-error safety net that falls back to the exclusion path.",
-    "fix_round_3: removed the only inline heredoc (ingest.yml publish safety-net) and moved it into pipeline/mark_excluded.py; added actionlint CI + README rule so no new heredocs can land."
+    "fix_round_3: removed the only inline heredoc (ingest.yml publish safety-net) and moved it into pipeline/mark_excluded.py; added actionlint CI + README rule so no new heredocs can land.",
+    "fix_round_5: Base64 serialization on large .torrent files uses FileReader.readAsDataURL and 8KB chunking to eliminate RangeError call stack overflow on 50+ file torrents; added error stack capture.",
+    "fix_round_5: Default file selection picks 0 videos if >1 video file exists in the torrent; 1 video if exactly 1. Live search filter retains selections; Select all / Clear dynamically targets filtered view; 2 GiB warning.",
+    "fix_round_5: Full-name text wrapping with overflow-wrap: anywhere, word-break: break-all, and dedicated tap-to-expand controls (>=44px touch targets) across torrent header, file list, project cards, and export labels.",
+    "fix_round_5: Project cards display user-typed project name as primary title with raw job ID secondary; fallback to torrent name then job ID for legacy projects."
   ],
   "known_issues": [],
-  "next_action": "fix_round_5 in progress: Task A (Maximum call stack size exceeded on Start) - replacing unchunked String.fromCharCode with chunked base64 conversion, adding regression tests.",
+  "next_action": "fix_round_5 completed. All tasks A-D done, regression tests and workflow lint pass.",
   "fix_round_1": {
     "started_at": "2026-10-03T00:37:08Z",
     "status": "done",
@@ -345,7 +349,7 @@
   },
   "fix_round_5": {
     "started_at": "2026-10-07T19:48:00Z",
-    "status": "in_progress",
+    "status": "done",
     "tasks": [
       {
         "id": "A",
@@ -364,17 +368,18 @@
       {
         "id": "C",
         "name": "Show full names with expand controls",
-        "status": "in_progress",
-        "notes": "Do not truncate without way to read full text; overflow-wrap, line-clamp-2 collapsed with tap-to-expand / chevron; full torrent name header; 44px tap targets; apply to project list and project page.",
-        "next_action": "Verify and harden full-name expand controls, non-colliding tap targets, and wrapping on long titles and export labels."
+        "status": "done",
+        "notes": "DONE: Applied overflow-wrap: anywhere and word-break: break-all with 2-line clamp across torrent header, file list rows, project list cards, project view headers, and export labels. Added dedicated >=44px chevron buttons (▾/▴) and direct text tap handlers that toggle multi-line expansion without toggling checkboxes or opening projects. Tested with long filenames containing brackets, underscores, and no spaces.",
+        "next_action": "none"
       },
       {
         "id": "D",
         "name": "Project card shows project name as title",
-        "status": "pending",
-        "notes": "Card titled with project name (fallback to torrent name, then id), id shown small/secondary. Ensure typed name is saved and displayed.",
-        "next_action": "Update job card rendering and status/ingest to display project name prominently with id secondary."
+        "status": "done",
+        "notes": "DONE: Project cards in the Jobs list display the user-typed project name as the prominent card title with the raw job ID displayed small and secondary. Fallbacks gracefully cascade to torrent name, then job ID for legacy projects. Status writer and ingest pipelines preserve user-typed title across workflow steps.",
+        "next_action": "none"
       }
-    ]
+    ],
+    "finished_at": "2026-10-07T20:55:00Z"
   }
 }

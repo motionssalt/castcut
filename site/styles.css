@@ -243,7 +243,7 @@ textarea.field{min-height:88px;resize:vertical}
   display:flex;flex-direction:column;gap:10px;position:relative}
 .export-card.done{border-color:rgba(63,185,80,.4)}
 .export-top{display:flex;align-items:flex-start;justify-content:space-between;gap:8px}
-.export-title{font-size:14px;font-weight:700;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.export-title{font-size:14px;font-weight:700;flex:1;min-width:0;overflow-wrap:anywhere;word-break:break-word;line-height:1.35;user-select:text}
 .export-tag{font-size:11px;padding:3px 8px;border-radius:6px;font-weight:700;flex:none}
 .export-tag.clips{background:rgba(79,140,255,.15);color:var(--acc);border:1px solid rgba(79,140,255,.3)}
 .export-tag.scene{background:rgba(188,140,255,.15);color:var(--await);border:1px solid rgba(188,140,255,.3)}

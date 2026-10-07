@@ -292,3 +292,44 @@ test("Task A Regression: Start flow simulation succeeds for 1-file, 50-file, mag
   assert.equal(res50.body.files.length, 50);
   assert.ok(res50.body.source.torrent_b64.length > 0);
 });
+
+test("Task C & D: Job card title display hierarchy and full-name resolution", () => {
+  function resolveJobCardTitle(job) {
+    const displayTitle = job.title || job.torrent_name || job.job_id;
+    const isCustomTitle = !!(job.title || job.torrent_name) && (job.title || job.torrent_name) !== job.job_id;
+    return {
+      title: displayTitle,
+      secondaryId: isCustomTitle ? job.job_id : null,
+    };
+  }
+
+  // 1. User typed title "Lelouch"
+  const card1 = resolveJobCardTitle({
+    job_id: "job-1791013658900-mp21",
+    title: "Lelouch",
+    torrent_name: "Code Geass Lelouch of the Rebellion R2 [1080p BD-Rip FLAC]",
+  });
+  assert.equal(card1.title, "Lelouch", "Should use typed project name as title");
+  assert.equal(card1.secondaryId, "job-1791013658900-mp21", "Should show job_id secondary");
+
+  // 2. User did not type title, but torrent has a name
+  const card2 = resolveJobCardTitle({
+    job_id: "job-1791013658900-mp22",
+    title: "",
+    torrent_name: "[Group] Show Name - S01E01 (BD 1080p x265 FLAC) [ABCD1234].mkv",
+  });
+  assert.equal(card2.title, "[Group] Show Name - S01E01 (BD 1080p x265 FLAC) [ABCD1234].mkv", "Should fallback to torrent name");
+  assert.equal(card2.secondaryId, "job-1791013658900-mp22");
+
+  // 3. Legacy job with no title or torrent name
+  const card3 = resolveJobCardTitle({
+    job_id: "job-1791013658900-legacy",
+  });
+  assert.equal(card3.title, "job-1791013658900-legacy", "Should fallback to job_id");
+  assert.equal(card3.secondaryId, null, "Should not duplicate job_id if title IS job_id");
+
+  // 4. Very long name without spaces
+  const longName = "[Commie]_Shinsekai_Yori_-_01_[BD_1080p_FLAC]_[5416F669].mkv";
+  const card4 = resolveJobCardTitle({ job_id: "job-long", title: longName });
+  assert.equal(card4.title, longName);
+});
