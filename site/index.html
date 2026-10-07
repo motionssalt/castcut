@@ -45,13 +45,29 @@
         <p id="torrentErr" class="err"></p>
       </div>
       <div id="newJobFiles" hidden>
-        <h3>Pick the files to download</h3>
+        <div class="torrent-header-card" id="newJobTorrentHeader">
+          <div class="th-label">Torrent:</div>
+          <div class="expandable-text" id="newJobTorrentName"></div>
+          <button type="button" class="expand-btn" id="btnToggleTorrentName" title="Toggle full torrent name">▾</button>
+        </div>
+        <div class="filter-controls-row">
+          <input id="newJobFileSearch" class="field sm" type="search" placeholder="Search files by name…" autocomplete="off">
+          <div class="sel-btn-row">
+            <button type="button" id="btnNewJobSelectAll" class="btn ghost sm">Select all</button>
+            <button type="button" id="btnNewJobClear" class="btn ghost sm">Clear</button>
+          </div>
+        </div>
         <div id="newJobFileList" class="filelist"></div>
+        <div id="newJobWarnBox" class="alert-inline warn" hidden></div>
         <p id="newJobSelInfo" class="dim sm"></p>
       </div>
       <input id="jobTitle" class="field" type="text" placeholder="Title (optional)" autocomplete="off">
       <button id="btnIngest" class="btn primary block">Start</button>
-      <p id="homeErr" class="err"></p>
+      <p id="newJobStartHint" class="dim sm center" hidden style="margin-top:6px;">Select at least 1 file to start</p>
+      <div id="homeErrWrap" class="err-box" hidden>
+        <p id="homeErr" class="err"></p>
+        <button id="btnCopyHomeErr" type="button" class="btn-link">Copy error details</button>
+      </div>
     </div>
 
     <div class="rowhead">
@@ -104,14 +120,30 @@
         <button id="btnRetry" class="btn primary" hidden>↻ Retry</button>
         <button id="btnDelete" class="btn danger">🗑 Delete</button>
       </div>
-      <p id="jobErr" class="err"></p>
+      <div id="jobErrWrap" class="err-box" hidden>
+        <p id="jobErr" class="err"></p>
+        <button id="btnCopyJobErr" type="button" class="btn-link">Copy error details</button>
+      </div>
     </div>
 
     <!-- torrent selection -->
     <div id="selCard" class="card" hidden>
       <h2>Pick the files to download</h2>
+      <div class="torrent-header-card" id="selTorrentHeader" hidden>
+        <div class="th-label">Torrent:</div>
+        <div class="expandable-text" id="selTorrentName"></div>
+        <button type="button" class="expand-btn" id="btnToggleSelTorrentName" title="Toggle full torrent name">▾</button>
+      </div>
+      <div class="filter-controls-row">
+        <input id="selFileSearch" class="field sm" type="search" placeholder="Search files by name…" autocomplete="off">
+        <div class="sel-btn-row">
+          <button type="button" id="btnSelSelectAll" class="btn ghost sm">Select all</button>
+          <button type="button" id="btnSelClear" class="btn ghost sm">Clear</button>
+        </div>
+      </div>
       <p class="dim sm" id="selHint">Only the checked files are downloaded.</p>
       <div id="selList" class="filelist"></div>
+      <div id="selWarnBox" class="alert-inline warn" hidden></div>
       <div class="stickybar" id="selBar">
         <span id="selInfo" class="sm"></span>
         <button id="btnConfirmSel" class="btn primary">Download selected</button>
