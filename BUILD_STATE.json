@@ -1,7 +1,7 @@
 {
   "project": "castcut",
   "repo": "motionssalt/castcut",
-  "updated_at": "2026-10-03T19:30:00Z",
+  "updated_at": "2026-10-07T19:48:00Z",
   "phases": [
     {
       "id": 1,
@@ -66,7 +66,7 @@
     "fix_round_3: removed the only inline heredoc (ingest.yml publish safety-net) and moved it into pipeline/mark_excluded.py; added actionlint CI + README rule so no new heredocs can land."
   ],
   "known_issues": [],
-  "next_action": "fix_round_4 complete: status crash fixed + job recovered, hybrid project model with multi-export/release-overflow implemented and migrated, contract tests + CI + selftest green (147 passed), live-feedback UI landed, README updated. Optional: one real-project smoke test on the phone.",
+  "next_action": "fix_round_5 in progress: Task A (Maximum call stack size exceeded on Start) - replacing unchunked String.fromCharCode with chunked base64 conversion, adding regression tests.",
   "fix_round_1": {
     "started_at": "2026-10-03T00:37:08Z",
     "status": "done",
@@ -342,5 +342,39 @@
       "Persistence: 24h auto-expiry removed for projects — cleanup.py skips any persistent or ready-state record; only the raw source video may be absent because pipeline.refetch re-downloads it from the committed ingest request + selection indices."
     ],
     "finished_at": "2026-10-03T19:30:00Z"
+  },
+  "fix_round_5": {
+    "started_at": "2026-10-07T19:48:00Z",
+    "status": "in_progress",
+    "tasks": [
+      {
+        "id": "A",
+        "name": "Maximum call stack size exceeded on Start",
+        "status": "pending",
+        "notes": "Diagnosed: String.fromCharCode(...new Uint8Array(buf)) in app.js and gh.js blows stack on large torrents/files. Needs chunked conversion, regression tests, stack capture, and useful error display.",
+        "next_action": "Implement chunked base64 conversion in app.js and gh.js, add regression test with 50/200/1000 file fixtures, add error stack logging and copy button."
+      },
+      {
+        "id": "B",
+        "name": "Torrent file selection defaults and controls",
+        "status": "pending",
+        "notes": "Select none by default if >1 video; select 1 if exactly 1 video. Add Select all, Clear, search filter box, warning on large total size, natural sorting by episode, preserve index, mirror in magnet flow.",
+        "next_action": "Update renderNewJobFiles and magnet awaiting_selection flow with default selection logic, search input, select all/clear, natural sort, and warning."
+      },
+      {
+        "id": "C",
+        "name": "Show full names with expand controls",
+        "status": "pending",
+        "notes": "Do not truncate without way to read full text; overflow-wrap, line-clamp-2 collapsed with tap-to-expand / chevron; full torrent name header; 44px tap targets; apply to project list and project page.",
+        "next_action": "Add wrapping and tap-to-expand to torrent name header, file rows, project list cards, and project view headers."
+      },
+      {
+        "id": "D",
+        "name": "Project card shows project name as title",
+        "status": "pending",
+        "notes": "Card titled with project name (fallback to torrent name, then id), id shown small/secondary. Ensure typed name is saved and displayed.",
+        "next_action": "Update job card rendering and status/ingest to display project name prominently with id secondary."
+      }
+    ]
   }
 }
