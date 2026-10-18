@@ -69,8 +69,14 @@ def write_status(
 
     if not resolved_job_id:
         raise ValueError("write_status requires job_id (positional or keyword)")
+    rec = read_status(str(resolved_job_id), jobs_root)
+    task_name = extra.pop("task", None)
+    task_state = extra.pop("task_state", None)
+    task_msg = extra.pop("task_message", None)
+    task_pct = extra.pop("task_percent", None)
+    task_url = extra.pop("task_url", None)
     if not resolved_state:
-        raise ValueError("write_status requires state (positional or keyword)")
+        resolved_state = rec.get("state") or (task_state if task_state else "queued")
 
     if len(args) >= 3 and not message:
         message = str(args[2])
@@ -112,6 +118,22 @@ def write_status(
     rec["message"] = message
     rec["updated_at_epoch"] = int(now)
     rec["updated_at"] = _iso(now)
+    if task_name:
+        tasks = rec.setdefault("tasks", {})
+        t_data = tasks.setdefault(task_name, {"name": task_name.capitalize()})
+        if task_state: t_data["state"] = task_state
+        if task_msg is not None: t_data["message"] = task_msg
+        if task_pct is not None: t_data["percent"] = task_pct
+        if task_url is not None: t_data["url"] = task_url
+        t_data["updated_at"] = _iso(now)
+        # Update composite state if appropriate
+        faces_st = tasks.get("faces", {}).get("state")
+        scene_st = tasks.get("scene", {}).get("state")
+        if faces_st == "ready" and scene_st == "ready":
+            if rec["state"] in ("analyzing", "faces_ready", "scene_ready", "faces_running", "scene_analyzing", "hybrid_ready", "hybrid_analyzing", "ingested"):
+                rec["state"] = "ready"
+                if not message: rec["message"] = "Analysis complete. Ready for Clips selection and AI scene requests."
+
 
     # Automatically preserve or populate title and torrent_name from ingest-request.json or files.json
     if not rec.get("title"):
@@ -173,7 +195,12 @@ def write_status(
 def main() -> None:
     ap = argparse.ArgumentParser(description="CastCut status writer")
     ap.add_argument("job_id", help="Job / Project ID")
-    ap.add_argument("--state", required=True, help="Status state string")
+    ap.add_argument("--state", default=None, help="Status state string")
+    ap.add_argument("--task", default=None, help="Task name (e.g. faces, scene, ingest)")
+    ap.add_argument("--task-state", default=None, help="Task state (running, ready, failed, cancelled)")
+    ap.add_argument("--task-message", default=None, help="Task message")
+    ap.add_argument("--task-percent", type=float, default=None, help="Task progress percent")
+    ap.add_argument("--task-url", default=None, help="Task URL (run or release)")
     ap.add_argument("--message", default="", help="Status message")
     ap.add_argument("--ttl-seconds", type=int, default=None, help="TTL in seconds (default 24h)")
     ap.add_argument("--jobs-root", default="jobs", help="Jobs directory root")
@@ -226,6 +253,11 @@ def main() -> None:
     for k in ("job_id", "state", "ttl_seconds", "jobs_root", "force"):
         extra.pop(k, None)
 
+    if args.task: extra["task"] = args.task
+    if args.task_state: extra["task_state"] = args.task_state
+    if args.task_message: extra["task_message"] = args.task_message
+    if args.task_percent is not None: extra["task_percent"] = args.task_percent
+    if args.task_url: extra["task_url"] = args.task_url
     write_status(
         args.job_id,
         args.state,
