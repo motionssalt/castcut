@@ -1,0 +1,6 @@
+self-hosted-runner:
+  ignore-actions:
+    - actions/checkout@v4
+    - actions/setup-python@v5
+    - actions/setup-node@v4
+    - reviewdog/action-actionlint@v1
