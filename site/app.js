@@ -478,7 +478,8 @@ $("btnIngest").onclick = async () => {
   setHomeError(null);
   let step = "validate";
   await withButtonLoading($("btnIngest"), async () => {
-    const body = { source: { kind: srcKind }, title: $("jobTitle").value.trim() };
+    const selectedContentType = document.querySelector('input[name="contentType"]:checked')?.value || "anime";
+    const body = { source: { kind: srcKind }, title: $("jobTitle").value.trim(), content_type: selectedContentType };
     if (srcKind === "direct_url" || srcKind === "gdrive") {
       body.source.url = $("srcUrl").value.trim();
       if (!body.source.url) throw new Error("Paste a URL first");
@@ -527,7 +528,8 @@ async function refreshJobs() {
       const displayTitle = j.title || j.torrent_name || j.job_id;
       const isCustomTitle = !!(j.title || j.torrent_name) && (j.title || j.torrent_name) !== j.job_id;
 
-      div.innerHTML = `<span class="badge ${cls}">${label}</span>
+      const ctTag = j.content_type === "irl" ? '<span class="badge sm pill tag-irl">IRL</span>' : '<span class="badge sm pill tag-anime">Anime</span>';
+      div.innerHTML = `<span class="badge ${cls}">${label}</span> ${ctTag}
         <span class="jt">
           <div class="jt-title-wrap">
             <b class="name-text" title="${esc(displayTitle)}">${esc(displayTitle)}</b>

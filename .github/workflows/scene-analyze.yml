@@ -37,7 +37,7 @@ jobs:
           git pull --rebase --autostash || true
           git add "jobs/${{ inputs.job_id }}/"
           git commit -m "castcut: scene analyzing ${{ inputs.job_id }}" || true
-          for i in 1 2 3; do git push && break; git pull --rebase --autostash; sleep 2; done
+          for attempt in 1 2 3; do git push && break; echo "Push attempt  failed; retrying"; git pull --rebase --autostash; sleep 2; done
 
       - name: Fetch source (release, or re-download when excluded)
         env: { GH_TOKEN: "${{ secrets.GITHUB_TOKEN }}" }
@@ -76,7 +76,7 @@ jobs:
           git pull --rebase --autostash || true
           git add "jobs/${{ inputs.job_id }}/"
           git commit -m "castcut: scene awaiting json ${{ inputs.job_id }}" || true
-          for i in 1 2 3; do git push && break; git pull --rebase --autostash; sleep 2; done
+          for attempt in 1 2 3; do git push && break; echo "Push attempt  failed; retrying"; git pull --rebase --autostash; sleep 2; done
 
       - name: Status — failed
         if: failure()
@@ -89,7 +89,7 @@ jobs:
           git pull --rebase --autostash || true
           git add "jobs/${{ inputs.job_id }}/"
           git commit -m "castcut: scene failed ${{ inputs.job_id }}" || true
-          for i in 1 2 3; do git push && break; git pull --rebase --autostash; sleep 2; done
+          for attempt in 1 2 3; do git push && break; echo "Push attempt  failed; retrying"; git pull --rebase --autostash; sleep 2; done
 
       - name: Status — cancelled
         if: cancelled()
@@ -102,4 +102,4 @@ jobs:
           git pull --rebase --autostash || true
           git add "jobs/${{ inputs.job_id }}/"
           git commit -m "castcut: cancelled ${{ inputs.job_id }}" || true
-          for i in 1 2 3; do git push && break; git pull --rebase --autostash; sleep 2; done
+          for attempt in 1 2 3; do git push && break; echo "Push attempt  failed; retrying"; git pull --rebase --autostash; sleep 2; done

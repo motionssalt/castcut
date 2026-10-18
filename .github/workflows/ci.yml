@@ -40,6 +40,7 @@ jobs:
         uses: reviewdog/action-actionlint@v1
         with:
           fail_on_error: true
+          actionlint_flags: "-ignore 'node20.*deprecated'"
 
       - name: Run automated test suite
         run: |

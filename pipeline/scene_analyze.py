@@ -95,8 +95,23 @@ def main() -> None:
     print(f"[scene] transcript: {len(transcript['segments'])} segments "
           f"(lang={transcript.get('language')})", flush=True)
 
-    boundaries = _scene_index(src, args.work_dir)
-    scene_index = {"version": 1, "threshold": 0.35, "boundaries": boundaries,
+    content_type = "anime"
+    for p in (os.path.join(args.jobs_root, args.job_id, "ingest-request.json"), os.path.join(args.jobs_root, args.job_id, "status.json")):
+        if os.path.isfile(p):
+            try:
+                ct = json.load(open(p, encoding="utf-8")).get("content_type")
+                if ct in ("anime", "irl"):
+                    content_type = ct
+                    break
+            except Exception:
+                pass
+
+    # Live-action / IRL scene detection threshold (0.28) vs anime hard cuts (0.35)
+    threshold = 0.28 if content_type == "irl" else 0.35
+    print(f"[scene] content_type={content_type} scdet_threshold={threshold}", flush=True)
+
+    boundaries = _scene_index(src, args.work_dir, threshold=threshold)
+    scene_index = {"version": 1, "content_type": content_type, "threshold": threshold, "boundaries": boundaries,
                    "count": len(boundaries)}
     with open(os.path.join(args.work_dir, "scene_index.json"), "w", encoding="utf-8") as fh:
         json.dump(scene_index, fh, indent=2)

@@ -61,6 +61,19 @@
         <div id="newJobWarnBox" class="alert-inline warn" hidden></div>
         <p id="newJobSelInfo" class="dim sm"></p>
       </div>
+      <div class="content-type-wrap">
+        <span class="dim sm">Content Type:</span>
+        <div class="content-type-toggle">
+          <label class="ct-label">
+            <input type="radio" name="contentType" value="anime" checked>
+            <span class="ct-pill">Anime</span>
+          </label>
+          <label class="ct-label">
+            <input type="radio" name="contentType" value="irl">
+            <span class="ct-pill">IRL (Live Action)</span>
+          </label>
+        </div>
+      </div>
       <input id="jobTitle" class="field" type="text" placeholder="Title (optional)" autocomplete="off">
       <button id="btnIngest" class="btn primary block">Start</button>
       <p id="newJobStartHint" class="dim sm center" hidden style="margin-top:6px;">Select at least 1 file to start</p>

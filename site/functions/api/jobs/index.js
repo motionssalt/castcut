@@ -23,7 +23,7 @@ export async function onRequest({ request, data }) {
         }
       }
       jobs.push({
-        job_id: id, state: j.state, message: j.message, title: title,
+        job_id: id, state: j.state, message: j.message, title: title, content_type: j.content_type || "anime",
         torrent_name: j.torrent_name || null,
         updated_at: j.updated_at, workflow_run_url: j.workflow_run_url || j.run_url || null,
       });
@@ -50,9 +50,11 @@ export async function onRequest({ request, data }) {
     const userTitle = String(body.title || "").trim().slice(0, 200);
     const torrentName = String(body.torrent_name || "").trim().slice(0, 255);
     const resolvedTitle = userTitle || torrentName || "";
+    const contentType = body?.content_type === "irl" ? "irl" : "anime";
 
     const req = {
       version: 1, job_id: jobId, title: userTitle, torrent_name: torrentName,
+      content_type: contentType,
       source: { kind, url: body?.source?.url, magnet: body?.source?.magnet },
       created_at_epoch: epoch,
     };
@@ -62,7 +64,7 @@ export async function onRequest({ request, data }) {
     await putFile(pat, `jobs/${jobId}/ingest-request.json`, JSON.stringify(req, null, 2), `castcut: create job ${jobId}`);
 
     const status = {
-      job_id: jobId, title: resolvedTitle, torrent_name: torrentName,
+      job_id: jobId, title: resolvedTitle, torrent_name: torrentName, content_type: contentType,
       created_at_epoch: epoch, created_at: now, updated_at: now, updated_at_epoch: epoch,
       expires_at_epoch: epoch + 86400,
     };

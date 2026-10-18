@@ -5,7 +5,11 @@ on:
   workflow_dispatch:
     inputs:
       job_id: { required: true, type: string }
-      sample_fps: { required: false, type: string, default: "1.0" }
+      sample_fps: { required: false, type: string, default: "1.0"
+      content_type:
+        description: "Content type (anime or irl)"
+        required: false
+        default: "anime" }
 
 permissions:
   contents: write
@@ -45,7 +49,7 @@ jobs:
           git pull --rebase --autostash || true
           git add "jobs/${{ inputs.job_id }}/"
           git commit -m "castcut: faces running ${{ inputs.job_id }}" || true
-          for i in 1 2 3; do git push && break; git pull --rebase --autostash; sleep 2; done
+          for attempt in 1 2 3; do git push && break; echo "Push attempt  failed; retrying"; git pull --rebase --autostash; sleep 2; done
 
       - name: Fetch source (release, or re-download when excluded)
         env: { GH_TOKEN: "${{ secrets.GITHUB_TOKEN }}" }
@@ -55,7 +59,7 @@ jobs:
           python -m pipeline.refetch "${{ inputs.job_id }}" --release-tag "castcut-${{ inputs.job_id }}"
 
       - name: Analyze faces
-        run: python -m pipeline.faces "${{ inputs.job_id }}" --fps ${{ inputs.sample_fps }}
+        run: python -m pipeline.faces "${{ inputs.job_id }}" --fps ${{ inputs.sample_fps }} --content-type "${{ inputs.content_type }}"
 
       - name: Commit face manifest
         run: |
@@ -66,7 +70,7 @@ jobs:
           git pull --rebase --autostash || true
           git add "jobs/${{ inputs.job_id }}/"
           git commit -m "castcut: faces ready ${{ inputs.job_id }}" || true
-          for i in 1 2 3; do git push && break; git pull --rebase --autostash; sleep 2; done
+          for attempt in 1 2 3; do git push && break; echo "Push attempt  failed; retrying"; git pull --rebase --autostash; sleep 2; done
 
       - name: Status — failed
         if: failure()
@@ -79,7 +83,7 @@ jobs:
           git pull --rebase --autostash || true
           git add "jobs/${{ inputs.job_id }}/"
           git commit -m "castcut: faces failed ${{ inputs.job_id }}" || true
-          for i in 1 2 3; do git push && break; git pull --rebase --autostash; sleep 2; done
+          for attempt in 1 2 3; do git push && break; echo "Push attempt  failed; retrying"; git pull --rebase --autostash; sleep 2; done
 
       - name: Status — cancelled
         if: cancelled()
@@ -92,4 +96,4 @@ jobs:
           git pull --rebase --autostash || true
           git add "jobs/${{ inputs.job_id }}/"
           git commit -m "castcut: cancelled ${{ inputs.job_id }}" || true
-          for i in 1 2 3; do git push && break; git pull --rebase --autostash; sleep 2; done
+          for attempt in 1 2 3; do git push && break; echo "Push attempt  failed; retrying"; git pull --rebase --autostash; sleep 2; done

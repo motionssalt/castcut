@@ -4,3 +4,4 @@ work/
 node_modules/
 .wrangler/
 .DS_Store
+pipeline/models/face_recognition_sface.onnx

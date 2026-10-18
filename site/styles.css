@@ -258,3 +258,51 @@ textarea.field{min-height:88px;resize:vertical}
   .gallery{grid-template-columns:repeat(auto-fill,minmax(116px,1fr))}
   .details-grid{grid-template-columns:repeat(4,1fr)}
 }
+
+/* Content type toggle (Task B: IRL Support) */
+.content-type-wrap {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 8px 0;
+}
+.content-type-toggle {
+  display: inline-flex;
+  background: var(--bg-card, #1c1f26);
+  border: 1px solid var(--border, #2e3440);
+  border-radius: 8px;
+  padding: 2px;
+  gap: 2px;
+}
+.ct-label {
+  cursor: pointer;
+  margin: 0;
+  display: flex;
+}
+.ct-label input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+.ct-pill {
+  padding: 4px 12px;
+  font-size: 12px;
+  font-weight: 500;
+  border-radius: 6px;
+  color: var(--text-dim, #8892b0);
+  transition: all 0.15s ease;
+  user-select: none;
+}
+.ct-label input[type="radio"]:checked + .ct-pill {
+  background: var(--primary, #6366f1);
+  color: #fff;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+}
+.tag-irl {
+  background: #3b82f6 !important;
+  color: #fff !important;
+}
+.tag-anime {
+  background: #8b5cf6 !important;
+  color: #fff !important;
+}

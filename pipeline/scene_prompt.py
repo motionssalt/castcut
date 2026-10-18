@@ -84,10 +84,28 @@ def main() -> None:
             "best scene or sequence — the one that carries the video — and cut that."
         )
 
+    content_type = "anime"
+    for p in (os.path.join(args.jobs_root, args.job_id, "ingest-request.json"), os.path.join(args.jobs_root, args.job_id, "status.json")):
+        if os.path.isfile(p):
+            try:
+                ct = json.load(open(p, encoding="utf-8")).get("content_type")
+                if ct in ("anime", "irl"):
+                    content_type = ct
+                    break
+            except Exception:
+                pass
+
+    if content_type == "irl":
+        role_desc = "a professional video editor cutting real-world, live-action (IRL) footage (such as movies, vlogs, interviews, or real-life footage)"
+        style_note = "The footage is LIVE-ACTION / REAL-WORLD (not anime). Preserve natural speech rhythms and conversational beats."
+    else:
+        role_desc = "an anime AMV editor"
+        style_note = "The footage is ANIME. Focus on impactful visual scene transitions and narrative moments."
+
     prompt = f"""# CastCut Scene-Cut Agent Prompt
 
-You are the cutting-room assistant for an anime AMV editor. You are given the
-analysis of ONE video. Choose the exact time segments to cut, and return ONLY
+You are the cutting-room assistant for {role_desc}. {style_note}
+You are given the analysis of ONE video. Choose the exact time segments to cut, and return ONLY
 a JSON document in the strict schema at the bottom. No prose, no markdown
 fences — JSON only.
 
