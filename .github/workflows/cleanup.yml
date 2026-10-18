@@ -23,8 +23,8 @@ jobs:
         env: { GH_TOKEN: "${{ secrets.GITHUB_TOKEN }}" }
         run: |
           if [ -f jobs/.expired.json ]; then
-            python -c "import json; [print(j) for j in json.load(open('jobs/.expired.json'))]" | while read j; do
-              [ -n "$j" ] && gh release delete "castcut-$j" --yes --cleanup-tag || true
+            python -c "import json; [print(j) for j in json.load(open('jobs/.expired.json'))]" | while read -r j; do
+              if [ -n "$j" ]; then gh release delete "castcut-$j" --yes --cleanup-tag || true; fi
             done
           fi
       - name: Commit sweep
@@ -33,4 +33,4 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add jobs/
           git commit -m "castcut: hourly cleanup sweep" || true
-          for attempt in 1 2 3; do git push && break; echo "Push attempt  failed; retrying"; git pull --rebase --autostash; sleep 2; done
+          for attempt in 1 2 3; do git push && break; echo "Push attempt $attempt failed; retrying"; git pull --rebase --autostash; sleep 2; done

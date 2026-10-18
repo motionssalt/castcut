@@ -386,7 +386,7 @@
     "repo": "castcut",
     "task": "fix-failing-runs",
     "status": "in_progress",
-    "last_updated": "2026-10-18T18:48:54.083353+00:00",
+    "last_updated": "2026-10-18T19:06:15.925523+00:00",
     "failures_found": [
       {
         "run_id": 39154814335,
@@ -401,6 +401,20 @@
         "step_name": "Run face analysis",
         "exact_error": "ModuleNotFoundError: No module named 'cv2'",
         "root_cause": "hybrid-analyze.yml Install analysis packages step did not install opencv-python-headless, pillow, numpy, or requests, causing immediate crash on import cv2 in pipeline/faces.py."
+      },
+      {
+        "run_id": 39156172298,
+        "workflow_name": "Lint Workflows",
+        "step_name": "Run actionlint",
+        "exact_error": "reviewdog: Too many results (annotations) in diff... SC2034:warning: attempt appears unused",
+        "root_cause": "Double space in \"Push attempt  failed\" omitted $attempt variable across 31 git push retry loops, causing shellcheck SC2034 warnings that flooded reviewdog past the annotations limit."
+      },
+      {
+        "run_id": 39156172286,
+        "workflow_name": "CI (Tests, Lint, Selftest)",
+        "step_name": "Run actionlint",
+        "exact_error": "reviewdog: Too many results (annotations) in diff... SC2034:warning: attempt appears unused",
+        "root_cause": "Same SC2034 unused attempt warning and SC2012/SC2015 warnings in cleanup and export workflows."
       }
     ],
     "fixes_done": [
@@ -418,6 +432,11 @@
         "issue": "Task B: IRL clip support",
         "fix": "Added content_type per project (anime/irl, default anime); integrated OpenCV YuNet (face_detection_yunet) and SFace (face_recognition_sface ArcFace 128D) for live-action human face discovery & clustering; added blur/small detection filtering; compressed 112px WebP thumbnails; tailored scene AI prompt for IRL footage; adjusted scene cut threshold to 0.28 for live action; added content_type toggle to site UI and Cloudflare Pages API.",
         "status": "verified"
+      },
+      {
+        "issue": "SC2034 unused attempt and SC2012/SC2015/SC2162 reviewdog overflow",
+        "fix": "Referenced $attempt in all 31 push retry loops, sanitized read -r and if conditions in cleanup.yml, replaced ls with find in export workflows. actionlint now passes with 0 warnings.",
+        "status": "committed"
       }
     ],
     "fixes_pending": [],
