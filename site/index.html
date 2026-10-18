@@ -14,7 +14,6 @@
 </header>
 
 <main id="app">
-
   <!-- ============ GATE ============ -->
   <section id="gate" hidden>
     <div class="card">
@@ -29,21 +28,28 @@
   <!-- ============ HOME ============ -->
   <section id="home" hidden>
     <div class="card">
-      <h2>New job</h2>
-      <div class="pillrow" id="srcKindRow">
-        <button class="pill sel" data-kind="direct_url">🔗 URL</button>
-        <button class="pill" data-kind="gdrive">📁 Drive</button>
-        <button class="pill" data-kind="magnet">🧲 Magnet</button>
-        <button class="pill" data-kind="torrent_file">📦 .torrent</button>
-      </div>
+      <h2>New Project</h2>
+      
+      <label class="lbl">1. Video link (direct URL, Google Drive, or magnet)</label>
       <div id="srcUrlWrap">
-        <input id="srcUrl" class="field" type="text" placeholder="Paste URL / magnet here" autocomplete="off" spellcheck="false">
+        <input id="srcUrl" class="field" type="text" placeholder="Paste video URL, Google Drive link, or magnet link..." autocomplete="off" spellcheck="false">
+        <p id="srcUrlNote" class="dim sm" hidden></p>
       </div>
-      <div id="srcFileWrap" hidden>
-        <button id="btnPickTorrent" class="btn ghost block">Choose .torrent file</button>
+      <p id="srcUrlErr" class="err" hidden></p>
+
+      <div style="margin: 12px 0; text-align: center;" class="dim sm">— OR —</div>
+
+      <label class="lbl">2. Torrent file</label>
+      <div id="srcFileWrap">
+        <button type="button" id="btnPickTorrent" class="btn ghost block">Choose .torrent file</button>
         <input id="srcFile" type="file" accept=".torrent,application/x-bittorrent" hidden>
+        <div id="torrentSelectedInfo" class="torrent-selected-row" hidden>
+          <span id="torrentSelectedName" class="sm mono"></span>
+          <button type="button" id="btnRemoveTorrent" class="btn danger sm">✕ Remove</button>
+        </div>
         <p id="torrentErr" class="err"></p>
       </div>
+
       <div id="newJobFiles" hidden>
         <div class="torrent-header-card" id="newJobTorrentHeader">
           <div class="th-label">Torrent:</div>
@@ -61,7 +67,8 @@
         <div id="newJobWarnBox" class="alert-inline warn" hidden></div>
         <p id="newJobSelInfo" class="dim sm"></p>
       </div>
-      <div class="content-type-wrap">
+
+      <div class="content-type-wrap" style="margin-top: 14px;">
         <span class="dim sm">Content Type:</span>
         <div class="content-type-toggle">
           <label class="ct-label">
@@ -70,31 +77,27 @@
           </label>
           <label class="ct-label">
             <input type="radio" name="contentType" value="irl">
-            <span class="ct-pill">IRL (Live Action)</span>
+            <span class="ct-pill">Live-Action (IRL)</span>
           </label>
         </div>
       </div>
-      <input id="jobTitle" class="field" type="text" placeholder="Title (optional)" autocomplete="off">
-      <button id="btnIngest" class="btn primary block">Start</button>
-      <p id="newJobStartHint" class="dim sm center" hidden style="margin-top:6px;">Select at least 1 file to start</p>
-      <div id="homeErrWrap" class="err-box" hidden>
-        <p id="homeErr" class="err"></p>
-        <button id="btnCopyHomeErr" type="button" class="btn-link">Copy error details</button>
-      </div>
+
+      <input id="jobTitle" class="field" type="text" placeholder="Project name / label (optional)" autocomplete="off" spellcheck="false" style="margin-top: 10px;">
+      <button id="btnIngest" class="btn primary block">Start Project</button>
+      <p id="homeErr" class="err"></p>
     </div>
 
     <div class="rowhead">
-      <h2>Jobs</h2>
-      <button id="btnCleanup" class="btn ghost sm" hidden>Clear finished</button>
+      <h2>Projects</h2>
+      <button id="btnRefreshJobs" class="btn ghost sm">↻ Refresh</button>
     </div>
     <div id="jobList"></div>
     <p id="jobListEmpty" class="dim center" hidden>No jobs yet — add a source above.</p>
   </section>
 
-    <!-- ============ PROJECT ============ -->
+  <!-- ============ PROJECT ============ -->
   <section id="job" hidden>
     <button id="btnBack" class="btn ghost sm">← Projects</button>
-
     <div class="card">
       <div class="jobhead">
         <h2 id="jobTitleH"></h2>
@@ -128,15 +131,26 @@
           <a id="jobRunLink" class="btn ghost sm" target="_blank" rel="noopener" href="#">Open run log ↗</a>
         </div>
       </div>
+
       <div class="actions">
         <button id="btnCancel" class="btn warn" hidden>⛔ Cancel</button>
         <button id="btnRetry" class="btn primary" hidden>↻ Retry</button>
         <button id="btnDelete" class="btn danger">🗑 Delete</button>
       </div>
+
       <div id="jobErrWrap" class="err-box" hidden>
         <p id="jobErr" class="err"></p>
         <button id="btnCopyJobErr" type="button" class="btn-link">Copy error details</button>
       </div>
+    </div>
+
+    <!-- Active & recent tasks / jobs under this project -->
+    <div id="tasksCard" class="card">
+      <div class="rowhead" style="margin-top:0">
+        <h3>Project Tasks</h3>
+        <span class="dim sm" id="tasksSummary"></span>
+      </div>
+      <div id="tasksList" class="tasks-list"></div>
     </div>
 
     <!-- torrent selection -->
@@ -163,7 +177,7 @@
       </div>
     </div>
 
-    <!-- Project Tabs (always available once source is ready) -->
+    <!-- Project Tabs -->
     <div id="projectTabs" class="tabbar" hidden>
       <button class="tabbtn sel" data-tab="overview">📋 Overview</button>
       <button class="tabbtn" data-tab="clips">🙂 Clips</button>
@@ -176,14 +190,8 @@
       <div class="card">
         <h2>Source Details</h2>
         <div id="sourceDetails" class="details-grid"></div>
-        <div id="hybridActionCard" class="action-box" hidden>
-          <div class="ab-header">
-            <b>✨ Unified Hybrid Analysis</b>
-            <small class="dim">Runs face clustering and scene transcription together in one go.</small>
-          </div>
-          <div class="rowgap">
-            <button id="btnHybridAnalyze" class="btn primary block">Run Hybrid Analysis</button>
-          </div>
+        <div id="overviewActions" style="margin-top:14px;">
+          <button id="btnStartAnalysis" class="btn primary block" hidden>⚡ Run Face & Scene Analysis</button>
         </div>
       </div>
     </div>
@@ -192,12 +200,7 @@
     <div id="tabClips" class="tabpanel" hidden>
       <div class="card">
         <h2>🙂 Face Detection & Clips</h2>
-        <div id="facesStart">
-          <p class="dim sm">Extract and cluster characters in this video.</p>
-          <label class="lbl">Sample rate (fps)</label>
-          <input id="sampleFps" class="field" type="number" min="0.5" max="2.0" step="0.1" value="1.0">
-          <button id="btnFaces" class="btn primary block">Analyze faces</button>
-        </div>
+        <div id="facesWaiting" class="dim" hidden>Face analysis is currently running...</div>
         <div id="galleryWrap" hidden>
           <p class="dim sm">Tap characters in the order you want them in the cut.</p>
           <div id="gallery" class="gallery"></div>
@@ -221,17 +224,21 @@
     <div id="tabScene" class="tabpanel" hidden>
       <div class="card">
         <h2>🎞 Scene & AI Agent</h2>
-        <div id="sceneStart">
-          <label class="lbl">What scene do you need? <span class="dim">(blank = AI picks the best one)</span></label>
-          <textarea id="sceneReq" class="field" rows="3" placeholder="e.g. the fight intro where X draws the sword"></textarea>
-          <button id="btnSceneAnalyze" class="btn primary block">Analyze source</button>
-        </div>
+        <div id="sceneWaiting" class="dim" hidden>AI Scene analysis is currently running...</div>
         <div id="sceneAgent" hidden>
-          <h3>1 · Copy the agent prompt</h3>
-          <p class="dim sm">Paste it into your AI of choice.</p>
+          <label class="lbl">What scene do you need? <span class="dim">(leave blank = AI picks the best one)</span></label>
+          <textarea id="sceneReq" class="field" rows="3" placeholder="e.g. Lelouch's grand speech, or the climax duel..."></textarea>
+          
+          <div class="rowhead" style="margin-top: 10px;">
+            <h3>1 · Agent prompt</h3>
+            <span class="dim sm">Assembled live from release</span>
+          </div>
+          <pre id="scenePromptText" class="summary mono" style="max-height: 180px; overflow-y: auto; white-space: pre-wrap; word-break: break-word;"></pre>
           <button id="btnCopyPrompt" class="btn primary block">📋 Copy agent prompt</button>
-          <h3>2 · Paste the production JSON back</h3>
-          <textarea id="prodJson" class="field mono" rows="8" placeholder='{"version":1,"segments":[{"start":12.5,"end":27}]}'></textarea>
+
+          <h3 style="margin-top: 18px;">2 · Upload production JSON</h3>
+          <p class="dim sm">Paste the returned production JSON from your AI.</p>
+          <textarea id="prodJson" class="field mono" rows="8" placeholder='{"version":1,"segments":[{"start":12.5,"end":27.0,"note":"why this segment"}]}'></textarea>
           <p id="validationOut" class="err"></p>
           <button id="btnScenePush" class="btn primary block">Cut & export</button>
         </div>

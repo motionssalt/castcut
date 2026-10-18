@@ -23,20 +23,21 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with: { fetch-depth: 0 }
-
       - uses: actions/setup-python@v5
         with: { python-version: "3.12" }
-
       - name: System deps
         run: |
           sudo apt-get update -qq
           sudo apt-get install -y -qq ffmpeg aria2
           python -m pip install -q requests
-
       - name: Status — running
         run: |
           python -m pipeline.status "${{ inputs.job_id }}" \
             --state ingest_running \
+            --task ingest \
+            --task-state running \
+            --task-message "Downloading source" \
+            --task-percent 10.0 \
             --message "Downloading source" \
             --release-tag "castcut-${{ inputs.job_id }}" \
             --workflow-run-url "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
@@ -46,11 +47,9 @@ jobs:
           git add "jobs/${{ inputs.job_id }}/"
           git commit -m "castcut: ingest running ${{ inputs.job_id }}" || true
           for attempt in 1 2 3; do git push && break; echo "Push attempt $attempt failed; retrying"; git pull --rebase --autostash; sleep 2; done
-
       - name: Ingest
         id: ingest
         run: python -m pipeline.ingest "${{ inputs.job_id }}"
-
       - name: Publish release (source video only when it fits)
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -67,11 +66,6 @@ jobs:
             if gh release upload "$tag" work/source.* --clobber; then
               echo "source video uploaded to the release"
             else
-              # Safety net (fix_round_3): the pre-upload size check already
-              # prevents this, but if an upload still fails (e.g. GitHub
-              # lowered the limit), fall back to the exclusion path instead
-              # of failing the job. This is a single-line pipeline module —
-              # no inline heredocs anywhere in the workflows.
               echo "::warning::source upload failed — falling back to the exclusion path"
               if ! python -m pipeline.mark_excluded "${{ inputs.job_id }}"; then
                 echo "::warning::mark_excluded itself failed, but the job must not be killed — continuing"
@@ -81,17 +75,28 @@ jobs:
           else
             echo "source video excluded from the release (over the per-asset size limit) — skipping upload; it will be re-downloaded when processing"
           fi
-
+      - name: Trigger parallel analysis
+        if: success()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          echo "Dispatching parallel face analysis and AI scene analysis..."
+          gh workflow run faces.yml -f job_id="${{ inputs.job_id }}" --repo "$GITHUB_REPOSITORY" || echo "faces dispatch warning"
+          gh workflow run scene-analyze.yml -f job_id="${{ inputs.job_id }}" --repo "$GITHUB_REPOSITORY" || echo "scene-analyze dispatch warning"
       - name: Status — done
         if: success()
         run: |
           vir=$(python -c "import json;print(str(json.load(open('jobs/${{ inputs.job_id }}/ingest.json')).get('video_in_release', True)).lower())")
-          msg="Source ready. Pick a mode (Clips or Scene)."
+          msg="Source ready. Analyzing faces and AI scene..."
           if [ "$vir" = "false" ]; then
-            msg="Source ready — large video: it will be re-downloaded automatically when processing starts. Pick a mode (Clips or Scene)."
+            msg="Source ready (large video). Analyzing faces and AI scene..."
           fi
           python -m pipeline.status "${{ inputs.job_id }}" \
-            --state ingested \
+            --state analyzing \
+            --task ingest \
+            --task-state ready \
+            --task-message "Source downloaded successfully" \
+            --task-percent 100.0 \
             --message "$msg" \
             --set-json "{\"video_in_release\":$vir}"
           git config user.name "github-actions[bot]"
@@ -100,12 +105,14 @@ jobs:
           git add "jobs/${{ inputs.job_id }}/"
           git commit -m "castcut: ingested ${{ inputs.job_id }}" || true
           for attempt in 1 2 3; do git push && break; echo "Push attempt $attempt failed; retrying"; git pull --rebase --autostash; sleep 2; done
-
       - name: Status — failed
         if: failure()
         run: |
           python -m pipeline.status "${{ inputs.job_id }}" \
             --state ingest_failed \
+            --task ingest \
+            --task-state failed \
+            --task-message "Ingest failed — ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}" \
             --message "Ingest failed — ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}" \
             --workflow-run-url "${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
           git config user.name "github-actions[bot]"
@@ -114,12 +121,14 @@ jobs:
           git add "jobs/${{ inputs.job_id }}/"
           git commit -m "castcut: ingest failed ${{ inputs.job_id }}" || true
           for attempt in 1 2 3; do git push && break; echo "Push attempt $attempt failed; retrying"; git pull --rebase --autostash; sleep 2; done
-
       - name: Status — cancelled
         if: cancelled()
         run: |
           prev=$(python -c "import json;print(json.load(open('jobs/${{ inputs.job_id }}/status.json')).get('state',''))" 2>/dev/null || true)
           python -m pipeline.status "${{ inputs.job_id }}" --state cancelled \
+            --task ingest \
+            --task-state cancelled \
+            --task-message "Ingest run cancelled." \
             --message "Run cancelled." --set-json "{\"cancelled_from\":\"$prev\"}" || true
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"

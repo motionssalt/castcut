@@ -264,47 +264,110 @@ $("btnLogin").onclick = async () => {
 $("btnLogout").onclick = () => { clearPat(); location.reload(); };
 
 // ---------- home: new project ----------
-let srcKind = "direct_url";
+function detectLinkKind(raw) {
+  const s = String(raw || "").trim();
+  if (!s) return null;
+  if (s.startsWith("magnet:?")) {
+    return { kind: "magnet", magnet: s };
+  }
+  if (s.includes("drive.google.com") || s.includes("docs.google.com")) {
+    return { kind: "gdrive", url: s };
+  }
+  if (/^https?:\/\//i.test(s)) {
+    return { kind: "direct_url", url: s };
+  }
+  return { kind: "unsupported", raw: s };
+}
+
 function updateStartButtonState() {
-  if (srcKind === "torrent_file") {
-    const t = state.newJobTorrent;
-    const hasPick = !!(t && t.checked && t.checked.size > 0);
-    const btn = $("btnIngest");
-    if (btn) btn.disabled = !hasPick;
-    show("newJobStartHint", !hasPick);
+  const urlVal = ($("srcUrl")?.value || "").trim();
+  const t = state.newJobTorrent;
+  const btn = $("btnIngest");
+  if (!btn) return;
+
+  if (t) {
+    const hasPick = !!(t.checked && t.checked.size > 0);
+    btn.disabled = !hasPick;
   } else {
-    const btn = $("btnIngest");
-    if (btn) btn.disabled = false;
-    show("newJobStartHint", false);
+    btn.disabled = !urlVal;
   }
 }
 
-$("srcKindRow").addEventListener("click", (e) => {
-  const b = e.target.closest(".pill"); if (!b) return;
-  srcKind = b.dataset.kind;
-  document.querySelectorAll("#srcKindRow .pill").forEach(p => p.classList.toggle("sel", p === b));
-  show("srcUrlWrap", srcKind !== "torrent_file");
-  show("srcFileWrap", srcKind === "torrent_file");
-  $("srcUrl").placeholder = srcKind === "magnet" ? "magnet:?xt=urn:btih:…" : srcKind === "gdrive" ? "https://drive.google.com/…" : "https://…/video.mp4";
-  updateStartButtonState();
-});
-$("btnPickTorrent").onclick = () => $("srcFile").click();
-$("srcFile").onchange = async () => {
-  $("torrentErr").textContent = ""; show("newJobFiles", false); state.newJobTorrent = null;
-  const file = $("srcFile").files[0]; if (!file) { updateStartButtonState(); return; }
-  if (!file.size || file.size > 1024 * 1024) { $("torrentErr").textContent = "The .torrent must be 1 byte – 1 MB."; updateStartButtonState(); return; }
-  try {
-    const t = parseTorrentFiles(await file.arrayBuffer());
-    t.raw = file;
-    state.newJobTorrent = t;
-    renderNewJobFiles(t);
-    $("btnPickTorrent").textContent = `📦 ${t.name}`;
-  } catch (e) {
-    $("torrentErr").textContent = "Could not parse that .torrent: " + e.message;
+if ($("srcUrl")) {
+  $("srcUrl").addEventListener("input", () => {
+    $("srcUrlErr").hidden = true;
+    $("srcUrlErr").textContent = "";
     updateStartButtonState();
-  }
-};
+  });
+}
 
+if ($("btnPickTorrent")) {
+  $("btnPickTorrent").onclick = () => {
+    const urlVal = ($("srcUrl")?.value || "").trim();
+    if (urlVal) {
+      setHomeError("Please clear the video link field before choosing a torrent file.");
+      return;
+    }
+    $("srcFile").click();
+  };
+}
+
+if ($("btnRemoveTorrent")) {
+  $("btnRemoveTorrent").onclick = () => {
+    state.newJobTorrent = null;
+    $("srcFile").value = "";
+    show("torrentSelectedInfo", false);
+    show("newJobFiles", false);
+    const srcUrl = $("srcUrl");
+    if (srcUrl) {
+      srcUrl.disabled = false;
+      srcUrl.classList.remove("disabled");
+    }
+    show("srcUrlNote", false);
+    updateStartButtonState();
+  };
+}
+
+if ($("srcFile")) {
+  $("srcFile").onchange = async () => {
+    $("torrentErr").textContent = "";
+    show("newJobFiles", false);
+    state.newJobTorrent = null;
+    const file = $("srcFile").files[0];
+    if (!file) { updateStartButtonState(); return; }
+    if (!file.size || file.size > 1024 * 1024) {
+      $("torrentErr").textContent = "The .torrent must be 1 byte – 1 MB.";
+      updateStartButtonState();
+      return;
+    }
+    try {
+      const t = parseTorrentFiles(await file.arrayBuffer());
+      t.raw = file;
+      state.newJobTorrent = t;
+      renderNewJobFiles(t);
+
+      const srcUrl = $("srcUrl");
+      if (srcUrl) {
+        srcUrl.disabled = true;
+        srcUrl.classList.add("disabled");
+      }
+      const note = $("srcUrlNote");
+      if (note) {
+        note.textContent = "(Disabled: .torrent file selected — remove torrent to use a link)";
+        show("srcUrlNote", true);
+      }
+      const selInfo = $("torrentSelectedInfo");
+      if (selInfo) {
+        $("torrentSelectedName").textContent = `📦 ${t.name}`;
+        show("torrentSelectedInfo", true);
+      }
+      updateStartButtonState();
+    } catch (e) {
+      $("torrentErr").textContent = "Could not parse that .torrent: " + e.message;
+      updateStartButtonState();
+    }
+  };
+}
 function renderNewJobFiles(t) {
   const sortedFiles = naturalSortFiles(t.files);
   const videos = sortedFiles.filter(f => f.is_video);
@@ -479,38 +542,49 @@ $("btnIngest").onclick = async () => {
   let step = "validate";
   await withButtonLoading($("btnIngest"), async () => {
     const selectedContentType = document.querySelector('input[name="contentType"]:checked')?.value || "anime";
-    const body = { source: { kind: srcKind }, title: $("jobTitle").value.trim(), content_type: selectedContentType };
-    if (srcKind === "direct_url" || srcKind === "gdrive") {
-      body.source.url = $("srcUrl").value.trim();
-      if (!body.source.url) throw new Error("Paste a URL first");
-    }
-    if (srcKind === "magnet") {
-      body.source.magnet = $("srcUrl").value.trim();
-      if (!body.source.magnet.startsWith("magnet:?")) throw new Error("That doesn't look like a magnet:? link");
-    }
-    if (srcKind === "torrent_file") {
+    const titleVal = $("jobTitle").value.trim();
+    const body = { title: titleVal, content_type: selectedContentType };
+
+    if (state.newJobTorrent) {
       const t = state.newJobTorrent;
-      if (!t) throw new Error("Choose a .torrent file first");
       const checked = Array.from(t.checked || []);
       if (!checked.length) throw new Error("Select at least 1 video file to start");
       step = "encode_torrent";
-      body.source.torrent_b64 = await fileToBase64(t.raw);
+      body.source = { kind: "torrent_file", torrent_b64: await fileToBase64(t.raw) };
       body.torrent_name = t.name;
       body.files = t.files;
       body.selected_indices = checked;
+    } else {
+      const rawUrl = ($("srcUrl")?.value || "").trim();
+      if (!rawUrl) throw new Error("Please paste a video link or choose a .torrent file.");
+      const detected = detectLinkKind(rawUrl);
+      if (!detected || detected.kind === "unsupported") {
+        throw new Error("Unsupported link format. Please provide a direct video URL (http/https), a Google Drive share link, or a magnet link.");
+      }
+      body.source = { kind: detected.kind };
+      if (detected.kind === "magnet") body.source.magnet = detected.magnet;
+      else body.source.url = detected.url;
     }
+
     step = "api_post";
     const r = await api("/jobs", { method: "POST", body });
     step = "open_job";
     $("srcUrl").value = ""; $("jobTitle").value = ""; $("srcFile").value = "";
-    state.newJobTorrent = null; show("newJobFiles", false); $("btnPickTorrent").textContent = "Choose .torrent file";
+    state.newJobTorrent = null;
+    show("newJobFiles", false);
+    show("torrentSelectedInfo", false);
+    const srcUrl = $("srcUrl");
+    if (srcUrl) {
+      srcUrl.disabled = false;
+      srcUrl.classList.remove("disabled");
+    }
+    show("srcUrlNote", false);
     updateStartButtonState();
     openJob(r.job_id);
   }, "Starting…").catch(e => {
     setHomeError(e, step);
   });
 };
-
 // ---------- home: project list ----------
 async function refreshJobs() {
   try {
@@ -752,6 +826,141 @@ function renderJob(r) {
     renderExportsTab(r);
     switchTab(state.currentTab);
   }
+  renderTasks(r);
+}
+
+
+// ----- Tasks List (A3: Active & Recent tasks under project) -----
+function renderTasks(r) {
+  const container = $("tasksList");
+  if (!container) return;
+  container.innerHTML = "";
+  const status = r.status || {};
+  const tasksObj = status.tasks || {};
+  const runs = r.runs || [];
+  const exports = r.exports || [];
+
+  const taskItems = [];
+
+  // 1. Ingest task
+  if (tasksObj.ingest || r.ingest || runs.some(x => x.workflow === "ingest.yml")) {
+    const inf = tasksObj.ingest || {};
+    const run = runs.find(x => x.workflow === "ingest.yml");
+    const st = inf.state || (r.ingest ? "done" : (run?.conclusion || run?.status || "queued"));
+    taskItems.push({
+      id: "task-ingest",
+      name: "Source Ingest",
+      state: st === "ready" ? "done" : st,
+      message: inf.message || (r.ingest ? "Source ready" : "Downloading source"),
+      runUrl: run?.html_url || status.workflow_run_url,
+      canCancel: ACTIVE_RUN_STATES.has(run?.status),
+      runId: run?.id,
+    });
+  }
+
+  // 2. Face Analysis task
+  if (tasksObj.faces || r.clipsManifest || runs.some(x => x.workflow === "faces.yml")) {
+    const inf = tasksObj.faces || {};
+    const run = runs.find(x => x.workflow === "faces.yml");
+    const st = inf.state || (r.clipsManifest ? "done" : (run?.conclusion || run?.status || "running"));
+    taskItems.push({
+      id: "task-faces",
+      name: "Face Detection & Clustering",
+      state: (st === "ready" || st === "success") ? "done" : st,
+      message: inf.message || (r.clipsManifest ? "Character gallery ready" : "Detecting characters"),
+      percent: inf.percent,
+      runUrl: run?.html_url,
+      canCancel: ACTIVE_RUN_STATES.has(run?.status),
+      runId: run?.id,
+    });
+  }
+
+  // 3. AI Scene Analysis task
+  if (tasksObj.scene || r.sceneAgent || runs.some(x => x.workflow === "scene-analyze.yml")) {
+    const inf = tasksObj.scene || {};
+    const run = runs.find(x => x.workflow === "scene-analyze.yml");
+    const st = inf.state || (r.sceneAgent ? "done" : (run?.conclusion || run?.status || "running"));
+    taskItems.push({
+      id: "task-scene",
+      name: "AI Scene Analysis",
+      state: (st === "ready" || st === "success") ? "done" : st,
+      message: inf.message || (r.sceneAgent ? "Release assets and instructions ready" : "Detecting scenes & dialogue"),
+      percent: inf.percent,
+      runUrl: run?.html_url || inf.url,
+      canCancel: ACTIVE_RUN_STATES.has(run?.status),
+      runId: run?.id,
+    });
+  }
+
+  // 4. Project exports
+  exports.forEach(exp => {
+    taskItems.push({
+      id: `exp-${exp.export_id}`,
+      name: `${exp.type === "clips" ? "🙂 Clips Export" : "🎞 Scene Cut"}: ${exp.label || exp.title || "Export"}`,
+      state: exp.status || "done",
+      message: `${exp.segments || 0} segments · ${exp.total_duration || 0}s (${exp.size_human || humanSize(exp.size_bytes)})`,
+      canDelete: true,
+      exportId: exp.export_id,
+    });
+  });
+
+  if (!taskItems.length) {
+    container.innerHTML = '<p class="dim sm">No active or completed tasks for this project yet.</p>';
+    return;
+  }
+
+  taskItems.forEach(t => {
+    const div = document.createElement("div");
+    const isFailed = FAILED_RE.test(t.state) || t.state === "failure";
+    const isCancelled = t.state === "cancelled";
+    const isDone = (t.state === "done" || t.state === "ready" || t.state === "success" || t.state === "ok");
+    const isRunning = (!isDone && !isFailed && !isCancelled);
+
+    const badgeCls = isDone ? "ok" : isRunning ? "running" : isFailed ? "failed" : "cancelled";
+    const badgeLabel = isDone ? "Done" : isRunning ? (t.percent ? `${Math.round(t.percent)}%` : "Running") : isFailed ? "Failed" : "Cancelled";
+
+    div.className = `task-row ${isFailed ? "failed" : isCancelled ? "cancelled" : ""}`;
+    div.innerHTML = `
+      <div class="task-info">
+        <div class="task-title">
+          <span>${esc(t.name)}</span>
+          <span class="badge ${badgeCls}">${badgeLabel}</span>
+        </div>
+        <div class="task-desc">${esc(t.message || "")}</div>
+      </div>
+      <div class="task-actions">
+        ${t.runUrl ? `<a href="${t.runUrl}" target="_blank" rel="noopener" class="btn ghost sm">Logs ↗</a>` : ""}
+        ${t.canCancel ? `<button type="button" class="btn warn sm btn-task-cancel" data-run-id="${t.runId}">Cancel</button>` : ""}
+        ${t.canDelete ? `<button type="button" class="btn danger sm btn-task-delete" data-exp-id="${t.exportId}">Delete</button>` : ""}
+      </div>
+    `;
+    container.appendChild(div);
+  });
+
+  container.querySelectorAll(".btn-task-cancel").forEach(btn => {
+    btn.onclick = async () => {
+      const ok = await confirmBox("Cancel this active task?", "Cancel Task");
+      if (ok) {
+        await api(`/jobs/${state.job}/cancel`, { method: "POST" }).catch(() => {});
+        toast("Cancellation requested");
+        await tickJob();
+      }
+    };
+  });
+
+  container.querySelectorAll(".btn-task-delete").forEach(btn => {
+    btn.onclick = async () => {
+      const expId = btn.dataset.expId;
+      if (expId) {
+        const ok = await confirmBox("Delete this export permanently?", "Delete Export");
+        if (ok) {
+          await api(`/jobs/${state.job}/exports/${expId}`, { method: "DELETE" }).catch(() => {});
+          toast("Export deleted ✓");
+          await tickJob();
+        }
+      }
+    };
+  });
 }
 
 // ----- Tab 1: Overview -----
@@ -760,7 +969,7 @@ function renderOverview(r) {
   const grid = $("sourceDetails");
   if (!ing) {
     grid.innerHTML = `<div class="detail-item"><span class="detail-k">Status</span><span class="detail-v">Awaiting source ingestion</span></div>`;
-    show("hybridActionCard", false);
+    show("btnStartAnalysis", false);
     return;
   }
   grid.innerHTML = `
@@ -769,41 +978,44 @@ function renderOverview(r) {
     <div class="detail-item"><span class="detail-k">Size</span><span class="detail-v">${humanSize(ing.size_bytes)}</span></div>
     <div class="detail-item"><span class="detail-k">Source Storage</span><span class="detail-v">${ing.video_in_release === false ? "Refetched on demand" : "Release asset"}</span></div>
   `;
-  // Show hybrid action card if neither faces nor scene have been analyzed
-  const hasFaces = !!r.clipsManifest;
-  const hasScene = !!r.sceneAgent;
-  show("hybridActionCard", (!hasFaces || !hasScene));
+  const hasFaces = !!(r.clipsManifest || r.status?.tasks?.faces?.state === "ready");
+  const hasScene = !!(r.sceneAgent || r.status?.tasks?.scene?.state === "ready");
+  const isBusy = BUSY_STATES.has(r.status?.state || "");
+  show("btnStartAnalysis", (!hasFaces || !hasScene) && !isBusy);
 }
 
-$("btnHybridAnalyze").onclick = async () => {
-  await withButtonLoading($("btnHybridAnalyze"), async () => {
-    await api(`/jobs/${state.job}/hybrid-analyze`, { method: "POST", body: { sample_fps: 1.0 } });
-    toast("Hybrid analysis dispatched ⚡");
-    await tickJob(); schedulePoll();
-  }, "Dispatching…").catch(e => { $("jobErr").textContent = e.message; });
-};
-
+if ($("btnStartAnalysis")) {
+  $("btnStartAnalysis").onclick = async () => {
+    await withButtonLoading($("btnStartAnalysis"), async () => {
+      await api(`/jobs/${state.job}/analyze`, { method: "POST", body: { sample_fps: 1.0 } });
+      toast("Face and scene analysis dispatched ⚡");
+      await tickJob(); schedulePoll();
+    }, "Dispatching…").catch(e => { $("jobErr").textContent = e.message; });
+  };
+}
 // ----- Tab 2: Clips -----
 function renderClipsTab(r) {
+  const isFacesReady = !!(r.clipsManifest || r.status?.tasks?.faces?.state === "ready");
+  const isFacesRunning = (r.status?.tasks?.faces?.state === "running" || r.status?.state === "faces_running");
+
   if (r.clipsManifest && !state.manifest) {
     state.manifest = r.clipsManifest;
     renderGallery();
-    show("facesStart", false);
+    show("facesWaiting", false);
     show("galleryWrap", true);
-  } else if (!r.clipsManifest) {
-    show("facesStart", true);
+  } else if (r.clipsManifest) {
+    show("facesWaiting", false);
+    show("galleryWrap", true);
+  } else if (isFacesRunning) {
+    show("facesWaiting", true);
     show("galleryWrap", false);
+    $("facesWaiting").textContent = "Face analysis is running... Characters will appear here when ready.";
+  } else {
+    show("facesWaiting", true);
+    show("galleryWrap", false);
+    $("facesWaiting").textContent = "Face analysis not completed yet. Start the analysis from Overview.";
   }
 }
-
-$("btnFaces").onclick = async () => {
-  await withButtonLoading($("btnFaces"), async () => {
-    await api(`/jobs/${state.job}/faces`, { method: "POST", body: { sample_fps: parseFloat($("sampleFps").value) || 1.0 } });
-    toast("Face analysis started");
-    await tickJob(); schedulePoll();
-  }, "Analyzing…").catch(e => { $("jobErr").textContent = e.message; });
-};
-
 function renderGallery() {
   const chars = state.manifest.characters || [];
   const g = $("gallery"); g.innerHTML = "";
@@ -867,50 +1079,99 @@ $("btnExportClips").onclick = async () => {
 
 // ----- Tab 3: Scene -----
 function renderSceneTab(r) {
-  if (r.sceneAgent) {
-    show("sceneStart", false);
+  const isSceneReady = !!(
+    r.sceneAgent ||
+    r.status?.tasks?.scene?.state === "ready" ||
+    r.status?.release_url ||
+    (r.releases && r.releases.length > 0) ||
+    r.status?.state === "scene_awaiting_json" ||
+    r.status?.state === "scene_ready" ||
+    r.status?.state === "ready"
+  );
+  const isSceneRunning = (r.status?.tasks?.scene?.state === "running" || r.status?.state === "scene_analyzing");
+
+  if (isSceneReady) {
+    show("sceneWaiting", false);
     show("sceneAgent", true);
-  } else {
-    show("sceneStart", true);
+    updateLivePrompt();
+  } else if (isSceneRunning) {
+    show("sceneWaiting", true);
     show("sceneAgent", false);
+    $("sceneWaiting").textContent = "AI Scene analysis is running... The agent prompt will be ready immediately once analysis completes.";
+  } else {
+    show("sceneWaiting", true);
+    show("sceneAgent", false);
+    $("sceneWaiting").textContent = "Scene analysis not completed yet. Start the analysis from Overview.";
   }
 }
 
-$("btnSceneAnalyze").onclick = async () => {
-  await withButtonLoading($("btnSceneAnalyze"), async () => {
-    await api(`/jobs/${state.job}/scene-analyze`, { method: "POST", body: { request: $("sceneReq").value.trim() } });
-    toast("Scene analysis started");
-    await tickJob(); schedulePoll();
-  }, "Analyzing…").catch(e => { $("jobErr").textContent = e.message; });
-};
+function updateLivePrompt() {
+  const status = state.jobData?.status || {};
+  const tag = `castcut-${state.job}`;
+  const releaseUrl = status.tasks?.scene?.url || status.release_url || `https://github.com/motionssalt/castcut/releases/tag/${tag}`;
+  const title = status.title || status.torrent_name || state.job;
+  const ct = status.content_type || "anime";
+  const req = ($("sceneReq")?.value || "").trim();
+  const reqBlock = req
+    ? `THE USER'S SCENE REQUEST:\n"""\n${req}\n"""`
+    : "The user left the scene request EMPTY. Pick the single best, most coherent, and impactful scene or sequence from the video that carries the narrative.";
+  const ctLabel = ct === "irl" ? "Live-Action / IRL" : "Anime";
+  const prompt = [
+    `Open this GitHub release: ${releaseUrl}`,
+    "Download and read 00_READ_THIS_FIRST.txt FIRST, then inspect the evidence assets (scene_index.json, transcript.json, and screenshots.zip as needed).",
+    "",
+    `Project: ${title}`,
+    `Content type: ${ctLabel}`,
+    "",
+    "Task:",
+    reqBlock,
+    "",
+    "Rules:",
+    "- Read 00_READ_THIS_FIRST.txt in the release before selecting any cuts.",
+    "- Produce exactly one production.json containing the selected segments.",
+    "- Segments must be in chronological playback order with start and end timestamps within the source video.",
+    "- The pipeline cuts the source video at full quality and joins the segments with hard cuts.",
+    "- Return ONLY the valid JSON document conforming to the schema in 00_READ_THIS_FIRST.txt. No commentary, no prose, no markdown fences."
+  ].join("\n");
+  if ($("scenePromptText")) $("scenePromptText").textContent = prompt;
+  return prompt;
+}
 
-$("btnCopyPrompt").onclick = async () => {
-  const text = state.jobData?.sceneAgent || "";
-  if (!text) { toast("Prompt not ready yet"); return; }
-  try { await navigator.clipboard.writeText(text); } catch {
-    const ta = document.createElement("textarea"); ta.value = text; document.body.appendChild(ta);
-    ta.select(); document.execCommand("copy"); ta.remove();
-  }
-  toast("Prompt copied ✓");
-};
+if ($("sceneReq")) {
+  $("sceneReq").oninput = () => updateLivePrompt();
+}
 
-$("btnScenePush").onclick = async () => {
-  $("validationOut").textContent = "";
-  const raw = $("prodJson").value.trim();
-  if (!raw) { $("validationOut").textContent = "Paste the production JSON first."; return; }
-  let parsed;
-  try { parsed = JSON.parse(raw); } catch (e) { $("validationOut").textContent = "Invalid JSON: " + e.message; return; }
-  if (!Array.isArray(parsed.segments) || !parsed.segments.length) {
-    $("validationOut").textContent = 'The JSON needs a non-empty "segments" array.'; return;
-  }
-  await withButtonLoading($("btnScenePush"), async () => {
-    await api(`/jobs/${state.job}/scene-export`, { method: "POST", body: { production: parsed } });
-    toast("Scene export started");
-    await tickJob(); schedulePoll();
-    switchTab("exports");
-  }, "Exporting…").catch(e => { $("validationOut").textContent = e.message; });
-};
+if ($("btnCopyPrompt")) {
+  $("btnCopyPrompt").onclick = async () => {
+    const p = updateLivePrompt();
+    try {
+      await navigator.clipboard.writeText(p);
+    } catch {
+      const ta = document.createElement("textarea"); ta.value = p; document.body.appendChild(ta);
+      ta.select(); document.execCommand("copy"); ta.remove();
+    }
+    toast("Prompt copied ✓");
+  };
+}
 
+if ($("btnScenePush")) {
+  $("btnScenePush").onclick = async () => {
+    $("validationOut").textContent = "";
+    const raw = $("prodJson").value.trim();
+    if (!raw) { $("validationOut").textContent = "Paste the production JSON first."; return; }
+    let parsed;
+    try { parsed = JSON.parse(raw); } catch (e) { $("validationOut").textContent = "Invalid JSON: " + e.message; return; }
+    if (!Array.isArray(parsed.segments) || !parsed.segments.length) {
+      $("validationOut").textContent = 'The JSON needs a non-empty "segments" array.'; return;
+    }
+    await withButtonLoading($("btnScenePush"), async () => {
+      await api(`/jobs/${state.job}/scene-export`, { method: "POST", body: { production: parsed } });
+      toast("Scene export started");
+      await tickJob(); schedulePoll();
+      switchTab("exports");
+    }, "Exporting…").catch(e => { $("validationOut").textContent = e.message; });
+  };
+}
 // ----- Tab 4: Exports & Downloads -----
 function renderExportsTab(r) {
   const exportsList = r.exports || [];

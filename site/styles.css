@@ -306,3 +306,13 @@ textarea.field{min-height:88px;resize:vertical}
   background: #8b5cf6 !important;
   color: #fff !important;
 }
+
+/* Tasks and Intake enhancements */
+.tasks-list { display: flex; flex-direction: column; gap: 8px; margin-top: 10px; }
+.task-row { display: flex; align-items: center; justify-content: space-between; background: #161b22; border: 1px solid #30363d; border-radius: 6px; padding: 10px 14px; gap: 10px; }
+.task-info { display: flex; flex-direction: column; gap: 2px; flex: 1; min-width: 0; }
+.task-title { font-weight: 600; font-size: 14px; display: flex; align-items: center; gap: 8px; }
+.task-desc { font-size: 12px; color: var(--text-dim, #8b949e); word-break: break-word; }
+.task-actions { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+.torrent-selected-row { display: flex; align-items: center; justify-content: space-between; background: #1f242c; border: 1px solid #30363d; border-radius: 6px; padding: 8px 12px; margin-top: 8px; gap: 8px; }
+input.field:disabled, input.field.disabled { opacity: 0.55; cursor: not-allowed; background: #12151a; border-color: #21262d; }

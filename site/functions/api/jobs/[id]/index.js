@@ -1,8 +1,7 @@
-import { readFile, readJson, getProjectReleases, reconcileStatus, cancelActiveRuns, deleteProjectReleasesAndTags, deleteJobFiles, gh, REPO } from "../../../_lib/gh.js";
+import { readFile, readJson, getProjectReleases, reconcileStatus, cancelActiveRuns, deleteProjectReleasesAndTags, deleteJobFiles, listJobRuns, gh, REPO } from "../../../_lib/gh.js";
 
 export async function onRequest({ request, params, data }) {
   const pat = data.pat; const id = params.id;
-
   if (request.method === "DELETE") {
     // Delete a project completely: cancel any live run, drop all releases + tags,
     // and remove every committed file under jobs/<id>/ so nothing is left.
@@ -12,7 +11,7 @@ export async function onRequest({ request, params, data }) {
     return json({ ok: true, cancelled_runs: cancelled, deleted_files: files });
   }
 
-  const [statusTxt, ingest, clips, filesJson, selection, sceneAgent, relData, exportItems] = await Promise.all([
+  const [statusTxt, ingest, clips, filesJson, selection, sceneAgent, relData, exportItems, runs] = await Promise.all([
     readFile(pat, `jobs/${id}/status.json`),
     readFile(pat, `jobs/${id}/ingest.json`),
     readFile(pat, `jobs/${id}/clips/manifest.json`),
@@ -21,6 +20,7 @@ export async function onRequest({ request, params, data }) {
     readFile(pat, `jobs/${id}/scene/agent_prompt.txt`),
     getProjectReleases(pat, id).catch(() => ({ releases: [], assets: [] })),
     listProjectExports(pat, id),
+    listJobRuns(pat, id).catch(() => []),
   ]);
 
   let status = statusTxt ? safeJson(statusTxt) : null;
@@ -42,6 +42,7 @@ export async function onRequest({ request, params, data }) {
     releases: relData.releases || [],
     release: { assets },
     assets,
+    runs: runs || [],
   });
 }
 

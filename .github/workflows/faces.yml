@@ -7,6 +7,7 @@ on:
       job_id: { required: true, type: string }
       sample_fps: { required: false, type: string, default: "1.0" }
       content_type: { required: false, type: string, default: "anime" }
+
 permissions:
   contents: write
 
@@ -34,11 +35,13 @@ jobs:
           mim install -q "mmengine" "mmcv>=2.0.0,<2.2" "mmdet>=3,<4" "mmpose>=1,<2" || true
           python -m pip install -q anime-face-detector || true
           python -m pip install -q "imgutils[metrics]" || python -m pip install -q dghs-imgutils || true
-
       - name: Status — faces running
         run: |
-          python -m pipeline.status "${{ inputs.job_id }}" --state faces_running \
-            --message "Sampling frames and clustering unique faces" \
+          python -m pipeline.status "${{ inputs.job_id }}" \
+            --task faces \
+            --task-state running \
+            --task-message "Sampling frames and clustering unique faces" \
+            --task-percent 20.0 \
             --workflow-run-url "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -46,33 +49,34 @@ jobs:
           git add "jobs/${{ inputs.job_id }}/"
           git commit -m "castcut: faces running ${{ inputs.job_id }}" || true
           for attempt in 1 2 3; do git push && break; echo "Push attempt $attempt failed; retrying"; git pull --rebase --autostash; sleep 2; done
-
       - name: Fetch source (release, or re-download when excluded)
         env: { GH_TOKEN: "${{ secrets.GITHUB_TOKEN }}" }
         run: |
           mkdir -p work
           df -h .
           python -m pipeline.refetch "${{ inputs.job_id }}" --release-tag "castcut-${{ inputs.job_id }}"
-
       - name: Analyze faces
         run: python -m pipeline.faces "${{ inputs.job_id }}" --fps ${{ inputs.sample_fps }} --content-type "${{ inputs.content_type }}"
-
       - name: Commit face manifest
         run: |
-          python -m pipeline.status "${{ inputs.job_id }}" --state faces_ready \
-            --message "Face gallery ready. Pick characters in the UI."
+          python -m pipeline.status "${{ inputs.job_id }}" \
+            --task faces \
+            --task-state ready \
+            --task-message "Face gallery ready. Select characters to extract." \
+            --task-percent 100.0
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git pull --rebase --autostash || true
           git add "jobs/${{ inputs.job_id }}/"
           git commit -m "castcut: faces ready ${{ inputs.job_id }}" || true
           for attempt in 1 2 3; do git push && break; echo "Push attempt $attempt failed; retrying"; git pull --rebase --autostash; sleep 2; done
-
       - name: Status — failed
         if: failure()
         run: |
-          python -m pipeline.status "${{ inputs.job_id }}" --state faces_failed \
-            --message "Face analysis failed; see workflow log: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" \
+          python -m pipeline.status "${{ inputs.job_id }}" \
+            --task faces \
+            --task-state failed \
+            --task-message "Face analysis failed; see workflow log: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" \
             --workflow-run-url "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -80,16 +84,17 @@ jobs:
           git add "jobs/${{ inputs.job_id }}/"
           git commit -m "castcut: faces failed ${{ inputs.job_id }}" || true
           for attempt in 1 2 3; do git push && break; echo "Push attempt $attempt failed; retrying"; git pull --rebase --autostash; sleep 2; done
-
       - name: Status — cancelled
         if: cancelled()
         run: |
           prev=$(python -c "import json;print(json.load(open('jobs/${{ inputs.job_id }}/status.json')).get('state',''))" 2>/dev/null || true)
-          python -m pipeline.status "${{ inputs.job_id }}" --state cancelled \
-            --message "Run cancelled." --set-json "{\"cancelled_from\":\"$prev\"}" || true
+          python -m pipeline.status "${{ inputs.job_id }}" \
+            --task faces \
+            --task-state cancelled \
+            --task-message "Face analysis was cancelled."
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git pull --rebase --autostash || true
           git add "jobs/${{ inputs.job_id }}/"
-          git commit -m "castcut: cancelled ${{ inputs.job_id }}" || true
+          git commit -m "castcut: cancelled faces ${{ inputs.job_id }}" || true
           for attempt in 1 2 3; do git push && break; echo "Push attempt $attempt failed; retrying"; git pull --rebase --autostash; sleep 2; done
