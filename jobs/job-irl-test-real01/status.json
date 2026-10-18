@@ -1,0 +1,13 @@
+{
+  "job_id": "job-irl-test-real01",
+  "title": "IRL Test Face Discovery",
+  "content_type": "irl",
+  "created_at_epoch": 1792350000,
+  "created_at": "2026-10-18T19:17:00Z",
+  "updated_at": "2026-10-18T19:17:00Z",
+  "updated_at_epoch": 1792350000,
+  "state": "ingested",
+  "message": "Source ready. Pick a mode (Clips or Scene).",
+  "release_tag": "castcut-job-irl-test-real01",
+  "video_in_release": true
+}

@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "job_id": "job-irl-test-real01",
+  "title": "IRL Test Face Discovery",
+  "content_type": "irl",
+  "source": {
+    "kind": "direct_url",
+    "url": "https://raw.githubusercontent.com/opencv/opencv/master/samples/data/lena.jpg"
+  },
+  "created_at_epoch": 1792350000
+}
