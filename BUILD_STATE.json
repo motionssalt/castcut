@@ -1,7 +1,7 @@
 {
   "project": "castcut",
   "repo": "motionssalt/castcut",
-  "updated_at": "2026-10-18T19:31:00Z",
+  "updated_at": "2026-10-18T21:05:15.953130+00:00",
   "phases": [
     {
       "id": 1,
@@ -461,5 +461,21 @@
       39159016308
     ],
     "notes": "All failing pipelines resolved and verified green end-to-end. CastCut made public as requested. Full IRL live-action pipeline implemented with OpenCV YuNet detection and SFace ArcFace 128D embeddings within Actions CPU limits, generating 112px WebP gallery thumbnails, per-person grouping, and visually lossless compression. End-to-end verified on Anime (job-1791410158245-1kwa, run 39157684009) and IRL (job-irl-test-real01, runs 39158114953 and 39159016308) with download-ready releases."
+  },
+  "castcut_unified_flow": {
+    "status": "in_progress",
+    "last_updated": "2026-10-18T21:05:15.953130+00:00",
+    "root_cause_notes": "",
+    "done": [],
+    "pending": [
+      "A0: Study ClipForge pipeline architecture and document in BUILD_STATE",
+      "A3: Remove Hybrid Mode, implement unified parallel Start (faces + scene analysis)",
+      "A3b: ClipForge-style release-linked AI scene prompt + release assets (screenshots, subtitles/ASR, complete scene index)",
+      "A4: Simplified intake (one link field auto-detecting all URLs/magnets + torrent upload with mutual disabling)",
+      "A3: Show active and recent tasks/jobs under each project with cancel/delete options",
+      "A5: End-to-end verification and real runs recording"
+    ],
+    "verified_runs": [],
+    "notes": "Initialized castcut_unified_flow task."
   }
 }
