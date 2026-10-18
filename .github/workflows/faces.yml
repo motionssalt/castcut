@@ -5,12 +5,8 @@ on:
   workflow_dispatch:
     inputs:
       job_id: { required: true, type: string }
-      sample_fps: { required: false, type: string, default: "1.0"
-      content_type:
-        description: "Content type (anime or irl)"
-        required: false
-        default: "anime" }
-
+      sample_fps: { required: false, type: string, default: "1.0" }
+      content_type: { required: false, type: string, default: "anime" }
 permissions:
   contents: write
 
