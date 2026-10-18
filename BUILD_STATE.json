@@ -1,7 +1,7 @@
 {
   "project": "castcut",
   "repo": "motionssalt/castcut",
-  "updated_at": "2026-10-18T21:05:15.953130+00:00",
+  "updated_at": "2026-10-18T21:11:58.886365+00:00",
   "phases": [
     {
       "id": 1,
@@ -464,11 +464,12 @@
   },
   "castcut_unified_flow": {
     "status": "in_progress",
-    "last_updated": "2026-10-18T21:05:15.953130+00:00",
+    "last_updated": "2026-10-18T21:11:58.886365+00:00",
     "root_cause_notes": "",
-    "done": [],
+    "done": [
+      "A0: Studied ClipForge pipeline architecture and mapped out CastCut adaptation"
+    ],
     "pending": [
-      "A0: Study ClipForge pipeline architecture and document in BUILD_STATE",
       "A3: Remove Hybrid Mode, implement unified parallel Start (faces + scene analysis)",
       "A3b: ClipForge-style release-linked AI scene prompt + release assets (screenshots, subtitles/ASR, complete scene index)",
       "A4: Simplified intake (one link field auto-detecting all URLs/magnets + torrent upload with mutual disabling)",
@@ -476,6 +477,6 @@
       "A5: End-to-end verification and real runs recording"
     ],
     "verified_runs": [],
-    "notes": "Initialized castcut_unified_flow task."
+    "notes": "Architecture map of ClipForge adapted to CastCut:\n- Stage A: publishes GitHub release (00_READ_THIS_FIRST.txt, screenshots.zip, transcript.json, scene_index.json, video_meta.json, manifest.json). If source >2GB, marks source_omitted: true and re-fetches in Stage B.\n- Client UI: prompt is generated instantly client-side pointing to the release and instructions file. Typing a scene description updates prompt live with zero server/Action latency.\n- Stage B (scene export): reads production.json, validates schema, re-fetches source, cuts segments at full quality (CRF 14), joins with hard cuts, publishes to release.\n- Single intake: one link field auto-detecting URL/Drive/Magnet, plus torrent file with mutual disable.\n- Unified parallel execution: Start runs faces and scene analysis in parallel, with independent status reporting and tasks list under project."
   }
 }
