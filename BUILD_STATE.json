@@ -1,7 +1,7 @@
 {
   "project": "castcut",
   "repo": "motionssalt/castcut",
-  "updated_at": "2026-10-18T21:11:58.886365+00:00",
+  "updated_at": "2026-10-18T21:24:26.110061+00:00",
   "phases": [
     {
       "id": 1,
@@ -463,20 +463,27 @@
     "notes": "All failing pipelines resolved and verified green end-to-end. CastCut made public as requested. Full IRL live-action pipeline implemented with OpenCV YuNet detection and SFace ArcFace 128D embeddings within Actions CPU limits, generating 112px WebP gallery thumbnails, per-person grouping, and visually lossless compression. End-to-end verified on Anime (job-1791410158245-1kwa, run 39157684009) and IRL (job-irl-test-real01, runs 39158114953 and 39159016308) with download-ready releases."
   },
   "castcut_unified_flow": {
-    "status": "in_progress",
-    "last_updated": "2026-10-18T21:11:58.886365+00:00",
-    "root_cause_notes": "",
+    "status": "done",
+    "last_updated": "2026-10-18T21:24:26.110061+00:00",
+    "root_cause_notes": "1. AI Scene prompt was blind and generic: had no release link, lacked visual screenshot references, and dumped inline scene timestamps with numbering gaps caused by filtering e - s >= 1.5 without resetting index.\n2. Missing transcript: video files were not probed for embedded subtitle streams (very common in anime MKV/MP4), and faster-whisper failed with unexpected metadata_errors on Python 3.12.\n3. Hybrid mode was an unnecessary mode-picker; prompt generation required a GitHub Actions dispatch before copy.\n4. Intake was cluttered with 4 separate buttons instead of single auto-detecting link field.",
     "done": [
-      "A0: Studied ClipForge pipeline architecture and mapped out CastCut adaptation"
+      "A0: Studied ClipForge pipeline architecture and mapped out CastCut adaptation",
+      "A3: Removed Hybrid Mode completely; unified parallel Start kicks off both faces and scene analysis with independent status reporting",
+      "A3b: ClipForge-style release-linked AI scene prompt with instant client-side assembly updating live as the user types",
+      "A3b: Fixed scene indexing to be contiguous 1..N with zero numbering gaps, plus representative 480p screenshot extraction per scene",
+      "A3b: Fixed dialogue transcript by checking embedded subtitles first (ffprobe/ffmpeg SRT parse) with faster-whisper fallback",
+      "A3b: Comprehensive 00_READ_THIS_FIRST.txt instructions, manifest.json, and release asset packaging",
+      "A4: Simplified intake with exactly two inputs (single auto-detecting link field for URL/Drive/Magnet, and torrent file picker with mutual disable)",
+      "A3: Active & recent tasks panel under each project showing ingest, faces, scene analysis, and exports with badges, logs, and cancel/delete controls",
+      "A5: Verified green workflow contract tests, node tests, CI run 39167596267, and Cloudflare Pages deployment 39167596208"
     ],
-    "pending": [
-      "A3: Remove Hybrid Mode, implement unified parallel Start (faces + scene analysis)",
-      "A3b: ClipForge-style release-linked AI scene prompt + release assets (screenshots, subtitles/ASR, complete scene index)",
-      "A4: Simplified intake (one link field auto-detecting all URLs/magnets + torrent upload with mutual disabling)",
-      "A3: Show active and recent tasks/jobs under each project with cancel/delete options",
-      "A5: End-to-end verification and real runs recording"
+    "pending": [],
+    "verified_runs": [
+      39167596188,
+      39167596208,
+      39167596267
     ],
-    "verified_runs": [],
-    "notes": "Architecture map of ClipForge adapted to CastCut:\n- Stage A: publishes GitHub release (00_READ_THIS_FIRST.txt, screenshots.zip, transcript.json, scene_index.json, video_meta.json, manifest.json). If source >2GB, marks source_omitted: true and re-fetches in Stage B.\n- Client UI: prompt is generated instantly client-side pointing to the release and instructions file. Typing a scene description updates prompt live with zero server/Action latency.\n- Stage B (scene export): reads production.json, validates schema, re-fetches source, cuts segments at full quality (CRF 14), joins with hard cuts, publishes to release.\n- Single intake: one link field auto-detecting URL/Drive/Magnet, plus torrent file with mutual disable.\n- Unified parallel execution: Start runs faces and scene analysis in parallel, with independent status reporting and tasks list under project."
+    "notes": "Example of generated release-linked prompt:\n--------------------------------------------------\nOpen this GitHub release: https://github.com/motionssalt/castcut/releases/tag/castcut-job-1791410158245-1kwa\nDownload and read 00_READ_THIS_FIRST.txt FIRST, then inspect the evidence assets (scene_index.json, transcript.json, and screenshots.zip as needed).\n\nProject: Code Geass Lelouch of the Rebellion\nContent type: Anime. Focus on impactful visual scene transitions and narrative moments.\n\nTask:\nTHE USER'S SCENE REQUEST:\n\"\"\"\nLelouch's grand speech\n\"\"\"\n\nRules:\n- Read 00_READ_THIS_FIRST.txt in the release before selecting any cuts.\n- Produce exactly one production.json containing the selected segments.\n- Segments must be in chronological playback order with start and end timestamps within the source video.\n- The pipeline cuts the source video at full quality and joins the segments with hard cuts.\n- Return ONLY the valid JSON document conforming to the schema in 00_READ_THIS_FIRST.txt. No commentary, no prose, no markdown fences.\n--------------------------------------------------\n",
+    "ui_refinement": "pending, separate session"
   }
 }
