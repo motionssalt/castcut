@@ -1,7 +1,7 @@
 {
   "project": "castcut",
   "repo": "motionssalt/castcut",
-  "updated_at": "2026-10-07T19:48:00Z",
+  "updated_at": "2026-10-18T19:31:00Z",
   "phases": [
     {
       "id": 1,
@@ -385,8 +385,8 @@
   "fix_failing_runs_task": {
     "repo": "castcut",
     "task": "fix-failing-runs",
-    "status": "in_progress",
-    "last_updated": "2026-10-18T19:09:01.062677+00:00",
+    "status": "done",
+    "last_updated": "2026-10-18T19:31:00Z",
     "failures_found": [
       {
         "run_id": 39154814335,
@@ -452,7 +452,14 @@
       }
     ],
     "fixes_pending": [],
-    "verified_runs": [],
-    "notes": "Initialized fix_failing_runs_task for pipeline failures and IRL clip support"
+    "verified_runs": [
+      39157434288,
+      39157684009,
+      39158105935,
+      39158114953,
+      39159011383,
+      39159016308
+    ],
+    "notes": "All failing pipelines resolved and verified green end-to-end. CastCut made public as requested. Full IRL live-action pipeline implemented with OpenCV YuNet detection and SFace ArcFace 128D embeddings within Actions CPU limits, generating 112px WebP gallery thumbnails, per-person grouping, and visually lossless compression. End-to-end verified on Anime (job-1791410158245-1kwa, run 39157684009) and IRL (job-irl-test-real01, runs 39158114953 and 39159016308) with download-ready releases."
   }
 }
