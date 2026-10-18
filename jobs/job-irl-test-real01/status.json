@@ -4,11 +4,30 @@
   "content_type": "irl",
   "created_at_epoch": 1792350000,
   "created_at": "2026-10-18T19:17:00Z",
-  "updated_at": "2026-10-18T19:30:18Z",
-  "updated_at_epoch": 1792351818,
-  "state": "clips_exporting",
-  "message": "Building ordered character cut and running final compression",
+  "updated_at": "2026-10-18T19:30:24Z",
+  "updated_at_epoch": 1792351824,
+  "state": "clips_ready",
+  "message": "Final clips file ready. Download from the release.",
   "release_tag": "castcut-job-irl-test-real01",
   "video_in_release": true,
-  "workflow_run_url": "https://github.com/motionssalt/castcut/actions/runs/39159016308"
+  "workflow_run_url": "https://github.com/motionssalt/castcut/actions/runs/39159016308",
+  "version": 1,
+  "export_id": "exp-job-irl-test-real01-clips",
+  "project_id": "job-irl-test-real01",
+  "type": "clips",
+  "label": "char1",
+  "order": [
+    "char1"
+  ],
+  "per_char_segments": {
+    "char1": 1
+  },
+  "total_segments": 1,
+  "total_duration": 5.0,
+  "size_before_bytes": 213670,
+  "size_after_bytes": 164488,
+  "size_before_human": "208.7 KB",
+  "size_after_human": "160.6 KB",
+  "asset_name": "castcut-clips-job-irl-test-real01.mp4",
+  "status": "done"
 }
