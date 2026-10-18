@@ -31,7 +31,7 @@ export async function gh(pat, path, { method = "GET", body = null, raw = false, 
   return r.json();
 }
 
-const esc = (p) => encodeURIComponent(p).replace(/%2F/g, "/");
+export const esc = (p) => encodeURIComponent(p).replace(/%2F/g, "/");
 
 export async function readFile(pat, path) {
   try {
