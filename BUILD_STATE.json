@@ -386,7 +386,7 @@
     "repo": "castcut",
     "task": "fix-failing-runs",
     "status": "in_progress",
-    "last_updated": "2026-10-18T19:06:15.925523+00:00",
+    "last_updated": "2026-10-18T19:09:01.062677+00:00",
     "failures_found": [
       {
         "run_id": 39154814335,
@@ -415,6 +415,13 @@
         "step_name": "Run actionlint",
         "exact_error": "reviewdog: Too many results (annotations) in diff... SC2034:warning: attempt appears unused",
         "root_cause": "Same SC2034 unused attempt warning and SC2012/SC2015 warnings in cleanup and export workflows."
+      },
+      {
+        "run_id": 39157226877,
+        "workflow_name": "CI (Tests, Lint, Selftest)",
+        "step_name": "Run automated test suite",
+        "exact_error": "ModuleNotFoundError: No module named 'pipeline' during pytest collection",
+        "root_cause": "pytest was invoked without current working directory on sys.path, and CI test environment lacked opencv-python-headless/pillow/numpy/requests required by test_irl_support and pipeline modules."
       }
     ],
     "fixes_done": [
@@ -436,6 +443,11 @@
       {
         "issue": "SC2034 unused attempt and SC2012/SC2015/SC2162 reviewdog overflow",
         "fix": "Referenced $attempt in all 31 push retry loops, sanitized read -r and if conditions in cleanup.yml, replaced ls with find in export workflows. actionlint now passes with 0 warnings.",
+        "status": "committed"
+      },
+      {
+        "issue": "CI pytest ModuleNotFoundError: No module named pipeline",
+        "fix": "Added tests/conftest.py to ensure repo root is on sys.path; added requests, opencv-python-headless, pillow, numpy, onnxruntime to CI test deps; added PYTHONPATH=. to test invocation.",
         "status": "committed"
       }
     ],

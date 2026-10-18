@@ -31,7 +31,7 @@ jobs:
       - name: Install Python test dependencies
         run: |
           python -m pip install --upgrade pip
-          python -m pip install pytest
+          python -m pip install pytest requests opencv-python-headless pillow numpy onnxruntime
 
       - name: Lint workflows (no heredocs + bash -n)
         run: python scripts/lint_workflows.py
@@ -45,7 +45,7 @@ jobs:
       - name: Run automated test suite
         run: |
           node tests/test_torrent_fixtures.test.mjs
-          pytest -v tests/
+          PYTHONPATH=. pytest -v tests/
 
       - name: Run pipeline selftest dry-run
         run: python -m pipeline.selftest
