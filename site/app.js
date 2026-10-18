@@ -638,8 +638,10 @@ async function refreshJobs() {
       list.appendChild(div);
     });
     const cb = $("btnCleanup");
-    cb.hidden = clearable === 0;
-    cb.textContent = `Clear finished (${clearable})`;
+    if (cb) {
+      cb.hidden = clearable === 0;
+      cb.textContent = `Clear finished (${clearable})`;
+    }
   } catch (e) { console.warn(e); }
 }
 
@@ -654,7 +656,15 @@ async function deleteJob(id, title, fromList) {
   } catch (e) { toast("Delete failed: " + e.message); }
 }
 
-$("btnCleanup").onclick = async () => {
+if ($("btnRefreshJobs")) {
+  $("btnRefreshJobs").onclick = () => {
+    refreshJobs();
+    toast("Refreshing projects…");
+  };
+}
+
+if ($("btnCleanup")) {
+  $("btnCleanup").onclick = async () => {
   const r = await api("/jobs");
   const doomed = (r.jobs || []).filter(j => FINISHED_STATES.has(j.state) || FAILED_RE.test(j.state) || j.state === "cancelled");
   if (!doomed.length) return;
@@ -662,7 +672,8 @@ $("btnCleanup").onclick = async () => {
   if (!ok) return;
   for (const j of doomed) { try { await api(`/jobs/${j.job_id}`, { method: "DELETE" }); } catch { /* ignore */ } }
   toast("Cleared"); refreshJobs();
-};
+  };
+}
 
 // ---------- project page ----------
 function stopPoll() {

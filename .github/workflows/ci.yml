@@ -45,6 +45,7 @@ jobs:
       - name: Run automated test suite
         run: |
           node tests/test_torrent_fixtures.test.mjs
+          node tests/test_site_dom.test.mjs
           PYTHONPATH=. pytest -v tests/
 
       - name: Run pipeline selftest dry-run

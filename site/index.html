@@ -84,12 +84,18 @@
 
       <input id="jobTitle" class="field" type="text" placeholder="Project name / label (optional)" autocomplete="off" spellcheck="false" style="margin-top: 10px;">
       <button id="btnIngest" class="btn primary block">Start Project</button>
-      <p id="homeErr" class="err"></p>
+      <div id="homeErrWrap" class="err-box" hidden>
+        <p id="homeErr" class="err"></p>
+        <button id="btnCopyHomeErr" type="button" class="btn-link" style="background:none;border:none;color:var(--dim);cursor:pointer;font-size:12px;text-decoration:underline;margin-top:4px;">Copy error details</button>
+      </div>
     </div>
 
     <div class="rowhead">
       <h2>Projects</h2>
-      <button id="btnRefreshJobs" class="btn ghost sm">↻ Refresh</button>
+      <div style="display:flex;gap:6px;align-items:center;">
+        <button id="btnRefreshJobs" class="btn ghost sm">↻ Refresh</button>
+        <button id="btnCleanup" class="btn ghost sm" hidden>Clear finished</button>
+      </div>
     </div>
     <div id="jobList"></div>
     <p id="jobListEmpty" class="dim center" hidden>No jobs yet — add a source above.</p>
