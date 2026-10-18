@@ -15,6 +15,17 @@ import sys
 
 from .utils import fmt_time
 
+SCHEMA_TEXT = """{
+  "version": 1,
+  "request": "<echo the scene request, or omit>",
+  "title": "<short label for this cut>",
+  "segments": [
+    {"start": 12.5, "end": 27.0, "note": "why this segment"},
+    {"start": "1:04", "end": "1:19.5", "note": "MM:SS also accepted"}
+  ],
+  "metadata": {"mood": "...", "characters": ["..."]}
+}"""
+
 
 def build_release_linked_prompt(
     job_id: str,
@@ -37,7 +48,10 @@ def build_release_linked_prompt(
         )
 
     project_name = title or job_id
-    ct_label = "Anime" if content_type == "anime" else "Live-Action / IRL"
+    if content_type == "irl":
+        ct_label = "LIVE-ACTION / REAL-WORLD (not anime). Focus on conversational beats and natural live pacing."
+    else:
+        ct_label = "Anime. Focus on impactful visual scene transitions and narrative moments."
 
     return f"""Open this GitHub release: {rel_url}
 Download and read 00_READ_THIS_FIRST.txt FIRST, then inspect the evidence assets (scene_index.json, transcript.json, and screenshots.zip as needed).

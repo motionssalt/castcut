@@ -91,7 +91,8 @@ jobs:
           python -m pipeline.status "${{ inputs.job_id }}" \
             --task faces \
             --task-state cancelled \
-            --task-message "Face analysis was cancelled."
+            --task-message "Face analysis was cancelled." \
+            --set-json "{\"cancelled_from\":\"$prev\"}" || true
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git pull --rebase --autostash || true
