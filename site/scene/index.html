@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#0d1117">
+  <title>CastCut — AI Scene Editor</title>
+  <link rel="stylesheet" href="/styles.css">
+  <link rel="prefetch" href="/common.js">
+</head>
+<body>
+<header class="topbar">
+  <div class="brand"><a href="/" style="color:inherit; text-decoration:none;">🎬 CastCut</a> <span class="dim" id="whoami"></span></div>
+  <button id="btnLogout" class="btn ghost sm" hidden>Sign out</button>
+</header>
+
+<main id="app">
+  <!-- ============ GATE ============ -->
+  <section id="gate" hidden>
+    <div class="card">
+      <h2>Sign in</h2>
+      <p class="dim">Private tool. Paste the owner's GitHub PAT. It stays in this browser only.</p>
+      <input id="patInput" class="field" type="password" placeholder="Paste the GitHub PAT" autocomplete="off" spellcheck="false">
+      <button id="btnLogin" class="btn primary block">Unlock</button>
+      <p id="gateErr" class="err"></p>
+    </div>
+  </section>
+
+  <!-- ============ SCENE CONTENT ============ -->
+  <section id="pageContent" hidden>
+    <div id="projectNav" class="project-nav-bar"></div>
+    <div id="sceneContent"></div>
+  </section>
+</main>
+
+<script src="/common.js"></script>
+<script src="/scene/scene.js"></script>
+</body>
+</html>

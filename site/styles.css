@@ -317,3 +317,261 @@ textarea.field{min-height:88px;resize:vertical}
 .task-actions { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
 .torrent-selected-row { display: flex; align-items: center; justify-content: space-between; background: #1f242c; border: 1px solid #30363d; border-radius: 6px; padding: 8px 12px; margin-top: 8px; gap: 8px; }
 input.field:disabled, input.field.disabled { opacity: 0.55; cursor: not-allowed; background: #12151a; border-color: #21262d; }
+
+/* ==========================================================================
+   Multi-Page & Issue 1-5 UI Extensions (CastCut)
+   ========================================================================== */
+
+/* Project Navigation & Breadcrumbs */
+.project-nav-bar {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+.crumb-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+}
+.crumb-link {
+  color: var(--primary, #6366f1);
+  text-decoration: none;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.crumb-link:hover {
+  text-decoration: underline;
+}
+.crumb-title {
+  color: var(--text, #c9d1d9);
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.page-nav-tabs {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+  scrollbar-width: none;
+}
+.page-nav-tabs::-webkit-scrollbar {
+  display: none;
+}
+.nav-tab-btn {
+  background: var(--bg-card, #161b22);
+  border: 1px solid var(--border, #30363d);
+  color: var(--text-dim, #8b949e);
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+  transition: all 0.15s ease;
+}
+.nav-tab-btn:hover {
+  background: #21262d;
+  color: var(--text, #c9d1d9);
+  border-color: #484f58;
+}
+.nav-tab-btn.active {
+  background: var(--primary, #6366f1);
+  border-color: var(--primary, #6366f1);
+  color: #ffffff;
+  font-weight: 600;
+  box-shadow: 0 1px 4px rgba(99, 102, 241, 0.4);
+}
+.nav-badge {
+  background: rgba(255, 255, 255, 0.2);
+  color: #fff;
+  font-size: 11px;
+  padding: 1px 6px;
+  border-radius: 10px;
+}
+
+/* Audio Track & Quality Pickers */
+.picker-group {
+  background: #141820;
+  border: 1px solid #2a303c;
+  border-radius: 8px;
+  padding: 12px 14px;
+  margin: 12px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.picker-label-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.picker-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text, #c9d1d9);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.picker-badge {
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 10px;
+  background: #232a36;
+  color: #8b949e;
+  border: 1px solid #30363d;
+}
+.picker-badge.selected {
+  background: rgba(99, 102, 241, 0.15);
+  color: #a5b4fc;
+  border-color: rgba(99, 102, 241, 0.4);
+}
+.audio-track-select {
+  width: 100%;
+  font-size: 13px;
+  background: #1c2128;
+  color: #c9d1d9;
+  border: 1px solid #384252;
+  border-radius: 6px;
+  padding: 8px 10px;
+}
+.audio-track-note {
+  font-size: 11px;
+  color: #8b949e;
+  line-height: 1.4;
+}
+
+/* JSON Input, Upload & Preview (Issue 3 & 4) */
+.input-method-tabs {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 8px;
+  background: #12151b;
+  padding: 3px;
+  border-radius: 6px;
+  border: 1px solid #262c37;
+}
+.method-tab-btn {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: #8b949e;
+  padding: 6px 10px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+}
+.method-tab-btn.active {
+  background: #232936;
+  color: #fff;
+  font-weight: 600;
+}
+.file-upload-box {
+  border: 2px dashed #30363d;
+  background: #161b22;
+  border-radius: 8px;
+  padding: 16px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.file-upload-box:hover, .file-upload-box.dragover {
+  border-color: var(--primary, #6366f1);
+  background: rgba(99, 102, 241, 0.05);
+}
+.file-upload-info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #1c2128;
+  border: 1px solid #30363d;
+  border-radius: 6px;
+  padding: 8px 12px;
+  margin-top: 8px;
+}
+.source-winner-indicator {
+  font-size: 11px;
+  color: #38bdf8;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-bottom: 6px;
+}
+.json-preview-box {
+  background: #131922;
+  border: 1px solid #238636;
+  border-radius: 8px;
+  padding: 12px 14px;
+  margin: 10px 0;
+  font-size: 13px;
+}
+.json-preview-title {
+  color: #3fb950;
+  font-weight: 600;
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.json-preview-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  color: #c9d1d9;
+  font-size: 12px;
+  margin-bottom: 8px;
+}
+.json-preview-stat-item {
+  background: #1f2735;
+  padding: 4px 8px;
+  border-radius: 4px;
+  border: 1px solid #303a4b;
+}
+
+/* Skeleton Loading (Issue 5 Instant response) */
+.loading-skeleton {
+  animation: skeleton-pulse 1.2s infinite ease-in-out;
+  background: linear-gradient(90deg, #161b22 25%, #21262d 50%, #161b22 75%);
+  background-size: 200% 100%;
+  border-radius: 6px;
+}
+@keyframes skeleton-pulse {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* Export Cards Details */
+.export-meta-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 8px;
+  margin: 10px 0;
+  background: #14171f;
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #282f3c;
+}
+.meta-item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.meta-item-label {
+  font-size: 11px;
+  color: #8b949e;
+}
+.meta-item-val {
+  font-size: 13px;
+  font-weight: 600;
+  color: #e6edf3;
+}

@@ -218,6 +218,8 @@
             <div><label class="lbl">Merge gap (s)</label><input id="gapSec" class="field" type="number" min="0" max="10" step="0.5" value="2"></div>
             <div><label class="lbl">Pad (s)</label><input id="padSec" class="field" type="number" min="0" max="2" step="0.1" value="0.4"></div>
           </div>
+          <div id="clipsAudioPickerSlot"></div>
+          <div id="clipsQualitySlot"></div>
           <div class="stickybar" id="extractBar">
             <span id="extractInfo" class="sm">0 selected</span>
             <button id="btnExportClips" class="btn primary">Extract video</button>
@@ -242,10 +244,22 @@
           <pre id="scenePromptText" class="summary mono" style="max-height: 180px; overflow-y: auto; white-space: pre-wrap; word-break: break-word;"></pre>
           <button id="btnCopyPrompt" class="btn primary block">📋 Copy agent prompt</button>
 
-          <h3 style="margin-top: 18px;">2 · Upload production JSON</h3>
-          <p class="dim sm">Paste the returned production JSON from your AI.</p>
-          <textarea id="prodJson" class="field mono" rows="8" placeholder='{"version":1,"segments":[{"start":12.5,"end":27.0,"note":"why this segment"}]}'></textarea>
+          <h3 style="margin-top: 18px;">2 · Submit production JSON</h3>
+          <p class="dim sm">Upload the <code>.json</code> or <code>.txt</code> file produced by your AI, or paste the text.</p>
+          <div id="sceneSourceWinner" class="source-winner-indicator" hidden></div>
+          <div style="margin-bottom: 10px;">
+            <button type="button" id="btnPickJsonFile" class="btn ghost block">📄 Choose .json / .txt file</button>
+            <input id="sceneFileInput" type="file" accept=".json,.txt,text/plain,application/json" hidden>
+            <div id="sceneFileInfo" class="file-upload-info" hidden>
+              <span id="sceneFileName" class="mono sm"></span>
+              <button type="button" id="btnRemoveSceneFile" class="btn danger sm">✕ Remove</button>
+            </div>
+          </div>
+          <textarea id="prodJson" class="field mono" rows="6" placeholder='Paste JSON here (fences and surrounding text are fine)...''></textarea>
+          <div id="scenePreviewSlot"></div>
           <p id="validationOut" class="err"></p>
+          <div id="sceneAudioPickerSlot"></div>
+          <div id="sceneQualitySlot"></div>
           <button id="btnScenePush" class="btn primary block">Cut & export</button>
         </div>
       </div>
@@ -282,6 +296,7 @@
 </div>
 
 <div id="toast" hidden></div>
+<script src="/common.js"></script>
 <script src="/app.js" type="module"></script>
 </body>
 </html>

@@ -46,6 +46,7 @@ jobs:
         run: |
           node tests/test_torrent_fixtures.test.mjs
           node tests/test_site_dom.test.mjs
+          node tests/test_pages.test.mjs
           PYTHONPATH=. pytest -v tests/
 
       - name: Run pipeline selftest dry-run

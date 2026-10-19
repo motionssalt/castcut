@@ -20,6 +20,11 @@ const state = {
   selChecked: new Set(),
   currentTab: "overview",
   tickerTimer: null,
+  chosenAudioTrack: null,
+  chosenQuality: "normal",
+  sceneUploadedFileContent: null,
+  sceneUploadedFileName: "",
+  sceneActiveSource: "paste",
 };
 
 // ---------- status presentation ----------
@@ -45,6 +50,82 @@ function statusView(s) {
 }
 
 // ---------- helpers ----------
+// Tolerant JSON parser & validator (Issues 3 & 4)
+function cleanAndParseJson(raw) {
+  if (!raw || !raw.trim()) return { ok: false, error: "JSON input is empty" };
+  let text = raw.trim();
+  if (text.charCodeAt(0) === 0xFEFF) text = text.slice(1).trim();
+  try {
+    const data = JSON.parse(text);
+    if (typeof data === "object" && data !== null && !Array.isArray(data)) return { ok: true, data };
+  } catch (e) {}
+
+  const fenceMatch = text.match(/```(?:json)?\s*([\s\S]*?)\s*```/i);
+  if (fenceMatch) {
+    text = fenceMatch[1].trim();
+  } else {
+    const s = text.indexOf("{");
+    const e = text.lastIndexOf("}");
+    if (s !== -1 && e !== -1 && e > s) text = text.slice(s, e + 1).trim();
+  }
+  try {
+    const data = JSON.parse(text);
+    if (typeof data === "object" && data !== null && !Array.isArray(data)) return { ok: true, data };
+  } catch (e) {}
+
+  text = text.replace(/[“”]/g, '"').replace(/[‘’]/g, "'");
+  try {
+    const data = JSON.parse(text);
+    if (typeof data === "object" && data !== null && !Array.isArray(data)) return { ok: true, data };
+  } catch (e) {}
+
+  const cleaned = text.replace(/,\s*([}\]])/g, "$1");
+  try {
+    const data = JSON.parse(cleaned);
+    if (typeof data === "object" && data !== null && !Array.isArray(data)) return { ok: true, data };
+  } catch (e) {
+    return { ok: false, error: "JSON syntax error: " + e.message };
+  }
+  return { ok: false, error: "Root must be a JSON object" };
+}
+
+function parseTime(val) {
+  if (typeof val === "number") return val;
+  const s = String(val).trim();
+  if (/^\d+(\.\d+)?$/.test(s)) return parseFloat(s);
+  const m = s.match(/^(?:(\d+):)?([0-5]?\d):([0-5]?\d(?:\.\d+)?)$/);
+  if (!m) throw new Error(`Invalid timestamp: "${val}"`);
+  return parseFloat(m[1] || 0) * 3600 + parseFloat(m[2]) * 60 + parseFloat(m[3]);
+}
+
+function validateProduction(data, duration = 0) {
+  if (!data || typeof data !== "object") return { ok: false, errors: ["Root must be an object"] };
+  if (!Array.isArray(data.segments) || !data.segments.length) {
+    return { ok: false, errors: ['The JSON requires a non-empty "segments" array'] };
+  }
+  const errors = [];
+  const segments = [];
+  let totalDur = 0;
+  data.segments.forEach((seg, i) => {
+    const idx = i + 1;
+    if (!seg || typeof seg !== "object") { errors.push(`Segment ${idx}: must be an object with start and end`); return; }
+    if (seg.start === undefined || seg.end === undefined) { errors.push(`Segment ${idx}: missing start or end`); return; }
+    try {
+      const s = parseTime(seg.start);
+      const e = parseTime(seg.end);
+      if (s < 0) errors.push(`Segment ${idx}: start cannot be negative`);
+      if (e <= s) errors.push(`Segment ${idx}: end must be greater than start`);
+      if (duration > 0 && s >= duration) errors.push(`Segment ${idx}: start beyond duration`);
+      totalDur += Math.max(0, e - s);
+      segments.push({ start: s, end: e, note: seg.note || "" });
+    } catch (err) {
+      errors.push(`Segment ${idx}: ${err.message}`);
+    }
+  });
+  if (errors.length > 0) return { ok: false, errors };
+  return { ok: true, errors: [], segments, count: segments.length, totalDuration: totalDur, title: data.title || "AI Scene Cut" };
+}
+
 function toast(msg) {
   const t = $("toast"); t.textContent = msg; t.hidden = false;
   clearTimeout(toast._t); toast._t = setTimeout(() => { t.hidden = true; }, 2200);
@@ -1006,6 +1087,10 @@ if ($("btnStartAnalysis")) {
 }
 // ----- Tab 2: Clips -----
 function renderClipsTab(r) {
+  const audioTracks = r.ingest?.audio_tracks || r.clipsManifest?.audio_tracks || [];
+  if ($("clipsAudioPickerSlot") && typeof renderAudioTrackPicker === "function") {
+    renderAudioTrackPicker($("clipsAudioPickerSlot"), audioTracks, state.chosenAudioTrack, (t) => { state.chosenAudioTrack = t; });
+  }
   const isFacesReady = !!(r.clipsManifest || r.status?.tasks?.faces?.state === "ready");
   const isFacesRunning = (r.status?.tasks?.faces?.state === "running" || r.status?.state === "faces_running");
 
@@ -1080,6 +1165,8 @@ $("btnExportClips").onclick = async () => {
       body: {
         order: state.selection, ignored: [...state.ignored], merge_groups: state.merged,
         gap_threshold: parseFloat($("gapSec").value) || 2, padding: parseFloat($("padSec").value) || 0.4,
+        audio_track: state.chosenAudioTrack,
+        quality: state.chosenQuality || "normal",
       },
     });
     toast("Clips export started");
@@ -1090,6 +1177,11 @@ $("btnExportClips").onclick = async () => {
 
 // ----- Tab 3: Scene -----
 function renderSceneTab(r) {
+  const audioTracks = r.ingest?.audio_tracks || r.clipsManifest?.audio_tracks || [];
+  if ($("sceneAudioPickerSlot") && typeof renderAudioTrackPicker === "function") {
+    renderAudioTrackPicker($("sceneAudioPickerSlot"), audioTracks, state.chosenAudioTrack, (t) => { state.chosenAudioTrack = t; });
+  }
+  setupAppSceneFileUpload();
   const isSceneReady = !!(
     r.sceneAgent ||
     r.status?.tasks?.scene?.state === "ready" ||
@@ -1141,8 +1233,7 @@ function updateLivePrompt() {
     "- Read 00_READ_THIS_FIRST.txt in the release before selecting any cuts.",
     "- Produce exactly one production.json containing the selected segments.",
     "- Segments must be in chronological playback order with start and end timestamps within the source video.",
-    "- The pipeline cuts the source video at full quality and joins the segments with hard cuts.",
-    "- Return ONLY the valid JSON document conforming to the schema in 00_READ_THIS_FIRST.txt. No commentary, no prose, no markdown fences."
+    `- Deliver the production JSON either as a downloadable .json file (recommended filename: castcut-scene-${state.job}.json) if you can create files, or inside a single \`\`\`json code block (one block, valid JSON, nothing else inside it). If you include a short explanation, place it outside the file or code block.`
   ].join("\n");
   if ($("scenePromptText")) $("scenePromptText").textContent = prompt;
   return prompt;
@@ -1165,19 +1256,126 @@ if ($("btnCopyPrompt")) {
   };
 }
 
+function setupAppSceneFileUpload() {
+  const btnPick = $("btnPickJsonFile");
+  const fileInput = $("sceneFileInput");
+  const btnRemove = $("btnRemoveSceneFile");
+  const prodTextarea = $("prodJson");
+
+  if (btnPick && fileInput) {
+    btnPick.onclick = () => fileInput.click();
+    fileInput.onchange = async () => {
+      const file = fileInput.files[0];
+      if (!file) return;
+      if (file.size > 5 * 1024 * 1024) { $("validationOut").textContent = "File too large (max 5 MB)"; return; }
+      const text = await file.text();
+      state.sceneUploadedFileContent = text;
+      state.sceneUploadedFileName = file.name;
+      state.sceneActiveSource = "file";
+      $("btnPickJsonFile").hidden = true;
+      $("sceneFileInfo").hidden = false;
+      $("sceneFileName").textContent = `📄 ${file.name} (${humanSize(file.size)})`;
+      validateAppSceneInput();
+    };
+  }
+  if (btnRemove) {
+    btnRemove.onclick = () => {
+      state.sceneUploadedFileContent = null;
+      state.sceneUploadedFileName = "";
+      state.sceneActiveSource = $("prodJson")?.value?.trim() ? "paste" : "none";
+      $("sceneFileInput").value = "";
+      $("btnPickJsonFile").hidden = false;
+      $("sceneFileInfo").hidden = true;
+      validateAppSceneInput();
+    };
+  }
+  if (prodTextarea) {
+    prodTextarea.oninput = () => {
+      if (prodTextarea.value.trim()) state.sceneActiveSource = "paste";
+      else if (state.sceneUploadedFileContent) state.sceneActiveSource = "file";
+      else state.sceneActiveSource = "none";
+      validateAppSceneInput();
+    };
+  }
+}
+
+function validateAppSceneInput() {
+  const winnerEl = $("sceneSourceWinner");
+  const outEl = $("validationOut");
+  const prevSlot = $("scenePreviewSlot");
+  if (!outEl) return;
+  outEl.textContent = "";
+
+  let raw = "";
+  if (state.sceneActiveSource === "file") {
+    raw = state.sceneUploadedFileContent || "";
+    if (winnerEl) {
+      winnerEl.hidden = false;
+      winnerEl.innerHTML = `✓ Active Input: <b>Uploaded File</b> (${esc(state.sceneUploadedFileName)}) — <i>Most recent input wins</i>`;
+    }
+  } else if (state.sceneActiveSource === "paste") {
+    raw = $("prodJson")?.value || "";
+    if (winnerEl) {
+      winnerEl.hidden = false;
+      winnerEl.innerHTML = `✓ Active Input: <b>Pasted Text</b> — <i>Most recent input wins</i>`;
+    }
+  } else {
+    if (winnerEl) winnerEl.hidden = true;
+    if (prevSlot) prevSlot.innerHTML = "";
+    return;
+  }
+
+  if (!raw.trim()) {
+    if (prevSlot) prevSlot.innerHTML = "";
+    return;
+  }
+
+  const parsed = cleanAndParseJson(raw);
+  if (!parsed.ok) {
+    outEl.textContent = parsed.error;
+    if (prevSlot) prevSlot.innerHTML = "";
+    return;
+  }
+
+  const dur = state.jobData?.ingest?.duration || 0;
+  const val = validateProduction(parsed.data, dur);
+  if (!val.ok) {
+    outEl.textContent = val.errors.join("; ");
+    if (prevSlot) prevSlot.innerHTML = "";
+    return;
+  }
+
+  if (prevSlot) {
+    prevSlot.innerHTML = `
+      <div class="json-preview-box" style="margin-top: 8px;">
+        <div class="json-preview-title">✓ Validated: ${val.count} segments · ${val.totalDuration.toFixed(1)}s total cut duration</div>
+        <div class="dim sm">${esc(val.title)}</div>
+      </div>
+    `;
+  }
+  return parsed.data;
+}
+
 if ($("btnScenePush")) {
   $("btnScenePush").onclick = async () => {
     $("validationOut").textContent = "";
-    const raw = $("prodJson").value.trim();
-    if (!raw) { $("validationOut").textContent = "Paste the production JSON first."; return; }
-    let parsed;
-    try { parsed = JSON.parse(raw); } catch (e) { $("validationOut").textContent = "Invalid JSON: " + e.message; return; }
-    if (!Array.isArray(parsed.segments) || !parsed.segments.length) {
-      $("validationOut").textContent = 'The JSON needs a non-empty "segments" array.'; return;
-    }
+    const raw = state.sceneActiveSource === "file" ? (state.sceneUploadedFileContent || "") : ($("prodJson")?.value || "").trim();
+    if (!raw) { $("validationOut").textContent = "Provide the production JSON first (upload or paste)."; return; }
+    const parsed = cleanAndParseJson(raw);
+    if (!parsed.ok) { $("validationOut").textContent = parsed.error; return; }
+    const val = validateProduction(parsed.data, state.jobData?.ingest?.duration || 0);
+    if (!val.ok) { $("validationOut").textContent = val.errors.join("; "); return; }
+
     await withButtonLoading($("btnScenePush"), async () => {
-      await api(`/jobs/${state.job}/scene-export`, { method: "POST", body: { production: parsed } });
-      toast("Scene export started");
+      await api(`/jobs/${state.job}/scene-export`, {
+        method: "POST",
+        body: {
+          production: parsed.data,
+          audio_track: state.chosenAudioTrack,
+          quality: state.chosenQuality || "normal",
+        }
+      });
+      toast("Scene export started ✓");
       await tickJob(); schedulePoll();
       switchTab("exports");
     }, "Exporting…").catch(e => { $("validationOut").textContent = e.message; });
@@ -1212,10 +1410,11 @@ function renderExportsTab(r) {
           <b class="export-title">${esc(exp.label || exp.export_id)}</b>
         </div>
         <div class="export-meta">
-          <span>${exp.total_duration ? `${exp.total_duration.toFixed(1)}s` : ""} ${exp.total_segments ? `(${exp.total_segments} cuts)` : ""}</span>
-          <span>${exp.size_human || humanSize(exp.size_bytes)}</span>
-          <span class="dim">${exp.created_at ? new Date(exp.created_at).toLocaleDateString() : ""}</span>
+          <span>${exp.total_duration ? `${exp.total_duration.toFixed(1)}s` : ""} ${exp.total_segments || exp.segments ? `(${exp.total_segments || exp.segments} cuts)` : ""}</span>
+          <span>${exp.size_after_human || exp.size_human || humanSize(exp.size_bytes)}${exp.size_before_human ? ` <span class="dim sm">(was ${exp.size_before_human})</span>` : ""}</span>
+          <span class="dim">${exp.effective_bitrate || (exp.bitrate_kbps ? `${exp.bitrate_kbps} kbps` : "")}</span>
         </div>
+        ${exp.audio_track_label ? `<div class="dim sm" style="margin-top:2px;">🔊 ${esc(exp.audio_track_label)}</div>` : ""}
         <div class="export-actions">
           <span class="dim sm mono">${esc(exp.export_id)}</span>
           ${asset || exp.asset_name ? `<a class="export-dl-btn" href="${dlUrl}" target="_blank" rel="noopener">⬇ Download MP4</a>` : '<span class="dim sm">Exporting…</span>'}
