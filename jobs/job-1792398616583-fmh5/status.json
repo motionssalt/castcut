@@ -1,14 +1,14 @@
 {
   "job_id": "job-1792398616583-fmh5",
-  "title": "",
-  "torrent_name": "",
+  "title": "Henry.Danger.S01.1080p.NF.WEBRip.DDP2.0.x264-LAZY[rartv]",
+  "torrent_name": "Henry.Danger.S01.1080p.NF.WEBRip.DDP2.0.x264-LAZY[rartv]",
   "content_type": "anime",
   "created_at_epoch": 1792398616,
   "created_at": "2026-10-19T08:30:16Z",
-  "updated_at": "2026-10-19T08:30:34Z",
-  "updated_at_epoch": 1792398634,
+  "updated_at": "2026-10-19T08:30:43Z",
+  "updated_at_epoch": 1792398643,
   "expires_at_epoch": 1792485016,
-  "state": "selecting",
-  "message": "Fetching torrent metadata (listing files — no content download)",
+  "state": "awaiting_selection",
+  "message": "File list ready — pick which files to download.",
   "workflow_run_url": "https://github.com/motionssalt/castcut/actions/runs/39223229957"
 }
