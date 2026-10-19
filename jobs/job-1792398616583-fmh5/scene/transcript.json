@@ -1,0 +1,3880 @@
+{
+  "version": 1,
+  "source": "embedded_subtitles",
+  "language": "eng",
+  "track_title": "SDH",
+  "model": "embedded/subrip",
+  "stream_index": 2,
+  "segments": [
+    {
+      "start": 7.132,
+      "end": 9.927,
+      "text": "Hey, did you guys see"
+    },
+    {
+      "start": 7.132,
+      "end": 9.927,
+      "text": "what Captain Man"
+    },
+    {
+      "start": 7.132,
+      "end": 9.927,
+      "text": "did yesterday?"
+    },
+    {
+      "start": 9.969,
+      "end": 12.721,
+      "text": "Can we focus on algebra?"
+    },
+    {
+      "start": 12.763,
+      "end": 14.556,
+      "text": "There was a fire"
+    },
+    {
+      "start": 12.763,
+      "end": 14.556,
+      "text": "at a pet store,"
+    },
+    {
+      "start": 14.598,
+      "end": 17.058,
+      "text": "and Captain Man ran inside"
+    },
+    {
+      "start": 14.598,
+      "end": 17.058,
+      "text": "right through the flames"
+    },
+    {
+      "start": 17.1,
+      "end": 18.727,
+      "text": "and saved all the animals."
+    },
+    {
+      "start": 18.769,
+      "end": 20.437,
+      "text": "And he didn't even get hurt."
+    },
+    {
+      "start": 20.479,
+      "end": 23.398,
+      "text": "Captain Man"
+    },
+    {
+      "start": 20.479,
+      "end": 23.398,
+      "text": "never gets hurt."
+    },
+    {
+      "start": 20.479,
+      "end": 23.398,
+      "text": "He's a beast."
+    },
+    {
+      "start": 23.44,
+      "end": 25.275,
+      "text": "You know, someday,"
+    },
+    {
+      "start": 25.317,
+      "end": 27.152,
+      "text": "when you guys are cleaning"
+    },
+    {
+      "start": 25.317,
+      "end": 27.152,
+      "text": "my swimming pool"
+    },
+    {
+      "start": 27.194,
+      "end": 28.654,
+      "text": "'cause you failed"
+    },
+    {
+      "start": 27.194,
+      "end": 28.654,
+      "text": "this algebra test,"
+    },
+    {
+      "start": 28.696,
+      "end": 30.739,
+      "text": "then flunked out of school,"
+    },
+    {
+      "start": 30.781,
+      "end": 34.075,
+      "text": "I hope you remember"
+    },
+    {
+      "start": 30.781,
+      "end": 34.075,
+      "text": "this moment, 'cause I will."
+    },
+    {
+      "start": 37.913,
+      "end": 40.207,
+      "text": "Hey, here's a cool job"
+    },
+    {
+      "start": 37.913,
+      "end": 40.207,
+      "text": "I could do,"
+    },
+    {
+      "start": 41.333,
+      "end": 42.334,
+      "text": "foot model."
+    },
+    {
+      "start": 43.836,
+      "end": 45.88,
+      "text": "You guys,"
+    },
+    {
+      "start": 43.836,
+      "end": 45.88,
+      "text": "could we go over the list"
+    },
+    {
+      "start": 43.836,
+      "end": 45.88,
+      "text": "for my birthday party?"
+    },
+    {
+      "start": 45.921,
+      "end": 47.006,
+      "text": "Sure."
+    },
+    {
+      "start": 45.921,
+      "end": 47.006,
+      "text": "No."
+    },
+    {
+      "start": 47.046,
+      "end": 48.465,
+      "text": "No."
+    },
+    {
+      "start": 48.507,
+      "end": 50.467,
+      "text": "But I invited 52 people,"
+    },
+    {
+      "start": 50.509,
+      "end": 52.302,
+      "text": "and nobody's"
+    },
+    {
+      "start": 50.509,
+      "end": 52.302,
+      "text": "texted me back yet."
+    },
+    {
+      "start": 52.344,
+      "end": 54.013,
+      "text": "What does that mean?"
+    },
+    {
+      "start": 54.054,
+      "end": 56.306,
+      "text": "That people have been"
+    },
+    {
+      "start": 54.054,
+      "end": 56.306,
+      "text": "to your parties before?"
+    },
+    {
+      "start": 56.348,
+      "end": 58.767,
+      "text": "Oh, come on,"
+    },
+    {
+      "start": 56.348,
+      "end": 58.767,
+      "text": "my parties aren't that bad."
+    },
+    {
+      "start": 58.809,
+      "end": 61.478,
+      "text": "Christmas, three years ago,"
+    },
+    {
+      "start": 61.52,
+      "end": 64.356,
+      "text": "15 kids ended up"
+    },
+    {
+      "start": 61.52,
+      "end": 64.356,
+      "text": "in the hospital."
+    },
+    {
+      "start": 64.398,
+      "end": 65.774,
+      "text": "'Cause of your raw turkey."
+    },
+    {
+      "start": 65.816,
+      "end": 67.651,
+      "text": "It was turkey sushi."
+    },
+    {
+      "start": 67.693,
+      "end": 69.403,
+      "text": "A boy almost died."
+    },
+    {
+      "start": 69.444,
+      "end": 71.279,
+      "text": "Almost."
+    },
+    {
+      "start": 71.321,
+      "end": 72.907,
+      "text": "Okay."
+    },
+    {
+      "start": 72.948,
+      "end": 75.492,
+      "text": "First person who helps me"
+    },
+    {
+      "start": 72.948,
+      "end": 75.492,
+      "text": "find an after school job"
+    },
+    {
+      "start": 75.534,
+      "end": 79.038,
+      "text": "gets this bowl of pine cones."
+    },
+    {
+      "start": 79.079,
+      "end": 80.455,
+      "text": "(gasps)"
+    },
+    {
+      "start": 80.497,
+      "end": 82.041,
+      "text": "Why do you even need"
+    },
+    {
+      "start": 80.497,
+      "end": 82.041,
+      "text": "a job?"
+    },
+    {
+      "start": 82.082,
+      "end": 84.668,
+      "text": "You know,"
+    },
+    {
+      "start": 82.082,
+      "end": 84.668,
+      "text": "to learn responsibility,"
+    },
+    {
+      "start": 84.71,
+      "end": 85.961,
+      "text": "challenge myself."
+    },
+    {
+      "start": 86.003,
+      "end": 87.755,
+      "text": "He wants money."
+    },
+    {
+      "start": 86.003,
+      "end": 87.755,
+      "text": "I want money."
+    },
+    {
+      "start": 87.796,
+      "end": 88.839,
+      "text": "Money's good."
+    },
+    {
+      "start": 89.214,
+      "end": 91.425,
+      "text": "Can we please talk"
+    },
+    {
+      "start": 89.214,
+      "end": 91.425,
+      "text": "about my birthday?"
+    },
+    {
+      "start": 91.466,
+      "end": 94.553,
+      "text": "(sighs)"
+    },
+    {
+      "start": 91.466,
+      "end": 94.553,
+      "text": "Am I gonna have"
+    },
+    {
+      "start": 91.466,
+      "end": 94.553,
+      "text": "to slap a boy?"
+    },
+    {
+      "start": 96.638,
+      "end": 100.017,
+      "text": "Henry,"
+    },
+    {
+      "start": 96.638,
+      "end": 100.017,
+      "text": "can you please tell me"
+    },
+    {
+      "start": 96.638,
+      "end": 100.017,
+      "text": "how in the wor--"
+    },
+    {
+      "start": 100.059,
+      "end": 102.477,
+      "text": "Oh, I didn't know Jasper"
+    },
+    {
+      "start": 100.059,
+      "end": 102.477,
+      "text": "and Charlotte were here."
+    },
+    {
+      "start": 102.519,
+      "end": 103.437,
+      "text": "We're studying."
+    },
+    {
+      "start": 103.478,
+      "end": 104.646,
+      "text": "Are we?"
+    },
+    {
+      "start": 105.981,
+      "end": 106.982,
+      "text": "Mom, we're right"
+    },
+    {
+      "start": 105.981,
+      "end": 106.982,
+      "text": "in the middle"
+    },
+    {
+      "start": 105.981,
+      "end": 106.982,
+      "text": "of something."
+    },
+    {
+      "start": 107.024,
+      "end": 108.233,
+      "text": "I'm not interrupting."
+    },
+    {
+      "start": 107.024,
+      "end": 108.233,
+      "text": "Okay, thanks."
+    },
+    {
+      "start": 108.275,
+      "end": 108.859,
+      "text": "I just have a question"
+    },
+    {
+      "start": 108.275,
+      "end": 108.859,
+      "text": "about your underwear."
+    },
+    {
+      "start": 108.901,
+      "end": 109.818,
+      "text": "Mom!"
+    },
+    {
+      "start": 110.861,
+      "end": 113.154,
+      "text": "I'd like to hear"
+    },
+    {
+      "start": 110.861,
+      "end": 113.154,
+      "text": "the question."
+    },
+    {
+      "start": 113.196,
+      "end": 116.658,
+      "text": "What is the issue"
+    },
+    {
+      "start": 113.196,
+      "end": 116.658,
+      "text": "with Henry's underwear?"
+    },
+    {
+      "start": 116.7,
+      "end": 119.119,
+      "text": "Mom!"
+    },
+    {
+      "start": 119.16,
+      "end": 120.662,
+      "text": "Mom, I'm not okay."
+    },
+    {
+      "start": 120.704,
+      "end": 122.831,
+      "text": "Piper, we're trying"
+    },
+    {
+      "start": 120.704,
+      "end": 122.831,
+      "text": "to study here."
+    },
+    {
+      "start": 122.873,
+      "end": 125.042,
+      "text": "I'm talking to my mother."
+    },
+    {
+      "start": 126.126,
+      "end": 127.461,
+      "text": "What's wrong, baby?"
+    },
+    {
+      "start": 127.502,
+      "end": 128.963,
+      "text": "Jessica unfollowed me."
+    },
+    {
+      "start": 129.004,
+      "end": 130.338,
+      "text": "No one cares."
+    },
+    {
+      "start": 130.38,
+      "end": 131.715,
+      "text": "Henry."
+    },
+    {
+      "start": 131.757,
+      "end": 133.508,
+      "text": "Why would Jessica"
+    },
+    {
+      "start": 131.757,
+      "end": 133.508,
+      "text": "unfollow you?"
+    },
+    {
+      "start": 133.55,
+      "end": 136.553,
+      "text": "'Cause she posted"
+    },
+    {
+      "start": 133.55,
+      "end": 136.553,
+      "text": "a picture of her"
+    },
+    {
+      "start": 133.55,
+      "end": 136.553,
+      "text": "with me and Allison,"
+    },
+    {
+      "start": 136.595,
+      "end": 138.722,
+      "text": "so I posted a comment"
+    },
+    {
+      "start": 136.595,
+      "end": 138.722,
+      "text": "that said,"
+    },
+    {
+      "start": 138.764,
+      "end": 140.474,
+      "text": "\"OMG, you look"
+    },
+    {
+      "start": 138.764,
+      "end": 140.474,
+      "text": "so gorgeous.\""
+    },
+    {
+      "start": 140.515,
+      "end": 142.35,
+      "text": "Well, that's nice."
+    },
+    {
+      "start": 140.515,
+      "end": 142.35,
+      "text": "No."
+    },
+    {
+      "start": 142.392,
+      "end": 144.436,
+      "text": "'Cause Allison thought"
+    },
+    {
+      "start": 142.392,
+      "end": 144.436,
+      "text": "it meant she looked gorgeous,"
+    },
+    {
+      "start": 144.478,
+      "end": 147.23,
+      "text": "so she posted a comment"
+    },
+    {
+      "start": 144.478,
+      "end": 147.23,
+      "text": "that said, \"Thanks, ILY.\""
+    },
+    {
+      "start": 147.272,
+      "end": 150.734,
+      "text": "And so then"
+    },
+    {
+      "start": 147.272,
+      "end": 150.734,
+      "text": "Jessica got jealous"
+    },
+    {
+      "start": 147.272,
+      "end": 150.734,
+      "text": "and unfollowed me,"
+    },
+    {
+      "start": 150.776,
+      "end": 153.654,
+      "text": "and now I hate myself"
+    },
+    {
+      "start": 150.776,
+      "end": 153.654,
+      "text": "and I'm gonna die."
+    },
+    {
+      "start": 155.614,
+      "end": 157.532,
+      "text": "I'll call Jessica's mom"
+    },
+    {
+      "start": 155.614,
+      "end": 157.532,
+      "text": "and talk to her."
+    },
+    {
+      "start": 157.574,
+      "end": 160.661,
+      "text": "No!"
+    },
+    {
+      "start": 157.574,
+      "end": 160.661,
+      "text": "That's not okay!"
+    },
+    {
+      "start": 163.122,
+      "end": 164.623,
+      "text": "Dang it."
+    },
+    {
+      "start": 164.665,
+      "end": 166.708,
+      "text": "All these jobs say"
+    },
+    {
+      "start": 164.665,
+      "end": 166.708,
+      "text": "I've got to have skills."
+    },
+    {
+      "start": 166.75,
+      "end": 168.543,
+      "text": "So? You've got"
+    },
+    {
+      "start": 166.75,
+      "end": 168.543,
+      "text": "tons of skills."
+    },
+    {
+      "start": 168.585,
+      "end": 169.628,
+      "text": "Name one."
+    },
+    {
+      "start": 169.67,
+      "end": 171.13,
+      "text": "You're a great dancer."
+    },
+    {
+      "start": 171.17,
+      "end": 173.214,
+      "text": "No, I'm not."
+    },
+    {
+      "start": 171.17,
+      "end": 173.214,
+      "text": "You could take lessons."
+    },
+    {
+      "start": 174.967,
+      "end": 176.343,
+      "text": "Oh, my gosh."
+    },
+    {
+      "start": 176.384,
+      "end": 177.719,
+      "text": "(Charlotte) What?"
+    },
+    {
+      "start": 177.761,
+      "end": 179.68,
+      "text": "I'm--I'm not great"
+    },
+    {
+      "start": 177.761,
+      "end": 179.68,
+      "text": "at anything."
+    },
+    {
+      "start": 179.721,
+      "end": 181.556,
+      "text": "This is tragic."
+    },
+    {
+      "start": 181.598,
+      "end": 183.058,
+      "text": "Here, let me see."
+    },
+    {
+      "start": 184.143,
+      "end": 186.854,
+      "text": "I'm just a big pile"
+    },
+    {
+      "start": 184.143,
+      "end": 186.854,
+      "text": "of average."
+    },
+    {
+      "start": 187.813,
+      "end": 189.314,
+      "text": "Okay. Here's a job."
+    },
+    {
+      "start": 189.356,
+      "end": 190.649,
+      "text": "Where?"
+    },
+    {
+      "start": 190.691,
+      "end": 192.484,
+      "text": "At a store called"
+    },
+    {
+      "start": 190.691,
+      "end": 192.484,
+      "text": "Junk-N-Stuff."
+    },
+    {
+      "start": 192.776,
+      "end": 195.529,
+      "text": "It says,"
+    },
+    {
+      "start": 192.776,
+      "end": 195.529,
+      "text": "\"Needed, part-time helper"
+    },
+    {
+      "start": 192.776,
+      "end": 195.529,
+      "text": "for various duties.\""
+    },
+    {
+      "start": 196.488,
+      "end": 197.739,
+      "text": "\"Duties.\""
+    },
+    {
+      "start": 201.451,
+      "end": 204.163,
+      "text": "And see? It says,"
+    },
+    {
+      "start": 201.451,
+      "end": 204.163,
+      "text": "\"No special skills necessary.\""
+    },
+    {
+      "start": 204.203,
+      "end": 206.54,
+      "text": "That's me."
+    },
+    {
+      "start": 204.203,
+      "end": 206.54,
+      "text": "I've got to go get that job."
+    },
+    {
+      "start": 213.296,
+      "end": 215.883,
+      "text": "You get the pine cones."
+    },
+    {
+      "start": 216.466,
+      "end": 217.885,
+      "text": "Sweet."
+    },
+    {
+      "start": 219.678,
+      "end": 220.888,
+      "text": "Good luck, Hen."
+    },
+    {
+      "start": 220.929,
+      "end": 221.889,
+      "text": "Thanks."
+    },
+    {
+      "start": 224.265,
+      "end": 227.102,
+      "text": "If you give me a pine cone,"
+    },
+    {
+      "start": 224.265,
+      "end": 227.102,
+      "text": "I'll lick my elbow."
+    },
+    {
+      "start": 231.272,
+      "end": 234.526,
+      "text": "♪♪"
+    },
+    {
+      "start": 240.866,
+      "end": 246.454,
+      "text": "♪♪"
+    },
+    {
+      "start": 248.165,
+      "end": 250.125,
+      "text": "(growling)"
+    },
+    {
+      "start": 262.763,
+      "end": 264.305,
+      "text": "What are you looking at?"
+    },
+    {
+      "start": 264.347,
+      "end": 266.016,
+      "text": "Uh, nothing."
+    },
+    {
+      "start": 266.058,
+      "end": 269.019,
+      "text": "Just, uh, this turtle's butt."
+    },
+    {
+      "start": 271.646,
+      "end": 272.564,
+      "text": "Sorry."
+    },
+    {
+      "start": 287.871,
+      "end": 288.956,
+      "text": "(Henry clears throat)"
+    },
+    {
+      "start": 288.997,
+      "end": 290.874,
+      "text": "Um, my name is Henry Hart."
+    },
+    {
+      "start": 290.916,
+      "end": 292.626,
+      "text": "I'm here about the job."
+    },
+    {
+      "start": 292.667,
+      "end": 294.419,
+      "text": "The job."
+    },
+    {
+      "start": 294.461,
+      "end": 295.503,
+      "text": "(burp)"
+    },
+    {
+      "start": 296.88,
+      "end": 299.466,
+      "text": "Um, did that plant burp?"
+    },
+    {
+      "start": 301.301,
+      "end": 303.137,
+      "text": "Go back."
+    },
+    {
+      "start": 303.178,
+      "end": 304.596,
+      "text": "Come back?"
+    },
+    {
+      "start": 304.638,
+      "end": 306.89,
+      "text": "Go back."
+    },
+    {
+      "start": 306.932,
+      "end": 308.058,
+      "text": "Where?"
+    },
+    {
+      "start": 308.1,
+      "end": 309.434,
+      "text": "To the back."
+    },
+    {
+      "start": 310.018,
+      "end": 312.353,
+      "text": "Oh, go to the back."
+    },
+    {
+      "start": 312.395,
+      "end": 314.522,
+      "text": "Take the elevator down."
+    },
+    {
+      "start": 314.982,
+      "end": 317.151,
+      "text": "What floor?"
+    },
+    {
+      "start": 314.982,
+      "end": 317.151,
+      "text": "Down."
+    },
+    {
+      "start": 318.068,
+      "end": 319.444,
+      "text": "(plant squeals)"
+    },
+    {
+      "start": 321.238,
+      "end": 322.53,
+      "text": "You too."
+    },
+    {
+      "start": 333.0,
+      "end": 335.836,
+      "text": "(cell phone rings)"
+    },
+    {
+      "start": 335.877,
+      "end": 337.087,
+      "text": "Hey, what's up?"
+    },
+    {
+      "start": 337.462,
+      "end": 340.007,
+      "text": "Does my basement smell"
+    },
+    {
+      "start": 337.462,
+      "end": 340.007,
+      "text": "like chicken poop?"
+    },
+    {
+      "start": 341.091,
+      "end": 342.717,
+      "text": "Yes."
+    },
+    {
+      "start": 343.927,
+      "end": 345.012,
+      "text": "What?"
+    },
+    {
+      "start": 345.386,
+      "end": 347.222,
+      "text": "I'm down in my basement"
+    },
+    {
+      "start": 345.386,
+      "end": 347.222,
+      "text": "with Charlotte,"
+    },
+    {
+      "start": 347.264,
+      "end": 350.184,
+      "text": "and she said it smells"
+    },
+    {
+      "start": 347.264,
+      "end": 350.184,
+      "text": "like poop from a chicken."
+    },
+    {
+      "start": 350.225,
+      "end": 351.893,
+      "text": "A sick chicken."
+    },
+    {
+      "start": 353.27,
+      "end": 356.773,
+      "text": "Uh, what are you"
+    },
+    {
+      "start": 353.27,
+      "end": 356.773,
+      "text": "and Charlotte doing"
+    },
+    {
+      "start": 353.27,
+      "end": 356.773,
+      "text": "in your basement?"
+    },
+    {
+      "start": 356.815,
+      "end": 359.151,
+      "text": "He wants to have"
+    },
+    {
+      "start": 356.815,
+      "end": 359.151,
+      "text": "his birthday party"
+    },
+    {
+      "start": 356.815,
+      "end": 359.151,
+      "text": "down here"
+    },
+    {
+      "start": 359.193,
+      "end": 361.32,
+      "text": "in this chicken toilet."
+    },
+    {
+      "start": 362.237,
+      "end": 364.405,
+      "text": "This is my home."
+    },
+    {
+      "start": 364.447,
+      "end": 366.158,
+      "text": "Guys,"
+    },
+    {
+      "start": 364.447,
+      "end": 366.158,
+      "text": "I can't talk right now."
+    },
+    {
+      "start": 366.2,
+      "end": 367.993,
+      "text": "I'm at a job interview,"
+    },
+    {
+      "start": 366.2,
+      "end": 367.993,
+      "text": "so I gotta go."
+    },
+    {
+      "start": 368.035,
+      "end": 369.452,
+      "text": "(screams)"
+    },
+    {
+      "start": 374.666,
+      "end": 377.044,
+      "text": "Henry, you still there?"
+    },
+    {
+      "start": 377.919,
+      "end": 380.088,
+      "text": "(screams)"
+    },
+    {
+      "start": 382.423,
+      "end": 384.634,
+      "text": "(rock music blaring)"
+    },
+    {
+      "start": 384.676,
+      "end": 386.385,
+      "text": "(Jasper)  Henry?"
+    },
+    {
+      "start": 389.097,
+      "end": 390.349,
+      "text": "Henry?"
+    },
+    {
+      "start": 390.389,
+      "end": 391.892,
+      "text": "I'll call you back."
+    },
+    {
+      "start": 406.781,
+      "end": 408.075,
+      "text": "Hello?"
+    },
+    {
+      "start": 416.166,
+      "end": 417.625,
+      "text": "Hey, how are you?"
+    },
+    {
+      "start": 417.667,
+      "end": 419.002,
+      "text": "Cool. Thanks."
+    },
+    {
+      "start": 417.667,
+      "end": 419.002,
+      "text": "Great to meet you."
+    },
+    {
+      "start": 419.044,
+      "end": 420.921,
+      "text": "I'm doing good."
+    },
+    {
+      "start": 419.044,
+      "end": 420.921,
+      "text": "What's your name?"
+    },
+    {
+      "start": 420.962,
+      "end": 422.881,
+      "text": "Um, I'm Henry Hart."
+    },
+    {
+      "start": 422.923,
+      "end": 423.965,
+      "text": "I'm here about the job."
+    },
+    {
+      "start": 424.007,
+      "end": 425.384,
+      "text": "Age?"
+    },
+    {
+      "start": 424.007,
+      "end": 425.384,
+      "text": "13."
+    },
+    {
+      "start": 425.424,
+      "end": 428.053,
+      "text": "I'll be 14"
+    },
+    {
+      "start": 425.424,
+      "end": 428.053,
+      "text": "on my next birthday."
+    },
+    {
+      "start": 428.095,
+      "end": 430.972,
+      "text": "Ah. So you're aging"
+    },
+    {
+      "start": 428.095,
+      "end": 430.972,
+      "text": "sequentially."
+    },
+    {
+      "start": 431.014,
+      "end": 432.724,
+      "text": "I like that."
+    },
+    {
+      "start": 432.766,
+      "end": 433.934,
+      "text": "Thanks."
+    },
+    {
+      "start": 433.975,
+      "end": 435.56,
+      "text": "My name's Ray."
+    },
+    {
+      "start": 433.975,
+      "end": 435.56,
+      "text": "Hi, Ray."
+    },
+    {
+      "start": 435.602,
+      "end": 437.354,
+      "text": "You ask a lot of questions."
+    },
+    {
+      "start": 437.396,
+      "end": 440.565,
+      "text": "I don't think I've asked"
+    },
+    {
+      "start": 437.396,
+      "end": 440.565,
+      "text": "any questions."
+    },
+    {
+      "start": 440.607,
+      "end": 441.9,
+      "text": "Chocolate or vanilla?"
+    },
+    {
+      "start": 441.942,
+      "end": 443.11,
+      "text": "Vanilla."
+    },
+    {
+      "start": 443.151,
+      "end": 444.736,
+      "text": "Helicopters or kangaroos?"
+    },
+    {
+      "start": 445.279,
+      "end": 447.155,
+      "text": "Helicopters."
+    },
+    {
+      "start": 445.279,
+      "end": 447.155,
+      "text": "Love it."
+    },
+    {
+      "start": 447.197,
+      "end": 449.49,
+      "text": "Scrambled eggs or dynamite?"
+    },
+    {
+      "start": 450.867,
+      "end": 451.952,
+      "text": "Both."
+    },
+    {
+      "start": 451.993,
+      "end": 452.994,
+      "text": "Maybe."
+    },
+    {
+      "start": 454.162,
+      "end": 455.496,
+      "text": "Complete this sentence,"
+    },
+    {
+      "start": 454.162,
+      "end": 455.496,
+      "text": "\"I'm sorry, Mother,"
+    },
+    {
+      "start": 455.538,
+      "end": 457.791,
+      "text": "I didn't mean"
+    },
+    {
+      "start": 455.538,
+      "end": 457.791,
+      "text": "for my elephant to blank.\""
+    },
+    {
+      "start": 457.832,
+      "end": 459.418,
+      "text": "Uh, lick Dad."
+    },
+    {
+      "start": 459.459,
+      "end": 460.419,
+      "text": "(laughs)"
+    },
+    {
+      "start": 460.46,
+      "end": 462.921,
+      "text": "(both laughing)"
+    },
+    {
+      "start": 464.589,
+      "end": 465.548,
+      "text": "Well, that's not funny."
+    },
+    {
+      "start": 465.59,
+      "end": 466.716,
+      "text": "No."
+    },
+    {
+      "start": 467.842,
+      "end": 470.929,
+      "text": "Um, is this"
+    },
+    {
+      "start": 467.842,
+      "end": 470.929,
+      "text": "the job interview?"
+    },
+    {
+      "start": 470.971,
+      "end": 472.847,
+      "text": "Do you want it to be"
+    },
+    {
+      "start": 470.971,
+      "end": 472.847,
+      "text": "the job interview?"
+    },
+    {
+      "start": 472.889,
+      "end": 474.557,
+      "text": "Um, what is the job?"
+    },
+    {
+      "start": 475.85,
+      "end": 477.436,
+      "text": "What do you think"
+    },
+    {
+      "start": 475.85,
+      "end": 477.436,
+      "text": "the job is?"
+    },
+    {
+      "start": 477.477,
+      "end": 480.439,
+      "text": "Uh, well, the ad said"
+    },
+    {
+      "start": 477.477,
+      "end": 480.439,
+      "text": "part-time helper,"
+    },
+    {
+      "start": 480.521,
+      "end": 482.565,
+      "text": "so I'm thinking"
+    },
+    {
+      "start": 480.521,
+      "end": 482.565,
+      "text": "maybe you need someone"
+    },
+    {
+      "start": 482.607,
+      "end": 487.446,
+      "text": "to help you, you know,"
+    },
+    {
+      "start": 482.607,
+      "end": 487.446,
+      "text": "part time."
+    },
+    {
+      "start": 489.281,
+      "end": 491.741,
+      "text": "Do you ever dream"
+    },
+    {
+      "start": 489.281,
+      "end": 491.741,
+      "text": "about sleeping?"
+    },
+    {
+      "start": 489.281,
+      "end": 491.741,
+      "text": "No."
+    },
+    {
+      "start": 491.783,
+      "end": 493.952,
+      "text": "Good."
+    },
+    {
+      "start": 491.783,
+      "end": 493.952,
+      "text": "If you did, you'd be dead."
+    },
+    {
+      "start": 495.203,
+      "end": 496.621,
+      "text": "I am so confused."
+    },
+    {
+      "start": 496.663,
+      "end": 497.998,
+      "text": "David?"
+    },
+    {
+      "start": 496.663,
+      "end": 497.998,
+      "text": "Henry."
+    },
+    {
+      "start": 498.039,
+      "end": 500.167,
+      "text": "Can I trust you?"
+    },
+    {
+      "start": 498.039,
+      "end": 500.167,
+      "text": "Sure."
+    },
+    {
+      "start": 500.208,
+      "end": 501.96,
+      "text": "Can you keep a secret?"
+    },
+    {
+      "start": 500.208,
+      "end": 501.96,
+      "text": "Totally."
+    },
+    {
+      "start": 502.002,
+      "end": 505.339,
+      "text": "So I can trust you"
+    },
+    {
+      "start": 502.002,
+      "end": 505.339,
+      "text": "to keep a secret?"
+    },
+    {
+      "start": 505.38,
+      "end": 506.34,
+      "text": "Yes, sir."
+    },
+    {
+      "start": 509.426,
+      "end": 510.593,
+      "text": "I'm going to blow a bubble."
+    },
+    {
+      "start": 510.635,
+      "end": 512.012,
+      "text": "You're going to blow"
+    },
+    {
+      "start": 510.635,
+      "end": 512.012,
+      "text": "a bubble?"
+    },
+    {
+      "start": 512.053,
+      "end": 513.472,
+      "text": "And I'm going"
+    },
+    {
+      "start": 512.053,
+      "end": 513.472,
+      "text": "to blow your mind."
+    },
+    {
+      "start": 524.691,
+      "end": 526.776,
+      "text": "You're Captain Man!"
+    },
+    {
+      "start": 526.818,
+      "end": 528.278,
+      "text": "That's right, Henry."
+    },
+    {
+      "start": 529.154,
+      "end": 530.53,
+      "text": "Hold on a second."
+    },
+    {
+      "start": 531.406,
+      "end": 534.534,
+      "text": "Stupid zipper"
+    },
+    {
+      "start": 531.406,
+      "end": 534.534,
+      "text": "always sticks."
+    },
+    {
+      "start": 534.575,
+      "end": 536.619,
+      "text": "Come--"
+    },
+    {
+      "start": 534.575,
+      "end": 536.619,
+      "text": "Ow, that's my skin!"
+    },
+    {
+      "start": 543.751,
+      "end": 546.213,
+      "text": "Yeah, there we go."
+    },
+    {
+      "start": 543.751,
+      "end": 546.213,
+      "text": "(chuckles)"
+    },
+    {
+      "start": 546.254,
+      "end": 547.839,
+      "text": "Whoo!"
+    },
+    {
+      "start": 547.881,
+      "end": 549.757,
+      "text": "Always good to keep"
+    },
+    {
+      "start": 547.881,
+      "end": 549.757,
+      "text": "the old zipper lubed."
+    },
+    {
+      "start": 550.633,
+      "end": 553.72,
+      "text": "I--I can't believe"
+    },
+    {
+      "start": 550.633,
+      "end": 553.72,
+      "text": "I'm standing here"
+    },
+    {
+      "start": 550.633,
+      "end": 553.72,
+      "text": "talking to Captain Man."
+    },
+    {
+      "start": 553.761,
+      "end": 556.597,
+      "text": "Why, are you a fan?"
+    },
+    {
+      "start": 553.761,
+      "end": 556.597,
+      "text": "Do you like me?"
+    },
+    {
+      "start": 556.639,
+      "end": 558.558,
+      "text": "Most people like me,"
+    },
+    {
+      "start": 556.639,
+      "end": 558.558,
+      "text": "but not everyone."
+    },
+    {
+      "start": 558.599,
+      "end": 560.81,
+      "text": "Yeah, I'm a huge fan."
+    },
+    {
+      "start": 560.852,
+      "end": 562.729,
+      "text": "Oh, man,"
+    },
+    {
+      "start": 560.852,
+      "end": 562.729,
+      "text": "I've got to tell Jasper"
+    },
+    {
+      "start": 560.852,
+      "end": 562.729,
+      "text": "about this."
+    },
+    {
+      "start": 562.77,
+      "end": 564.939,
+      "text": "He's gonna freak"
+    },
+    {
+      "start": 562.77,
+      "end": 564.939,
+      "text": "when I tell him I'm here"
+    },
+    {
+      "start": 562.77,
+      "end": 564.939,
+      "text": "standing next to Captain--"
+    },
+    {
+      "start": 564.981,
+      "end": 566.191,
+      "text": "(screams)"
+    },
+    {
+      "start": 567.567,
+      "end": 569.903,
+      "text": "Sorry, but you can't tell"
+    },
+    {
+      "start": 567.567,
+      "end": 569.903,
+      "text": "your friends about this."
+    },
+    {
+      "start": 569.944,
+      "end": 571.238,
+      "text": "Okay. But--"
+    },
+    {
+      "start": 572.655,
+      "end": 574.824,
+      "text": "Did you have"
+    },
+    {
+      "start": 572.655,
+      "end": 574.824,
+      "text": "to melt my phone?"
+    },
+    {
+      "start": 574.866,
+      "end": 576.159,
+      "text": "I'll get you a new one."
+    },
+    {
+      "start": 576.201,
+      "end": 577.16,
+      "text": "Really?"
+    },
+    {
+      "start": 576.201,
+      "end": 577.16,
+      "text": "No."
+    },
+    {
+      "start": 578.37,
+      "end": 582.332,
+      "text": "So, Henry, tell me"
+    },
+    {
+      "start": 578.37,
+      "end": 582.332,
+      "text": "why you want a job."
+    },
+    {
+      "start": 582.374,
+      "end": 584.751,
+      "text": "Well, you know, to--"
+    },
+    {
+      "start": 584.792,
+      "end": 587.587,
+      "text": "to learn responsibility"
+    },
+    {
+      "start": 584.792,
+      "end": 587.587,
+      "text": "and challenge myself."
+    },
+    {
+      "start": 587.628,
+      "end": 588.713,
+      "text": "So you want money?"
+    },
+    {
+      "start": 588.755,
+      "end": 590.09,
+      "text": "Lots of money."
+    },
+    {
+      "start": 590.131,
+      "end": 591.758,
+      "text": "(elevator bell chimes)"
+    },
+    {
+      "start": 595.136,
+      "end": 598.306,
+      "text": "(in British accent) Oh,"
+    },
+    {
+      "start": 595.136,
+      "end": 598.306,
+      "text": "is this the ladies' room?"
+    },
+    {
+      "start": 599.099,
+      "end": 600.475,
+      "text": "No, ma'am."
+    },
+    {
+      "start": 600.517,
+      "end": 601.768,
+      "text": "You're not supposed to be"
+    },
+    {
+      "start": 600.517,
+      "end": 601.768,
+      "text": "down here."
+    },
+    {
+      "start": 601.809,
+      "end": 604.271,
+      "text": "What an interesting place."
+    },
+    {
+      "start": 604.771,
+      "end": 607.148,
+      "text": "Thank you,"
+    },
+    {
+      "start": 604.771,
+      "end": 607.148,
+      "text": "but I'm conducting"
+    },
+    {
+      "start": 604.771,
+      "end": 607.148,
+      "text": "a job interview,"
+    },
+    {
+      "start": 607.19,
+      "end": 608.816,
+      "text": "and you're very old,"
+    },
+    {
+      "start": 608.858,
+      "end": 611.945,
+      "text": "so can you please just"
+    },
+    {
+      "start": 608.858,
+      "end": 611.945,
+      "text": "get back in the elevator?"
+    },
+    {
+      "start": 611.986,
+      "end": 615.24,
+      "text": "Oh, I'll just take me phone"
+    },
+    {
+      "start": 611.986,
+      "end": 615.24,
+      "text": "out of me purse"
+    },
+    {
+      "start": 615.282,
+      "end": 616.783,
+      "text": "and call me nephew."
+    },
+    {
+      "start": 616.824,
+      "end": 618.118,
+      "text": "(Captain Man) Great."
+    },
+    {
+      "start": 618.452,
+      "end": 620.495,
+      "text": "I'll just turn my back"
+    },
+    {
+      "start": 618.452,
+      "end": 620.495,
+      "text": "and look at something."
+    },
+    {
+      "start": 626.793,
+      "end": 628.128,
+      "text": "What are you looking at?"
+    },
+    {
+      "start": 630.63,
+      "end": 632.299,
+      "text": "Captain Man!"
+    },
+    {
+      "start": 633.091,
+      "end": 634.551,
+      "text": "Oh!"
+    },
+    {
+      "start": 634.593,
+      "end": 636.219,
+      "text": "(grunting)"
+    },
+    {
+      "start": 641.808,
+      "end": 644.018,
+      "text": "(in normal voice)"
+    },
+    {
+      "start": 641.808,
+      "end": 644.018,
+      "text": "Goodbye forever,"
+    },
+    {
+      "start": 641.808,
+      "end": 644.018,
+      "text": "Captain Man."
+    },
+    {
+      "start": 644.06,
+      "end": 645.145,
+      "text": "No!"
+    },
+    {
+      "start": 646.771,
+      "end": 648.315,
+      "text": "Get off of me."
+    },
+    {
+      "start": 648.356,
+      "end": 650.358,
+      "text": "(Henry) Quit talking"
+    },
+    {
+      "start": 648.356,
+      "end": 650.358,
+      "text": "like a British lady."
+    },
+    {
+      "start": 650.4,
+      "end": 652.193,
+      "text": "(in British accent)"
+    },
+    {
+      "start": 650.4,
+      "end": 652.193,
+      "text": "Stop pulling me wig"
+    },
+    {
+      "start": 650.4,
+      "end": 652.193,
+      "text": "over me eyes."
+    },
+    {
+      "start": 652.86,
+      "end": 654.362,
+      "text": "I can't see."
+    },
+    {
+      "start": 657.532,
+      "end": 658.492,
+      "text": "(grunts)"
+    },
+    {
+      "start": 662.579,
+      "end": 663.871,
+      "text": "Captain Man!"
+    },
+    {
+      "start": 665.999,
+      "end": 667.792,
+      "text": "Captain Man, are you okay?"
+    },
+    {
+      "start": 668.376,
+      "end": 670.211,
+      "text": "Captain Man is always okay."
+    },
+    {
+      "start": 673.714,
+      "end": 675.342,
+      "text": "Nice work, Boris."
+    },
+    {
+      "start": 675.383,
+      "end": 677.218,
+      "text": "The boy did good job."
+    },
+    {
+      "start": 677.26,
+      "end": 678.512,
+      "text": "Wait, wait, wait, wait."
+    },
+    {
+      "start": 678.553,
+      "end": 680.096,
+      "text": "You know the--"
+    },
+    {
+      "start": 678.553,
+      "end": 680.096,
+      "text": "That's Boris."
+    },
+    {
+      "start": 680.138,
+      "end": 681.055,
+      "text": "He works for me."
+    },
+    {
+      "start": 681.097,
+      "end": 682.39,
+      "text": "(Henry) What?"
+    },
+    {
+      "start": 682.89,
+      "end": 685.018,
+      "text": "How'd you know he wasn't"
+    },
+    {
+      "start": 682.89,
+      "end": 685.018,
+      "text": "really an old lady?"
+    },
+    {
+      "start": 685.059,
+      "end": 688.563,
+      "text": "Uh, 'cause of the tattoo"
+    },
+    {
+      "start": 685.059,
+      "end": 688.563,
+      "text": "on his neck."
+    },
+    {
+      "start": 688.605,
+      "end": 690.064,
+      "text": "I saw it on him"
+    },
+    {
+      "start": 688.605,
+      "end": 690.064,
+      "text": "up in the store."
+    },
+    {
+      "start": 691.107,
+      "end": 692.984,
+      "text": "And his boobs are too wobbly."
+    },
+    {
+      "start": 693.692,
+      "end": 695.862,
+      "text": "True."
+    },
+    {
+      "start": 693.692,
+      "end": 695.862,
+      "text": "Go get those under control."
+    },
+    {
+      "start": 698.281,
+      "end": 701.576,
+      "text": "Henry, you have a sharp eye,"
+    },
+    {
+      "start": 701.618,
+      "end": 703.37,
+      "text": "good instincts, a nice shirt,"
+    },
+    {
+      "start": 703.411,
+      "end": 704.663,
+      "text": "and you're brave."
+    },
+    {
+      "start": 704.703,
+      "end": 706.247,
+      "text": "Thanks."
+    },
+    {
+      "start": 706.289,
+      "end": 707.374,
+      "text": "Do you know"
+    },
+    {
+      "start": 706.289,
+      "end": 707.374,
+      "text": "how to make sandwiches?"
+    },
+    {
+      "start": 707.415,
+      "end": 709.042,
+      "text": "I do."
+    },
+    {
+      "start": 709.708,
+      "end": 711.628,
+      "text": "Then you have"
+    },
+    {
+      "start": 709.708,
+      "end": 711.628,
+      "text": "all the qualities"
+    },
+    {
+      "start": 709.708,
+      "end": 711.628,
+      "text": "I'm looking for."
+    },
+    {
+      "start": 712.295,
+      "end": 714.506,
+      "text": "But I--I don't--"
+    },
+    {
+      "start": 714.548,
+      "end": 716.09,
+      "text": "You're the one, Henry."
+    },
+    {
+      "start": 716.132,
+      "end": 717.676,
+      "text": "The one to make you"
+    },
+    {
+      "start": 716.132,
+      "end": 717.676,
+      "text": "a sandwich?"
+    },
+    {
+      "start": 717.716,
+      "end": 720.053,
+      "text": "(laughs) No."
+    },
+    {
+      "start": 720.094,
+      "end": 721.054,
+      "text": "Well, yes."
+    },
+    {
+      "start": 721.971,
+      "end": 726.434,
+      "text": "But everybody gets old"
+    },
+    {
+      "start": 721.971,
+      "end": 726.434,
+      "text": "some day,"
+    },
+    {
+      "start": 726.476,
+      "end": 728.311,
+      "text": "even Captain Man."
+    },
+    {
+      "start": 728.353,
+      "end": 730.188,
+      "text": "I can't do this forever."
+    },
+    {
+      "start": 730.23,
+      "end": 731.69,
+      "text": "Do what?"
+    },
+    {
+      "start": 731.73,
+      "end": 733.066,
+      "text": "Protect our town, Swellview,"
+    },
+    {
+      "start": 733.107,
+      "end": 736.819,
+      "text": "from bad guys,"
+    },
+    {
+      "start": 733.107,
+      "end": 736.819,
+      "text": "bad things, bad smells."
+    },
+    {
+      "start": 737.987,
+      "end": 739.614,
+      "text": "Smells?"
+    },
+    {
+      "start": 739.656,
+      "end": 741.282,
+      "text": "You want to be horrified?"
+    },
+    {
+      "start": 741.324,
+      "end": 742.242,
+      "text": "No."
+    },
+    {
+      "start": 742.283,
+      "end": 743.368,
+      "text": "Watch this."
+    },
+    {
+      "start": 743.951,
+      "end": 747.33,
+      "text": "(grunting and laughing)"
+    },
+    {
+      "start": 747.372,
+      "end": 748.831,
+      "text": "Who's the freak"
+    },
+    {
+      "start": 747.372,
+      "end": 748.831,
+      "text": "in the diaper?"
+    },
+    {
+      "start": 750.749,
+      "end": 752.001,
+      "text": "The Toddler,"
+    },
+    {
+      "start": 752.919,
+      "end": 754.546,
+      "text": "and don't let the diaper"
+    },
+    {
+      "start": 752.919,
+      "end": 754.546,
+      "text": "fool you, kid."
+    },
+    {
+      "start": 754.588,
+      "end": 756.089,
+      "text": "He's pure evil."
+    },
+    {
+      "start": 756.13,
+      "end": 757.674,
+      "text": "Wow."
+    },
+    {
+      "start": 757.716,
+      "end": 759.384,
+      "text": "I'll show you wow."
+    },
+    {
+      "start": 759.426,
+      "end": 761.636,
+      "text": "Watch this secret video"
+    },
+    {
+      "start": 759.426,
+      "end": 761.636,
+      "text": "that was intercepted"
+    },
+    {
+      "start": 761.678,
+      "end": 763.263,
+      "text": "by my people"
+    },
+    {
+      "start": 761.678,
+      "end": 763.263,
+      "text": "who intercept secret videos."
+    },
+    {
+      "start": 765.014,
+      "end": 769.227,
+      "text": "You were supposed"
+    },
+    {
+      "start": 765.014,
+      "end": 769.227,
+      "text": "to bring me my applesauce"
+    },
+    {
+      "start": 765.014,
+      "end": 769.227,
+      "text": "two minutes ago."
+    },
+    {
+      "start": 769.269,
+      "end": 770.52,
+      "text": "I'm sorry, Toddler."
+    },
+    {
+      "start": 770.562,
+      "end": 773.106,
+      "text": "Sorry don't make baby happy."
+    },
+    {
+      "start": 773.481,
+      "end": 775.942,
+      "text": "(blowing raspberries)"
+    },
+    {
+      "start": 776.735,
+      "end": 778.236,
+      "text": "(man)"
+    },
+    {
+      "start": 776.735,
+      "end": 778.236,
+      "text": "Toddler, good news."
+    },
+    {
+      "start": 778.278,
+      "end": 780.905,
+      "text": "The radioactive zenite"
+    },
+    {
+      "start": 778.278,
+      "end": 780.905,
+      "text": "is here."
+    },
+    {
+      "start": 780.947,
+      "end": 782.699,
+      "text": "(Toddler)"
+    },
+    {
+      "start": 780.947,
+      "end": 782.699,
+      "text": "Really? Whoo-hoo!"
+    },
+    {
+      "start": 782.741,
+      "end": 786.202,
+      "text": "That means we can begin"
+    },
+    {
+      "start": 782.741,
+      "end": 786.202,
+      "text": "phase two of my plan."
+    },
+    {
+      "start": 786.244,
+      "end": 787.704,
+      "text": "(man)"
+    },
+    {
+      "start": 786.244,
+      "end": 787.704,
+      "text": "Will someone wipe my face?"
+    },
+    {
+      "start": 787.746,
+      "end": 788.829,
+      "text": "(Toddler)"
+    },
+    {
+      "start": 787.746,
+      "end": 788.829,
+      "text": "No!"
+    },
+    {
+      "start": 788.871,
+      "end": 790.998,
+      "text": "(blowing raspberries)"
+    },
+    {
+      "start": 791.79,
+      "end": 794.544,
+      "text": "Dang."
+    },
+    {
+      "start": 791.79,
+      "end": 794.544,
+      "text": "That takes so much effort."
+    },
+    {
+      "start": 795.712,
+      "end": 799.34,
+      "text": "Have one of our scientists"
+    },
+    {
+      "start": 795.712,
+      "end": 799.34,
+      "text": "build me a device to do that."
+    },
+    {
+      "start": 800.133,
+      "end": 801.718,
+      "text": "To do what, sir?"
+    },
+    {
+      "start": 800.133,
+      "end": 801.718,
+      "text": "This."
+    },
+    {
+      "start": 801.76,
+      "end": 803.72,
+      "text": "(blowing raspberries)"
+    },
+    {
+      "start": 805.513,
+      "end": 807.056,
+      "text": "(groans)"
+    },
+    {
+      "start": 807.098,
+      "end": 808.475,
+      "text": "You see that?"
+    },
+    {
+      "start": 808.516,
+      "end": 809.934,
+      "text": "He's a maniac."
+    },
+    {
+      "start": 809.976,
+      "end": 811.852,
+      "text": "And there's more maniacs"
+    },
+    {
+      "start": 809.976,
+      "end": 811.852,
+      "text": "like him,"
+    },
+    {
+      "start": 811.894,
+      "end": 814.314,
+      "text": "all dangerous"
+    },
+    {
+      "start": 811.894,
+      "end": 814.314,
+      "text": "to the good citizens"
+    },
+    {
+      "start": 811.894,
+      "end": 814.314,
+      "text": "of Swellview."
+    },
+    {
+      "start": 814.355,
+      "end": 817.4,
+      "text": "Well, yeah, but we've"
+    },
+    {
+      "start": 814.355,
+      "end": 817.4,
+      "text": "got you to stop them."
+    },
+    {
+      "start": 817.442,
+      "end": 818.943,
+      "text": "True."
+    },
+    {
+      "start": 818.985,
+      "end": 821.279,
+      "text": "But I'm not as young"
+    },
+    {
+      "start": 818.985,
+      "end": 821.279,
+      "text": "as I used to be."
+    },
+    {
+      "start": 821.321,
+      "end": 824.198,
+      "text": "(sighs) I'm almost 34."
+    },
+    {
+      "start": 826.326,
+      "end": 829.078,
+      "text": "I need help, and someday"
+    },
+    {
+      "start": 829.12,
+      "end": 831.748,
+      "text": "someone's gonna have"
+    },
+    {
+      "start": 829.12,
+      "end": 831.748,
+      "text": "to take over for me."
+    },
+    {
+      "start": 831.79,
+      "end": 832.791,
+      "text": "Like--"
+    },
+    {
+      "start": 834.417,
+      "end": 835.585,
+      "text": "Like me?"
+    },
+    {
+      "start": 836.043,
+      "end": 837.836,
+      "text": "What do you say, Henry?"
+    },
+    {
+      "start": 837.878,
+      "end": 839.297,
+      "text": "Do you want to be"
+    },
+    {
+      "start": 837.878,
+      "end": 839.297,
+      "text": "my sidekick?"
+    },
+    {
+      "start": 841.508,
+      "end": 843.51,
+      "text": "How much does it pay?"
+    },
+    {
+      "start": 841.508,
+      "end": 843.51,
+      "text": "$9 an hour."
+    },
+    {
+      "start": 843.551,
+      "end": 845.136,
+      "text": "Whoa!"
+    },
+    {
+      "start": 843.551,
+      "end": 845.136,
+      "text": "I know, right?"
+    },
+    {
+      "start": 847.639,
+      "end": 849.223,
+      "text": "(bell rings)"
+    },
+    {
+      "start": 851.976,
+      "end": 854.354,
+      "text": "(Jasper) Whoa!"
+    },
+    {
+      "start": 851.976,
+      "end": 854.354,
+      "text": "(Charlotte)"
+    },
+    {
+      "start": 851.976,
+      "end": 854.354,
+      "text": "Check this place out."
+    },
+    {
+      "start": 855.188,
+      "end": 856.69,
+      "text": "Hey, look at this thing."
+    },
+    {
+      "start": 857.691,
+      "end": 860.735,
+      "text": "(Jasper)"
+    },
+    {
+      "start": 857.691,
+      "end": 860.735,
+      "text": "Wow, a bucket of swords."
+    },
+    {
+      "start": 860.777,
+      "end": 862.654,
+      "text": "What are they doing here?"
+    },
+    {
+      "start": 862.696,
+      "end": 864.405,
+      "text": "Friends of yours?"
+    },
+    {
+      "start": 862.696,
+      "end": 864.405,
+      "text": "Uh-huh."
+    },
+    {
+      "start": 864.447,
+      "end": 866.783,
+      "text": "Jasper,"
+    },
+    {
+      "start": 864.447,
+      "end": 866.783,
+      "text": "please don't embarrass me."
+    },
+    {
+      "start": 866.825,
+      "end": 868.702,
+      "text": "Excuse me, sir."
+    },
+    {
+      "start": 866.825,
+      "end": 868.702,
+      "text": "He's gonna do it."
+    },
+    {
+      "start": 869.41,
+      "end": 870.62,
+      "text": "Yes?"
+    },
+    {
+      "start": 870.662,
+      "end": 871.871,
+      "text": "How much?"
+    },
+    {
+      "start": 871.912,
+      "end": 874.332,
+      "text": "Each sword is $100."
+    },
+    {
+      "start": 874.374,
+      "end": 876.917,
+      "text": "No, no, no."
+    },
+    {
+      "start": 874.374,
+      "end": 876.917,
+      "text": "How much for the bucket?"
+    },
+    {
+      "start": 877.836,
+      "end": 879.045,
+      "text": "The bucket?"
+    },
+    {
+      "start": 879.086,
+      "end": 881.214,
+      "text": "That's not a bucket."
+    },
+    {
+      "start": 879.086,
+      "end": 881.214,
+      "text": "That's a barrel."
+    },
+    {
+      "start": 881.255,
+      "end": 883.424,
+      "text": "It's close enough to a bucket."
+    },
+    {
+      "start": 883.466,
+      "end": 884.676,
+      "text": "I collect buckets."
+    },
+    {
+      "start": 884.718,
+      "end": 886.969,
+      "text": "Don't say it."
+    },
+    {
+      "start": 884.718,
+      "end": 886.969,
+      "text": "I'm a bucketeer."
+    },
+    {
+      "start": 888.054,
+      "end": 890.014,
+      "text": "Well, they seem"
+    },
+    {
+      "start": 888.054,
+      "end": 890.014,
+      "text": "like nice kids."
+    },
+    {
+      "start": 890.056,
+      "end": 892.058,
+      "text": "Yeah, their names are"
+    },
+    {
+      "start": 890.056,
+      "end": 892.058,
+      "text": "Jasper and Charlotte."
+    },
+    {
+      "start": 892.099,
+      "end": 893.476,
+      "text": "I've known them ever since--"
+    },
+    {
+      "start": 892.099,
+      "end": 893.476,
+      "text": "Get rid of 'em."
+    },
+    {
+      "start": 893.518,
+      "end": 895.019,
+      "text": "I'll get rid of them."
+    },
+    {
+      "start": 896.437,
+      "end": 898.773,
+      "text": "(Jasper)"
+    },
+    {
+      "start": 896.437,
+      "end": 898.773,
+      "text": "Wow, what a bucket."
+    },
+    {
+      "start": 899.691,
+      "end": 901.609,
+      "text": "Kid sure loves that bucket."
+    },
+    {
+      "start": 904.571,
+      "end": 906.113,
+      "text": "Hey."
+    },
+    {
+      "start": 904.571,
+      "end": 906.113,
+      "text": "Henry!"
+    },
+    {
+      "start": 906.155,
+      "end": 907.448,
+      "text": "Did you get the job?"
+    },
+    {
+      "start": 907.49,
+      "end": 908.658,
+      "text": "(Henry) Yeah."
+    },
+    {
+      "start": 907.49,
+      "end": 908.658,
+      "text": "(Charlotte) Cool."
+    },
+    {
+      "start": 908.7,
+      "end": 910.034,
+      "text": "(Jasper)"
+    },
+    {
+      "start": 908.7,
+      "end": 910.034,
+      "text": "Does that mean"
+    },
+    {
+      "start": 910.076,
+      "end": 912.036,
+      "text": "I can get a discount"
+    },
+    {
+      "start": 910.076,
+      "end": 912.036,
+      "text": "on this bucket?"
+    },
+    {
+      "start": 912.328,
+      "end": 913.788,
+      "text": "Dude,"
+    },
+    {
+      "start": 912.328,
+      "end": 913.788,
+      "text": "it's my first day here."
+    },
+    {
+      "start": 912.328,
+      "end": 913.788,
+      "text": "You--You guys gotta--"
+    },
+    {
+      "start": 913.83,
+      "end": 915.54,
+      "text": "Excuse me,"
+    },
+    {
+      "start": 913.83,
+      "end": 915.54,
+      "text": "mysterious foreign man,"
+    },
+    {
+      "start": 916.999,
+      "end": 919.043,
+      "text": "do Henry's friends"
+    },
+    {
+      "start": 916.999,
+      "end": 919.043,
+      "text": "get a discount here?"
+    },
+    {
+      "start": 921.337,
+      "end": 923.13,
+      "text": "That plant"
+    },
+    {
+      "start": 921.337,
+      "end": 923.13,
+      "text": "just shook its head."
+    },
+    {
+      "start": 923.172,
+      "end": 924.507,
+      "text": "Wow."
+    },
+    {
+      "start": 924.549,
+      "end": 925.675,
+      "text": "Would you get him"
+    },
+    {
+      "start": 924.549,
+      "end": 925.675,
+      "text": "out of here?"
+    },
+    {
+      "start": 925.717,
+      "end": 926.843,
+      "text": "How much for the plant?"
+    },
+    {
+      "start": 926.885,
+      "end": 928.511,
+      "text": "(mutters)"
+    },
+    {
+      "start": 928.553,
+      "end": 931.097,
+      "text": "The plant is not for sale."
+    },
+    {
+      "start": 928.553,
+      "end": 931.097,
+      "text": "Bye, guys."
+    },
+    {
+      "start": 931.138,
+      "end": 933.14,
+      "text": "Come on. I'll give you"
+    },
+    {
+      "start": 931.138,
+      "end": 933.14,
+      "text": "seven bucks for it"
+    },
+    {
+      "start": 933.182,
+      "end": 934.601,
+      "text": "and one Canadian loonie."
+    },
+    {
+      "start": 936.394,
+      "end": 938.979,
+      "text": "Ahhhhh!"
+    },
+    {
+      "start": 936.394,
+      "end": 938.979,
+      "text": "It spit in my eye!"
+    },
+    {
+      "start": 939.773,
+      "end": 942.4,
+      "text": "I told you Canadian money"
+    },
+    {
+      "start": 939.773,
+      "end": 942.4,
+      "text": "upsets people."
+    },
+    {
+      "start": 942.442,
+      "end": 944.485,
+      "text": "You guys,"
+    },
+    {
+      "start": 942.442,
+      "end": 944.485,
+      "text": "you've got to go now."
+    },
+    {
+      "start": 944.527,
+      "end": 947.28,
+      "text": "Wait, what about my bucket?"
+    },
+    {
+      "start": 947.321,
+      "end": 949.99,
+      "text": "I want the pretty bucket!"
+    },
+    {
+      "start": 950.032,
+      "end": 951.826,
+      "text": "I love that bucket!"
+    },
+    {
+      "start": 951.868,
+      "end": 953.494,
+      "text": "(Charlotte)"
+    },
+    {
+      "start": 951.868,
+      "end": 953.494,
+      "text": "Will you shut up"
+    },
+    {
+      "start": 951.868,
+      "end": 953.494,
+      "text": "about that bucket?"
+    },
+    {
+      "start": 957.457,
+      "end": 958.792,
+      "text": "Carry on."
+    },
+    {
+      "start": 964.464,
+      "end": 965.715,
+      "text": "I gotta wear this?"
+    },
+    {
+      "start": 965.757,
+      "end": 968.092,
+      "text": "All good sidekicks"
+    },
+    {
+      "start": 965.757,
+      "end": 968.092,
+      "text": "wear costumes."
+    },
+    {
+      "start": 968.551,
+      "end": 972.597,
+      "text": "Sorry, but this is bad."
+    },
+    {
+      "start": 972.639,
+      "end": 974.515,
+      "text": "I have more options."
+    },
+    {
+      "start": 978.436,
+      "end": 979.729,
+      "text": "Too sparkly."
+    },
+    {
+      "start": 982.899,
+      "end": 985.652,
+      "text": "Eh, it's a little Broadway."
+    },
+    {
+      "start": 989.864,
+      "end": 991.198,
+      "text": "Too tight."
+    },
+    {
+      "start": 991.24,
+      "end": 993.242,
+      "text": "Uh, way too tight."
+    },
+    {
+      "start": 995.745,
+      "end": 999.248,
+      "text": "Oh, man... (sighs)"
+    },
+    {
+      "start": 995.745,
+      "end": 999.248,
+      "text": "I ate a lot of fruit."
+    },
+    {
+      "start": 1005.63,
+      "end": 1007.381,
+      "text": "Hey, I like it."
+    },
+    {
+      "start": 1007.423,
+      "end": 1009.133,
+      "text": "I like it,"
+    },
+    {
+      "start": 1009.175,
+      "end": 1011.218,
+      "text": "but it takes a lot of time"
+    },
+    {
+      "start": 1009.175,
+      "end": 1011.218,
+      "text": "to put on."
+    },
+    {
+      "start": 1011.26,
+      "end": 1014.597,
+      "text": "And that's why you'll need"
+    },
+    {
+      "start": 1011.26,
+      "end": 1014.597,
+      "text": "this special bubble gum."
+    },
+    {
+      "start": 1016.975,
+      "end": 1018.977,
+      "text": "Special?"
+    },
+    {
+      "start": 1016.975,
+      "end": 1018.977,
+      "text": "Read the instructions."
+    },
+    {
+      "start": 1020.269,
+      "end": 1023.94,
+      "text": "\"Chew gum, blow bubble,"
+    },
+    {
+      "start": 1020.269,
+      "end": 1023.94,
+      "text": "fight crime.\""
+    },
+    {
+      "start": 1024.941,
+      "end": 1026.066,
+      "text": "Now."
+    },
+    {
+      "start": 1028.736,
+      "end": 1029.988,
+      "text": "What's this for?"
+    },
+    {
+      "start": 1030.029,
+      "end": 1032.365,
+      "text": "It means we're engaged."
+    },
+    {
+      "start": 1030.029,
+      "end": 1032.365,
+      "text": "What?"
+    },
+    {
+      "start": 1032.406,
+      "end": 1034.617,
+      "text": "No, I'm just kidding."
+    },
+    {
+      "start": 1032.406,
+      "end": 1034.617,
+      "text": "That's how I'll contact you."
+    },
+    {
+      "start": 1034.659,
+      "end": 1036.285,
+      "text": "Well, why can't you just"
+    },
+    {
+      "start": 1034.659,
+      "end": 1036.285,
+      "text": "call me?"
+    },
+    {
+      "start": 1036.327,
+      "end": 1038.204,
+      "text": "I melted your phone."
+    },
+    {
+      "start": 1036.327,
+      "end": 1038.204,
+      "text": "Right."
+    },
+    {
+      "start": 1038.955,
+      "end": 1040.707,
+      "text": "Now, listen closely."
+    },
+    {
+      "start": 1040.748,
+      "end": 1042.75,
+      "text": "That wristband flashes."
+    },
+    {
+      "start": 1040.748,
+      "end": 1042.75,
+      "text": "It flashes."
+    },
+    {
+      "start": 1042.792,
+      "end": 1045.252,
+      "text": "A triple flashing light"
+    },
+    {
+      "start": 1042.792,
+      "end": 1045.252,
+      "text": "means emergency like,"
+    },
+    {
+      "start": 1045.294,
+      "end": 1047.38,
+      "text": "\"major sitch going down,"
+    },
+    {
+      "start": 1045.294,
+      "end": 1047.38,
+      "text": "so get here fast.\""
+    },
+    {
+      "start": 1047.421,
+      "end": 1048.84,
+      "text": "Right."
+    },
+    {
+      "start": 1048.882,
+      "end": 1050.675,
+      "text": "A double flashing light"
+    },
+    {
+      "start": 1048.882,
+      "end": 1050.675,
+      "text": "means it's just important."
+    },
+    {
+      "start": 1050.717,
+      "end": 1052.426,
+      "text": "And what is a single"
+    },
+    {
+      "start": 1050.717,
+      "end": 1052.426,
+      "text": "flashing light mean?"
+    },
+    {
+      "start": 1052.468,
+      "end": 1055.013,
+      "text": "Just to, you know,"
+    },
+    {
+      "start": 1052.468,
+      "end": 1055.013,
+      "text": "shoot me a text whenever."
+    },
+    {
+      "start": 1055.847,
+      "end": 1056.89,
+      "text": "Got it."
+    },
+    {
+      "start": 1056.931,
+      "end": 1058.808,
+      "text": "Now, raise your right hand."
+    },
+    {
+      "start": 1058.85,
+      "end": 1060.1,
+      "text": "Spread your fingers."
+    },
+    {
+      "start": 1060.142,
+      "end": 1061.227,
+      "text": "Turn your head and cough."
+    },
+    {
+      "start": 1061.268,
+      "end": 1062.645,
+      "text": "What?"
+    },
+    {
+      "start": 1061.268,
+      "end": 1062.645,
+      "text": "(laughs) Joke."
+    },
+    {
+      "start": 1063.396,
+      "end": 1065.356,
+      "text": "Place your left hand"
+    },
+    {
+      "start": 1063.396,
+      "end": 1065.356,
+      "text": "over your right lung"
+    },
+    {
+      "start": 1066.232,
+      "end": 1067.358,
+      "text": "and repeat after me."
+    },
+    {
+      "start": 1067.65,
+      "end": 1069.861,
+      "text": "I, Henry Hart--"
+    },
+    {
+      "start": 1067.65,
+      "end": 1069.861,
+      "text": "I, Henry Hart--"
+    },
+    {
+      "start": 1069.903,
+      "end": 1072.03,
+      "text": "pledge to be"
+    },
+    {
+      "start": 1069.903,
+      "end": 1072.03,
+      "text": "an awesome sidekick"
+    },
+    {
+      "start": 1069.903,
+      "end": 1072.03,
+      "text": "to Captain Man--"
+    },
+    {
+      "start": 1072.071,
+      "end": 1074.24,
+      "text": "pledge to be"
+    },
+    {
+      "start": 1072.071,
+      "end": 1074.24,
+      "text": "an awesome sidekick"
+    },
+    {
+      "start": 1072.071,
+      "end": 1074.24,
+      "text": "to Captain Man--"
+    },
+    {
+      "start": 1074.281,
+      "end": 1075.825,
+      "text": "and to never ever, ever,"
+    },
+    {
+      "start": 1074.281,
+      "end": 1075.825,
+      "text": "tell anyone"
+    },
+    {
+      "start": 1075.867,
+      "end": 1077.785,
+      "text": "that I am Captain Man's"
+    },
+    {
+      "start": 1075.867,
+      "end": 1077.785,
+      "text": "secret sidekick."
+    },
+    {
+      "start": 1077.827,
+      "end": 1079.662,
+      "text": "And to never ever"
+    },
+    {
+      "start": 1077.827,
+      "end": 1079.662,
+      "text": "tell anyone"
+    },
+    {
+      "start": 1079.704,
+      "end": 1081.455,
+      "text": "that I am Captain Man's"
+    },
+    {
+      "start": 1079.704,
+      "end": 1081.455,
+      "text": "secret sidekick."
+    },
+    {
+      "start": 1081.497,
+      "end": 1082.957,
+      "text": "You left out one \"ever.\""
+    },
+    {
+      "start": 1081.497,
+      "end": 1082.957,
+      "text": "Ever."
+    },
+    {
+      "start": 1082.999,
+      "end": 1084.458,
+      "text": "It is done."
+    },
+    {
+      "start": 1085.501,
+      "end": 1087.336,
+      "text": "Feels good."
+    },
+    {
+      "start": 1085.501,
+      "end": 1087.336,
+      "text": "Yeah."
+    },
+    {
+      "start": 1088.212,
+      "end": 1090.464,
+      "text": "(alarm sounds)"
+    },
+    {
+      "start": 1088.212,
+      "end": 1090.464,
+      "text": "Uh-oh."
+    },
+    {
+      "start": 1092.091,
+      "end": 1093.3,
+      "text": "What's up, Gooch?"
+    },
+    {
+      "start": 1093.342,
+      "end": 1094.51,
+      "text": "Someone sabotaged the bridge"
+    },
+    {
+      "start": 1094.552,
+      "end": 1095.302,
+      "text": "over the Jandy River."
+    },
+    {
+      "start": 1095.344,
+      "end": 1096.846,
+      "text": "The bridge is down?"
+    },
+    {
+      "start": 1096.888,
+      "end": 1098.097,
+      "text": "Affirmative."
+    },
+    {
+      "start": 1098.138,
+      "end": 1100.182,
+      "text": "That means yes."
+    },
+    {
+      "start": 1098.138,
+      "end": 1100.182,
+      "text": "I got that."
+    },
+    {
+      "start": 1100.224,
+      "end": 1101.308,
+      "text": "Situation?"
+    },
+    {
+      "start": 1101.768,
+      "end": 1104.186,
+      "text": "Cars in the water,"
+    },
+    {
+      "start": 1101.768,
+      "end": 1104.186,
+      "text": "lives in danger."
+    },
+    {
+      "start": 1104.228,
+      "end": 1105.605,
+      "text": "Understood."
+    },
+    {
+      "start": 1106.188,
+      "end": 1107.899,
+      "text": "Phase two"
+    },
+    {
+      "start": 1106.188,
+      "end": 1107.899,
+      "text": "of The Toddler's plan."
+    },
+    {
+      "start": 1107.941,
+      "end": 1109.233,
+      "text": "Let's ride."
+    },
+    {
+      "start": 1109.275,
+      "end": 1111.151,
+      "text": "Wha-- Ride where?"
+    },
+    {
+      "start": 1111.193,
+      "end": 1113.112,
+      "text": "We've got people"
+    },
+    {
+      "start": 1111.193,
+      "end": 1113.112,
+      "text": "in the Jandy River"
+    },
+    {
+      "start": 1111.193,
+      "end": 1113.112,
+      "text": "that need saving."
+    },
+    {
+      "start": 1113.153,
+      "end": 1114.072,
+      "text": "Come on."
+    },
+    {
+      "start": 1115.406,
+      "end": 1117.366,
+      "text": "You mean we're going there"
+    },
+    {
+      "start": 1115.406,
+      "end": 1117.366,
+      "text": "together, like, right now?"
+    },
+    {
+      "start": 1117.408,
+      "end": 1118.826,
+      "text": "Yeah."
+    },
+    {
+      "start": 1117.408,
+      "end": 1118.826,
+      "text": "Get under your tube."
+    },
+    {
+      "start": 1119.326,
+      "end": 1120.954,
+      "text": "(beeping noises)"
+    },
+    {
+      "start": 1120.995,
+      "end": 1122.288,
+      "text": "Ready?"
+    },
+    {
+      "start": 1122.329,
+      "end": 1123.748,
+      "text": "For what?"
+    },
+    {
+      "start": 1125.207,
+      "end": 1126.626,
+      "text": "Up the tube."
+    },
+    {
+      "start": 1129.462,
+      "end": 1130.588,
+      "text": "I don't know how to--"
+    },
+    {
+      "start": 1134.174,
+      "end": 1135.468,
+      "text": "Whoosh!"
+    },
+    {
+      "start": 1136.886,
+      "end": 1139.221,
+      "text": "(Captain Man)"
+    },
+    {
+      "start": 1136.886,
+      "end": 1139.221,
+      "text": "Just tap your belt buckle."
+    },
+    {
+      "start": 1141.099,
+      "end": 1142.224,
+      "text": "Oh. Heh."
+    },
+    {
+      "start": 1144.518,
+      "end": 1147.354,
+      "text": "Up the tuuuuuuuube."
+    },
+    {
+      "start": 1149.398,
+      "end": 1151.191,
+      "text": "And we're going"
+    },
+    {
+      "start": 1149.398,
+      "end": 1151.191,
+      "text": "to come back to that story"
+    },
+    {
+      "start": 1151.233,
+      "end": 1153.569,
+      "text": "so we can take you live"
+    },
+    {
+      "start": 1151.233,
+      "end": 1153.569,
+      "text": "to the Jandy Bridge,"
+    },
+    {
+      "start": 1153.611,
+      "end": 1156.572,
+      "text": "which mysteriously collapsed"
+    },
+    {
+      "start": 1153.611,
+      "end": 1156.572,
+      "text": "a little over an hour ago."
+    },
+    {
+      "start": 1156.614,
+      "end": 1158.074,
+      "text": "Jake, honey, come look."
+    },
+    {
+      "start": 1158.116,
+      "end": 1159.325,
+      "text": "The Jandy Bridge collapsed."
+    },
+    {
+      "start": 1159.366,
+      "end": 1160.66,
+      "text": "What?"
+    },
+    {
+      "start": 1160.701,
+      "end": 1164.08,
+      "text": "Oh, no,"
+    },
+    {
+      "start": 1160.701,
+      "end": 1164.08,
+      "text": "that was my favorite bridge."
+    },
+    {
+      "start": 1164.122,
+      "end": 1166.666,
+      "text": "(reporter)  We understand"
+    },
+    {
+      "start": 1164.122,
+      "end": 1166.666,
+      "text": "there are several people"
+    },
+    {
+      "start": 1164.122,
+      "end": 1166.666,
+      "text": "in cars in the water."
+    },
+    {
+      "start": 1166.707,
+      "end": 1168.334,
+      "text": "People are injured."
+    },
+    {
+      "start": 1168.375,
+      "end": 1169.376,
+      "text": "(evil laughter)"
+    },
+    {
+      "start": 1169.418,
+      "end": 1170.586,
+      "text": "What happened?"
+    },
+    {
+      "start": 1170.628,
+      "end": 1171.838,
+      "text": "They're not sure."
+    },
+    {
+      "start": 1170.628,
+      "end": 1171.838,
+      "text": "They think--"
+    },
+    {
+      "start": 1171.879,
+      "end": 1173.965,
+      "text": "Mom, Dad, I hate my life,"
+    },
+    {
+      "start": 1171.879,
+      "end": 1173.965,
+      "text": "and I'm not okay."
+    },
+    {
+      "start": 1175.341,
+      "end": 1178.094,
+      "text": "Not now, honey."
+    },
+    {
+      "start": 1175.341,
+      "end": 1178.094,
+      "text": "Daddy's favorite bridge"
+    },
+    {
+      "start": 1175.341,
+      "end": 1178.094,
+      "text": "collapsed."
+    },
+    {
+      "start": 1178.136,
+      "end": 1180.054,
+      "text": "Who cares?"
+    },
+    {
+      "start": 1180.096,
+      "end": 1181.43,
+      "text": "Your daddy cares."
+    },
+    {
+      "start": 1182.181,
+      "end": 1184.642,
+      "text": "But every time I try"
+    },
+    {
+      "start": 1182.181,
+      "end": 1184.642,
+      "text": "to watch a video on my phone"
+    },
+    {
+      "start": 1184.684,
+      "end": 1187.77,
+      "text": "it keeps freezing,"
+    },
+    {
+      "start": 1184.684,
+      "end": 1187.77,
+      "text": "because our stupid"
+    },
+    {
+      "start": 1184.684,
+      "end": 1187.77,
+      "text": "Wi-Fi signal"
+    },
+    {
+      "start": 1187.812,
+      "end": 1189.772,
+      "text": "only gives me one bar"
+    },
+    {
+      "start": 1187.812,
+      "end": 1189.772,
+      "text": "in my room."
+    },
+    {
+      "start": 1189.814,
+      "end": 1193.067,
+      "text": "Then just wait"
+    },
+    {
+      "start": 1189.814,
+      "end": 1193.067,
+      "text": "until the video loads"
+    },
+    {
+      "start": 1189.814,
+      "end": 1193.067,
+      "text": "before you watch it."
+    },
+    {
+      "start": 1193.109,
+      "end": 1195.695,
+      "text": "Oh, so we're living"
+    },
+    {
+      "start": 1193.109,
+      "end": 1195.695,
+      "text": "like animals now?"
+    },
+    {
+      "start": 1197.155,
+      "end": 1198.447,
+      "text": "Later."
+    },
+    {
+      "start": 1199.406,
+      "end": 1200.282,
+      "text": "I'll run away."
+    },
+    {
+      "start": 1200.324,
+      "end": 1201.617,
+      "text": "I'll do it."
+    },
+    {
+      "start": 1205.538,
+      "end": 1209.208,
+      "text": "(reporter)  Rescue workers were"
+    },
+    {
+      "start": 1205.538,
+      "end": 1209.208,
+      "text": "unable to get their equipment"
+    },
+    {
+      "start": 1205.538,
+      "end": 1209.208,
+      "text": "down the muddy embankment."
+    },
+    {
+      "start": 1209.249,
+      "end": 1211.585,
+      "text": "Luckily, Captain Man"
+    },
+    {
+      "start": 1209.249,
+      "end": 1211.585,
+      "text": "arrived on the scene,"
+    },
+    {
+      "start": 1211.627,
+      "end": 1213.087,
+      "text": "leapt into the water,"
+    },
+    {
+      "start": 1213.129,
+      "end": 1215.255,
+      "text": "and saved the endangered"
+    },
+    {
+      "start": 1213.129,
+      "end": 1215.255,
+      "text": "citizens from drowning."
+    },
+    {
+      "start": 1215.589,
+      "end": 1217.717,
+      "text": "(news anchor)"
+    },
+    {
+      "start": 1215.589,
+      "end": 1217.717,
+      "text": "And Ron, is it true"
+    },
+    {
+      "start": 1215.589,
+      "end": 1217.717,
+      "text": "that for the first time"
+    },
+    {
+      "start": 1217.758,
+      "end": 1219.218,
+      "text": "Captain Man"
+    },
+    {
+      "start": 1217.758,
+      "end": 1219.218,
+      "text": "wasn't working alone?"
+    },
+    {
+      "start": 1219.259,
+      "end": 1221.804,
+      "text": "That's correct."
+    },
+    {
+      "start": 1219.259,
+      "end": 1221.804,
+      "text": "It appears Captain Man"
+    },
+    {
+      "start": 1221.846,
+      "end": 1224.057,
+      "text": "has teamed up"
+    },
+    {
+      "start": 1221.846,
+      "end": 1224.057,
+      "text": "with a new sidekick,"
+    },
+    {
+      "start": 1224.098,
+      "end": 1226.684,
+      "text": "who apparently goes"
+    },
+    {
+      "start": 1224.098,
+      "end": 1226.684,
+      "text": "by the name Kid Danger."
+    },
+    {
+      "start": 1226.726,
+      "end": 1229.02,
+      "text": "Huh."
+    },
+    {
+      "start": 1226.726,
+      "end": 1229.02,
+      "text": "Huh."
+    },
+    {
+      "start": 1229.062,
+      "end": 1230.938,
+      "text": "Well, once again Swellview"
+    },
+    {
+      "start": 1229.062,
+      "end": 1230.938,
+      "text": "owes a big thanks"
+    },
+    {
+      "start": 1230.98,
+      "end": 1234.525,
+      "text": "to Captain Man"
+    },
+    {
+      "start": 1230.98,
+      "end": 1234.525,
+      "text": "and, apparently, Kid Danger."
+    },
+    {
+      "start": 1240.907,
+      "end": 1242.992,
+      "text": "Hey, Henry,"
+    },
+    {
+      "start": 1240.907,
+      "end": 1242.992,
+      "text": "did you get the job?"
+    },
+    {
+      "start": 1243.034,
+      "end": 1246.286,
+      "text": "Yeah, just finished"
+    },
+    {
+      "start": 1243.034,
+      "end": 1246.286,
+      "text": "my first day."
+    },
+    {
+      "start": 1246.328,
+      "end": 1247.663,
+      "text": "So how was work?"
+    },
+    {
+      "start": 1247.705,
+      "end": 1249.582,
+      "text": "Uh, it was pretty..."
+    },
+    {
+      "start": 1251.333,
+      "end": 1252.752,
+      "text": "interesting."
+    },
+    {
+      "start": 1258.883,
+      "end": 1260.801,
+      "text": "Next on  Henry Danger..."
+    },
+    {
+      "start": 1261.844,
+      "end": 1263.846,
+      "text": "Ray!"
+    },
+    {
+      "start": 1261.844,
+      "end": 1263.846,
+      "text": "Ray, what's wrong?"
+    },
+    {
+      "start": 1263.888,
+      "end": 1265.973,
+      "text": "We have a situation."
+    },
+    {
+      "start": 1263.888,
+      "end": 1265.973,
+      "text": "The Toddler?"
+    },
+    {
+      "start": 1266.015,
+      "end": 1267.474,
+      "text": "Here comes the fun."
+    },
+    {
+      "start": 1267.516,
+      "end": 1271.812,
+      "text": "(growls)  Kill everyone!"
+    },
+    {
+      "start": 1271.854,
+      "end": 1273.689,
+      "text": "Monster babies?"
+    },
+    {
+      "start": 1273.731,
+      "end": 1275.024,
+      "text": "That's right, Henry."
+    },
+    {
+      "start": 1275.066,
+      "end": 1276.692,
+      "text": "Unless we stop"
+    },
+    {
+      "start": 1275.066,
+      "end": 1276.692,
+      "text": "The Toddler..."
+    },
+    {
+      "start": 1276.734,
+      "end": 1278.611,
+      "text": "Tonight?"
+    },
+    {
+      "start": 1276.734,
+      "end": 1278.611,
+      "text": "No, I can't do tonight."
+    },
+    {
+      "start": 1278.652,
+      "end": 1279.904,
+      "text": "What? What do you mean?"
+    },
+    {
+      "start": 1279.946,
+      "end": 1282.031,
+      "text": "I got two responses."
+    },
+    {
+      "start": 1279.946,
+      "end": 1282.031,
+      "text": "To what?"
+    },
+    {
+      "start": 1282.073,
+      "end": 1283.699,
+      "text": "My birthday party"
+    },
+    {
+      "start": 1282.073,
+      "end": 1283.699,
+      "text": "invitation."
+    },
+    {
+      "start": 1283.741,
+      "end": 1285.826,
+      "text": "Two guys said"
+    },
+    {
+      "start": 1283.741,
+      "end": 1285.826,
+      "text": "they might come."
+    },
+    {
+      "start": 1288.495,
+      "end": 1289.914,
+      "text": "Cool party."
+    },
+    {
+      "start": 1289.956,
+      "end": 1292.083,
+      "text": "Okay, you go"
+    },
+    {
+      "start": 1289.956,
+      "end": 1292.083,
+      "text": "to Jasper's party,"
+    },
+    {
+      "start": 1292.125,
+      "end": 1293.626,
+      "text": "I'll handle The Toddler"
+    },
+    {
+      "start": 1292.125,
+      "end": 1293.626,
+      "text": "by myself."
+    },
+    {
+      "start": 1293.667,
+      "end": 1295.002,
+      "text": "We do have confirmation"
+    },
+    {
+      "start": 1295.044,
+      "end": 1297.504,
+      "text": "that Captain Man"
+    },
+    {
+      "start": 1295.044,
+      "end": 1297.504,
+      "text": "has been captured."
+    },
+    {
+      "start": 1297.546,
+      "end": 1299.215,
+      "text": "Captured? Dang it, Ray."
+    },
+    {
+      "start": 1299.257,
+      "end": 1303.803,
+      "text": "This is my playroom,"
+    },
+    {
+      "start": 1299.257,
+      "end": 1303.803,
+      "text": "my toys, my rules."
+    },
+    {
+      "start": 1304.762,
+      "end": 1307.014,
+      "text": "You sick"
+    },
+    {
+      "start": 1304.762,
+      "end": 1307.014,
+      "text": "underdeveloped maniac."
+    },
+    {
+      "start": 1309.225,
+      "end": 1310.184,
+      "text": "Ow!"
+    },
+    {
+      "start": 1310.226,
+      "end": 1312.145,
+      "text": "Henry, you're late."
+    },
+    {
+      "start": 1312.186,
+      "end": 1314.605,
+      "text": "Well, sorry, but kinda"
+    },
+    {
+      "start": 1312.186,
+      "end": 1314.605,
+      "text": "in the middle of something."
+    },
+    {
+      "start": 1314.647,
+      "end": 1316.649,
+      "text": "There's something"
+    },
+    {
+      "start": 1314.647,
+      "end": 1316.649,
+      "text": "more important"
+    },
+    {
+      "start": 1314.647,
+      "end": 1316.649,
+      "text": "than my birthday party?"
+    },
+    {
+      "start": 1316.69,
+      "end": 1317.984,
+      "text": "Uh..."
+    },
+    {
+      "start": 1318.025,
+      "end": 1320.027,
+      "text": "Forty-eight hours from now"
+    },
+    {
+      "start": 1320.069,
+      "end": 1324.448,
+      "text": "every baby in Swellview"
+    },
+    {
+      "start": 1320.069,
+      "end": 1324.448,
+      "text": "will be a hideous monster."
+    },
+    {
+      "start": 1325.158,
+      "end": 1326.45,
+      "text": "Yeah, this is"
+    },
+    {
+      "start": 1325.158,
+      "end": 1326.45,
+      "text": "pretty important."
+    },
+    {
+      "start": 1326.492,
+      "end": 1327.827,
+      "text": "♪♪"
+    },
+    {
+      "start": 1330.621,
+      "end": 1334.667,
+      "text": "♪♪"
+    },
+    {
+      "start": 1353.644,
+      "end": 1354.854,
+      "text": "(oven bell)"
+    },
+    {
+      "start": 1354.895,
+      "end": 1356.189,
+      "text": "Mmm..."
+    }
+  ]
+}

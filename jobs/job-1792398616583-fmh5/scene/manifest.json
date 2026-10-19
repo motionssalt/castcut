@@ -1,0 +1,33 @@
+{
+  "version": 1,
+  "job_id": "job-1792398616583-fmh5",
+  "release_tag": "castcut-job-1792398616583-fmh5",
+  "content_type": "anime",
+  "duration": 1361.056,
+  "assets": [
+    {
+      "name": "00_READ_THIS_FIRST.txt",
+      "purpose": "agent_instructions"
+    },
+    {
+      "name": "scene_index.json",
+      "purpose": "scene_index"
+    },
+    {
+      "name": "transcript.json",
+      "purpose": "dialogue_transcript"
+    },
+    {
+      "name": "screenshots.zip",
+      "purpose": "scene_screenshots"
+    },
+    {
+      "name": "video_meta.json",
+      "purpose": "video_metadata"
+    },
+    {
+      "name": "manifest.json",
+      "purpose": "manifest"
+    }
+  ]
+}

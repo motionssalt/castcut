@@ -1,0 +1,24 @@
+{
+  "duration": 1361.056,
+  "size_bytes": 1296197857,
+  "width": 1920,
+  "height": 1080,
+  "fps": 23.976,
+  "vcodec": "h264",
+  "has_audio": true,
+  "audio_tracks": [
+    {
+      "index": 1,
+      "audio_index": 0,
+      "codec": "eac3",
+      "channels": 2,
+      "channel_layout": "stereo",
+      "sample_rate": 48000,
+      "language": "eng",
+      "title": "",
+      "is_default": true,
+      "bitrate": 128000,
+      "label": "Track 1 \u00b7 ENG \u00b7 2.0 \u00b7 eac3 \u00b7 [Default]"
+    }
+  ]
+}
