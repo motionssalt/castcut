@@ -1,0 +1,32 @@
+{
+  "job_id": "job-1792397039998-hd7m",
+  "title": "www.UIndex.org    -    Henry.Danger.S01E01.1080p.WEB.H264-SKYFiRE",
+  "torrent_name": "www.UIndex.org    -    Henry.Danger.S01E01.1080p.WEB.H264-SKYFiRE",
+  "content_type": "anime",
+  "created_at_epoch": 1792397039,
+  "created_at": "2026-10-19T08:03:59Z",
+  "updated_at": "2026-10-19T08:29:14Z",
+  "updated_at_epoch": 1792398554,
+  "expires_at_epoch": 1792483439,
+  "state": "cancelled",
+  "message": "Run cancelled.",
+  "workflow_run_url": "https://github.com/motionssalt/castcut/actions/runs/39220347382",
+  "selected_files": [
+    {
+      "index": 1,
+      "path": "henry.danger.s01e01.1080p.web.h264-skyfire.mkv",
+      "length": 790400936
+    }
+  ],
+  "tasks": {
+    "ingest": {
+      "name": "Ingest",
+      "state": "cancelled",
+      "message": "Ingest run cancelled.",
+      "percent": 10.0,
+      "updated_at": "2026-10-19T08:29:14Z"
+    }
+  },
+  "release_tag": "castcut-job-1792397039998-hd7m",
+  "cancelled_from": "ingest_running"
+}
