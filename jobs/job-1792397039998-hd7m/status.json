@@ -1,0 +1,13 @@
+{
+  "job_id": "job-1792397039998-hd7m",
+  "title": "",
+  "torrent_name": "",
+  "content_type": "anime",
+  "created_at_epoch": 1792397039,
+  "created_at": "2026-10-19T08:03:59Z",
+  "updated_at": "2026-10-19T08:03:59Z",
+  "updated_at_epoch": 1792397039,
+  "expires_at_epoch": 1792483439,
+  "state": "selecting",
+  "message": "Fetching torrent metadata (listing files — no content download)"
+}
