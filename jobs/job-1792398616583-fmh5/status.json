@@ -5,12 +5,21 @@
   "content_type": "anime",
   "created_at_epoch": 1792398616,
   "created_at": "2026-10-19T08:30:16Z",
+<<<<<<< Updated upstream
   "updated_at": "2026-10-19T09:30:31Z",
   "updated_at_epoch": 1792402231,
   "expires_at_epoch": 1792485016,
   "state": "analyzing",
   "message": "",
   "workflow_run_url": "https://github.com/motionssalt/castcut/actions/runs/39230507293",
+=======
+  "updated_at": "2026-10-19T09:32:06Z",
+  "updated_at_epoch": 1792402326,
+  "expires_at_epoch": 1792485016,
+  "state": "analyzing",
+  "message": "",
+  "workflow_run_url": "https://github.com/motionssalt/castcut/actions/runs/39230507334",
+>>>>>>> Stashed changes
   "selected_files": [
     {
       "index": 1,
@@ -26,12 +35,21 @@
       "percent": 100.0,
       "updated_at": "2026-10-19T09:00:39Z"
     },
+<<<<<<< Updated upstream
     "scene": {
       "name": "Scene",
       "state": "running",
       "message": "Transcribing and detecting scene boundaries",
       "percent": 20.0,
       "updated_at": "2026-10-19T09:30:31Z"
+=======
+    "faces": {
+      "name": "Faces",
+      "state": "running",
+      "message": "Sampling frames and clustering unique faces",
+      "percent": 20.0,
+      "updated_at": "2026-10-19T09:32:06Z"
+>>>>>>> Stashed changes
     }
   },
   "release_tag": "castcut-job-1792398616583-fmh5",
