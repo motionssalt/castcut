@@ -491,10 +491,14 @@
   },
   "size_and_audio": {
     "status": "in_progress",
-    "last_updated": "2026-10-19T06:35:40.059Z",
-    "size_findings": "",
-    "audio_findings": "",
-    "done": [],
+    "last_updated": "2026-10-19T06:52:15.790Z",
+    "size_findings": "ffprobe on real export (castcut-export-exp-job-1791410158245-1kwa-scene-mveee92x.mp4, 146.35s, 123,456,765 bytes / 117.74 MB, 6.75 Mbps):\n- Video (stream 0, h264 1080p): 6.55 Mbps, ~119.8 MB (97.1% of bytes). Root cause: scene_export.py hardcoded crf=14 preset=medium with zero compression pass.\n- Audio (stream 1, aac stereo): 193 kbps, ~3.5 MB (2.9% of bytes).\n- Benchmark on anime sample: CRF 14 = 7388 kbps; CRF 22 medium animation = 2070 kbps (SSIM 0.9874); CRF 23 medium animation = 1863 kbps (SSIM 0.9870); CRF 24 medium animation = 1685 kbps (SSIM 0.9866).\n- Full 146s test with CRF 23 medium animation + 128k AAC stereo: reduced from 123.46 MB (6.75 Mbps) to 27.10 MB (1.48 Mbps) -> 78.0% reduction (visually lossless SSIM > 0.98), perfectly landing in the 1-1.5 Mbps anime target.",
+    "audio_findings": "ffprobe on real source (source.mkv in job-1791410158245-1kwa):\n- 16 streams total: stream 0 video (av1), stream 1 audio (opus 5.1, Japanese, default), stream 2 audio (opus stereo, Japanese), stream 3 audio (opus stereo, English), streams 4-6 subtitles (ass), streams 7-15 font attachments.\n- Root causes: pipeline hardcoded -map 0:a:0? in concat_segments, completely ignoring tracks 1 and 2 (Japanese stereo and English stereo). No track picker existed in UI.\n- Convention: audio_index (0-based integer, e.g. 0, 1, 2) mapped to ffmpeg -map 0:a:<audio_index>, stored alongside absolute stream index in analysis metadata.\n- Verified cut: -map 0:v:0 -map 0:a:1 produced exact 1-track Japanese stereo AAC; -map 0:v:0 -map 0:a:2 produced exact 1-track English stereo AAC. Subtitles/data/attachments dropped via -sn -dn -map_chapters -1.",
+    "done": [
+      "Investigate current export file sizes and probe real exports with ffprobe",
+      "Investigate source audio tracks and probe audio streams with ffprobe during analysis",
+      "Benchmark video encoding options (CRF, preset, tune animation) on anime sample"
+    ],
     "pending": [
       "Investigate current export file sizes and probe real exports with ffprobe",
       "Investigate source audio tracks and probe audio streams with ffprobe during analysis",
