@@ -5,11 +5,11 @@
   "content_type": "anime",
   "created_at_epoch": 1792398616,
   "created_at": "2026-10-19T08:30:16Z",
-  "updated_at": "2026-10-19T08:56:39Z",
-  "updated_at_epoch": 1792400199,
+  "updated_at": "2026-10-19T09:00:39Z",
+  "updated_at_epoch": 1792400439,
   "expires_at_epoch": 1792485016,
-  "state": "ingest_running",
-  "message": "Downloading source",
+  "state": "analyzing",
+  "message": "Source ready. Analyzing faces and AI scene...",
   "workflow_run_url": "https://github.com/motionssalt/castcut/actions/runs/39226296012",
   "selected_files": [
     {
@@ -21,11 +21,12 @@
   "tasks": {
     "ingest": {
       "name": "Ingest",
-      "state": "running",
-      "message": "Downloading source",
-      "percent": 10.0,
-      "updated_at": "2026-10-19T08:56:39Z"
+      "state": "ready",
+      "message": "Source downloaded successfully",
+      "percent": 100.0,
+      "updated_at": "2026-10-19T09:00:39Z"
     }
   },
-  "release_tag": "castcut-job-1792398616583-fmh5"
+  "release_tag": "castcut-job-1792398616583-fmh5",
+  "video_in_release": true
 }
