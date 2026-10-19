@@ -5,9 +5,10 @@
   "content_type": "anime",
   "created_at_epoch": 1792397039,
   "created_at": "2026-10-19T08:03:59Z",
-  "updated_at": "2026-10-19T08:03:59Z",
-  "updated_at_epoch": 1792397039,
+  "updated_at": "2026-10-19T08:04:17Z",
+  "updated_at_epoch": 1792397057,
   "expires_at_epoch": 1792483439,
   "state": "selecting",
-  "message": "Fetching torrent metadata (listing files — no content download)"
+  "message": "Fetching torrent metadata (listing files — no content download)",
+  "workflow_run_url": "https://github.com/motionssalt/castcut/actions/runs/39220134001"
 }
