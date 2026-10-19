@@ -491,7 +491,7 @@
   },
   "size_and_audio": {
     "status": "in_progress",
-    "last_updated": "2026-10-19T05:26:00Z",
+    "last_updated": "2026-10-19T06:35:40.059Z",
     "size_findings": "",
     "audio_findings": "",
     "done": [],
@@ -507,5 +507,21 @@
     ],
     "verified_runs": [],
     "notes": "Initialized size_and_audio task."
+  },
+  "json_upload_pages": {
+    "status": "in_progress",
+    "last_updated": "2026-10-19T06:35:40.058Z",
+    "findings": "",
+    "done": [],
+    "pending": [
+      "Issue 3: Update AI scene prompt and release instructions to allow download or code block",
+      "Issue 3: Tolerant JSON parsing (fences, surrounding text, trailing commas, smart quotes, BOM)",
+      "Issue 4: JSON file upload (.json, .txt) with validation and clip preview",
+      "Issue 5: Measure performance and lag causes",
+      "Issue 5: Split site into separate pages with clean URLs, PAT gate preserved, fast navigation",
+      "Issue 5: Verify back/refresh/direct navigation and before/after performance"
+    ],
+    "verified_runs": [],
+    "notes": "Initialized json_upload_pages key for issues 3-5."
   }
 }
