@@ -112,6 +112,42 @@ def run_selftest(keep_artifacts: bool = False) -> None:
         assert out_size > 0, "Concat output is 0 bytes"
         print(f"[selftest] Segments successfully joined: {out_size} bytes")
 
+        # Step 4b: Test encode_final_export (Issue 1 & 2 verification)
+        print("[selftest] Step 4b: Testing encode_final_export and stream validation...")
+        final_video = os.path.join(work_dir, "final.mp4")
+        from pipeline.utils import encode_final_export, clean_and_parse_json
+        verif = encode_final_export(
+            output_video,
+            final_video,
+            has_audio=True,
+            crf=23,
+            preset="ultrafast",
+            tune="",
+            audio_bitrate="128k",
+        )
+        assert os.path.isfile(final_video)
+        assert verif["audio_streams"] == 1, "Expected exactly 1 audio stream"
+        assert verif["audio_codec"] == "aac", "Expected AAC audio"
+        print(f"[selftest] Final export validated: {verif['size_human']}, {verif['bitrate_kbps']} kbps")
+
+        # Step 4c: Test tolerant clean_and_parse_json (Issue 3 & 4)
+        print("[selftest] Step 4c: Testing tolerant clean_and_parse_json...")
+        test_ai_json = """Here is the cut:
+```json
+{
+  "version": 1,
+  "title": “Lelouch's Speech”,
+  "segments": [
+    {"start": 10.0, "end": 20.0, "note": "speech",},
+  ],
+}
+```
+Done!"""
+        data, err = clean_and_parse_json(test_ai_json)
+        assert data is not None and not err, f"clean_and_parse_json failed: {err}"
+        assert len(data["segments"]) == 1
+        print("[selftest] Tolerant JSON parsing verified cleanly")
+
         # Step 5: Test face detector cascade fallback
         print("[selftest] Step 5: Testing face detector cascade fallback...")
         try:

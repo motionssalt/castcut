@@ -11,7 +11,7 @@ export async function onRequest({ request, params, data }) {
     return json({ ok: true, cancelled_runs: cancelled, deleted_files: files });
   }
 
-  const [statusTxt, ingest, clips, filesJson, selection, sceneAgent, relData, exportItems, runs] = await Promise.all([
+  const [statusTxt, ingest, clips, filesJson, selection, sceneAgent, relData, exportItems, runs, audioChoiceTxt] = await Promise.all([
     readFile(pat, `jobs/${id}/status.json`),
     readFile(pat, `jobs/${id}/ingest.json`),
     readFile(pat, `jobs/${id}/clips/manifest.json`),
@@ -21,13 +21,14 @@ export async function onRequest({ request, params, data }) {
     getProjectReleases(pat, id).catch(() => ({ releases: [], assets: [] })),
     listProjectExports(pat, id),
     listJobRuns(pat, id).catch(() => []),
+    readFile(pat, `jobs/${id}/audio_choice.json`).catch(() => null),
   ]);
 
   let status = statusTxt ? safeJson(statusTxt) : null;
   if (status) status = await reconcileStatus(pat, id, status);
-
   const assets = relData.assets || [];
   const exportsList = Array.isArray(exportItems) ? exportItems : [];
+  const audioChoice = audioChoiceTxt ? safeJson(audioChoiceTxt) : null;
 
   return json({
     job_id: id,
@@ -38,6 +39,7 @@ export async function onRequest({ request, params, data }) {
     files: filesJson ? safeJson(filesJson) : null,
     selection: selection ? safeJson(selection) : null,
     sceneAgent: sceneAgent || null,
+    audioChoice: audioChoice,
     exports: exportsList,
     releases: relData.releases || [],
     release: { assets },
