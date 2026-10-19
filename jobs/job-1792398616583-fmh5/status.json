@@ -1,0 +1,13 @@
+{
+  "job_id": "job-1792398616583-fmh5",
+  "title": "",
+  "torrent_name": "",
+  "content_type": "anime",
+  "created_at_epoch": 1792398616,
+  "created_at": "2026-10-19T08:30:16Z",
+  "updated_at": "2026-10-19T08:30:16Z",
+  "updated_at_epoch": 1792398616,
+  "expires_at_epoch": 1792485016,
+  "state": "selecting",
+  "message": "Fetching torrent metadata (listing files — no content download)"
+}
