@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "export_id": "exp-job-1792398616583-fmh5-clips-mvf7j6vr",
+  "order": [
+    "char6",
+    "char8",
+    "char5"
+  ],
+  "ignored": [],
+  "merge_groups": [],
+  "gap_threshold": 2,
+  "padding": 0.4,
+  "audio_track": 0,
+  "quality": "normal"
+}
