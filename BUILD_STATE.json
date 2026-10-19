@@ -488,5 +488,24 @@
     ],
     "notes": "Example of generated release-linked prompt:\n--------------------------------------------------\nOpen this GitHub release: https://github.com/motionssalt/castcut/releases/tag/castcut-job-1791410158245-1kwa\nDownload and read 00_READ_THIS_FIRST.txt FIRST, then inspect the evidence assets (scene_index.json, transcript.json, and screenshots.zip as needed).\n\nProject: Code Geass Lelouch of the Rebellion\nContent type: Anime. Focus on impactful visual scene transitions and narrative moments.\n\nTask:\nTHE USER'S SCENE REQUEST:\n\"\"\"\nLelouch's grand speech\n\"\"\"\n\nRules:\n- Read 00_READ_THIS_FIRST.txt in the release before selecting any cuts.\n- Produce exactly one production.json containing the selected segments.\n- Segments must be in chronological playback order with start and end timestamps within the source video.\n- The pipeline cuts the source video at full quality and joins the segments with hard cuts.\n- Return ONLY the valid JSON document conforming to the schema in 00_READ_THIS_FIRST.txt. No commentary, no prose, no markdown fences.\n--------------------------------------------------\n",
     "ui_refinement": "pending, separate session"
+  },
+  "size_and_audio": {
+    "status": "in_progress",
+    "last_updated": "2026-10-19T05:26:00Z",
+    "size_findings": "",
+    "audio_findings": "",
+    "done": [],
+    "pending": [
+      "Investigate current export file sizes and probe real exports with ffprobe",
+      "Investigate source audio tracks and probe audio streams with ffprobe during analysis",
+      "Benchmark video encoding options (CRF, preset, tune animation) on anime sample",
+      "Single shared encode path for both faces and scene export (AAC stereo, modest bitrate, drop unnecessary streams)",
+      "Audio track picker in UI before export (faces & scene flows)",
+      "Pass chosen audio track to export job and map explicitly (-map 0:v:0 -map 0:a:<chosen>)",
+      "Log before/after size, effective bitrate, and chosen track in export details",
+      "Verify with real runs: size reduction & audio track selection"
+    ],
+    "verified_runs": [],
+    "notes": "Initialized size_and_audio task."
   }
 }
