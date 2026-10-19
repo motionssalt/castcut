@@ -1,7 +1,0 @@
-{
-  "version": 1,
-  "language": null,
-  "model": "faster-whisper/tiny",
-  "error": "open() got an unexpected keyword argument 'metadata_errors'",
-  "segments": []
-}
