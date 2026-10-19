@@ -514,8 +514,8 @@
   },
   "json_upload_pages": {
     "status": "in_progress",
-    "last_updated": "2026-10-19T06:35:40.058Z",
-    "findings": "",
+    "last_updated": "2026-10-19T07:01:48.460Z",
+    "findings": "Performance & Lag Investigation (Mobile Android / Network analysis):\n1. Monolithic payload: Single app.js (56.6 KB) + index.html (13.1 KB) + styles.css (19.0 KB) = 88.7 KB initial load.\n2. Single DOM for all screens: All 7 views (Gate, Home, New Project, Torrent selection, Overview, Clips/Gallery, Scene/AI, Exports, Task card) live in one heavy DOM.\n3. Global timer polling: setInterval polls /api/jobs/:id every 4s continuously, triggering full status reconciliation, runs re-fetching, and DOM diffing even when user is idle or on a static tab.\n4. Massive payload on project load: /api/jobs/:id bundled manifest.json (containing dozens of 112px WebP base64 images directly inside JSON), files.json, all runs, and all exports into one synchronous round-trip. On mobile networks, parsing and DOM-mounting this caused 400-600ms main-thread blockage on tap.\n5. Zero prefetching or instant transition: Tapping a card or tab caused an un-interactive frozen state while waiting for network before showing any view shell.\nTarget Architecture for Issue 5:\n- Real multi-page architecture with separate HTML documents: /, /new/, /project/, /faces/, /scene/, /exports/, /task/.\n- Shared cached core (common.js ~8KB, styles.css) cached by browser across all pages.\n- Dedicated per-page scripts (< 8-12 KB each) loading ONLY the data needed for that view (e.g. faces page only loads manifest when on /faces/).\n- Instant visual response on tap: immediate loading skeleton/placeholder while page fetches data, prefetching links on hover/touch.\n- Polling only while a job is actively running on that specific page, stopped immediately when navigating away.\n- Proper URL state: deep links, back button, refresh work natively. PAT authentication stored in localStorage and verified with instant non-flashing shell.",
     "done": [],
     "pending": [
       "Issue 3: Update AI scene prompt and release instructions to allow download or code block",
