@@ -1,14 +1,14 @@
 {
   "job_id": "job-1792397039998-hd7m",
-  "title": "",
-  "torrent_name": "",
+  "title": "www.UIndex.org    -    Henry.Danger.S01E01.1080p.WEB.H264-SKYFiRE",
+  "torrent_name": "www.UIndex.org    -    Henry.Danger.S01E01.1080p.WEB.H264-SKYFiRE",
   "content_type": "anime",
   "created_at_epoch": 1792397039,
   "created_at": "2026-10-19T08:03:59Z",
-  "updated_at": "2026-10-19T08:04:17Z",
-  "updated_at_epoch": 1792397057,
+  "updated_at": "2026-10-19T08:04:58Z",
+  "updated_at_epoch": 1792397098,
   "expires_at_epoch": 1792483439,
-  "state": "selecting",
-  "message": "Fetching torrent metadata (listing files — no content download)",
+  "state": "awaiting_selection",
+  "message": "File list ready — pick which files to download.",
   "workflow_run_url": "https://github.com/motionssalt/castcut/actions/runs/39220134001"
 }
