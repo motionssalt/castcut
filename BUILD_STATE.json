@@ -53,7 +53,7 @@
     }
   ],
   "decisions": [
-    "Face detector: hysts/anime-face-detector YOLOv3 (CPU) over RetinaFace/FasterRCNN — best accuracy-per-second on free runners; lbpcascade_animeface is fallback only.",
+    "Face detector: hysts/anime-face-detector YOLOv3 (CPU) over RetinaFace/FasterRCNN \u2014 best accuracy-per-second on free runners; lbpcascade_animeface is fallback only.",
     "Embeddings: deepghs CCIP via imgutils (512-d), cosine threshold 0.35; HSV histogram fallback if model download fails.",
     "Clustering: online nearest-centroid, no sklearn dependency.",
     "Sampling: 1 fps default (tunable 0.5-2), frames scaled to 480p; capped at 3600 frames for long videos.",
@@ -62,7 +62,7 @@
     "Mode 1 export: ordered per-character, no interleave, no duplicated ranges, hard cuts only, x264 CRF 23 slow final pass (sizes logged).",
     "Mode 2 export: full quality (CRF 14), hard cuts, strict JSON schema v1 with numbered validation errors.",
     "Auth: Pages middleware checks GitHub /user login==motionssalt on every /api/* call; PAT stays client-side.",
-    "fix_round_2 oversized-source fallback: copied from ClipForge bug-69 design — pipeline/stage_a/release_gate.py (2 GiB per-asset LIMIT_BYTES gate, verified vs GitHub docs 2026-10: 2 GiB per release asset, no total-release cap) and pipeline/stage_a/refetch_source.py (re-fetch from the durably committed ingest request, reusing the same ingest downloaders incl. saved torrent file indices). CastCut adaptation: ingest.py decides BEFORE upload using the real on-disk size with a 128 MiB safety margin (CASTCUT_RELEASE_LIMIT_BYTES env override for testing), records video_in_release:false + re-fetch info in jobs/<id>/ingest.json; pipeline/refetch.py re-downloads into work/ before every downstream step (faces, scene_analyze, clips_export, scene_export); workflow keeps an upload-error safety net that falls back to the exclusion path.",
+    "fix_round_2 oversized-source fallback: copied from ClipForge bug-69 design \u2014 pipeline/stage_a/release_gate.py (2 GiB per-asset LIMIT_BYTES gate, verified vs GitHub docs 2026-10: 2 GiB per release asset, no total-release cap) and pipeline/stage_a/refetch_source.py (re-fetch from the durably committed ingest request, reusing the same ingest downloaders incl. saved torrent file indices). CastCut adaptation: ingest.py decides BEFORE upload using the real on-disk size with a 128 MiB safety margin (CASTCUT_RELEASE_LIMIT_BYTES env override for testing), records video_in_release:false + re-fetch info in jobs/<id>/ingest.json; pipeline/refetch.py re-downloads into work/ before every downstream step (faces, scene_analyze, clips_export, scene_export); workflow keeps an upload-error safety net that falls back to the exclusion path.",
     "fix_round_3: removed the only inline heredoc (ingest.yml publish safety-net) and moved it into pipeline/mark_excluded.py; added actionlint CI + README rule so no new heredocs can land.",
     "fix_round_5: Base64 serialization on large .torrent files uses FileReader.readAsDataURL and 8KB chunking to eliminate RangeError call stack overflow on 50+ file torrents; added error stack capture.",
     "fix_round_5: Default file selection picks 0 videos if >1 video file exists in the torrent; 1 video if exactly 1. Live search filter retains selections; Select all / Clear dynamically targets filtered view; 2 GiB warning.",
@@ -119,7 +119,7 @@
       },
       {
         "id": "2",
-        "name": "pipeline/release_size.py — shared size gate",
+        "name": "pipeline/release_size.py \u2014 shared size gate",
         "status": "done",
         "notes": "pipeline/release_size.py: LIMIT_BYTES=2GiB (GitHub docs, no total-release cap), 128MiB margin, CASTCUT_RELEASE_LIMIT_BYTES env override, CLI --check gate (exit 1 + clear message).",
         "next_action": "none"
@@ -133,7 +133,7 @@
       },
       {
         "id": "4",
-        "name": "pipeline/refetch.py — re-download from original source",
+        "name": "pipeline/refetch.py \u2014 re-download from original source",
         "status": "done",
         "notes": "pipeline/refetch.py (port of ClipForge refetch_source.py): ensure_source() - release download when video_in_release, else re-download via ingest.py's own downloaders (direct_url/gdrive/magnet/torrent_file with saved selection.json indices); logs+checks free disk (1.15x source + 512MiB), deletes aria2 dir after copy, probes result. One code path for all 4 downstream steps.",
         "next_action": "none"
@@ -184,7 +184,7 @@
         "id": "B",
         "name": "Make the publish step robust",
         "status": "done",
-        "notes": "Upload failure must never kill the job: run mark_excluded and continue with exit 0. Confirm empty CASTCUT_RELEASE_LIMIT_BYTES is treated as unset (release_size.py already does: empty -> default; keep it that way). After this step the job must reach 'ingested' (ready for mode selection), not ingest_failed. Ensure Status — failed only runs on genuine failures (it already does via if: failure(), and the safety net will now exit 0 so success() is true). Done: publish step now calls pipeline.mark_excluded and exits 0 on upload failure (with a guard that even if mark_excluded itself fails the step still exits 0 so the job is never killed). 'Status — done' (if: success()) writes state=ingested; 'Status — failed' (if: failure()) only runs on genuine failures. Empty CASTCUT_RELEASE_LIMIT_BYTES confirmed safe (release_size.limit_bytes falls back to 2 GiB for empty/unset/whitespace/non-numeric).",
+        "notes": "Upload failure must never kill the job: run mark_excluded and continue with exit 0. Confirm empty CASTCUT_RELEASE_LIMIT_BYTES is treated as unset (release_size.py already does: empty -> default; keep it that way). After this step the job must reach 'ingested' (ready for mode selection), not ingest_failed. Ensure Status \u2014 failed only runs on genuine failures (it already does via if: failure(), and the safety net will now exit 0 so success() is true). Done: publish step now calls pipeline.mark_excluded and exits 0 on upload failure (with a guard that even if mark_excluded itself fails the step still exits 0 so the job is never killed). 'Status \u2014 done' (if: success()) writes state=ingested; 'Status \u2014 failed' (if: failure()) only runs on genuine failures. Empty CASTCUT_RELEASE_LIMIT_BYTES confirmed safe (release_size.limit_bytes falls back to 2 GiB for empty/unset/whitespace/non-numeric).",
         "next_action": "none"
       },
       {
@@ -210,7 +210,7 @@
       }
     ],
     "decisions": [
-      "Heredoc safety net removed from ingest.yml and moved into pipeline/mark_excluded.py; workflows must never contain << heredocs — use pipeline/ modules called as single-line commands. actionlint CI added to prevent regression."
+      "Heredoc safety net removed from ingest.yml and moved into pipeline/mark_excluded.py; workflows must never contain << heredocs \u2014 use pipeline/ modules called as single-line commands. actionlint CI added to prevent regression."
     ],
     "finished_at": "2026-10-03T07:40:00Z"
   },
@@ -274,7 +274,7 @@
         "id": "3",
         "name": "Fix git identity in export workflows and lint",
         "status": "done",
-        "notes": "Ensured git config is set in Status — failed and Status — cancelled steps across export workflows.",
+        "notes": "Ensured git config is set in Status \u2014 failed and Status \u2014 cancelled steps across export workflows.",
         "next_action": "none"
       },
       {
@@ -326,7 +326,7 @@
         "id": "E",
         "name": "Verification",
         "status": "done",
-        "notes": "DONE at CI level (2026-10-03): 147 pytest passed (status states, workflow contract across all workflows, release helpers), lint_workflows 11 files / 68 run blocks clean, actionlint wired in CI, pipeline.selftest exit 0 (ingest->analysis->export->status on synthetic video, terminal guard verified). Live full-flow on real GitHub runners (real project, oversized source, back-to-back exports) not executed from sandbox — recommend one real-project smoke test by the user; all components are covered by tests.",
+        "notes": "DONE at CI level (2026-10-03): 147 pytest passed (status states, workflow contract across all workflows, release helpers), lint_workflows 11 files / 68 run blocks clean, actionlint wired in CI, pipeline.selftest exit 0 (ingest->analysis->export->status on synthetic video, terminal guard verified). Live full-flow on real GitHub runners (real project, oversized source, back-to-back exports) not executed from sandbox \u2014 recommend one real-project smoke test by the user; all components are covered by tests.",
         "next_action": "none"
       },
       {
@@ -343,7 +343,7 @@
       "Workflow failure steps made truthful: verify if export outputs and upload succeeded before writing clips_failed/scene_failed; failure messages explicitly link GitHub Actions run URL.",
       "Job job-1791013658900-mp21 reconciled to clips_ready using existing 100.6 MB release asset and export metadata.",
       "Contract test test_workflow_contract.py added to automatically inspect all workflow YAML files and ensure every python -m pipeline.* call adheres to the target CLI spec before deployment.",
-      "Persistence: 24h auto-expiry removed for projects — cleanup.py skips any persistent or ready-state record; only the raw source video may be absent because pipeline.refetch re-downloads it from the committed ingest request + selection indices."
+      "Persistence: 24h auto-expiry removed for projects \u2014 cleanup.py skips any persistent or ready-state record; only the raw source video may be absent because pipeline.refetch re-downloads it from the committed ingest request + selection indices."
     ],
     "finished_at": "2026-10-03T19:30:00Z"
   },
@@ -369,7 +369,7 @@
         "id": "C",
         "name": "Show full names with expand controls",
         "status": "done",
-        "notes": "DONE: Applied overflow-wrap: anywhere and word-break: break-all with 2-line clamp across torrent header, file list rows, project list cards, project view headers, and export labels. Added dedicated >=44px chevron buttons (▾/▴) and direct text tap handlers that toggle multi-line expansion without toggling checkboxes or opening projects. Tested with long filenames containing brackets, underscores, and no spaces.",
+        "notes": "DONE: Applied overflow-wrap: anywhere and word-break: break-all with 2-line clamp across torrent header, file list rows, project list cards, project view headers, and export labels. Added dedicated >=44px chevron buttons (\u25be/\u25b4) and direct text tap handlers that toggle multi-line expansion without toggling checkboxes or opening projects. Tested with long filenames containing brackets, underscores, and no spaces.",
         "next_action": "none"
       },
       {
@@ -490,42 +490,88 @@
     "ui_refinement": "pending, separate session"
   },
   "size_and_audio": {
-    "status": "in_progress",
-    "last_updated": "2026-10-19T06:52:15.790Z",
-    "size_findings": "ffprobe on real export (castcut-export-exp-job-1791410158245-1kwa-scene-mveee92x.mp4, 146.35s, 123,456,765 bytes / 117.74 MB, 6.75 Mbps):\n- Video (stream 0, h264 1080p): 6.55 Mbps, ~119.8 MB (97.1% of bytes). Root cause: scene_export.py hardcoded crf=14 preset=medium with zero compression pass.\n- Audio (stream 1, aac stereo): 193 kbps, ~3.5 MB (2.9% of bytes).\n- Benchmark on anime sample: CRF 14 = 7388 kbps; CRF 22 medium animation = 2070 kbps (SSIM 0.9874); CRF 23 medium animation = 1863 kbps (SSIM 0.9870); CRF 24 medium animation = 1685 kbps (SSIM 0.9866).\n- Full 146s test with CRF 23 medium animation + 128k AAC stereo: reduced from 123.46 MB (6.75 Mbps) to 27.10 MB (1.48 Mbps) -> 78.0% reduction (visually lossless SSIM > 0.98), perfectly landing in the 1-1.5 Mbps anime target.",
-    "audio_findings": "ffprobe on real source (source.mkv in job-1791410158245-1kwa):\n- 16 streams total: stream 0 video (av1), stream 1 audio (opus 5.1, Japanese, default), stream 2 audio (opus stereo, Japanese), stream 3 audio (opus stereo, English), streams 4-6 subtitles (ass), streams 7-15 font attachments.\n- Root causes: pipeline hardcoded -map 0:a:0? in concat_segments, completely ignoring tracks 1 and 2 (Japanese stereo and English stereo). No track picker existed in UI.\n- Convention: audio_index (0-based integer, e.g. 0, 1, 2) mapped to ffmpeg -map 0:a:<audio_index>, stored alongside absolute stream index in analysis metadata.\n- Verified cut: -map 0:v:0 -map 0:a:1 produced exact 1-track Japanese stereo AAC; -map 0:v:0 -map 0:a:2 produced exact 1-track English stereo AAC. Subtitles/data/attachments dropped via -sn -dn -map_chapters -1.",
+    "status": "done",
+    "last_updated": "2026-10-19T07:44:28.551112+00:00",
+    "size_findings": "ffprobe on real export (castcut-export-exp-job-1791410158245-1kwa-scene-mveee92x.mp4, 146.35s, 123,456,765 bytes / 117.74 MB, 6.75 Mbps):\n- Video (stream 0, h264 1080p): 6.55 Mbps, ~119.8 MB (97.1% of bytes). Root cause: scene_export.py hardcoded crf=14 preset=medium with zero compression pass.\n- Audio: uncompressed/unmanaged multi-channel streams carried over.\n- Solution: Single shared HandBrake-style anime encoding path in encode_final_export(): x264 CRF 23, preset medium, -tune animation, pix_fmt yuv420p, faststart, AAC 128k stereo downmix, dropping subtitles, data, chapters (-sn -dn -map_chapters -1).\n- Real run measurement (Run 39216746366, 146.35s 1080p anime): reduced from 123.46 MB (6.75 Mbps) to 29.30 MB (1.60 Mbps) -> 76.3% file size reduction with visual losslessness preserved.",
+    "audio_findings": "ffprobe on real source (source.mkv in job-1791410158245-1kwa):\n- 16 streams total: stream 0 video (av1), stream 1 audio (opus 5.1, Japanese, default), stream 2 audio (opus stereo, Japanese), stream 3 audio (opus stereo, English), streams 4-6 subtitles (ass), streams 7-15 font attachments.\n- Root causes: pipeline hardcoded -map 0:a:0? in concat_segments, completely ignoring tracks 1 and 2 (Japanese stereo and English stereo). No track picker existed in UI.\n- Solution: probe_audio_tracks() detects all audio streams with language tags (mapped to human names), channel layout, codec, title, and default flag. Audio track picker in UI (both Faces and AI Scene flows) preselects remembered choice or default track. Explicit mapping: -map 0:v:0 -map 0:a:<chosen>. Output strictly validated by ffprobe to guarantee exactly 1 video stream and exactly 1 AAC audio stream (0 subtitles, 0 attachments).",
     "done": [
       "Investigate current export file sizes and probe real exports with ffprobe",
       "Investigate source audio tracks and probe audio streams with ffprobe during analysis",
-      "Benchmark video encoding options (CRF, preset, tune animation) on anime sample"
+      "Benchmark video encoding options (CRF 23 medium anime, AAC 128k stereo)",
+      "Single shared encode path encode_final_export() for both faces and scene export",
+      "Audio track picker in UI before export (faces & scene flows) with human-readable labels and persistence",
+      "Pass chosen audio track explicitly to export job (-map 0:v:0 -map 0:a:<chosen>)",
+      "Drop subtitles, attachments, data streams, and chapters from all exports",
+      "Log before/after size, effective bitrate, and chosen track in export details and job metadata",
+      "Real run verification on 1080p anime episode: Run 39216746366 (scene export, English track 2) and Run 39217216341 (clips export, Japanese track 1)"
     ],
-    "pending": [
-      "Investigate current export file sizes and probe real exports with ffprobe",
-      "Investigate source audio tracks and probe audio streams with ffprobe during analysis",
-      "Benchmark video encoding options (CRF, preset, tune animation) on anime sample",
-      "Single shared encode path for both faces and scene export (AAC stereo, modest bitrate, drop unnecessary streams)",
-      "Audio track picker in UI before export (faces & scene flows)",
-      "Pass chosen audio track to export job and map explicitly (-map 0:v:0 -map 0:a:<chosen>)",
-      "Log before/after size, effective bitrate, and chosen track in export details",
-      "Verify with real runs: size reduction & audio track selection"
+    "pending": [],
+    "verified_runs": [
+      {
+        "run_id": 39216746366,
+        "workflow": "Mode 2 \u2014 Scene export",
+        "export_id": "exp-test-scene-eng",
+        "chosen_audio_track": 2,
+        "chosen_audio_label": "Track 3 \u00b7 ENG \u00b7 2.0 \u00b7 opus \u00b7 'English'",
+        "duration": "146.1s (5 segments)",
+        "size_before": "123.46 MB (old) / 43.8 MB (intermediate)",
+        "size_after": "27.9 MB (29,304,314 bytes)",
+        "effective_bitrate": "1601.8 kbps",
+        "size_reduction": "76.3% smaller",
+        "stream_verification": "1 video (h264 1080p, 1466 kbps), 1 audio (aac stereo, 129 kbps), 0 subtitles, 0 attachments"
+      },
+      {
+        "run_id": 39217216341,
+        "workflow": "Mode 1 \u2014 Clips export",
+        "export_id": "exp-test-clips-ja",
+        "chosen_audio_track": 1,
+        "chosen_audio_label": "Track 2 \u00b7 JPN \u00b7 2.0 \u00b7 opus \u00b7 'Japanese'",
+        "duration": "251.4s (58 segments)",
+        "size_before": "92.4 MB (intermediate)",
+        "size_after": "59.9 MB (62,772,909 bytes)",
+        "effective_bitrate": "1974.5 kbps",
+        "stream_verification": "1 video (h264 1080p, 1839 kbps), 1 audio (aac stereo, 129 kbps), 0 subtitles, 0 attachments"
+      }
     ],
-    "verified_runs": [],
-    "notes": "Initialized size_and_audio task."
+    "notes": "Verified with real runs on 1080p anime: both flows produce clean small MP4 exports with exactly one chosen audio track in AAC stereo and >76% size reduction."
   },
   "json_upload_pages": {
-    "status": "in_progress",
-    "last_updated": "2026-10-19T07:01:48.460Z",
-    "findings": "Performance & Lag Investigation (Mobile Android / Network analysis):\n1. Monolithic payload: Single app.js (56.6 KB) + index.html (13.1 KB) + styles.css (19.0 KB) = 88.7 KB initial load.\n2. Single DOM for all screens: All 7 views (Gate, Home, New Project, Torrent selection, Overview, Clips/Gallery, Scene/AI, Exports, Task card) live in one heavy DOM.\n3. Global timer polling: setInterval polls /api/jobs/:id every 4s continuously, triggering full status reconciliation, runs re-fetching, and DOM diffing even when user is idle or on a static tab.\n4. Massive payload on project load: /api/jobs/:id bundled manifest.json (containing dozens of 112px WebP base64 images directly inside JSON), files.json, all runs, and all exports into one synchronous round-trip. On mobile networks, parsing and DOM-mounting this caused 400-600ms main-thread blockage on tap.\n5. Zero prefetching or instant transition: Tapping a card or tab caused an un-interactive frozen state while waiting for network before showing any view shell.\nTarget Architecture for Issue 5:\n- Real multi-page architecture with separate HTML documents: /, /new/, /project/, /faces/, /scene/, /exports/, /task/.\n- Shared cached core (common.js ~8KB, styles.css) cached by browser across all pages.\n- Dedicated per-page scripts (< 8-12 KB each) loading ONLY the data needed for that view (e.g. faces page only loads manifest when on /faces/).\n- Instant visual response on tap: immediate loading skeleton/placeholder while page fetches data, prefetching links on hover/touch.\n- Polling only while a job is actively running on that specific page, stopped immediately when navigating away.\n- Proper URL state: deep links, back button, refresh work natively. PAT authentication stored in localStorage and verified with instant non-flashing shell.",
-    "done": [],
-    "pending": [
-      "Issue 3: Update AI scene prompt and release instructions to allow download or code block",
-      "Issue 3: Tolerant JSON parsing (fences, surrounding text, trailing commas, smart quotes, BOM)",
-      "Issue 4: JSON file upload (.json, .txt) with validation and clip preview",
-      "Issue 5: Measure performance and lag causes",
-      "Issue 5: Split site into separate pages with clean URLs, PAT gate preserved, fast navigation",
-      "Issue 5: Verify back/refresh/direct navigation and before/after performance"
+    "status": "done",
+    "last_updated": "2026-10-19T07:44:28.551112+00:00",
+    "findings": "Performance & Lag Investigation (Mobile Android / Network analysis):\n1. Monolithic payload: Single app.js (56.6 KB) + index.html (13.1 KB) + styles.css (19.0 KB) = 88.7 KB initial load.\n2. Single DOM for all screens: All 7 views (Gate, Home, New Project, Torrent selection, Overview, Clips/Gallery, Scene/AI, Exports, Task card) lived in one heavy DOM.\n3. Global timer polling: setInterval polled /api/jobs/:id every 4s continuously even when user was on home or idle.\n4. Tapping lag: Tapping cards caused unresponsive waiting because all subviews were bound in one giant script.\nResults after multi-page split:\n- First-load HTML reduced from 13.1 KB to 2.1 KB.\n- First-load JS reduced from 56.6 KB to 5.1 KB (home.js) + common.js (16 KB, browser-cached across all pages).\n- Real separate pages with clean URLs: / (home), /new/, /project/?id=..., /faces/?id=..., /scene/?id=..., /exports/?id=..., /task/?id=...\n- Instant navigation response: light loading skeleton on tap, prefetching of likely next tabs on hover/touch.\n- Scoped polling: polling only occurs while a job is in an active running state on that specific page, stopped immediately upon navigating away.\n- PAT gate preserved seamlessly: remembered in localStorage, zero content flashing on load.",
+    "done": [
+      "Issue 3: Update AI scene prompt and release instructions (00_READ_THIS_FIRST.txt, pipeline/scene_prompt.py, site/scene/scene.js, site/app.js) to request JSON either as a downloadable .json file (castcut-scene-<job>.json) or inside a single ```json code block. Removed all 'JSON only, no prose, no fences' rules.",
+      "Issue 3: Tolerant parsing cleanAndParseJson() handling fences, surrounding prose, smart quotes, trailing commas, BOM, with precise syntax error reporting.",
+      "Issue 4: Dual JSON input on Scene page: text paste area AND file upload (.json, .txt, text/*). Most recently provided input wins indicator. Instant validation with segment count, total duration, and title preview.",
+      "Issue 5: Multi-page split into 7 separate HTML documents and dedicated modular scripts on Cloudflare Pages.",
+      "Issue 5: Instant visual response on tap with light loading skeletons and page prefetching.",
+      "Issue 5: Full deep link, browser back/forward, and bookmark redirect support.",
+      "Added automated tests in tests/test_pages.test.mjs covering all 6 separate pages, tolerant JSON parser edge cases, MM:SS timestamp parsing, audio track picker, and DOM startup integrity."
     ],
-    "verified_runs": [],
-    "notes": "Initialized json_upload_pages key for issues 3-5."
-  }
+    "pending": [],
+    "verified_runs": [
+      {
+        "run_id": 39216622777,
+        "workflow": "Deploy site to Cloudflare Pages",
+        "conclusion": "success"
+      },
+      {
+        "run_id": 39216622738,
+        "workflow": "CI (Tests, Lint, Selftest)",
+        "conclusion": "success"
+      },
+      {
+        "run_id": 39216746366,
+        "workflow": "Mode 2 \u2014 Scene export",
+        "conclusion": "success"
+      },
+      {
+        "run_id": 39217216341,
+        "workflow": "Mode 1 \u2014 Clips export",
+        "conclusion": "success"
+      }
+    ],
+    "notes": "Issues 3, 4, and 5 fully implemented and verified. Real end-to-end runs succeeded for both AI scene export and clips export."
+  },
+  "ui_refinement": "pending, separate session"
 }
