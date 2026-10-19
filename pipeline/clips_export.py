@@ -1,14 +1,13 @@
 """CastCut Mode 1 Pipeline B — ordered character segment extraction + export.
-
 Rules (from the build contract):
   * Characters appear in the order the user selected them; all of character
     1's segments (chronological), then character 2's, etc. Never interleaved.
   * A time range containing two selected characters is assigned to the
     earliest-selected character only — nothing is duplicated.
   * Hard cuts only, joined into ONE file.
-  * Final pass: HandBrake-style visually-lossless compression (x264 CRF 23,
-    slow preset), resolution/fps/aspect/audio unchanged. Before/after sizes
-    are logged into the job status.
+  * Shared anime HandBrake-style compression (x264 CRF 23, medium preset, tune animation).
+  * Exactly ONE audio track in output (the chosen track, stereo AAC 128k).
+  * Before/after sizes and effective bitrates logged and recorded in export summary.
 """
 from __future__ import annotations
 
@@ -17,9 +16,11 @@ import glob
 import json
 import os
 import sys
+import time
 
-from .utils import (concat_segments, human_size, merge_intervals,
-                    pad_intervals, probe_video, run, subtract_intervals)
+from .utils import (concat_segments, encode_final_export, human_size,
+                    merge_intervals, pad_intervals, probe_video,
+                    resolve_quality_settings, subtract_intervals)
 
 
 def main() -> None:
@@ -30,6 +31,8 @@ def main() -> None:
     ap.add_argument("--gap", type=float, default=None, help="merge gap override (s)")
     ap.add_argument("--pad", type=float, default=None, help="pad override (s)")
     ap.add_argument("--crf", type=int, default=23)
+    ap.add_argument("--quality", default="normal", help="Quality profile: normal (default), small, high")
+    ap.add_argument("--audio-track", default=None, help="Audio track index (0-based audio_index)")
     ap.add_argument("--export-id", default=None, help="Unique export ID for hybrid project model")
     args = ap.parse_args()
 
@@ -44,13 +47,13 @@ def main() -> None:
     order = selection.get("order", [])
     ignored = set(selection.get("ignored", []))
     merge_groups = selection.get("merge_groups", [])
+
     if not order:
         raise RuntimeError("selection.json has an empty order list")
 
     chars = {c["id"]: c for c in manifest.get("characters", [])}
 
-    # Apply merge groups: union ranges of grouped characters under the group's
-    # first member id.
+    # Apply merge groups: union ranges of grouped characters under the group's first member id.
     grouped = {}
     for group in merge_groups:
         members = [m for m in group if m in chars and m not in ignored]
@@ -62,6 +65,7 @@ def main() -> None:
         grouped[members[0]] = merge_intervals(ranges, gap=gap)
 
     duration = float(manifest.get("duration", 0))
+
     src = None
     for cand in glob.glob(os.path.join(args.work_dir, "source.*")):
         if os.path.splitext(cand)[1].lower() in (".mp4", ".mkv", ".webm", ".mov", ".avi", ".m4v", ".ts"):
@@ -69,7 +73,41 @@ def main() -> None:
             break
     if not src:
         raise RuntimeError("no source video found in work dir")
-    has_audio = probe_video(src)["has_audio"]
+
+    meta = probe_video(src)
+    audio_tracks = meta.get("audio_tracks", [])
+    has_audio = len(audio_tracks) > 0
+
+    chosen_audio_track = None
+    chosen_track_info = None
+    if has_audio:
+        if args.audio_track is not None:
+            chosen_audio_track = int(args.audio_track)
+        elif selection.get("audio_track") is not None:
+            chosen_audio_track = int(selection.get("audio_track"))
+        else:
+            choice_p = os.path.join(args.jobs_root, args.job_id, "audio_choice.json")
+            if os.path.isfile(choice_p):
+                try:
+                    chosen_audio_track = int(json.load(open(choice_p)).get("audio_track"))
+                except Exception:
+                    pass
+        if chosen_audio_track is None or chosen_audio_track >= len(audio_tracks):
+            def_t = next((t for t in audio_tracks if t.get("is_default")), None)
+            chosen_audio_track = def_t["audio_index"] if def_t else 0
+
+        chosen_track_info = next((t for t in audio_tracks if t.get("audio_index") == chosen_audio_track), None)
+        lbl = chosen_track_info.get("label") if chosen_track_info else "unknown"
+        print(f"[clips] Chosen audio track: {chosen_audio_track} ({lbl})", flush=True)
+
+        choice_p = os.path.join(args.jobs_root, args.job_id, "audio_choice.json")
+        try:
+            with open(choice_p, "w", encoding="utf-8") as fh:
+                json.dump({"audio_track": chosen_audio_track, "updated_at_epoch": int(time.time())}, fh, indent=2)
+        except Exception as exc:
+            print(f"[clips] warning: could not write audio_choice.json: {exc}", flush=True)
+    else:
+        print("[clips] Source has no audio streams; exporting video without audio", flush=True)
 
     segments = []
     taken = []
@@ -83,7 +121,7 @@ def main() -> None:
             ranges = merge_intervals([tuple(r) for r in chars[cid]["ranges"]], gap=gap)
         else:
             continue
-        ranges = subtract_intervals(ranges, taken)  # no duplicated time ranges
+        ranges = subtract_intervals(ranges, taken)
         ranges = pad_intervals(ranges, pad, duration)
         ranges = merge_intervals(ranges, gap=0.2)
         for s, e in ranges:
@@ -94,38 +132,48 @@ def main() -> None:
     if not segments:
         raise RuntimeError("selection produced zero segments")
 
-    print(f"[clips] segments per character (selection order): {per_char_counts}", flush=True)
-    print(f"[clips] total segments: {len(segments)}, total duration "
-          f"{sum(e - s for s, e in segments):.1f}s", flush=True)
+    total_cut_duration = sum(e - s for s, e in segments)
+    print(f"[clips] segments per character: {per_char_counts}", flush=True)
+    print(f"[clips] total segments: {len(segments)}, duration: {total_cut_duration:.1f}s", flush=True)
 
-    # Pass 1: join with hard cuts (fast intermediate).
+    # Pass 1: fast intermediate join
     joined = os.path.join(args.work_dir, "clips_joined.mp4")
     concat_segments(
         src=src,
         segments=segments,
         output_path=joined,
         has_audio=has_audio,
+        audio_track=chosen_audio_track,
         crf=18,
         preset="veryfast",
         temp_dir=args.work_dir,
     )
+    s_before = os.path.getsize(joined)
 
-    # Pass 2: HandBrake-style visually-lossless compression (CRF 23 slow).
+    # Pass 2: shared anime HandBrake-style compression
+    crf, preset = resolve_quality_settings(args.quality)
+    if args.crf and args.crf != 23:
+        crf = args.crf
+
     export_id = args.export_id or f"exp-{args.job_id}-clips"
     asset_name = f"castcut-export-{export_id}.mp4" if args.export_id else f"castcut-clips-{args.job_id}.mp4"
     final = os.path.join(args.work_dir, asset_name)
-    cmd = ["ffmpeg", "-hide_banner", "-loglevel", "error", "-y", "-i", joined,
-           "-c:v", "libx264", "-crf", str(args.crf), "-preset", "slow", "-pix_fmt", "yuv420p"]
-    if has_audio:
-        cmd += ["-c:a", "aac", "-b:a", "128k"]
-    cmd += ["-movflags", "+faststart", final]
-    run(cmd)
 
-    s_before = os.path.getsize(joined)
-    s_after = os.path.getsize(final)
+    verif = encode_final_export(
+        input_path=joined,
+        output_path=final,
+        has_audio=has_audio,
+        crf=crf,
+        preset=preset,
+        tune="animation",
+        audio_bitrate="128k",
+    )
+    s_after = verif["size_bytes"]
+
     print(f"[clips] size before compression: {human_size(s_before)}", flush=True)
     print(f"[clips] size after  compression: {human_size(s_after)} "
           f"({100 * s_after / max(1, s_before):.0f}% of intermediate)", flush=True)
+    print(f"[clips] effective bitrate: {verif['bitrate_kbps']} kbps ({verif['bitrate_bps']} bps)", flush=True)
 
     selected_chars = [c for c in order if c in per_char_counts]
     char_label = ", ".join(selected_chars[:3])
@@ -142,12 +190,20 @@ def main() -> None:
         "order": selected_chars,
         "per_char_segments": per_char_counts,
         "total_segments": len(segments),
-        "total_duration": round(sum(e - s for s, e in segments), 1),
+        "total_duration": round(total_cut_duration, 1),
         "size_before_bytes": s_before,
         "size_after_bytes": s_after,
+        "size_bytes": s_after,
         "size_before_human": human_size(s_before),
         "size_after_human": human_size(s_after),
+        "size_human": human_size(s_after),
+        "bitrate_kbps": verif["bitrate_kbps"],
+        "bitrate_bps": verif["bitrate_bps"],
+        "effective_bitrate": f"{verif['bitrate_kbps']} kbps",
+        "audio_track": chosen_audio_track,
+        "audio_track_label": chosen_track_info.get("label") if chosen_track_info else ("No audio" if not has_audio else None),
         "asset_name": os.path.basename(final),
+        "quality": f"anime HandBrake (x264 CRF {crf}, {preset}, tune animation, AAC 128k)",
         "status": "done",
     }
 

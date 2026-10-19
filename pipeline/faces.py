@@ -472,6 +472,8 @@ def main() -> None:
         "duration": round(duration, 1),
         "width": meta["width"],
         "height": meta["height"],
+        "has_audio": meta.get("has_audio", False),
+        "audio_tracks": meta.get("audio_tracks", []),
         "characters": characters,
     }
 

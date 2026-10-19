@@ -341,8 +341,8 @@ You can perform all cut selection using scene_index.json, transcript.json, and s
 3. EDITING RULES (CRITICAL - OBEY STRICTLY)
 --------------------------------------------------------------------------------
 1. PLAYBACK ORDER: Segments must be in chronological playback order (start times increasing).
-2. HARD CUTS: The final video is created by cutting each segment from the source in full quality
-   and joining them with hard cuts in the order given.
+2. HARD CUTS & COMPRESSION: The final video cuts each segment from the source, joins them with
+   hard cuts, and applies HandBrake-style visually-lossless anime compression (x264 CRF 23, AAC 128k stereo).
 3. COHERENCE & BOUNDARIES: Cut on natural scene or dialogue boundaries (refer to scene_index.json
    and transcript.json). Never cut mid-sentence or mid-action beat. Speeches must include their
    natural start and conclusion.
@@ -350,8 +350,9 @@ You can perform all cut selection using scene_index.json, transcript.json, and s
    0 <= start < end <= {duration:.1f}.
 5. SEGMENT COUNT & LENGTH: 1 to 40 segments. Total duration should fit the narrative arc of the scene.
 6. NOTES: Provide a concise "note" on each segment explaining why it was chosen.
-7. OUTPUT ONLY JSON: Deliver ONLY valid JSON matching the strict schema below. No commentary,
-   no conversational text, no markdown backticks outside of a single ```json block.
+7. RETURN FORMAT: Produce the production JSON either as a downloadable .json file (recommended filename:
+   castcut-scene-{job_id}.json if you can create files) or output it inside a single ```json code block
+   (one block, valid JSON, nothing else inside it). A brief explanation outside the file or code block is acceptable.
 
 --------------------------------------------------------------------------------
 4. PRODUCTION JSON SCHEMA & WORKED EXAMPLE
@@ -418,6 +419,8 @@ def main() -> None:
         "threshold": threshold,
         "total_scenes": len(scenes),
         "duration": duration,
+        "has_audio": meta.get("has_audio", False),
+        "audio_tracks": meta.get("audio_tracks", []),
         "scenes": scenes,
     }
     with open(os.path.join(args.work_dir, "scene_index.json"), "w", encoding="utf-8") as fh:

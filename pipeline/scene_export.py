@@ -1,9 +1,9 @@
-"""CastCut Mode 2 export — validate production JSON, cut FULL QUALITY, join.
-
-The JSON is validated with clear, numbered error messages (written into the
-job status so the UI can show them). Segments are joined in the given order
-with hard cuts. Full quality here: x264 CRF 14, audio kept at 192k — the
-heavy compression pass is a Mode 1 thing; Mode 2 output is the edit master.
+"""CastCut Mode 2 export — validate production JSON, cut, join, and compress.
+Tolerant of markdown fences, surrounding text, BOM, smart quotes, and trailing commas.
+The JSON is validated with clear, numbered error messages written into job status.
+Cuts are performed using fast intermediate slicing and joined with hard cuts, followed by
+the shared HandBrake-style visually-lossless anime compression pass (x264 CRF 23, medium, tune animation, AAC 128k stereo).
+Guarantees exactly ONE audio track in output (the chosen track).
 """
 from __future__ import annotations
 
@@ -12,9 +12,10 @@ import glob
 import json
 import os
 import sys
+import time
 
-from .utils import (concat_segments, human_size, parse_time, probe_video,
-                    run)
+from .utils import (clean_and_parse_json, concat_segments, encode_final_export,
+                    human_size, parse_time, probe_video, resolve_quality_settings)
 
 
 def validate_production(data, duration: float) -> tuple[list, list]:
@@ -24,11 +25,13 @@ def validate_production(data, duration: float) -> tuple[list, list]:
         return ["the JSON root must be an object"], []
     if "segments" not in data:
         return ['missing required key "segments"'], []
+
     segs = data["segments"]
     if not isinstance(segs, list) or not segs:
         return ['"segments" must be a non-empty array'], []
     if len(segs) > 200:
         return [f"too many segments ({len(segs)}); max is 200"], []
+
     out = []
     for i, seg in enumerate(segs, start=1):
         where = f"segment {i}"
@@ -65,16 +68,21 @@ def main() -> None:
     ap.add_argument("job_id")
     ap.add_argument("--jobs-root", default="jobs")
     ap.add_argument("--work-dir", default="work")
+    ap.add_argument("--crf", type=int, default=23)
+    ap.add_argument("--quality", default="normal", help="Quality profile: normal (default), small, high")
+    ap.add_argument("--audio-track", default=None, help="Audio track index (0-based audio_index)")
     ap.add_argument("--export-id", default=None, help="Unique export ID for hybrid project model")
     args = ap.parse_args()
 
     scene_dir = os.path.join(args.jobs_root, args.job_id, "scene")
     prod_path = os.path.join(scene_dir, "production.json")
+
     with open(prod_path, encoding="utf-8") as fh:
-        try:
-            data = json.load(fh)
-        except json.JSONDecodeError as exc:
-            raise RuntimeError(f"production.json is not valid JSON: line {exc.lineno} col {exc.colno}: {exc.msg}")
+        raw_text = fh.read()
+
+    data, json_err = clean_and_parse_json(raw_text)
+    if json_err or not data:
+        raise RuntimeError(f"production.json parsing failed: {json_err or 'root must be an object'}")
 
     src = None
     for cand in glob.glob(os.path.join(args.work_dir, "source.*")):
@@ -83,8 +91,8 @@ def main() -> None:
             break
     if not src:
         raise RuntimeError("no source video found in work dir")
-    meta = probe_video(src)
 
+    meta = probe_video(src)
     errors, segments = validate_production(data, meta["duration"])
     if errors:
         report = {"version": 1, "ok": False, "errors": errors}
@@ -92,23 +100,83 @@ def main() -> None:
             json.dump(report, fh, indent=2, ensure_ascii=False)
         raise RuntimeError("production JSON failed validation:\n- " + "\n- ".join(errors))
 
-    print(f"[scene-export] {len(segments)} segments, "
-          f"total {sum(e - s for s, e in segments):.1f}s", flush=True)
+    audio_tracks = meta.get("audio_tracks", [])
+    has_audio = len(audio_tracks) > 0
+
+    chosen_audio_track = None
+    chosen_track_info = None
+    if has_audio:
+        if args.audio_track is not None:
+            chosen_audio_track = int(args.audio_track)
+        elif data.get("audio_track") is not None:
+            chosen_audio_track = int(data.get("audio_track"))
+        elif data.get("metadata", {}).get("audio_track") is not None:
+            chosen_audio_track = int(data.get("metadata", {}).get("audio_track"))
+        else:
+            choice_p = os.path.join(args.jobs_root, args.job_id, "audio_choice.json")
+            if os.path.isfile(choice_p):
+                try:
+                    chosen_audio_track = int(json.load(open(choice_p)).get("audio_track"))
+                except Exception:
+                    pass
+        if chosen_audio_track is None or chosen_audio_track >= len(audio_tracks):
+            def_t = next((t for t in audio_tracks if t.get("is_default")), None)
+            chosen_audio_track = def_t["audio_index"] if def_t else 0
+
+        chosen_track_info = next((t for t in audio_tracks if t.get("audio_index") == chosen_audio_track), None)
+        print(f"[scene] Chosen audio track: {chosen_audio_track} ({chosen_track_info.get('label') if chosen_track_info else 'unknown'})", flush=True)
+
+        choice_p = os.path.join(args.jobs_root, args.job_id, "audio_choice.json")
+        try:
+            with open(choice_p, "w", encoding="utf-8") as fh:
+                json.dump({"audio_track": chosen_audio_track, "updated_at_epoch": int(time.time())}, fh, indent=2)
+        except Exception as exc:
+            print(f"[scene] warning: could not write audio_choice.json: {exc}", flush=True)
+    else:
+        print("[scene] Source has no audio streams; exporting video without audio", flush=True)
+
+    total_cut_duration = sum(e - s for s, e in segments)
+    print(f"[scene-export] {len(segments)} segments, total duration {total_cut_duration:.1f}s", flush=True)
+
+    # Pass 1: fast intermediate join
+    joined = os.path.join(args.work_dir, "scene_joined.mp4")
+    concat_segments(
+        src=src,
+        segments=segments,
+        output_path=joined,
+        has_audio=has_audio,
+        audio_track=chosen_audio_track,
+        crf=18,
+        preset="veryfast",
+        temp_dir=args.work_dir,
+    )
+    s_before = os.path.getsize(joined)
+
+    # Pass 2: shared anime HandBrake-style compression (CRF 23 medium animation, AAC 128k stereo)
+    crf, preset = resolve_quality_settings(args.quality)
+    if args.crf and args.crf != 23:
+        crf = args.crf
 
     export_id = args.export_id or f"exp-{args.job_id}-scene"
     asset_name = f"castcut-export-{export_id}.mp4" if args.export_id else f"castcut-scene-{args.job_id}.mp4"
     final = os.path.join(args.work_dir, asset_name)
-    concat_segments(
-        src=src,
-        segments=segments,
-        output_path=final,
-        has_audio=meta["has_audio"],
-        crf=14,
-        preset="medium",
-        temp_dir=args.work_dir,
-    )
 
-    size = os.path.getsize(final)
+    verif = encode_final_export(
+        input_path=joined,
+        output_path=final,
+        has_audio=has_audio,
+        crf=crf,
+        preset=preset,
+        tune="animation",
+        audio_bitrate="128k",
+    )
+    s_after = verif["size_bytes"]
+
+    print(f"[scene-export] size before compression: {human_size(s_before)}", flush=True)
+    print(f"[scene-export] size after  compression: {human_size(s_after)} "
+          f"({100 * s_after / max(1, s_before):.0f}% of intermediate)", flush=True)
+    print(f"[scene-export] effective bitrate: {verif['bitrate_kbps']} kbps ({verif['bitrate_bps']} bps)", flush=True)
+
     ai_label = data.get("title", "") or "AI Scene Edit"
     summary = {
         "version": 1,
@@ -120,11 +188,20 @@ def main() -> None:
         "ok": True,
         "title": ai_label,
         "segments": len(segments),
-        "total_duration": round(sum(e - s for s, e in segments), 1),
-        "size_bytes": size,
-        "size_human": human_size(size),
+        "total_duration": round(total_cut_duration, 1),
+        "size_before_bytes": s_before,
+        "size_after_bytes": s_after,
+        "size_bytes": s_after,
+        "size_before_human": human_size(s_before),
+        "size_after_human": human_size(s_after),
+        "size_human": human_size(s_after),
+        "bitrate_kbps": verif["bitrate_kbps"],
+        "bitrate_bps": verif["bitrate_bps"],
+        "effective_bitrate": f"{verif['bitrate_kbps']} kbps",
+        "audio_track": chosen_audio_track,
+        "audio_track_label": chosen_track_info.get("label") if chosen_track_info else ("No audio" if not has_audio else None),
         "asset_name": os.path.basename(final),
-        "quality": "full (x264 CRF 14, no heavy compression)",
+        "quality": f"anime HandBrake (x264 CRF {crf}, {preset}, tune animation, AAC 128k)",
         "status": "done",
     }
 

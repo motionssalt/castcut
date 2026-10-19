@@ -225,6 +225,7 @@ def main() -> None:
         "height": info["height"],
         "fps": info["fps"],
         "has_audio": info["has_audio"],
+        "audio_tracks": info.get("audio_tracks", []),
         "ingested_at_epoch": int(time.time()),
         "sources": [os.path.basename(p) for p in (source_paths or [source_path])],
     }

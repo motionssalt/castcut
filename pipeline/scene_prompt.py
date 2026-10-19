@@ -1,9 +1,7 @@
 """CastCut Stage A — agent prompt generator (ClipForge-aligned).
-
 Builds the concise, project-specific, release-linked prompt that the owner
 copies to their external AI agent. The release itself contains the full
 instructions (00_READ_THIS_FIRST.txt), scene index, screenshots, and transcript.
-
 Output: jobs/<job>/scene/agent_prompt.txt
 """
 from __future__ import annotations
@@ -37,8 +35,8 @@ def build_release_linked_prompt(
     """Assemble the short release-linked prompt."""
     tag = f"castcut-{job_id}"
     rel_url = release_url or f"https://github.com/motionssalt/castcut/releases/tag/{tag}"
-    req_clean = (request or "").strip()
 
+    req_clean = (request or "").strip()
     if req_clean:
         task_block = f'THE USER\'S SCENE REQUEST:\n"""\n{req_clean}\n"""'
     else:
@@ -66,8 +64,7 @@ Rules:
 - Read 00_READ_THIS_FIRST.txt in the release before selecting any cuts.
 - Produce exactly one production.json containing the selected segments.
 - Segments must be in chronological playback order with start and end timestamps within the source video.
-- The pipeline cuts the source video at full quality and joins the segments with hard cuts.
-- Return ONLY the valid JSON document conforming to the schema in 00_READ_THIS_FIRST.txt. No commentary, no prose, no markdown fences."""
+- Deliver the production JSON either as a downloadable .json file (recommended filename: castcut-scene-{job_id}.json) if you can create files, or inside a single ```json code block (one block, valid JSON, nothing else inside it). If you include a short explanation, place it outside the file or code block."""
 
 
 def main() -> None:
