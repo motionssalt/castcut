@@ -5,10 +5,17 @@
   "content_type": "anime",
   "created_at_epoch": 1792397039,
   "created_at": "2026-10-19T08:03:59Z",
-  "updated_at": "2026-10-19T08:04:58Z",
-  "updated_at_epoch": 1792397098,
+  "updated_at": "2026-10-19T08:05:50Z",
+  "updated_at_epoch": 1792397152,
   "expires_at_epoch": 1792483439,
-  "state": "awaiting_selection",
-  "message": "File list ready — pick which files to download.",
-  "workflow_run_url": "https://github.com/motionssalt/castcut/actions/runs/39220134001"
+  "state": "queued_for_ingest",
+  "message": "Downloading 1 selected file(s)…",
+  "workflow_run_url": "https://github.com/motionssalt/castcut/actions/runs/39220134001",
+  "selected_files": [
+    {
+      "index": 1,
+      "path": "henry.danger.s01e01.1080p.web.h264-skyfire.mkv",
+      "length": 790400936
+    }
+  ]
 }
