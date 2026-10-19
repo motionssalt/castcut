@@ -1,14 +1,14 @@
 {
   "job_id": "job-1792453953035-s33x",
-  "title": "",
-  "torrent_name": "",
+  "title": "iCarly (2007) Season 1-6 S01-06 (1080p AMZN.WEBDL x265 10bit EAC3 Mixed EDGE2020)",
+  "torrent_name": "iCarly (2007) Season 1-6 S01-06 (1080p AMZN.WEBDL x265 10bit EAC3 Mixed EDGE2020)",
   "content_type": "anime",
   "created_at_epoch": 1792453953,
   "created_at": "2026-10-19T23:52:33Z",
-  "updated_at": "2026-10-19T23:52:48Z",
-  "updated_at_epoch": 1792453968,
+  "updated_at": "2026-10-19T23:52:55Z",
+  "updated_at_epoch": 1792453975,
   "expires_at_epoch": 1792540353,
-  "state": "selecting",
-  "message": "Fetching torrent metadata (listing files — no content download)",
+  "state": "awaiting_selection",
+  "message": "File list ready — pick which files to download.",
   "workflow_run_url": "https://github.com/motionssalt/castcut/actions/runs/39344245381"
 }
