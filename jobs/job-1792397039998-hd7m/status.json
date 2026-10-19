@@ -5,17 +5,27 @@
   "content_type": "anime",
   "created_at_epoch": 1792397039,
   "created_at": "2026-10-19T08:03:59Z",
-  "updated_at": "2026-10-19T08:05:50Z",
-  "updated_at_epoch": 1792397152,
+  "updated_at": "2026-10-19T08:06:26Z",
+  "updated_at_epoch": 1792397186,
   "expires_at_epoch": 1792483439,
-  "state": "queued_for_ingest",
-  "message": "Downloading 1 selected file(s)…",
-  "workflow_run_url": "https://github.com/motionssalt/castcut/actions/runs/39220134001",
+  "state": "ingest_running",
+  "message": "Downloading source",
+  "workflow_run_url": "https://github.com/motionssalt/castcut/actions/runs/39220347382",
   "selected_files": [
     {
       "index": 1,
       "path": "henry.danger.s01e01.1080p.web.h264-skyfire.mkv",
       "length": 790400936
     }
-  ]
+  ],
+  "tasks": {
+    "ingest": {
+      "name": "Ingest",
+      "state": "running",
+      "message": "Downloading source",
+      "percent": 10.0,
+      "updated_at": "2026-10-19T08:06:26Z"
+    }
+  },
+  "release_tag": "castcut-job-1792397039998-hd7m"
 }
