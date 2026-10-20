@@ -1,4 +1,4 @@
-import { verifiedDownload, saveMp4 } from './download.js';
+import { startNativeDownload } from './download.js';
 import { requireAuth, api, escapeHtml, formatBytes, formatSeconds, formatDate, toast, withButtonFeedback, setupPrefetching } from "./core.js";
 
 let projectId = null;
@@ -86,8 +86,8 @@ function renderExportsUI(data) {
     const date = exp.created_at || (exp.created_at_epoch ? formatDate(new Date(exp.created_at_epoch * 1000).toISOString()) : "");
     const audioTrack = exp.audio_track !== undefined ? `Audio Track ${Number(exp.audio_track) + 1}` : "";
 
-    // Find download url matching asset
-    const matchingAsset = assets.find(a => (a.name && (a.name.includes(expId) || a.name === exp.asset_name))) || null;
+    // Exact asset binding: never pick an older file with a matching prefix.
+    const matchingAsset = assets.find(a => a.name === (exp.asset_name || `castcut-export-${expId}.mp4`)) || null;
     const canDownload = matchingAsset?.id && matchingAsset.name?.endsWith(".mp4") && matchingAsset.state === "uploaded";
     const fileSize = matchingAsset?.size ? formatBytes(matchingAsset.size) : (exp.size_bytes ? formatBytes(exp.size_bytes) : "");
 
@@ -135,12 +135,9 @@ function renderExportsUI(data) {
       const asset = assets.find(a => Number(a.id) === Number(btn.dataset.assetId));
       btn.disabled = true;
       try {
-        const bytes = await verifiedDownload(asset, (received,total) => {
-          btn.textContent = `Downloading ${total ? Math.round(received/total*100) : 0}%…`;
-        });
-        btn.textContent = 'Verified — saving…';
-        const method = await saveMp4(bytes, asset.name);
-        toast(method === 'cancelled' ? 'Save cancelled' : 'MP4 verified and saved — open it directly in Files or Gallery.', 'info');
+        btn.textContent = 'Starting phone download…';
+        await startNativeDownload(asset);
+        toast('Download handed to your browser. Wait for it to finish in Downloads, then open the MP4 in Files or Gallery.', 'info');
       } catch (error) { toast(error.message, 'error'); }
       finally { btn.disabled = false; btn.textContent = '⬇ Download MP4'; }
     };
