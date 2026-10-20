@@ -37,7 +37,7 @@ def upload(job, path, name, purpose, repo):
         raise RuntimeError(f'Required analysis asset missing or empty: {name} ({path})')
     if path.name != name:
         import shutil
-        staged=path.parent/'.release_upload'/name
+        staged=Path('work')/'.release_upload'/name
         staged.parent.mkdir(parents=True,exist_ok=True)
         shutil.copyfile(path,staged)
         path=staged
