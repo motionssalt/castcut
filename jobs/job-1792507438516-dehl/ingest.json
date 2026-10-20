@@ -1,0 +1,39 @@
+{
+  "version": 1,
+  "job_id": "job-1792507438516-dehl",
+  "source_kind": "torrent_file",
+  "title": "",
+  "asset_name": "source.mkv",
+  "size_bytes": 634427539,
+  "duration": 1362.403,
+  "width": 1920,
+  "height": 1080,
+  "fps": 23.976,
+  "has_audio": true,
+  "audio_tracks": [
+    {
+      "index": 1,
+      "audio_index": 0,
+      "codec": "eac3",
+      "channels": 2,
+      "channel_layout": "stereo",
+      "sample_rate": 48000,
+      "language": "eng",
+      "title": "",
+      "is_default": false,
+      "bitrate": 224000,
+      "label": "Track 1 \u00b7 ENG \u00b7 2.0 \u00b7 eac3"
+    }
+  ],
+  "ingested_at_epoch": 1792508979,
+  "sources": [
+    "source.mkv"
+  ],
+  "selected_indices": [
+    16
+  ],
+  "asset_sizes": {
+    "source.mkv": 634427539
+  },
+  "video_in_release": true
+}
