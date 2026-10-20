@@ -1,5 +1,6 @@
 {
   "job_id": "job-1792455597017-qjkc",
+<<<<<<< Updated upstream
   "title": "iCarly (2007) Season 1-6 S01-06 (1080p AMZN.WEBDL x265 10bit EAC3 Mixed EDGE2020)",
   "torrent_name": "iCarly (2007) Season 1-6 S01-06 (1080p AMZN.WEBDL x265 10bit EAC3 Mixed EDGE2020)",
   "content_type": "irl",
@@ -15,24 +16,16 @@
 >>>>>>> Stashed changes
   "expires_at_epoch": 1792541997,
   "state": "analyzing",
-  "message": "",
-  "workflow_run_url": "https://github.com/motionssalt/castcut/actions/runs/39350609777",
 =======
-  "updated_at": "2026-10-20T01:00:47Z",
-  "updated_at_epoch": 1792458047,
-  "expires_at_epoch": 1792541997,
-  "state": "analyzing",
-  "message": "",
-  "workflow_run_url": "https://github.com/motionssalt/castcut/actions/runs/39350609748",
+  "created_at_epoch": 1792458710,
+  "created_at": "2026-10-20T01:11:50Z",
+  "state": "ready",
 >>>>>>> Stashed changes
-  "selected_files": [
-    {
-      "index": 40,
-      "path": "Season 1/iCarly - S01E20 - iStakeout (1080p x265 EDGE2020).mkv",
-      "length": 976860153
-    }
-  ],
+  "message": "",
+  "updated_at_epoch": 1792458710,
+  "updated_at": "2026-10-20T01:11:50Z",
   "tasks": {
+<<<<<<< Updated upstream
     "ingest": {
       "name": "Ingest",
       "state": "ready",
@@ -68,4 +61,16 @@
   "release_tag": "castcut-job-1792455597017-qjkc",
   "video_in_release": true,
   "release_url": "https://github.com/motionssalt/castcut/releases/tag/castcut-job-1792455597017-qjkc"
+=======
+    "faces": {
+      "name": "Faces",
+      "state": "ready",
+      "message": "Face gallery ready. Select characters to extract.",
+      "percent": 100.0,
+      "updated_at": "2026-10-20T01:11:50Z"
+    }
+  },
+  "title": "iCarly (2007) Season 1-6 S01-06 (1080p AMZN.WEBDL x265 10bit EAC3 Mixed EDGE2020)",
+  "torrent_name": "iCarly (2007) Season 1-6 S01-06 (1080p AMZN.WEBDL x265 10bit EAC3 Mixed EDGE2020)"
+>>>>>>> Stashed changes
 }
