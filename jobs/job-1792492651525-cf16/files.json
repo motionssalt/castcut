@@ -1,0 +1,259 @@
+{
+  "version": 1,
+  "job_id": "job-1792492651525-cf16",
+  "source_kind": "torrent_file",
+  "torrent_name": "Sam & Cat (2013) Season 1 S01 (1080p AMZN WEB-DL x265 HEVC 10bit EAC3 2.0 RZeroX)",
+  "file_count": 35,
+  "files": [
+    {
+      "index": 1,
+      "path": "Sam & Cat (2013) - S01E01 - #Pilot (1080p AMZN WEB-DL x265 RZeroX).mkv",
+      "length": 648991632,
+      "is_video": true
+    },
+    {
+      "index": 2,
+      "path": "Sam & Cat (2013) - S01E02 - #FavoriteShow (1080p AMZN WEB-DL x265 RZeroX).mkv",
+      "length": 640600835,
+      "is_video": true
+    },
+    {
+      "index": 3,
+      "path": "Sam & Cat (2013) - S01E03 - #TheBritBrats (1080p AMZN WEB-DL x265 RZeroX).mkv",
+      "length": 635475576,
+      "is_video": true
+    },
+    {
+      "index": 4,
+      "path": "Sam & Cat (2013) - S01E04 - #NewGoat (1080p AMZN WEB-DL x265 RZeroX).mkv",
+      "length": 634883977,
+      "is_video": true
+    },
+    {
+      "index": 5,
+      "path": "Sam & Cat (2013) - S01E05 - #TextingCompetition (1080p AMZN WEB-DL x265 RZeroX).mkv",
+      "length": 635033349,
+      "is_video": true
+    },
+    {
+      "index": 6,
+      "path": "Sam & Cat (2013) - S01E06 - #BabySitterWar (1080p AMZN WEB-DL x265 RZeroX).mkv",
+      "length": 634703502,
+      "is_video": true
+    },
+    {
+      "index": 7,
+      "path": "Sam & Cat (2013) - S01E07 - #GoomerSitting (1080p AMZN WEB-DL x265 RZeroX).mkv",
+      "length": 635210052,
+      "is_video": true
+    },
+    {
+      "index": 8,
+      "path": "Sam & Cat (2013) - S01E08 - #ToddlerClimbing (1080p AMZN WEB-DL x265 RZeroX).mkv",
+      "length": 635016222,
+      "is_video": true
+    },
+    {
+      "index": 9,
+      "path": "Sam & Cat (2013) - S01E09 - #MommaGoomer (1080p AMZN WEB-DL x265 RZeroX).mkv",
+      "length": 634846303,
+      "is_video": true
+    },
+    {
+      "index": 10,
+      "path": "Sam & Cat (2013) - S01E10 - #BabySittingCommercial (1080p AMZN WEB-DL x265 RZeroX).mkv",
+      "length": 634308404,
+      "is_video": true
+    },
+    {
+      "index": 11,
+      "path": "Sam & Cat (2013) - S01E11 - #RevengeOfTheBritBrats (1080p AMZN WEB-DL x265 RZeroX).mkv",
+      "length": 634237977,
+      "is_video": true
+    },
+    {
+      "index": 12,
+      "path": "Sam & Cat (2013) - S01E12 - #MotorcycleMystery (1080p AMZN WEB-DL x265 RZeroX).mkv",
+      "length": 634163577,
+      "is_video": true
+    },
+    {
+      "index": 13,
+      "path": "Sam & Cat (2013) - S01E13 - #SecretSafe (1080p AMZN WEB-DL x265 RZeroX).mkv",
+      "length": 634345701,
+      "is_video": true
+    },
+    {
+      "index": 14,
+      "path": "Sam & Cat (2013) - S01E14 - #OscarTheOuch (1080p AMZN WEB-DL x265 RZeroX).mkv",
+      "length": 630026717,
+      "is_video": true
+    },
+    {
+      "index": 15,
+      "path": "Sam & Cat (2013) - S01E15 - #DollSitting (1080p AMZN WEB-DL x265 RZeroX).mkv",
+      "length": 634322245,
+      "is_video": true
+    },
+    {
+      "index": 16,
+      "path": "Sam & Cat (2013) - S01E16 - #PeezyB (1080p AMZN WEB-DL x265 RZeroX).mkv",
+      "length": 634427539,
+      "is_video": true
+    },
+    {
+      "index": 17,
+      "path": "Sam & Cat (2013) - S01E17 - #SalmonCat (1080p AMZN WEB-DL x265 RZeroX).mkv",
+      "length": 634578393,
+      "is_video": true
+    },
+    {
+      "index": 18,
+      "path": "Sam & Cat (2013) - S01E18 - #Twinfection (1080p AMZN WEB-DL x265 RZeroX).mkv",
+      "length": 634694979,
+      "is_video": true
+    },
+    {
+      "index": 19,
+      "path": "Sam & Cat (2013) - S01E19 - #MyPoober (1080p AMZN WEB-DL x265 RZeroX).mkv",
+      "length": 633988162,
+      "is_video": true
+    },
+    {
+      "index": 20,
+      "path": "Sam & Cat (2013) - S01E20 - #MadAboutShoe (1080p AMZN WEB-DL x265 RZeroX).mkv",
+      "length": 634515990,
+      "is_video": true
+    },
+    {
+      "index": 21,
+      "path": "Sam & Cat (2013) - S01E21 - #MagicATM (1080p AMZN WEB-DL x265 RZeroX).mkv",
+      "length": 629975258,
+      "is_video": true
+    },
+    {
+      "index": 22,
+      "path": "Sam & Cat (2013) - S01E22 - #Lumpatious (1080p AMZN WEB-DL x265 RZeroX).mkv",
+      "length": 634840720,
+      "is_video": true
+    },
+    {
+      "index": 23,
+      "path": "Sam & Cat (2013) - S01E23 - #TheKillerTunaJump #Freddie #Jade #Robbie (1080p AMZN WEB-DL x265 RZeroX).mkv",
+      "length": 1236852272,
+      "is_video": true
+    },
+    {
+      "index": 24,
+      "path": "Sam & Cat (2013) - S01E24 - #YayDay (1080p AMZN WEB-DL x265 RZeroX).mkv",
+      "length": 632249801,
+      "is_video": true
+    },
+    {
+      "index": 25,
+      "path": "Sam & Cat (2013) - S01E25 - #BrainCrush (1080p AMZN WEB-DL x265 RZeroX).mkv",
+      "length": 634513033,
+      "is_video": true
+    },
+    {
+      "index": 26,
+      "path": "Sam & Cat (2013) - S01E26 - #BlueDogSoda (1080p AMZN WEB-DL x265 RZeroX).mkv",
+      "length": 634706959,
+      "is_video": true
+    },
+    {
+      "index": 27,
+      "path": "Sam & Cat (2013) - S01E27 - #BlooperEpisode (1080p AMZN WEB-DL x265 RZeroX).mkv",
+      "length": 634600457,
+      "is_video": true
+    },
+    {
+      "index": 28,
+      "path": "Sam & Cat (2013) - S01E28 - #FresnoGirl (1080p AMZN WEB-DL x265 RZeroX).mkv",
+      "length": 634370569,
+      "is_video": true
+    },
+    {
+      "index": 29,
+      "path": "Sam & Cat (2013) - S01E29 - #StuckInABox (1080p AMZN WEB-DL x265 RZeroX).mkv",
+      "length": 634324999,
+      "is_video": true
+    },
+    {
+      "index": 30,
+      "path": "Sam & Cat (2013) - S01E30 - #SuperPsycho (1080p AMZN WEB-DL x265 RZeroX).mkv",
+      "length": 845422196,
+      "is_video": true
+    },
+    {
+      "index": 31,
+      "path": "Sam & Cat (2013) - S01E31 - #DroneBabyDrone (1080p AMZN WEB-DL x265 RZeroX).mkv",
+      "length": 634619561,
+      "is_video": true
+    },
+    {
+      "index": 32,
+      "path": "Sam & Cat (2013) - S01E32 - #FirstClassProblems (1080p AMZN WEB-DL x265 RZeroX).mkv",
+      "length": 627837862,
+      "is_video": true
+    },
+    {
+      "index": 33,
+      "path": "Sam & Cat (2013) - S01E33 - #KnockOut (1080p AMZN WEB-DL x265 RZeroX).mkv",
+      "length": 635209400,
+      "is_video": true
+    },
+    {
+      "index": 34,
+      "path": "Sam & Cat (2013) - S01E34 - #WeStealARockStar (1080p AMZN WEB-DL x265 RZeroX).mkv",
+      "length": 634170177,
+      "is_video": true
+    },
+    {
+      "index": 35,
+      "path": "Sam & Cat (2013) - S01E35 - #GettinWiggy (1080p AMZN WEB-DL x265 RZeroX).mkv",
+      "length": 634720400,
+      "is_video": true
+    }
+  ],
+  "video_indices": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32,
+    33,
+    34,
+    35
+  ],
+  "single_video": false,
+  "fetched_at_epoch": 1792492651,
+  "total_bytes": 23026784796
+}
