@@ -5,8 +5,8 @@
   "content_type": "irl",
   "created_at_epoch": 1792507438,
   "created_at": "2026-10-20T14:43:58Z",
-  "updated_at": "2026-10-20T21:45:10Z",
-  "updated_at_epoch": 1792532710,
+  "updated_at": "2026-10-20T21:49:37Z",
+  "updated_at_epoch": 1792532977,
   "expires_at_epoch": 1792593838,
   "state": "ready",
   "message": "Project ready \u2014 required release assets verified.",
@@ -47,10 +47,10 @@
   "missing_assets": [],
   "release_url": "https://github.com/motionssalt/castcut/releases/tag/castcut-job-1792507438516-dehl",
   "version": 1,
-  "export_id": "exp-job-1792507438516-dehl-clips-mvgvn5a4",
+  "export_id": "exp-job-1792507438516-dehl-scene-clipforge-port",
   "project_id": "job-1792507438516-dehl",
-  "type": "clips",
-  "label": "char1, char30, char35 (+1 others)",
+  "type": "ai",
+  "label": "Sam Confronts Peezy B & Gets Hired (Swaggy Spunk)",
   "order": [
     "char1",
     "char30",
@@ -64,22 +64,422 @@
     "char6": 51
   },
   "total_segments": 125,
-  "total_duration": 850.9,
-  "size_before_bytes": 918908121,
-  "size_after_bytes": 497293076,
-  "size_bytes": 497293076,
-  "size_before_human": "876.3 MB",
-  "size_after_human": "474.3 MB",
-  "size_human": "474.3 MB",
-  "bitrate_kbps": 4640.9,
-  "bitrate_bps": 4640922,
-  "effective_bitrate": "4640.9 kbps",
+  "total_duration": 114.0,
+  "size_before_bytes": 171589102,
+  "size_after_bytes": 27697735,
+  "size_bytes": 27697735,
+  "size_before_human": "163.6 MB",
+  "size_after_human": "26.4 MB",
+  "size_human": "26.4 MB",
+  "bitrate_kbps": 1941.759,
+  "bitrate_bps": 1941759,
+  "effective_bitrate": "1941.759 kbps",
   "audio_track": 0,
-  "audio_track_label": "Track 1 \u00b7 ENG \u00b7 2.0 \u00b7 eac3",
-  "asset_name": "castcut-export-exp-job-1792507438516-dehl-clips-mvgvn5a4.mp4",
+  "audio_track_label": "Track 1 \u00b7 ENG \u00b7 stereo \u00b7 eac3",
+  "asset_name": "castcut-export-exp-job-1792507438516-dehl-scene-clipforge-port.mp4",
   "quality": "anime HandBrake (x264 CRF 23, medium, tune animation, AAC 128k)",
   "status": "done",
   "ok": true,
   "segments": 1,
-  "video_bitrate_kbps": 1885.1
+  "video_bitrate_kbps": 1806.245,
+  "encode_path": "ClipForge vendored render/compress: H.264 High@L4.0, 1080p, 0 B-frames, mp42, faststart, AAC 128k stereo, <=2000 kbps",
+  "sha256": "71088e2b788f4371f934a40e88c1dc6fc85c747c06a039fafdfc2ca1bbc7da58",
+  "video_peak_10s_kbps": 1881.7008,
+  "video_average_kbps": 1806.245225059944,
+  "mb_per_minute": 14.563192453945856,
+  "reference_commit": "a05846de7c76a66ad42ba6fd37126514bc452167",
+  "delivery": {
+    "asset_id": 660584184,
+    "asset_name": "castcut-export-exp-job-1792507438516-dehl-scene-clipforge-port.mp4",
+    "sha256": "71088e2b788f4371f934a40e88c1dc6fc85c747c06a039fafdfc2ca1bbc7da58",
+    "size_bytes": 27697735,
+    "runner_release_download_identical": true,
+    "browser_download_url": "https://github.com/motionssalt/castcut/releases/download/castcut-job-1792507438516-dehl/castcut-export-exp-job-1792507438516-dehl-scene-clipforge-port.mp4"
+  },
+  "checks": {
+    "ok": true,
+    "sha256": "71088e2b788f4371f934a40e88c1dc6fc85c747c06a039fafdfc2ca1bbc7da58",
+    "duration": 114.113997,
+    "size_bytes": 27697735,
+    "size_human": "26.41 MiB",
+    "mb_per_minute": 14.563192453945856,
+    "bitrate_bps": 1941759,
+    "bitrate_kbps": 1941.759,
+    "video_bitrate_kbps": 1806.245,
+    "video_average_kbps": 1806.245225059944,
+    "video_peak_10s_kbps": 1881.7008,
+    "video_packets": 2736,
+    "audio_packets": 5347,
+    "all_packet_timestamps_contiguous": true,
+    "video_pts_equal_dts": true,
+    "fixed_gop": 60,
+    "duration_video": 114.113998,
+    "vcodec": "h264",
+    "profile": "High",
+    "level": 40,
+    "width": 1920,
+    "height": 1080,
+    "fps": 23.976023976023978,
+    "audio_streams": 1,
+    "audio_codec": "aac",
+    "audio_channels": 2,
+    "audio_lang": "und",
+    "faststart": true,
+    "has_elst": false,
+    "full_decode_passed": true,
+    "mp4_boxes": [
+      {
+        "type": "ftyp",
+        "offset": 0,
+        "size": 32,
+        "major_brand": "mp42"
+      },
+      {
+        "type": "moov",
+        "offset": 32,
+        "size": 74396,
+        "children": [
+          {
+            "type": "mvhd",
+            "offset": 40,
+            "size": 108
+          },
+          {
+            "type": "trak",
+            "offset": 148,
+            "size": 38385,
+            "children": [
+              {
+                "type": "tkhd",
+                "offset": 156,
+                "size": 92
+              },
+              {
+                "type": "mdia",
+                "offset": 248,
+                "size": 38285,
+                "children": [
+                  {
+                    "type": "mdhd",
+                    "offset": 256,
+                    "size": 32
+                  },
+                  {
+                    "type": "hdlr",
+                    "offset": 288,
+                    "size": 45
+                  },
+                  {
+                    "type": "minf",
+                    "offset": 333,
+                    "size": 38200,
+                    "children": [
+                      {
+                        "type": "vmhd",
+                        "offset": 341,
+                        "size": 20
+                      },
+                      {
+                        "type": "dinf",
+                        "offset": 361,
+                        "size": 36,
+                        "children": [
+                          {
+                            "type": "dref",
+                            "offset": 369,
+                            "size": 28
+                          }
+                        ]
+                      },
+                      {
+                        "type": "stbl",
+                        "offset": 397,
+                        "size": 38136,
+                        "children": [
+                          {
+                            "type": "stsd",
+                            "offset": 405,
+                            "size": 192
+                          },
+                          {
+                            "type": "stts",
+                            "offset": 597,
+                            "size": 15784
+                          },
+                          {
+                            "type": "stss",
+                            "offset": 16381,
+                            "size": 200
+                          },
+                          {
+                            "type": "stsc",
+                            "offset": 16581,
+                            "size": 28
+                          },
+                          {
+                            "type": "stsz",
+                            "offset": 16609,
+                            "size": 10964
+                          },
+                          {
+                            "type": "stco",
+                            "offset": 27573,
+                            "size": 10960
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "trak",
+            "offset": 38533,
+            "size": 35797,
+            "children": [
+              {
+                "type": "tkhd",
+                "offset": 38541,
+                "size": 92
+              },
+              {
+                "type": "mdia",
+                "offset": 38633,
+                "size": 35697,
+                "children": [
+                  {
+                    "type": "mdhd",
+                    "offset": 38641,
+                    "size": 32
+                  },
+                  {
+                    "type": "hdlr",
+                    "offset": 38673,
+                    "size": 45
+                  },
+                  {
+                    "type": "minf",
+                    "offset": 38718,
+                    "size": 35612,
+                    "children": [
+                      {
+                        "type": "smhd",
+                        "offset": 38726,
+                        "size": 16
+                      },
+                      {
+                        "type": "dinf",
+                        "offset": 38742,
+                        "size": 36,
+                        "children": [
+                          {
+                            "type": "dref",
+                            "offset": 38750,
+                            "size": 28
+                          }
+                        ]
+                      },
+                      {
+                        "type": "stbl",
+                        "offset": 38778,
+                        "size": 35552,
+                        "children": [
+                          {
+                            "type": "stsd",
+                            "offset": 38786,
+                            "size": 126
+                          },
+                          {
+                            "type": "stts",
+                            "offset": 38912,
+                            "size": 32
+                          },
+                          {
+                            "type": "stsc",
+                            "offset": 38944,
+                            "size": 2968
+                          },
+                          {
+                            "type": "stsz",
+                            "offset": 41912,
+                            "size": 21408
+                          },
+                          {
+                            "type": "stco",
+                            "offset": 63320,
+                            "size": 10956
+                          },
+                          {
+                            "type": "sgpd",
+                            "offset": 74276,
+                            "size": 26
+                          },
+                          {
+                            "type": "sbgp",
+                            "offset": 74302,
+                            "size": 28
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "udta",
+            "offset": 74330,
+            "size": 98
+          }
+        ]
+      },
+      {
+        "type": "free",
+        "offset": 74428,
+        "size": 8
+      },
+      {
+        "type": "mdat",
+        "offset": 74436,
+        "size": 27623299
+      }
+    ],
+    "streams": [
+      {
+        "index": 0,
+        "codec_name": "h264",
+        "codec_long_name": "H.264 / AVC / MPEG-4 AVC / MPEG-4 part 10",
+        "profile": "High",
+        "codec_type": "video",
+        "codec_tag_string": "avc1",
+        "codec_tag": "0x31637661",
+        "width": 1920,
+        "height": 1080,
+        "coded_width": 1920,
+        "coded_height": 1080,
+        "closed_captions": 0,
+        "film_grain": 0,
+        "has_b_frames": 0,
+        "sample_aspect_ratio": "1:1",
+        "display_aspect_ratio": "16:9",
+        "pix_fmt": "yuv420p",
+        "level": 40,
+        "chroma_location": "left",
+        "field_order": "progressive",
+        "refs": 1,
+        "is_avc": "true",
+        "nal_length_size": "4",
+        "id": "0x1",
+        "r_frame_rate": "24000/1001",
+        "avg_frame_rate": "42024960/1752791",
+        "time_base": "1/15360",
+        "start_pts": 0,
+        "start_time": "0.000000",
+        "duration_ts": 1752791,
+        "duration": "114.113997",
+        "bit_rate": "1806245",
+        "bits_per_raw_sample": "8",
+        "nb_frames": "2736",
+        "extradata_size": 46,
+        "disposition": {
+          "default": 1,
+          "dub": 0,
+          "original": 0,
+          "comment": 0,
+          "lyrics": 0,
+          "karaoke": 0,
+          "forced": 0,
+          "hearing_impaired": 0,
+          "visual_impaired": 0,
+          "clean_effects": 0,
+          "attached_pic": 0,
+          "timed_thumbnails": 0,
+          "non_diegetic": 0,
+          "captions": 0,
+          "descriptions": 0,
+          "metadata": 0,
+          "dependent": 0,
+          "still_image": 0
+        },
+        "tags": {
+          "language": "und",
+          "handler_name": "VideoHandler",
+          "vendor_id": "[0][0][0][0]",
+          "encoder": "Lavc60.31.102 libx264"
+        }
+      },
+      {
+        "index": 1,
+        "codec_name": "aac",
+        "codec_long_name": "AAC (Advanced Audio Coding)",
+        "profile": "LC",
+        "codec_type": "audio",
+        "codec_tag_string": "mp4a",
+        "codec_tag": "0x6134706d",
+        "sample_fmt": "fltp",
+        "sample_rate": "48000",
+        "channels": 2,
+        "channel_layout": "stereo",
+        "bits_per_sample": 0,
+        "initial_padding": 0,
+        "id": "0x2",
+        "r_frame_rate": "0/0",
+        "avg_frame_rate": "0/0",
+        "time_base": "1/48000",
+        "start_pts": 0,
+        "start_time": "0.000000",
+        "duration_ts": 5474944,
+        "duration": "114.061333",
+        "bit_rate": "130354",
+        "nb_frames": "5347",
+        "extradata_size": 5,
+        "disposition": {
+          "default": 1,
+          "dub": 0,
+          "original": 0,
+          "comment": 0,
+          "lyrics": 0,
+          "karaoke": 0,
+          "forced": 0,
+          "hearing_impaired": 0,
+          "visual_impaired": 0,
+          "clean_effects": 0,
+          "attached_pic": 0,
+          "timed_thumbnails": 0,
+          "non_diegetic": 0,
+          "captions": 0,
+          "descriptions": 0,
+          "metadata": 0,
+          "dependent": 0,
+          "still_image": 0
+        },
+        "tags": {
+          "language": "und",
+          "handler_name": "SoundHandler",
+          "vendor_id": "[0][0][0][0]"
+        }
+      }
+    ],
+    "source_audio_index": 0,
+    "source_audio_stream_index": 1,
+    "audio_target_kbps": 128,
+    "source_fps": "24000/1001",
+    "target_fps": "24000/1001",
+    "source_width": 1920,
+    "source_height": 1080,
+    "segments": [
+      [
+        405.4,
+        519.44
+      ]
+    ],
+    "join_times": [],
+    "reference_commit": "a05846de7c76a66ad42ba6fd37126514bc452167",
+    "path": "clipforge_vendor.render.produce_merged_video -> clipforge_vendor.compress.compress",
+    "size_before_bytes": 171589102,
+    "compressed": true
+  }
 }
