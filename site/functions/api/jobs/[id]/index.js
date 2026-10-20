@@ -1,3 +1,4 @@
+import { checkAnalysisAssets } from "../../../_lib/project.js";
 import { readFile, readJson, getProjectReleases, reconcileStatus, cancelActiveRuns, deleteProjectReleasesAndTags, deleteJobFiles, listJobRuns, gh, REPO } from "../../../_lib/gh.js";
 
 export async function onRequest({ request, params, data }) {
@@ -11,7 +12,7 @@ export async function onRequest({ request, params, data }) {
     return json({ ok: true, cancelled_runs: cancelled, deleted_files: files });
   }
 
-  const [statusTxt, ingest, clips, filesJson, selection, sceneAgent, relData, exportItems, runs, audioChoiceTxt] = await Promise.all([
+  const [statusTxt, ingest, clips, filesJson, selection, sceneAgent, relData, exportItems, runs, audioChoiceTxt, project, analysisManifest] = await Promise.all([
     readFile(pat, `jobs/${id}/status.json`),
     readFile(pat, `jobs/${id}/ingest.json`),
     readFile(pat, `jobs/${id}/clips/manifest.json`),
@@ -22,11 +23,20 @@ export async function onRequest({ request, params, data }) {
     listProjectExports(pat, id),
     listJobRuns(pat, id).catch(() => []),
     readFile(pat, `jobs/${id}/audio_choice.json`).catch(() => null),
+    readJson(pat, `jobs/${id}/ingest-request.json`),
+    readJson(pat, `jobs/${id}/analysis/manifest.json`),
   ]);
 
   let status = statusTxt ? safeJson(statusTxt) : null;
   if (status) status = await reconcileStatus(pat, id, status);
   const assets = relData.assets || [];
+  status = status || {state:'incomplete',message:'Invalid status record; repair analysis required.'};
+  status.content_type = project?.content_type || null;
+  const missing = checkAnalysisAssets(analysisManifest, assets);
+  if (missing.length && (status.release_verified || ['ready','hybrid_ready'].includes(status.state))) {
+    status.state='incomplete'; status.release_verified=false;
+    status.missing_assets=missing; status.message='Analysis incomplete; missing assets: '+missing.join(', ');
+  }
   const exportsList = Array.isArray(exportItems) ? exportItems : [];
   const audioChoice = audioChoiceTxt ? safeJson(audioChoiceTxt) : null;
 
