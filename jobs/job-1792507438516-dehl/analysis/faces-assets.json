@@ -1,0 +1,19 @@
+{
+  "content_type": "irl",
+  "assets": [
+    {
+      "name": "faces-manifest.json",
+      "release_tag": "castcut-job-1792507438516-dehl",
+      "size": 10375815,
+      "sha256": "f8a43e4aa8d608c6c2f3004956903002f6ab1368b6e48599efea37dc0ceef507",
+      "purpose": "face_manifest"
+    },
+    {
+      "name": "face_thumbnails.zip",
+      "release_tag": "castcut-job-1792507438516-dehl",
+      "size": 7806939,
+      "sha256": "7f992b07ad6a0a2c4b5ab28d8eb7f30e59ff6894935afcfb1878d0b6ba9baa73",
+      "purpose": "face_thumbnails"
+    }
+  ]
+}
