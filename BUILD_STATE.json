@@ -1045,7 +1045,7 @@
   },
   "export_copy_clipforge": {
     "status": "in_progress",
-    "last_updated": "2026-10-20T23:01:16.472379+00:00",
+    "last_updated": "2026-10-20T23:02:15.241969+00:00",
     "clipforge_reference": {
       "repository": "motionssalt/clipforge",
       "commit": "a05846de7c76a66ad42ba6fd37126514bc452167",
@@ -1532,7 +1532,8 @@
       "Engineering work complete. No redesign. Audio picker remains; UI/API/workflows have one fixed export path and no quality/resolution/encoder/preset switches.",
       "Confirmed frontend buffers the full video twice (chunks then contiguous bytes) and saves a Blob; implementing encrypted asset-scoped download cookie so native download manager receives an HTTP MP4 stream. Real current H264 outputs decode; physical gallery cause not established.",
       "Native streaming backend now supports authenticated POST handoff, HttpOnly encrypted cookie, GET/HEAD, resumable byte ranges, explicit video/mp4 MIME, short filename, length validation and unbuffered response.body; production/preview download encryption secret configured.",
-      "Removed JS media fetching/chunk assembly/hash/Blob-save path from export UI; the button now authorizes a short same-origin handoff then navigates to HTTP attachment. Exact filename matching prevents picking stale prefix-matching assets. UI truthfully says download started, not saved."
+      "Removed JS media fetching/chunk assembly/hash/Blob-save path from export UI; the button now authorizes a short same-origin handoff then navigates to HTTP attachment. Exact filename matching prevents picking stale prefix-matching assets. UI truthfully says download started, not saved.",
+      "All 10 native-download regression tests pass: no JS media buffer, scoped encrypted cookie, expiry/tampering/wrong-asset rejection, PAT gate, native navigation, full/range/HEAD byte semantics, MIME/filename, redirect and truncation rejection."
     ],
     "pending": [
       "Inspect actual reference and delivered outputs",
