@@ -1045,7 +1045,7 @@
   },
   "export_copy_clipforge": {
     "status": "in_progress",
-    "last_updated": "2026-10-20T21:39:09.389176+00:00",
+    "last_updated": "2026-10-20T21:41:44.600908+00:00",
     "clipforge_reference": {
       "repository": "motionssalt/clipforge",
       "commit": "a05846de7c76a66ad42ba6fd37126514bc452167",
@@ -1515,7 +1515,8 @@
       "Inspected exact source/render/compositor/compression/delivery code and previous a5f68a7 git diff",
       "Downloaded real reference, old and previously fixed outputs; all SHA256 match GitHub asset digests",
       "Recorded full ffprobe and recursive MP4 atom inspection; latest fixed output already matches reference headline compatibility fields",
-      "Vendored unmodified upstream render/compress snapshots plus exact shared helpers; adapted render only fps/scale/AAC rate, compression only VBV rate and cap-safe original-retained fallback"
+      "Vendored unmodified upstream render/compress snapshots plus exact shared helpers; adapted render only fps/scale/AAC rate, compression only VBV rate and cap-safe original-retained fallback",
+      "Both faces and AI entry points call export_segments on ORIGINAL source; removed TS concat and standalone final FFmpeg path, --quality/--crf export switches, and silent invalid-track fallback"
     ],
     "pending": [
       "Inspect reference code and delivered media",
