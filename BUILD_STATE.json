@@ -576,7 +576,7 @@
   "ui_refinement": "pending, separate session",
   "castcut_irl_faces": {
     "status": "in_progress",
-    "last_updated": "2026-10-20T07:53:39.619265+00:00",
+    "last_updated": "2026-10-20T07:54:44.850381+00:00",
     "root_cause_notes": "Confirmed affected latest project job-1792457832430-8m4z creation ingest-request.json content_type=irl. app.js Analyze sends only sample_fps; analyze.js/hybrid-analyze.js default missing body.content_type to anime; faces.yml defaults anime and faces.py trusts CLI over creation record. Actual run 39353135125 logs content_type=anime, mode=ANIME detector=anime-face-detector(yolov3), HSV fallback, 1362 frames at 480 width, 63 formed clusters -> 27 gallery entries (min_appearances=3). Raw/quality/embedding counts were not instrumented; cannot invent them. Both latest IRL status.json files contain nested literal Git conflict markers from concurrent git pull --rebase --autostash || true and git add; status parsing fails, recreation loses content_type, API/UI invent anime. Scene run 39353135055 succeeded and newest release currently has 8 assets including screenshots.zip (not video-only); cannot corroborate transient video-only report on newest release. Defects confirmed: faces never uploaded; no manifest completeness verification; legacy hybrid uploads subset and ignores errors. Screenshots are one 480-wide mid-scene frame, unlike ClipForge fps=1 scale<=640 tile=3x2 padding=2 margin=2 JPEG qscale5 every six seconds, naming frame_START.jpg; ClipForge baseline has no burned labels or end-range names, so CastCut will retain 3x2/cadence/640/JPEG compression and add explicit exact labels and ranges as requested.",
     "done": [
       "Implemented immutable creation-record type through API/workflows/scene/faces/status with explicit mismatch errors and no anime fallback; restored both corrupted IRL project status records; replaced analysis and export autostash status commits with per-file GitHub SHA compare-and-swap; composite task failure cannot be hidden. Recall: 960px up to2fps plus shot start/middle/end anchors, threshold0.35/min10px, adaptive upscale, no blur/embedding/singleton discards, no same-frame/histogram merging, funnel stored. Required release manifest including sheets/transcript/index/instructions/faces/thumbs/source unless excluded, upload retries and final remote validation, API live check, repair endpoint/button. Six-second 3x2 640px q5 grids with exact labels and shorter-tail sampling. Local verification:143 pytest,17 JS tests,workflow lint,selftest PASS. Full episode repair run39387165187 still running; no recall/completeness success claimed yet.",
@@ -651,6 +651,20 @@
         "run_id": 39389360362,
         "type": "Cloudflare deployment",
         "conclusion": "success"
+      },
+      {
+        "verification": "Final deployed API check",
+        "http_status": 200,
+        "content_type": "irl",
+        "project_state": "ready",
+        "release_verified": true,
+        "missing_assets": [],
+        "gallery_entries": 7977,
+        "wrong_anime_dispatch_http_status": 409,
+        "wrong_anime_dispatch_message": "content_type mismatch: requested anime, stored irl",
+        "manifest_assets_verified": 11,
+        "project_page_http_status": 200,
+        "browser_rendered_tag_verified": false
       }
     ],
     "notes": "Implementation and affected-project asset repair are pushed and deployed. DO NOT mark this task done until pending verification is satisfied. No credentials missing. No website redesign started. Raw after detections include adaptive upscale duplicates; before/after counts are not a like-for-like recall benchmark. ClipForge actual baseline had no labels/range names; CastCut mirrors cadence/layout/640px/JPEG q5 and adds the requested labels/ranges. Newest release already had scene assets when investigation began; video-only state not corroborated. Confirmed latent legacy upload-error swallowing and no asset gate were fixed."
