@@ -463,6 +463,8 @@ function statusView(s) {
     scene_exporting: { label: "Cutting scene…", cls: "run" },
     clips_exporting: { label: "Exporting clips…", cls: "run" },
     scene_ready: { label: "Scene ready ✓", cls: "ok" },
+    analyzing: { label: "Analyzing", cls:"running" },
+    incomplete: { label:"Incomplete — repair required", cls:"failed" },
     ready: { label: "Ready ✓", cls: "ok" },
     failed: { label: "Failed ✕", cls: "err" },
     ingest_failed: { label: "Ingest failed", cls: "err" },
