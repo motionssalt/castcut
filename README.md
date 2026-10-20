@@ -44,7 +44,7 @@ Multi-file torrents no longer download everything.
 * Every job workflow sets `run-name` to `… — <job_id>` and has an
   `if: cancelled()` status step. The Pages API reconciles a job whose run
   failed/was cancelled while the user was away (`reconcileStatus` in
-  `site/functions/_lib/gh.js`), pulling the failing step name and run-log URL
+  `web/functions/_lib/gh.js`), pulling the failing step name and run-log URL
   from the Actions API.
 * **Cancel**: `POST /api/jobs/<id>/cancel` cancels active runs + marks the
   job cancelled. **Retry**: `POST /api/jobs/<id>/retry` re-dispatches the
@@ -239,3 +239,12 @@ generated on demand. There is no mode choice and no "pipeline finished" state
 - **Selection defaults & search (Task B):** Torrents with multiple videos select nothing by default (Start disabled with "Select at least 1 file to start" hint); single-video torrents pre-select their 1 video. Added case-insensitive name filter/search that retains selections across queries, dynamic "Select all (N shown)" and "Clear shown" controls, 2 GiB large-selection warning, and natural episode sorting (episode 2 before episode 10). Mirrored identically in the magnet `awaiting_selection` flow.
 - **Full names with tap-to-expand (Task C):** Long file names, torrent titles, and export labels are no longer truncated without a way to read them. Collapsed state wraps and line-clamps to 2 lines; dedicated 44px chevrons (`▾`/`▴`) and text taps toggle full multi-line display with `overflow-wrap: anywhere; word-break: break-all`. Checkbox tap targets remain isolated from name expansion.
 - **Project cards show project name (Task D):** The project card in the Jobs list displays the user-typed project name as the primary title (falling back to torrent name, then job ID), with the raw job ID displayed small and secondary. Existing projects without custom names retain their format seamlessly.
+
+
+## Frontend Rebuild (`web/`)
+The frontend is reimagined and built from scratch in `web/` for mid-range Android phone editing over mobile connections:
+- **Zero-framework & fast**: <50 KB critical-path HTML/CSS/JS payload, instant paint under 1 second.
+- **Automated Light & Dark Themes**: Follows browser/OS `prefers-color-scheme` automatically with high-contrast tokens.
+- **Separate Real Pages**: Real deep-linkable URLs with back button support (`/`, `/new/`, `/project/?id=`, `/faces/?id=`, `/scene/?id=`, `/exports/?id=`, `/task/?id=`).
+- **Resilient Network Client**: Client and server-side exponential backoff retry for spotty mobile connections.
+- **Deploy**: Cloudflare Pages connects to GitHub and auto-deploys `web/` on push to `main`.

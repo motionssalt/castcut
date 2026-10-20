@@ -1,3 +1,22 @@
+// Backward compatibility redirect for legacy bookmarked URLs
+const params = new URLSearchParams(window.location.search);
+const hash = window.location.hash.replace(/^#/, "");
+const legacyJob = params.get("id") || params.get("job") || (hash.startsWith("job-") ? hash : null);
+if (legacyJob) {
+  const tab = params.get("tab");
+  if (tab === "faces" || tab === "clips") {
+    location.replace(`/faces/?id=${encodeURIComponent(legacyJob)}`);
+  } else if (tab === "scene") {
+    location.replace(`/scene/?id=${encodeURIComponent(legacyJob)}`);
+  } else if (tab === "exports") {
+    location.replace(`/exports/?id=${encodeURIComponent(legacyJob)}`);
+  } else if (tab === "task" || tab === "runs") {
+    location.replace(`/task/?id=${encodeURIComponent(legacyJob)}`);
+  } else {
+    location.replace(`/project/?id=${encodeURIComponent(legacyJob)}`);
+  }
+}
+
 import { requireAuth, api, escapeHtml, formatDate, getStatusBadge, toast, withButtonFeedback, setupPrefetching, clearPat, getTheme, applyTheme } from "./core.js";
 
 const ACTIVE_STATES = new Set([
