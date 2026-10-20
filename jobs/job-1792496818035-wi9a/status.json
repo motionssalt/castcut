@@ -5,11 +5,11 @@
   "content_type": "irl",
   "created_at_epoch": 1792496818,
   "created_at": "2026-10-20T11:46:58Z",
-  "updated_at": "2026-10-20T13:13:54Z",
-  "updated_at_epoch": 1792502034,
+  "updated_at": "2026-10-20T13:14:27Z",
+  "updated_at_epoch": 1792502067,
   "expires_at_epoch": 1792583218,
   "state": "analyzing",
-  "message": "Source ready. Analyzing faces and AI scene...",
+  "message": "",
   "selected_files": [
     {
       "index": 16,
@@ -24,9 +24,16 @@
       "message": "Source downloaded successfully",
       "percent": 100.0,
       "updated_at": "2026-10-20T13:13:54Z"
+    },
+    "faces": {
+      "name": "Faces",
+      "state": "queued",
+      "message": "Queued for analysis",
+      "updated_at": "2026-10-20T13:14:27Z"
     }
   },
   "release_tag": "castcut-job-1792496818035-wi9a",
   "workflow_run_url": "https://github.com/motionssalt/castcut/actions/runs/39426886617",
-  "video_in_release": true
+  "video_in_release": true,
+  "release_verified": false
 }
