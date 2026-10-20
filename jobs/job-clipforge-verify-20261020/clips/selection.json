@@ -1,12 +1,11 @@
 {
   "version": 1,
+  "export_id": "exp-job-clipforge-verify-20261020-clips-mvh9823y",
   "order": [
-    "char1",
-    "char30",
-    "char35",
     "char6"
   ],
   "ignored": [
+    "char1",
     "char2",
     "char3",
     "char4",
@@ -34,10 +33,12 @@
     "char27",
     "char28",
     "char29",
+    "char30",
     "char31",
     "char32",
     "char33",
-    "char34"
+    "char34",
+    "char35"
   ],
   "merge_groups": [],
   "gap_threshold": 2,
