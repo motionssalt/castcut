@@ -664,5 +664,28 @@
     ],
     "notes": "Implementation and affected-project asset repair are pushed and deployed. DO NOT mark this task done until pending verification is satisfied. No credentials missing. No website redesign started. Raw after detections include adaptive upscale duplicates; before/after counts are not a like-for-like recall benchmark. ClipForge actual baseline had no labels/range names; CastCut mirrors cadence/layout/640px/JPEG q5 and adds the requested labels/ranges. Newest release already had scene assets when investigation began; video-only state not corroborated. Confirmed latent legacy upload-error swallowing and no asset gate were fixed."
   },
-  "ui_rebuild": "pending, separate session"
+  "ui_rebuild": "pending, separate session",
+  "website_rebuild": {
+    "status": "in_progress",
+    "last_updated": "2026-10-20T12:27:35.265392+00:00",
+    "feature_inventory": [],
+    "api_contract": {},
+    "pages": [],
+    "done": [],
+    "pending": [
+      "feature_inventory",
+      "api_contract",
+      "torrent_download_fix",
+      "network_resilience_fix",
+      "new_website_architecture",
+      "light_and_dark_tokens",
+      "pages_implementation",
+      "perf_measurement",
+      "screenshots_verification",
+      "cloudflare_switchover",
+      "cleanup_old_frontend"
+    ],
+    "perf": {},
+    "notes": "Session initialized. Starting inventory and torrent/network resilience fixes."
+  }
 }
