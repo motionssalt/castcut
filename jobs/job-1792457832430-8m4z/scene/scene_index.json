@@ -28,8 +28,16 @@
       "duration": 2.0,
       "start_time": "00:00.000",
       "end_time": "00:02.000",
-      "screenshot": "scene_0001_00-00.000.jpg",
-      "screenshot_pts": 1.0
+      "screenshot": "sheet_000000-000006.000.jpg",
+      "screenshot_pts": 1.0,
+      "sheet_timestamps": [
+        0.0,
+        1.0,
+        2.0,
+        3.0,
+        4.0,
+        5.0
+      ]
     },
     {
       "scene_number": 2,
@@ -38,8 +46,16 @@
       "duration": 4.01,
       "start_time": "00:02.000",
       "end_time": "00:06.010",
-      "screenshot": "scene_0002_00-02.000.jpg",
-      "screenshot_pts": 4.005
+      "screenshot": "sheet_000000-000006.000.jpg",
+      "screenshot_pts": 4.005,
+      "sheet_timestamps": [
+        0.0,
+        1.0,
+        2.0,
+        3.0,
+        4.0,
+        5.0
+      ]
     },
     {
       "scene_number": 3,
@@ -48,8 +64,16 @@
       "duration": 6.59,
       "start_time": "00:06.010",
       "end_time": "00:12.600",
-      "screenshot": "scene_0003_00-06.010.jpg",
-      "screenshot_pts": 9.305
+      "screenshot": "sheet_000006-000012.000.jpg",
+      "screenshot_pts": 9.305,
+      "sheet_timestamps": [
+        6.0,
+        7.0,
+        8.0,
+        9.0,
+        10.0,
+        11.0
+      ]
     },
     {
       "scene_number": 4,
@@ -58,8 +82,16 @@
       "duration": 6.42,
       "start_time": "00:12.600",
       "end_time": "00:19.020",
-      "screenshot": "scene_0004_00-12.600.jpg",
-      "screenshot_pts": 15.81
+      "screenshot": "sheet_000012-000018.000.jpg",
+      "screenshot_pts": 15.81,
+      "sheet_timestamps": [
+        12.0,
+        13.0,
+        14.0,
+        15.0,
+        16.0,
+        17.0
+      ]
     },
     {
       "scene_number": 5,
@@ -68,8 +100,16 @@
       "duration": 3.29,
       "start_time": "00:19.020",
       "end_time": "00:22.310",
-      "screenshot": "scene_0005_00-19.020.jpg",
-      "screenshot_pts": 20.665
+      "screenshot": "sheet_000018-000024.000.jpg",
+      "screenshot_pts": 20.665,
+      "sheet_timestamps": [
+        18.0,
+        19.0,
+        20.0,
+        21.0,
+        22.0,
+        23.0
+      ]
     },
     {
       "scene_number": 6,
@@ -78,8 +118,16 @@
       "duration": 9.14,
       "start_time": "00:22.310",
       "end_time": "00:31.450",
-      "screenshot": "scene_0006_00-22.310.jpg",
-      "screenshot_pts": 26.88
+      "screenshot": "sheet_000024-000030.000.jpg",
+      "screenshot_pts": 26.88,
+      "sheet_timestamps": [
+        24.0,
+        25.0,
+        26.0,
+        27.0,
+        28.0,
+        29.0
+      ]
     },
     {
       "scene_number": 7,
@@ -88,8 +136,16 @@
       "duration": 5.54,
       "start_time": "00:31.450",
       "end_time": "00:36.990",
-      "screenshot": "scene_0007_00-31.450.jpg",
-      "screenshot_pts": 34.22
+      "screenshot": "sheet_000030-000036.000.jpg",
+      "screenshot_pts": 34.22,
+      "sheet_timestamps": [
+        30.0,
+        31.0,
+        32.0,
+        33.0,
+        34.0,
+        35.0
+      ]
     },
     {
       "scene_number": 8,
@@ -98,8 +154,16 @@
       "duration": 2.92,
       "start_time": "00:36.990",
       "end_time": "00:39.910",
-      "screenshot": "scene_0008_00-36.990.jpg",
-      "screenshot_pts": 38.45
+      "screenshot": "sheet_000036-000042.000.jpg",
+      "screenshot_pts": 38.45,
+      "sheet_timestamps": [
+        36.0,
+        37.0,
+        38.0,
+        39.0,
+        40.0,
+        41.0
+      ]
     },
     {
       "scene_number": 9,
@@ -108,8 +172,16 @@
       "duration": 2.59,
       "start_time": "00:39.910",
       "end_time": "00:42.500",
-      "screenshot": "scene_0009_00-39.910.jpg",
-      "screenshot_pts": 41.205
+      "screenshot": "sheet_000036-000042.000.jpg",
+      "screenshot_pts": 41.205,
+      "sheet_timestamps": [
+        36.0,
+        37.0,
+        38.0,
+        39.0,
+        40.0,
+        41.0
+      ]
     },
     {
       "scene_number": 10,
@@ -118,8 +190,16 @@
       "duration": 4.71,
       "start_time": "00:42.500",
       "end_time": "00:47.210",
-      "screenshot": "scene_0010_00-42.500.jpg",
-      "screenshot_pts": 44.855
+      "screenshot": "sheet_000042-000048.000.jpg",
+      "screenshot_pts": 44.855,
+      "sheet_timestamps": [
+        42.0,
+        43.0,
+        44.0,
+        45.0,
+        46.0,
+        47.0
+      ]
     },
     {
       "scene_number": 11,
@@ -128,8 +208,16 @@
       "duration": 3.55,
       "start_time": "00:47.210",
       "end_time": "00:50.760",
-      "screenshot": "scene_0011_00-47.210.jpg",
-      "screenshot_pts": 48.985
+      "screenshot": "sheet_000048-000054.000.jpg",
+      "screenshot_pts": 48.985,
+      "sheet_timestamps": [
+        48.0,
+        49.0,
+        50.0,
+        51.0,
+        52.0,
+        53.0
+      ]
     },
     {
       "scene_number": 12,
@@ -138,8 +226,16 @@
       "duration": 3.59,
       "start_time": "00:50.760",
       "end_time": "00:54.350",
-      "screenshot": "scene_0012_00-50.760.jpg",
-      "screenshot_pts": 52.555
+      "screenshot": "sheet_000048-000054.000.jpg",
+      "screenshot_pts": 52.555,
+      "sheet_timestamps": [
+        48.0,
+        49.0,
+        50.0,
+        51.0,
+        52.0,
+        53.0
+      ]
     },
     {
       "scene_number": 13,
@@ -148,8 +244,16 @@
       "duration": 3.5,
       "start_time": "00:54.350",
       "end_time": "00:57.850",
-      "screenshot": "scene_0013_00-54.350.jpg",
-      "screenshot_pts": 56.1
+      "screenshot": "sheet_000054-000060.000.jpg",
+      "screenshot_pts": 56.1,
+      "sheet_timestamps": [
+        54.0,
+        55.0,
+        56.0,
+        57.0,
+        58.0,
+        59.0
+      ]
     },
     {
       "scene_number": 14,
@@ -158,8 +262,16 @@
       "duration": 2.0,
       "start_time": "00:57.850",
       "end_time": "00:59.850",
-      "screenshot": "scene_0014_00-57.850.jpg",
-      "screenshot_pts": 58.85
+      "screenshot": "sheet_000054-000060.000.jpg",
+      "screenshot_pts": 58.85,
+      "sheet_timestamps": [
+        54.0,
+        55.0,
+        56.0,
+        57.0,
+        58.0,
+        59.0
+      ]
     },
     {
       "scene_number": 15,
@@ -168,8 +280,16 @@
       "duration": 4.71,
       "start_time": "00:59.850",
       "end_time": "01:04.560",
-      "screenshot": "scene_0015_00-59.850.jpg",
-      "screenshot_pts": 62.205
+      "screenshot": "sheet_000060-000066.000.jpg",
+      "screenshot_pts": 62.205,
+      "sheet_timestamps": [
+        60.0,
+        61.0,
+        62.0,
+        63.0,
+        64.0,
+        65.0
+      ]
     },
     {
       "scene_number": 16,
@@ -178,8 +298,16 @@
       "duration": 1.17,
       "start_time": "01:04.560",
       "end_time": "01:05.730",
-      "screenshot": "scene_0016_01-04.560.jpg",
-      "screenshot_pts": 65.145
+      "screenshot": "sheet_000060-000066.000.jpg",
+      "screenshot_pts": 65.145,
+      "sheet_timestamps": [
+        60.0,
+        61.0,
+        62.0,
+        63.0,
+        64.0,
+        65.0
+      ]
     },
     {
       "scene_number": 17,
@@ -188,8 +316,16 @@
       "duration": 6.34,
       "start_time": "01:05.730",
       "end_time": "01:12.070",
-      "screenshot": "scene_0017_01-05.730.jpg",
-      "screenshot_pts": 68.9
+      "screenshot": "sheet_000066-000072.000.jpg",
+      "screenshot_pts": 68.9,
+      "sheet_timestamps": [
+        66.0,
+        67.0,
+        68.0,
+        69.0,
+        70.0,
+        71.0
+      ]
     },
     {
       "scene_number": 18,
@@ -198,8 +334,16 @@
       "duration": 4.59,
       "start_time": "01:12.070",
       "end_time": "01:16.660",
-      "screenshot": "scene_0018_01-12.070.jpg",
-      "screenshot_pts": 74.365
+      "screenshot": "sheet_000072-000078.000.jpg",
+      "screenshot_pts": 74.365,
+      "sheet_timestamps": [
+        72.0,
+        73.0,
+        74.0,
+        75.0,
+        76.0,
+        77.0
+      ]
     },
     {
       "scene_number": 19,
@@ -208,8 +352,16 @@
       "duration": 4.71,
       "start_time": "01:16.660",
       "end_time": "01:21.370",
-      "screenshot": "scene_0019_01-16.660.jpg",
-      "screenshot_pts": 79.015
+      "screenshot": "sheet_000078-000084.000.jpg",
+      "screenshot_pts": 79.015,
+      "sheet_timestamps": [
+        78.0,
+        79.0,
+        80.0,
+        81.0,
+        82.0,
+        83.0
+      ]
     },
     {
       "scene_number": 20,
@@ -218,8 +370,16 @@
       "duration": 1.21,
       "start_time": "01:21.370",
       "end_time": "01:22.580",
-      "screenshot": "scene_0020_01-21.370.jpg",
-      "screenshot_pts": 81.975
+      "screenshot": "sheet_000078-000084.000.jpg",
+      "screenshot_pts": 81.975,
+      "sheet_timestamps": [
+        78.0,
+        79.0,
+        80.0,
+        81.0,
+        82.0,
+        83.0
+      ]
     },
     {
       "scene_number": 21,
@@ -228,8 +388,16 @@
       "duration": 4.26,
       "start_time": "01:22.580",
       "end_time": "01:26.840",
-      "screenshot": "scene_0021_01-22.580.jpg",
-      "screenshot_pts": 84.71
+      "screenshot": "sheet_000084-000090.000.jpg",
+      "screenshot_pts": 84.71,
+      "sheet_timestamps": [
+        84.0,
+        85.0,
+        86.0,
+        87.0,
+        88.0,
+        89.0
+      ]
     },
     {
       "scene_number": 22,
@@ -238,8 +406,16 @@
       "duration": 8.17,
       "start_time": "01:26.840",
       "end_time": "01:35.010",
-      "screenshot": "scene_0022_01-26.840.jpg",
-      "screenshot_pts": 90.925
+      "screenshot": "sheet_000090-000096.000.jpg",
+      "screenshot_pts": 90.925,
+      "sheet_timestamps": [
+        90.0,
+        91.0,
+        92.0,
+        93.0,
+        94.0,
+        95.0
+      ]
     },
     {
       "scene_number": 23,
@@ -248,8 +424,16 @@
       "duration": 1.88,
       "start_time": "01:35.010",
       "end_time": "01:36.890",
-      "screenshot": "scene_0023_01-35.010.jpg",
-      "screenshot_pts": 95.95
+      "screenshot": "sheet_000090-000096.000.jpg",
+      "screenshot_pts": 95.95,
+      "sheet_timestamps": [
+        90.0,
+        91.0,
+        92.0,
+        93.0,
+        94.0,
+        95.0
+      ]
     },
     {
       "scene_number": 24,
@@ -258,8 +442,16 @@
       "duration": 5.84,
       "start_time": "01:36.890",
       "end_time": "01:42.730",
-      "screenshot": "scene_0024_01-36.890.jpg",
-      "screenshot_pts": 99.81
+      "screenshot": "sheet_000096-000102.000.jpg",
+      "screenshot_pts": 99.81,
+      "sheet_timestamps": [
+        96.0,
+        97.0,
+        98.0,
+        99.0,
+        100.0,
+        101.0
+      ]
     },
     {
       "scene_number": 25,
@@ -268,8 +460,16 @@
       "duration": 2.92,
       "start_time": "01:42.730",
       "end_time": "01:45.650",
-      "screenshot": "scene_0025_01-42.730.jpg",
-      "screenshot_pts": 104.19
+      "screenshot": "sheet_000102-000108.000.jpg",
+      "screenshot_pts": 104.19,
+      "sheet_timestamps": [
+        102.0,
+        103.0,
+        104.0,
+        105.0,
+        106.0,
+        107.0
+      ]
     },
     {
       "scene_number": 26,
@@ -278,8 +478,16 @@
       "duration": 3.88,
       "start_time": "01:45.650",
       "end_time": "01:49.530",
-      "screenshot": "scene_0026_01-45.650.jpg",
-      "screenshot_pts": 107.59
+      "screenshot": "sheet_000102-000108.000.jpg",
+      "screenshot_pts": 107.59,
+      "sheet_timestamps": [
+        102.0,
+        103.0,
+        104.0,
+        105.0,
+        106.0,
+        107.0
+      ]
     },
     {
       "scene_number": 27,
@@ -288,8 +496,16 @@
       "duration": 1.12,
       "start_time": "01:49.530",
       "end_time": "01:50.650",
-      "screenshot": "scene_0027_01-49.530.jpg",
-      "screenshot_pts": 110.09
+      "screenshot": "sheet_000108-000114.000.jpg",
+      "screenshot_pts": 110.09,
+      "sheet_timestamps": [
+        108.0,
+        109.0,
+        110.0,
+        111.0,
+        112.0,
+        113.0
+      ]
     },
     {
       "scene_number": 28,
@@ -298,8 +514,16 @@
       "duration": 6.93,
       "start_time": "01:50.650",
       "end_time": "01:57.580",
-      "screenshot": "scene_0028_01-50.650.jpg",
-      "screenshot_pts": 114.115
+      "screenshot": "sheet_000114-000120.000.jpg",
+      "screenshot_pts": 114.115,
+      "sheet_timestamps": [
+        114.0,
+        115.0,
+        116.0,
+        117.0,
+        118.0,
+        119.0
+      ]
     },
     {
       "scene_number": 29,
@@ -308,8 +532,16 @@
       "duration": 6.34,
       "start_time": "01:57.580",
       "end_time": "02:03.920",
-      "screenshot": "scene_0029_01-57.580.jpg",
-      "screenshot_pts": 120.75
+      "screenshot": "sheet_000120-000126.000.jpg",
+      "screenshot_pts": 120.75,
+      "sheet_timestamps": [
+        120.0,
+        121.0,
+        122.0,
+        123.0,
+        124.0,
+        125.0
+      ]
     },
     {
       "scene_number": 30,
@@ -318,8 +550,16 @@
       "duration": 1.0,
       "start_time": "02:03.920",
       "end_time": "02:04.920",
-      "screenshot": "scene_0030_02-03.920.jpg",
-      "screenshot_pts": 124.42
+      "screenshot": "sheet_000120-000126.000.jpg",
+      "screenshot_pts": 124.42,
+      "sheet_timestamps": [
+        120.0,
+        121.0,
+        122.0,
+        123.0,
+        124.0,
+        125.0
+      ]
     },
     {
       "scene_number": 31,
@@ -328,8 +568,16 @@
       "duration": 3.79,
       "start_time": "02:04.920",
       "end_time": "02:08.710",
-      "screenshot": "scene_0031_02-04.920.jpg",
-      "screenshot_pts": 126.815
+      "screenshot": "sheet_000126-000132.000.jpg",
+      "screenshot_pts": 126.815,
+      "sheet_timestamps": [
+        126.0,
+        127.0,
+        128.0,
+        129.0,
+        130.0,
+        131.0
+      ]
     },
     {
       "scene_number": 32,
@@ -338,8 +586,16 @@
       "duration": 5.84,
       "start_time": "02:08.710",
       "end_time": "02:14.550",
-      "screenshot": "scene_0032_02-08.710.jpg",
-      "screenshot_pts": 131.63
+      "screenshot": "sheet_000126-000132.000.jpg",
+      "screenshot_pts": 131.63,
+      "sheet_timestamps": [
+        126.0,
+        127.0,
+        128.0,
+        129.0,
+        130.0,
+        131.0
+      ]
     },
     {
       "scene_number": 33,
@@ -348,8 +604,16 @@
       "duration": 3.59,
       "start_time": "02:14.550",
       "end_time": "02:18.140",
-      "screenshot": "scene_0033_02-14.550.jpg",
-      "screenshot_pts": 136.345
+      "screenshot": "sheet_000132-000138.000.jpg",
+      "screenshot_pts": 136.345,
+      "sheet_timestamps": [
+        132.0,
+        133.0,
+        134.0,
+        135.0,
+        136.0,
+        137.0
+      ]
     },
     {
       "scene_number": 34,
@@ -358,8 +622,16 @@
       "duration": 4.67,
       "start_time": "02:18.140",
       "end_time": "02:22.810",
-      "screenshot": "scene_0034_02-18.140.jpg",
-      "screenshot_pts": 140.475
+      "screenshot": "sheet_000138-000144.000.jpg",
+      "screenshot_pts": 140.475,
+      "sheet_timestamps": [
+        138.0,
+        139.0,
+        140.0,
+        141.0,
+        142.0,
+        143.0
+      ]
     },
     {
       "scene_number": 35,
@@ -368,8 +640,16 @@
       "duration": 7.38,
       "start_time": "02:22.810",
       "end_time": "02:30.190",
-      "screenshot": "scene_0035_02-22.810.jpg",
-      "screenshot_pts": 146.5
+      "screenshot": "sheet_000144-000150.000.jpg",
+      "screenshot_pts": 146.5,
+      "sheet_timestamps": [
+        144.0,
+        145.0,
+        146.0,
+        147.0,
+        148.0,
+        149.0
+      ]
     },
     {
       "scene_number": 36,
@@ -378,8 +658,16 @@
       "duration": 13.31,
       "start_time": "02:30.190",
       "end_time": "02:43.500",
-      "screenshot": "scene_0036_02-30.190.jpg",
-      "screenshot_pts": 156.845
+      "screenshot": "sheet_000156-000162.000.jpg",
+      "screenshot_pts": 156.845,
+      "sheet_timestamps": [
+        156.0,
+        157.0,
+        158.0,
+        159.0,
+        160.0,
+        161.0
+      ]
     },
     {
       "scene_number": 37,
@@ -388,8 +676,16 @@
       "duration": 1.79,
       "start_time": "02:43.500",
       "end_time": "02:45.290",
-      "screenshot": "scene_0037_02-43.500.jpg",
-      "screenshot_pts": 164.395
+      "screenshot": "sheet_000162-000168.000.jpg",
+      "screenshot_pts": 164.395,
+      "sheet_timestamps": [
+        162.0,
+        163.0,
+        164.0,
+        165.0,
+        166.0,
+        167.0
+      ]
     },
     {
       "scene_number": 38,
@@ -398,8 +694,16 @@
       "duration": 4.21,
       "start_time": "02:45.290",
       "end_time": "02:49.500",
-      "screenshot": "scene_0038_02-45.290.jpg",
-      "screenshot_pts": 167.395
+      "screenshot": "sheet_000162-000168.000.jpg",
+      "screenshot_pts": 167.395,
+      "sheet_timestamps": [
+        162.0,
+        163.0,
+        164.0,
+        165.0,
+        166.0,
+        167.0
+      ]
     },
     {
       "scene_number": 39,
@@ -408,8 +712,16 @@
       "duration": 5.72,
       "start_time": "02:49.500",
       "end_time": "02:55.220",
-      "screenshot": "scene_0039_02-49.500.jpg",
-      "screenshot_pts": 172.36
+      "screenshot": "sheet_000168-000174.000.jpg",
+      "screenshot_pts": 172.36,
+      "sheet_timestamps": [
+        168.0,
+        169.0,
+        170.0,
+        171.0,
+        172.0,
+        173.0
+      ]
     },
     {
       "scene_number": 40,
@@ -418,8 +730,16 @@
       "duration": 2.37,
       "start_time": "02:55.220",
       "end_time": "02:57.590",
-      "screenshot": "scene_0040_02-55.220.jpg",
-      "screenshot_pts": 176.405
+      "screenshot": "sheet_000174-000180.000.jpg",
+      "screenshot_pts": 176.405,
+      "sheet_timestamps": [
+        174.0,
+        175.0,
+        176.0,
+        177.0,
+        178.0,
+        179.0
+      ]
     },
     {
       "scene_number": 41,
@@ -428,8 +748,16 @@
       "duration": 0.71,
       "start_time": "02:57.590",
       "end_time": "02:58.300",
-      "screenshot": "scene_0041_02-57.590.jpg",
-      "screenshot_pts": 177.945
+      "screenshot": "sheet_000174-000180.000.jpg",
+      "screenshot_pts": 177.945,
+      "sheet_timestamps": [
+        174.0,
+        175.0,
+        176.0,
+        177.0,
+        178.0,
+        179.0
+      ]
     },
     {
       "scene_number": 42,
@@ -438,8 +766,16 @@
       "duration": 6.09,
       "start_time": "02:58.300",
       "end_time": "03:04.390",
-      "screenshot": "scene_0042_02-58.300.jpg",
-      "screenshot_pts": 181.345
+      "screenshot": "sheet_000180-000186.000.jpg",
+      "screenshot_pts": 181.345,
+      "sheet_timestamps": [
+        180.0,
+        181.0,
+        182.0,
+        183.0,
+        184.0,
+        185.0
+      ]
     },
     {
       "scene_number": 43,
@@ -448,8 +784,16 @@
       "duration": 3.55,
       "start_time": "03:04.390",
       "end_time": "03:07.940",
-      "screenshot": "scene_0043_03-04.390.jpg",
-      "screenshot_pts": 186.165
+      "screenshot": "sheet_000186-000192.000.jpg",
+      "screenshot_pts": 186.165,
+      "sheet_timestamps": [
+        186.0,
+        187.0,
+        188.0,
+        189.0,
+        190.0,
+        191.0
+      ]
     },
     {
       "scene_number": 44,
@@ -458,8 +802,16 @@
       "duration": 2.46,
       "start_time": "03:07.940",
       "end_time": "03:10.400",
-      "screenshot": "scene_0044_03-07.940.jpg",
-      "screenshot_pts": 189.17
+      "screenshot": "sheet_000186-000192.000.jpg",
+      "screenshot_pts": 189.17,
+      "sheet_timestamps": [
+        186.0,
+        187.0,
+        188.0,
+        189.0,
+        190.0,
+        191.0
+      ]
     },
     {
       "scene_number": 45,
@@ -468,8 +820,16 @@
       "duration": 2.88,
       "start_time": "03:10.400",
       "end_time": "03:13.280",
-      "screenshot": "scene_0045_03-10.400.jpg",
-      "screenshot_pts": 191.84
+      "screenshot": "sheet_000186-000192.000.jpg",
+      "screenshot_pts": 191.84,
+      "sheet_timestamps": [
+        186.0,
+        187.0,
+        188.0,
+        189.0,
+        190.0,
+        191.0
+      ]
     },
     {
       "scene_number": 46,
@@ -478,8 +838,16 @@
       "duration": 1.71,
       "start_time": "03:13.280",
       "end_time": "03:14.990",
-      "screenshot": "scene_0046_03-13.280.jpg",
-      "screenshot_pts": 194.135
+      "screenshot": "sheet_000192-000198.000.jpg",
+      "screenshot_pts": 194.135,
+      "sheet_timestamps": [
+        192.0,
+        193.0,
+        194.0,
+        195.0,
+        196.0,
+        197.0
+      ]
     },
     {
       "scene_number": 47,
@@ -488,8 +856,16 @@
       "duration": 3.21,
       "start_time": "03:14.990",
       "end_time": "03:18.200",
-      "screenshot": "scene_0047_03-14.990.jpg",
-      "screenshot_pts": 196.595
+      "screenshot": "sheet_000192-000198.000.jpg",
+      "screenshot_pts": 196.595,
+      "sheet_timestamps": [
+        192.0,
+        193.0,
+        194.0,
+        195.0,
+        196.0,
+        197.0
+      ]
     },
     {
       "scene_number": 48,
@@ -498,8 +874,16 @@
       "duration": 0.96,
       "start_time": "03:18.200",
       "end_time": "03:19.160",
-      "screenshot": "scene_0048_03-18.200.jpg",
-      "screenshot_pts": 198.68
+      "screenshot": "sheet_000198-000204.000.jpg",
+      "screenshot_pts": 198.68,
+      "sheet_timestamps": [
+        198.0,
+        199.0,
+        200.0,
+        201.0,
+        202.0,
+        203.0
+      ]
     },
     {
       "scene_number": 49,
@@ -508,8 +892,16 @@
       "duration": 2.79,
       "start_time": "03:19.160",
       "end_time": "03:21.950",
-      "screenshot": "scene_0049_03-19.160.jpg",
-      "screenshot_pts": 200.555
+      "screenshot": "sheet_000198-000204.000.jpg",
+      "screenshot_pts": 200.555,
+      "sheet_timestamps": [
+        198.0,
+        199.0,
+        200.0,
+        201.0,
+        202.0,
+        203.0
+      ]
     },
     {
       "scene_number": 50,
@@ -518,8 +910,16 @@
       "duration": 3.17,
       "start_time": "03:21.950",
       "end_time": "03:25.120",
-      "screenshot": "scene_0050_03-21.950.jpg",
-      "screenshot_pts": 203.535
+      "screenshot": "sheet_000198-000204.000.jpg",
+      "screenshot_pts": 203.535,
+      "sheet_timestamps": [
+        198.0,
+        199.0,
+        200.0,
+        201.0,
+        202.0,
+        203.0
+      ]
     },
     {
       "scene_number": 51,
@@ -528,8 +928,16 @@
       "duration": 2.42,
       "start_time": "03:25.120",
       "end_time": "03:27.540",
-      "screenshot": "scene_0051_03-25.120.jpg",
-      "screenshot_pts": 206.33
+      "screenshot": "sheet_000204-000210.000.jpg",
+      "screenshot_pts": 206.33,
+      "sheet_timestamps": [
+        204.0,
+        205.0,
+        206.0,
+        207.0,
+        208.0,
+        209.0
+      ]
     },
     {
       "scene_number": 52,
@@ -538,8 +946,16 @@
       "duration": 10.8,
       "start_time": "03:27.540",
       "end_time": "03:38.340",
-      "screenshot": "scene_0052_03-27.540.jpg",
-      "screenshot_pts": 212.94
+      "screenshot": "sheet_000210-000216.000.jpg",
+      "screenshot_pts": 212.94,
+      "sheet_timestamps": [
+        210.0,
+        211.0,
+        212.0,
+        213.0,
+        214.0,
+        215.0
+      ]
     },
     {
       "scene_number": 53,
@@ -548,8 +964,16 @@
       "duration": 6.84,
       "start_time": "03:38.340",
       "end_time": "03:45.180",
-      "screenshot": "scene_0053_03-38.340.jpg",
-      "screenshot_pts": 221.76
+      "screenshot": "sheet_000216-000222.000.jpg",
+      "screenshot_pts": 221.76,
+      "sheet_timestamps": [
+        216.0,
+        217.0,
+        218.0,
+        219.0,
+        220.0,
+        221.0
+      ]
     },
     {
       "scene_number": 54,
@@ -558,8 +982,16 @@
       "duration": 6.76,
       "start_time": "03:45.180",
       "end_time": "03:51.940",
-      "screenshot": "scene_0054_03-45.180.jpg",
-      "screenshot_pts": 228.56
+      "screenshot": "sheet_000228-000234.000.jpg",
+      "screenshot_pts": 228.56,
+      "sheet_timestamps": [
+        228.0,
+        229.0,
+        230.0,
+        231.0,
+        232.0,
+        233.0
+      ]
     },
     {
       "scene_number": 55,
@@ -568,8 +1000,16 @@
       "duration": 8.59,
       "start_time": "03:51.940",
       "end_time": "04:00.530",
-      "screenshot": "scene_0055_03-51.940.jpg",
-      "screenshot_pts": 236.235
+      "screenshot": "sheet_000234-000240.000.jpg",
+      "screenshot_pts": 236.235,
+      "sheet_timestamps": [
+        234.0,
+        235.0,
+        236.0,
+        237.0,
+        238.0,
+        239.0
+      ]
     },
     {
       "scene_number": 56,
@@ -578,8 +1018,16 @@
       "duration": 2.55,
       "start_time": "04:00.530",
       "end_time": "04:03.080",
-      "screenshot": "scene_0056_04-00.530.jpg",
-      "screenshot_pts": 241.805
+      "screenshot": "sheet_000240-000246.000.jpg",
+      "screenshot_pts": 241.805,
+      "sheet_timestamps": [
+        240.0,
+        241.0,
+        242.0,
+        243.0,
+        244.0,
+        245.0
+      ]
     },
     {
       "scene_number": 57,
@@ -588,8 +1036,16 @@
       "duration": 7.13,
       "start_time": "04:03.080",
       "end_time": "04:10.210",
-      "screenshot": "scene_0057_04-03.080.jpg",
-      "screenshot_pts": 246.645
+      "screenshot": "sheet_000246-000252.000.jpg",
+      "screenshot_pts": 246.645,
+      "sheet_timestamps": [
+        246.0,
+        247.0,
+        248.0,
+        249.0,
+        250.0,
+        251.0
+      ]
     },
     {
       "scene_number": 58,
@@ -598,8 +1054,16 @@
       "duration": 6.25,
       "start_time": "04:10.210",
       "end_time": "04:16.460",
-      "screenshot": "scene_0058_04-10.210.jpg",
-      "screenshot_pts": 253.335
+      "screenshot": "sheet_000252-000258.000.jpg",
+      "screenshot_pts": 253.335,
+      "sheet_timestamps": [
+        252.0,
+        253.0,
+        254.0,
+        255.0,
+        256.0,
+        257.0
+      ]
     },
     {
       "scene_number": 59,
@@ -608,8 +1072,16 @@
       "duration": 5.84,
       "start_time": "04:16.460",
       "end_time": "04:22.300",
-      "screenshot": "scene_0059_04-16.460.jpg",
-      "screenshot_pts": 259.38
+      "screenshot": "sheet_000258-000264.000.jpg",
+      "screenshot_pts": 259.38,
+      "sheet_timestamps": [
+        258.0,
+        259.0,
+        260.0,
+        261.0,
+        262.0,
+        263.0
+      ]
     },
     {
       "scene_number": 60,
@@ -618,8 +1090,16 @@
       "duration": 7.34,
       "start_time": "04:22.300",
       "end_time": "04:29.640",
-      "screenshot": "scene_0060_04-22.300.jpg",
-      "screenshot_pts": 265.97
+      "screenshot": "sheet_000264-000270.000.jpg",
+      "screenshot_pts": 265.97,
+      "sheet_timestamps": [
+        264.0,
+        265.0,
+        266.0,
+        267.0,
+        268.0,
+        269.0
+      ]
     },
     {
       "scene_number": 61,
@@ -628,8 +1108,16 @@
       "duration": 5.63,
       "start_time": "04:29.640",
       "end_time": "04:35.270",
-      "screenshot": "scene_0061_04-29.640.jpg",
-      "screenshot_pts": 272.455
+      "screenshot": "sheet_000270-000276.000.jpg",
+      "screenshot_pts": 272.455,
+      "sheet_timestamps": [
+        270.0,
+        271.0,
+        272.0,
+        273.0,
+        274.0,
+        275.0
+      ]
     },
     {
       "scene_number": 62,
@@ -638,8 +1126,16 @@
       "duration": 7.68,
       "start_time": "04:35.270",
       "end_time": "04:42.950",
-      "screenshot": "scene_0062_04-35.270.jpg",
-      "screenshot_pts": 279.11
+      "screenshot": "sheet_000276-000282.000.jpg",
+      "screenshot_pts": 279.11,
+      "sheet_timestamps": [
+        276.0,
+        277.0,
+        278.0,
+        279.0,
+        280.0,
+        281.0
+      ]
     },
     {
       "scene_number": 63,
@@ -648,8 +1144,16 @@
       "duration": 1.79,
       "start_time": "04:42.950",
       "end_time": "04:44.740",
-      "screenshot": "scene_0063_04-42.950.jpg",
-      "screenshot_pts": 283.845
+      "screenshot": "sheet_000282-000288.000.jpg",
+      "screenshot_pts": 283.845,
+      "sheet_timestamps": [
+        282.0,
+        283.0,
+        284.0,
+        285.0,
+        286.0,
+        287.0
+      ]
     },
     {
       "scene_number": 64,
@@ -658,8 +1162,16 @@
       "duration": 3.63,
       "start_time": "04:44.740",
       "end_time": "04:48.370",
-      "screenshot": "scene_0064_04-44.740.jpg",
-      "screenshot_pts": 286.555
+      "screenshot": "sheet_000282-000288.000.jpg",
+      "screenshot_pts": 286.555,
+      "sheet_timestamps": [
+        282.0,
+        283.0,
+        284.0,
+        285.0,
+        286.0,
+        287.0
+      ]
     },
     {
       "scene_number": 65,
@@ -668,8 +1180,16 @@
       "duration": 11.1,
       "start_time": "04:48.370",
       "end_time": "04:59.470",
-      "screenshot": "scene_0065_04-48.370.jpg",
-      "screenshot_pts": 293.92
+      "screenshot": "sheet_000288-000294.000.jpg",
+      "screenshot_pts": 293.92,
+      "sheet_timestamps": [
+        288.0,
+        289.0,
+        290.0,
+        291.0,
+        292.0,
+        293.0
+      ]
     },
     {
       "scene_number": 66,
@@ -678,8 +1198,16 @@
       "duration": 9.01,
       "start_time": "04:59.470",
       "end_time": "05:08.480",
-      "screenshot": "scene_0066_04-59.470.jpg",
-      "screenshot_pts": 303.975
+      "screenshot": "sheet_000300-000306.000.jpg",
+      "screenshot_pts": 303.975,
+      "sheet_timestamps": [
+        300.0,
+        301.0,
+        302.0,
+        303.0,
+        304.0,
+        305.0
+      ]
     },
     {
       "scene_number": 67,
@@ -688,8 +1216,16 @@
       "duration": 5.71,
       "start_time": "05:08.480",
       "end_time": "05:14.190",
-      "screenshot": "scene_0067_05-08.480.jpg",
-      "screenshot_pts": 311.335
+      "screenshot": "sheet_000306-000312.000.jpg",
+      "screenshot_pts": 311.335,
+      "sheet_timestamps": [
+        306.0,
+        307.0,
+        308.0,
+        309.0,
+        310.0,
+        311.0
+      ]
     },
     {
       "scene_number": 68,
@@ -698,8 +1234,16 @@
       "duration": 6.17,
       "start_time": "05:14.190",
       "end_time": "05:20.360",
-      "screenshot": "scene_0068_05-14.190.jpg",
-      "screenshot_pts": 317.275
+      "screenshot": "sheet_000312-000318.000.jpg",
+      "screenshot_pts": 317.275,
+      "sheet_timestamps": [
+        312.0,
+        313.0,
+        314.0,
+        315.0,
+        316.0,
+        317.0
+      ]
     },
     {
       "scene_number": 69,
@@ -708,8 +1252,16 @@
       "duration": 3.05,
       "start_time": "05:20.360",
       "end_time": "05:23.410",
-      "screenshot": "scene_0069_05-20.360.jpg",
-      "screenshot_pts": 321.885
+      "screenshot": "sheet_000318-000324.000.jpg",
+      "screenshot_pts": 321.885,
+      "sheet_timestamps": [
+        318.0,
+        319.0,
+        320.0,
+        321.0,
+        322.0,
+        323.0
+      ]
     },
     {
       "scene_number": 70,
@@ -718,8 +1270,16 @@
       "duration": 3.83,
       "start_time": "05:23.410",
       "end_time": "05:27.240",
-      "screenshot": "scene_0070_05-23.410.jpg",
-      "screenshot_pts": 325.325
+      "screenshot": "sheet_000324-000330.000.jpg",
+      "screenshot_pts": 325.325,
+      "sheet_timestamps": [
+        324.0,
+        325.0,
+        326.0,
+        327.0,
+        328.0,
+        329.0
+      ]
     },
     {
       "scene_number": 71,
@@ -728,8 +1288,16 @@
       "duration": 3.13,
       "start_time": "05:27.240",
       "end_time": "05:30.370",
-      "screenshot": "scene_0071_05-27.240.jpg",
-      "screenshot_pts": 328.805
+      "screenshot": "sheet_000324-000330.000.jpg",
+      "screenshot_pts": 328.805,
+      "sheet_timestamps": [
+        324.0,
+        325.0,
+        326.0,
+        327.0,
+        328.0,
+        329.0
+      ]
     },
     {
       "scene_number": 72,
@@ -738,8 +1306,16 @@
       "duration": 7.72,
       "start_time": "05:30.370",
       "end_time": "05:38.090",
-      "screenshot": "scene_0072_05-30.370.jpg",
-      "screenshot_pts": 334.23
+      "screenshot": "sheet_000330-000336.000.jpg",
+      "screenshot_pts": 334.23,
+      "sheet_timestamps": [
+        330.0,
+        331.0,
+        332.0,
+        333.0,
+        334.0,
+        335.0
+      ]
     },
     {
       "scene_number": 73,
@@ -748,8 +1324,16 @@
       "duration": 2.96,
       "start_time": "05:38.090",
       "end_time": "05:41.050",
-      "screenshot": "scene_0073_05-38.090.jpg",
-      "screenshot_pts": 339.57
+      "screenshot": "sheet_000336-000342.000.jpg",
+      "screenshot_pts": 339.57,
+      "sheet_timestamps": [
+        336.0,
+        337.0,
+        338.0,
+        339.0,
+        340.0,
+        341.0
+      ]
     },
     {
       "scene_number": 74,
@@ -758,8 +1342,16 @@
       "duration": 1.13,
       "start_time": "05:41.050",
       "end_time": "05:42.180",
-      "screenshot": "scene_0074_05-41.050.jpg",
-      "screenshot_pts": 341.615
+      "screenshot": "sheet_000336-000342.000.jpg",
+      "screenshot_pts": 341.615,
+      "sheet_timestamps": [
+        336.0,
+        337.0,
+        338.0,
+        339.0,
+        340.0,
+        341.0
+      ]
     },
     {
       "scene_number": 75,
@@ -768,8 +1360,16 @@
       "duration": 3.0,
       "start_time": "05:42.180",
       "end_time": "05:45.180",
-      "screenshot": "scene_0075_05-42.180.jpg",
-      "screenshot_pts": 343.68
+      "screenshot": "sheet_000342-000348.000.jpg",
+      "screenshot_pts": 343.68,
+      "sheet_timestamps": [
+        342.0,
+        343.0,
+        344.0,
+        345.0,
+        346.0,
+        347.0
+      ]
     },
     {
       "scene_number": 76,
@@ -778,8 +1378,16 @@
       "duration": 2.88,
       "start_time": "05:45.180",
       "end_time": "05:48.060",
-      "screenshot": "scene_0076_05-45.180.jpg",
-      "screenshot_pts": 346.62
+      "screenshot": "sheet_000342-000348.000.jpg",
+      "screenshot_pts": 346.62,
+      "sheet_timestamps": [
+        342.0,
+        343.0,
+        344.0,
+        345.0,
+        346.0,
+        347.0
+      ]
     },
     {
       "scene_number": 77,
@@ -788,8 +1396,16 @@
       "duration": 5.08,
       "start_time": "05:48.060",
       "end_time": "05:53.140",
-      "screenshot": "scene_0077_05-48.060.jpg",
-      "screenshot_pts": 350.6
+      "screenshot": "sheet_000348-000354.000.jpg",
+      "screenshot_pts": 350.6,
+      "sheet_timestamps": [
+        348.0,
+        349.0,
+        350.0,
+        351.0,
+        352.0,
+        353.0
+      ]
     },
     {
       "scene_number": 78,
@@ -798,8 +1414,16 @@
       "duration": 6.3,
       "start_time": "05:53.140",
       "end_time": "05:59.440",
-      "screenshot": "scene_0078_05-53.140.jpg",
-      "screenshot_pts": 356.29
+      "screenshot": "sheet_000354-000360.000.jpg",
+      "screenshot_pts": 356.29,
+      "sheet_timestamps": [
+        354.0,
+        355.0,
+        356.0,
+        357.0,
+        358.0,
+        359.0
+      ]
     },
     {
       "scene_number": 79,
@@ -808,8 +1432,16 @@
       "duration": 2.8,
       "start_time": "05:59.440",
       "end_time": "06:02.240",
-      "screenshot": "scene_0079_05-59.440.jpg",
-      "screenshot_pts": 360.84
+      "screenshot": "sheet_000360-000366.000.jpg",
+      "screenshot_pts": 360.84,
+      "sheet_timestamps": [
+        360.0,
+        361.0,
+        362.0,
+        363.0,
+        364.0,
+        365.0
+      ]
     },
     {
       "scene_number": 80,
@@ -818,8 +1450,16 @@
       "duration": 3.58,
       "start_time": "06:02.240",
       "end_time": "06:05.820",
-      "screenshot": "scene_0080_06-02.240.jpg",
-      "screenshot_pts": 364.03
+      "screenshot": "sheet_000360-000366.000.jpg",
+      "screenshot_pts": 364.03,
+      "sheet_timestamps": [
+        360.0,
+        361.0,
+        362.0,
+        363.0,
+        364.0,
+        365.0
+      ]
     },
     {
       "scene_number": 81,
@@ -828,8 +1468,16 @@
       "duration": 3.34,
       "start_time": "06:05.820",
       "end_time": "06:09.160",
-      "screenshot": "scene_0081_06-05.820.jpg",
-      "screenshot_pts": 367.49
+      "screenshot": "sheet_000366-000372.000.jpg",
+      "screenshot_pts": 367.49,
+      "sheet_timestamps": [
+        366.0,
+        367.0,
+        368.0,
+        369.0,
+        370.0,
+        371.0
+      ]
     },
     {
       "scene_number": 82,
@@ -838,8 +1486,16 @@
       "duration": 2.67,
       "start_time": "06:09.160",
       "end_time": "06:11.830",
-      "screenshot": "scene_0082_06-09.160.jpg",
-      "screenshot_pts": 370.495
+      "screenshot": "sheet_000366-000372.000.jpg",
+      "screenshot_pts": 370.495,
+      "sheet_timestamps": [
+        366.0,
+        367.0,
+        368.0,
+        369.0,
+        370.0,
+        371.0
+      ]
     },
     {
       "scene_number": 83,
@@ -848,8 +1504,16 @@
       "duration": 5.21,
       "start_time": "06:11.830",
       "end_time": "06:17.040",
-      "screenshot": "scene_0083_06-11.830.jpg",
-      "screenshot_pts": 374.435
+      "screenshot": "sheet_000372-000378.000.jpg",
+      "screenshot_pts": 374.435,
+      "sheet_timestamps": [
+        372.0,
+        373.0,
+        374.0,
+        375.0,
+        376.0,
+        377.0
+      ]
     },
     {
       "scene_number": 84,
@@ -858,8 +1522,16 @@
       "duration": 5.42,
       "start_time": "06:17.040",
       "end_time": "06:22.460",
-      "screenshot": "scene_0084_06-17.040.jpg",
-      "screenshot_pts": 379.75
+      "screenshot": "sheet_000378-000384.000.jpg",
+      "screenshot_pts": 379.75,
+      "sheet_timestamps": [
+        378.0,
+        379.0,
+        380.0,
+        381.0,
+        382.0,
+        383.0
+      ]
     },
     {
       "scene_number": 85,
@@ -868,8 +1540,16 @@
       "duration": 1.13,
       "start_time": "06:22.460",
       "end_time": "06:23.590",
-      "screenshot": "scene_0085_06-22.460.jpg",
-      "screenshot_pts": 383.025
+      "screenshot": "sheet_000378-000384.000.jpg",
+      "screenshot_pts": 383.025,
+      "sheet_timestamps": [
+        378.0,
+        379.0,
+        380.0,
+        381.0,
+        382.0,
+        383.0
+      ]
     },
     {
       "scene_number": 86,
@@ -878,8 +1558,16 @@
       "duration": 5.38,
       "start_time": "06:23.590",
       "end_time": "06:28.970",
-      "screenshot": "scene_0086_06-23.590.jpg",
-      "screenshot_pts": 386.28
+      "screenshot": "sheet_000384-000390.000.jpg",
+      "screenshot_pts": 386.28,
+      "sheet_timestamps": [
+        384.0,
+        385.0,
+        386.0,
+        387.0,
+        388.0,
+        389.0
+      ]
     },
     {
       "scene_number": 87,
@@ -888,8 +1576,16 @@
       "duration": 3.42,
       "start_time": "06:28.970",
       "end_time": "06:32.390",
-      "screenshot": "scene_0087_06-28.970.jpg",
-      "screenshot_pts": 390.68
+      "screenshot": "sheet_000390-000396.000.jpg",
+      "screenshot_pts": 390.68,
+      "sheet_timestamps": [
+        390.0,
+        391.0,
+        392.0,
+        393.0,
+        394.0,
+        395.0
+      ]
     },
     {
       "scene_number": 88,
@@ -898,8 +1594,16 @@
       "duration": 2.88,
       "start_time": "06:32.390",
       "end_time": "06:35.270",
-      "screenshot": "scene_0088_06-32.390.jpg",
-      "screenshot_pts": 393.83
+      "screenshot": "sheet_000390-000396.000.jpg",
+      "screenshot_pts": 393.83,
+      "sheet_timestamps": [
+        390.0,
+        391.0,
+        392.0,
+        393.0,
+        394.0,
+        395.0
+      ]
     },
     {
       "scene_number": 89,
@@ -908,8 +1612,16 @@
       "duration": 6.21,
       "start_time": "06:35.270",
       "end_time": "06:41.480",
-      "screenshot": "scene_0089_06-35.270.jpg",
-      "screenshot_pts": 398.375
+      "screenshot": "sheet_000396-000402.000.jpg",
+      "screenshot_pts": 398.375,
+      "sheet_timestamps": [
+        396.0,
+        397.0,
+        398.0,
+        399.0,
+        400.0,
+        401.0
+      ]
     },
     {
       "scene_number": 90,
@@ -918,8 +1630,16 @@
       "duration": 3.92,
       "start_time": "06:41.480",
       "end_time": "06:45.400",
-      "screenshot": "scene_0090_06-41.480.jpg",
-      "screenshot_pts": 403.44
+      "screenshot": "sheet_000402-000408.000.jpg",
+      "screenshot_pts": 403.44,
+      "sheet_timestamps": [
+        402.0,
+        403.0,
+        404.0,
+        405.0,
+        406.0,
+        407.0
+      ]
     },
     {
       "scene_number": 91,
@@ -928,8 +1648,16 @@
       "duration": 4.34,
       "start_time": "06:45.400",
       "end_time": "06:49.740",
-      "screenshot": "scene_0091_06-45.400.jpg",
-      "screenshot_pts": 407.57
+      "screenshot": "sheet_000402-000408.000.jpg",
+      "screenshot_pts": 407.57,
+      "sheet_timestamps": [
+        402.0,
+        403.0,
+        404.0,
+        405.0,
+        406.0,
+        407.0
+      ]
     },
     {
       "scene_number": 92,
@@ -938,8 +1666,16 @@
       "duration": 1.67,
       "start_time": "06:49.740",
       "end_time": "06:51.410",
-      "screenshot": "scene_0092_06-49.740.jpg",
-      "screenshot_pts": 410.575
+      "screenshot": "sheet_000408-000414.000.jpg",
+      "screenshot_pts": 410.575,
+      "sheet_timestamps": [
+        408.0,
+        409.0,
+        410.0,
+        411.0,
+        412.0,
+        413.0
+      ]
     },
     {
       "scene_number": 93,
@@ -948,8 +1684,16 @@
       "duration": 2.59,
       "start_time": "06:51.410",
       "end_time": "06:54.000",
-      "screenshot": "scene_0093_06-51.410.jpg",
-      "screenshot_pts": 412.705
+      "screenshot": "sheet_000408-000414.000.jpg",
+      "screenshot_pts": 412.705,
+      "sheet_timestamps": [
+        408.0,
+        409.0,
+        410.0,
+        411.0,
+        412.0,
+        413.0
+      ]
     },
     {
       "scene_number": 94,
@@ -958,8 +1702,16 @@
       "duration": 5.46,
       "start_time": "06:54.000",
       "end_time": "06:59.460",
-      "screenshot": "scene_0094_06-54.000.jpg",
-      "screenshot_pts": 416.73
+      "screenshot": "sheet_000414-000420.000.jpg",
+      "screenshot_pts": 416.73,
+      "sheet_timestamps": [
+        414.0,
+        415.0,
+        416.0,
+        417.0,
+        418.0,
+        419.0
+      ]
     },
     {
       "scene_number": 95,
@@ -968,8 +1720,16 @@
       "duration": 1.59,
       "start_time": "06:59.460",
       "end_time": "07:01.050",
-      "screenshot": "scene_0095_06-59.460.jpg",
-      "screenshot_pts": 420.255
+      "screenshot": "sheet_000420-000426.000.jpg",
+      "screenshot_pts": 420.255,
+      "sheet_timestamps": [
+        420.0,
+        421.0,
+        422.0,
+        423.0,
+        424.0,
+        425.0
+      ]
     },
     {
       "scene_number": 96,
@@ -978,8 +1738,16 @@
       "duration": 3.37,
       "start_time": "07:01.050",
       "end_time": "07:04.420",
-      "screenshot": "scene_0096_07-01.050.jpg",
-      "screenshot_pts": 422.735
+      "screenshot": "sheet_000420-000426.000.jpg",
+      "screenshot_pts": 422.735,
+      "sheet_timestamps": [
+        420.0,
+        421.0,
+        422.0,
+        423.0,
+        424.0,
+        425.0
+      ]
     },
     {
       "scene_number": 97,
@@ -988,8 +1756,16 @@
       "duration": 2.34,
       "start_time": "07:04.420",
       "end_time": "07:06.760",
-      "screenshot": "scene_0097_07-04.420.jpg",
-      "screenshot_pts": 425.59
+      "screenshot": "sheet_000420-000426.000.jpg",
+      "screenshot_pts": 425.59,
+      "sheet_timestamps": [
+        420.0,
+        421.0,
+        422.0,
+        423.0,
+        424.0,
+        425.0
+      ]
     },
     {
       "scene_number": 98,
@@ -998,8 +1774,16 @@
       "duration": 3.13,
       "start_time": "07:06.760",
       "end_time": "07:09.890",
-      "screenshot": "scene_0098_07-06.760.jpg",
-      "screenshot_pts": 428.325
+      "screenshot": "sheet_000426-000432.000.jpg",
+      "screenshot_pts": 428.325,
+      "sheet_timestamps": [
+        426.0,
+        427.0,
+        428.0,
+        429.0,
+        430.0,
+        431.0
+      ]
     },
     {
       "scene_number": 99,
@@ -1008,8 +1792,16 @@
       "duration": 1.04,
       "start_time": "07:09.890",
       "end_time": "07:10.930",
-      "screenshot": "scene_0099_07-09.890.jpg",
-      "screenshot_pts": 430.41
+      "screenshot": "sheet_000426-000432.000.jpg",
+      "screenshot_pts": 430.41,
+      "sheet_timestamps": [
+        426.0,
+        427.0,
+        428.0,
+        429.0,
+        430.0,
+        431.0
+      ]
     },
     {
       "scene_number": 100,
@@ -1018,8 +1810,16 @@
       "duration": 2.92,
       "start_time": "07:10.930",
       "end_time": "07:13.850",
-      "screenshot": "scene_0100_07-10.930.jpg",
-      "screenshot_pts": 432.39
+      "screenshot": "sheet_000432-000438.000.jpg",
+      "screenshot_pts": 432.39,
+      "sheet_timestamps": [
+        432.0,
+        433.0,
+        434.0,
+        435.0,
+        436.0,
+        437.0
+      ]
     },
     {
       "scene_number": 101,
@@ -1028,8 +1828,16 @@
       "duration": 5.59,
       "start_time": "07:13.850",
       "end_time": "07:19.440",
-      "screenshot": "scene_0101_07-13.850.jpg",
-      "screenshot_pts": 436.645
+      "screenshot": "sheet_000432-000438.000.jpg",
+      "screenshot_pts": 436.645,
+      "sheet_timestamps": [
+        432.0,
+        433.0,
+        434.0,
+        435.0,
+        436.0,
+        437.0
+      ]
     },
     {
       "scene_number": 102,
@@ -1038,8 +1846,16 @@
       "duration": 6.3,
       "start_time": "07:19.440",
       "end_time": "07:25.740",
-      "screenshot": "scene_0102_07-19.440.jpg",
-      "screenshot_pts": 442.59
+      "screenshot": "sheet_000438-000444.000.jpg",
+      "screenshot_pts": 442.59,
+      "sheet_timestamps": [
+        438.0,
+        439.0,
+        440.0,
+        441.0,
+        442.0,
+        443.0
+      ]
     },
     {
       "scene_number": 103,
@@ -1048,8 +1864,16 @@
       "duration": 3.5,
       "start_time": "07:25.740",
       "end_time": "07:29.240",
-      "screenshot": "scene_0103_07-25.740.jpg",
-      "screenshot_pts": 447.49
+      "screenshot": "sheet_000444-000450.000.jpg",
+      "screenshot_pts": 447.49,
+      "sheet_timestamps": [
+        444.0,
+        445.0,
+        446.0,
+        447.0,
+        448.0,
+        449.0
+      ]
     },
     {
       "scene_number": 104,
@@ -1058,8 +1882,16 @@
       "duration": 5.09,
       "start_time": "07:29.240",
       "end_time": "07:34.330",
-      "screenshot": "scene_0104_07-29.240.jpg",
-      "screenshot_pts": 451.785
+      "screenshot": "sheet_000450-000456.000.jpg",
+      "screenshot_pts": 451.785,
+      "sheet_timestamps": [
+        450.0,
+        451.0,
+        452.0,
+        453.0,
+        454.0,
+        455.0
+      ]
     },
     {
       "scene_number": 105,
@@ -1068,8 +1900,16 @@
       "duration": 4.21,
       "start_time": "07:34.330",
       "end_time": "07:38.540",
-      "screenshot": "scene_0105_07-34.330.jpg",
-      "screenshot_pts": 456.435
+      "screenshot": "sheet_000456-000462.000.jpg",
+      "screenshot_pts": 456.435,
+      "sheet_timestamps": [
+        456.0,
+        457.0,
+        458.0,
+        459.0,
+        460.0,
+        461.0
+      ]
     },
     {
       "scene_number": 106,
@@ -1078,8 +1918,16 @@
       "duration": 1.54,
       "start_time": "07:38.540",
       "end_time": "07:40.080",
-      "screenshot": "scene_0106_07-38.540.jpg",
-      "screenshot_pts": 459.31
+      "screenshot": "sheet_000456-000462.000.jpg",
+      "screenshot_pts": 459.31,
+      "sheet_timestamps": [
+        456.0,
+        457.0,
+        458.0,
+        459.0,
+        460.0,
+        461.0
+      ]
     },
     {
       "scene_number": 107,
@@ -1088,8 +1936,16 @@
       "duration": 2.51,
       "start_time": "07:40.080",
       "end_time": "07:42.590",
-      "screenshot": "scene_0107_07-40.080.jpg",
-      "screenshot_pts": 461.335
+      "screenshot": "sheet_000456-000462.000.jpg",
+      "screenshot_pts": 461.335,
+      "sheet_timestamps": [
+        456.0,
+        457.0,
+        458.0,
+        459.0,
+        460.0,
+        461.0
+      ]
     },
     {
       "scene_number": 108,
@@ -1098,8 +1954,16 @@
       "duration": 4.25,
       "start_time": "07:42.590",
       "end_time": "07:46.840",
-      "screenshot": "scene_0108_07-42.590.jpg",
-      "screenshot_pts": 464.715
+      "screenshot": "sheet_000462-000468.000.jpg",
+      "screenshot_pts": 464.715,
+      "sheet_timestamps": [
+        462.0,
+        463.0,
+        464.0,
+        465.0,
+        466.0,
+        467.0
+      ]
     },
     {
       "scene_number": 109,
@@ -1108,8 +1972,16 @@
       "duration": 5.67,
       "start_time": "07:46.840",
       "end_time": "07:52.510",
-      "screenshot": "scene_0109_07-46.840.jpg",
-      "screenshot_pts": 469.675
+      "screenshot": "sheet_000468-000474.000.jpg",
+      "screenshot_pts": 469.675,
+      "sheet_timestamps": [
+        468.0,
+        469.0,
+        470.0,
+        471.0,
+        472.0,
+        473.0
+      ]
     },
     {
       "scene_number": 110,
@@ -1118,8 +1990,16 @@
       "duration": 1.25,
       "start_time": "07:52.510",
       "end_time": "07:53.760",
-      "screenshot": "scene_0110_07-52.510.jpg",
-      "screenshot_pts": 473.135
+      "screenshot": "sheet_000468-000474.000.jpg",
+      "screenshot_pts": 473.135,
+      "sheet_timestamps": [
+        468.0,
+        469.0,
+        470.0,
+        471.0,
+        472.0,
+        473.0
+      ]
     },
     {
       "scene_number": 111,
@@ -1128,8 +2008,16 @@
       "duration": 2.51,
       "start_time": "07:53.760",
       "end_time": "07:56.270",
-      "screenshot": "scene_0111_07-53.760.jpg",
-      "screenshot_pts": 475.015
+      "screenshot": "sheet_000474-000480.000.jpg",
+      "screenshot_pts": 475.015,
+      "sheet_timestamps": [
+        474.0,
+        475.0,
+        476.0,
+        477.0,
+        478.0,
+        479.0
+      ]
     },
     {
       "scene_number": 112,
@@ -1138,8 +2026,16 @@
       "duration": 4.84,
       "start_time": "07:56.270",
       "end_time": "08:01.110",
-      "screenshot": "scene_0112_07-56.270.jpg",
-      "screenshot_pts": 478.69
+      "screenshot": "sheet_000474-000480.000.jpg",
+      "screenshot_pts": 478.69,
+      "sheet_timestamps": [
+        474.0,
+        475.0,
+        476.0,
+        477.0,
+        478.0,
+        479.0
+      ]
     },
     {
       "scene_number": 113,
@@ -1148,8 +2044,16 @@
       "duration": 5.25,
       "start_time": "08:01.110",
       "end_time": "08:06.360",
-      "screenshot": "scene_0113_08-01.110.jpg",
-      "screenshot_pts": 483.735
+      "screenshot": "sheet_000480-000486.000.jpg",
+      "screenshot_pts": 483.735,
+      "sheet_timestamps": [
+        480.0,
+        481.0,
+        482.0,
+        483.0,
+        484.0,
+        485.0
+      ]
     },
     {
       "scene_number": 114,
@@ -1158,8 +2062,16 @@
       "duration": 2.04,
       "start_time": "08:06.360",
       "end_time": "08:08.400",
-      "screenshot": "scene_0114_08-06.360.jpg",
-      "screenshot_pts": 487.38
+      "screenshot": "sheet_000486-000492.000.jpg",
+      "screenshot_pts": 487.38,
+      "sheet_timestamps": [
+        486.0,
+        487.0,
+        488.0,
+        489.0,
+        490.0,
+        491.0
+      ]
     },
     {
       "scene_number": 115,
@@ -1168,8 +2080,16 @@
       "duration": 5.22,
       "start_time": "08:08.400",
       "end_time": "08:13.620",
-      "screenshot": "scene_0115_08-08.400.jpg",
-      "screenshot_pts": 491.01
+      "screenshot": "sheet_000486-000492.000.jpg",
+      "screenshot_pts": 491.01,
+      "sheet_timestamps": [
+        486.0,
+        487.0,
+        488.0,
+        489.0,
+        490.0,
+        491.0
+      ]
     },
     {
       "scene_number": 116,
@@ -1178,8 +2098,16 @@
       "duration": 3.88,
       "start_time": "08:13.620",
       "end_time": "08:17.500",
-      "screenshot": "scene_0116_08-13.620.jpg",
-      "screenshot_pts": 495.56
+      "screenshot": "sheet_000492-000498.000.jpg",
+      "screenshot_pts": 495.56,
+      "sheet_timestamps": [
+        492.0,
+        493.0,
+        494.0,
+        495.0,
+        496.0,
+        497.0
+      ]
     },
     {
       "scene_number": 117,
@@ -1188,8 +2116,16 @@
       "duration": 5.0,
       "start_time": "08:17.500",
       "end_time": "08:22.500",
-      "screenshot": "scene_0117_08-17.500.jpg",
-      "screenshot_pts": 500.0
+      "screenshot": "sheet_000498-000504.000.jpg",
+      "screenshot_pts": 500.0,
+      "sheet_timestamps": [
+        498.0,
+        499.0,
+        500.0,
+        501.0,
+        502.0,
+        503.0
+      ]
     },
     {
       "scene_number": 118,
@@ -1198,8 +2134,16 @@
       "duration": 8.09,
       "start_time": "08:22.500",
       "end_time": "08:30.590",
-      "screenshot": "scene_0118_08-22.500.jpg",
-      "screenshot_pts": 506.545
+      "screenshot": "sheet_000504-000510.000.jpg",
+      "screenshot_pts": 506.545,
+      "sheet_timestamps": [
+        504.0,
+        505.0,
+        506.0,
+        507.0,
+        508.0,
+        509.0
+      ]
     },
     {
       "scene_number": 119,
@@ -1208,8 +2152,16 @@
       "duration": 3.67,
       "start_time": "08:30.590",
       "end_time": "08:34.260",
-      "screenshot": "scene_0119_08-30.590.jpg",
-      "screenshot_pts": 512.425
+      "screenshot": "sheet_000510-000516.000.jpg",
+      "screenshot_pts": 512.425,
+      "sheet_timestamps": [
+        510.0,
+        511.0,
+        512.0,
+        513.0,
+        514.0,
+        515.0
+      ]
     },
     {
       "scene_number": 120,
@@ -1218,8 +2170,16 @@
       "duration": 4.67,
       "start_time": "08:34.260",
       "end_time": "08:38.930",
-      "screenshot": "scene_0120_08-34.260.jpg",
-      "screenshot_pts": 516.595
+      "screenshot": "sheet_000516-000522.000.jpg",
+      "screenshot_pts": 516.595,
+      "sheet_timestamps": [
+        516.0,
+        517.0,
+        518.0,
+        519.0,
+        520.0,
+        521.0
+      ]
     },
     {
       "scene_number": 121,
@@ -1228,8 +2188,16 @@
       "duration": 0.51,
       "start_time": "08:38.930",
       "end_time": "08:39.440",
-      "screenshot": "scene_0121_08-38.930.jpg",
-      "screenshot_pts": 519.185
+      "screenshot": "sheet_000516-000522.000.jpg",
+      "screenshot_pts": 519.185,
+      "sheet_timestamps": [
+        516.0,
+        517.0,
+        518.0,
+        519.0,
+        520.0,
+        521.0
+      ]
     },
     {
       "scene_number": 122,
@@ -1238,8 +2206,16 @@
       "duration": 4.83,
       "start_time": "08:39.440",
       "end_time": "08:44.270",
-      "screenshot": "scene_0122_08-39.440.jpg",
-      "screenshot_pts": 521.855
+      "screenshot": "sheet_000516-000522.000.jpg",
+      "screenshot_pts": 521.855,
+      "sheet_timestamps": [
+        516.0,
+        517.0,
+        518.0,
+        519.0,
+        520.0,
+        521.0
+      ]
     },
     {
       "scene_number": 123,
@@ -1248,8 +2224,16 @@
       "duration": 6.3,
       "start_time": "08:44.270",
       "end_time": "08:50.570",
-      "screenshot": "scene_0123_08-44.270.jpg",
-      "screenshot_pts": 527.42
+      "screenshot": "sheet_000522-000528.000.jpg",
+      "screenshot_pts": 527.42,
+      "sheet_timestamps": [
+        522.0,
+        523.0,
+        524.0,
+        525.0,
+        526.0,
+        527.0
+      ]
     },
     {
       "scene_number": 124,
@@ -1258,8 +2242,16 @@
       "duration": 1.63,
       "start_time": "08:50.570",
       "end_time": "08:52.200",
-      "screenshot": "scene_0124_08-50.570.jpg",
-      "screenshot_pts": 531.385
+      "screenshot": "sheet_000528-000534.000.jpg",
+      "screenshot_pts": 531.385,
+      "sheet_timestamps": [
+        528.0,
+        529.0,
+        530.0,
+        531.0,
+        532.0,
+        533.0
+      ]
     },
     {
       "scene_number": 125,
@@ -1268,8 +2260,16 @@
       "duration": 2.58,
       "start_time": "08:52.200",
       "end_time": "08:54.780",
-      "screenshot": "scene_0125_08-52.200.jpg",
-      "screenshot_pts": 533.49
+      "screenshot": "sheet_000528-000534.000.jpg",
+      "screenshot_pts": 533.49,
+      "sheet_timestamps": [
+        528.0,
+        529.0,
+        530.0,
+        531.0,
+        532.0,
+        533.0
+      ]
     },
     {
       "scene_number": 126,
@@ -1278,8 +2278,16 @@
       "duration": 4.18,
       "start_time": "08:54.780",
       "end_time": "08:58.960",
-      "screenshot": "scene_0126_08-54.780.jpg",
-      "screenshot_pts": 536.87
+      "screenshot": "sheet_000534-000540.000.jpg",
+      "screenshot_pts": 536.87,
+      "sheet_timestamps": [
+        534.0,
+        535.0,
+        536.0,
+        537.0,
+        538.0,
+        539.0
+      ]
     },
     {
       "scene_number": 127,
@@ -1288,8 +2296,16 @@
       "duration": 1.62,
       "start_time": "08:58.960",
       "end_time": "09:00.580",
-      "screenshot": "scene_0127_08-58.960.jpg",
-      "screenshot_pts": 539.77
+      "screenshot": "sheet_000534-000540.000.jpg",
+      "screenshot_pts": 539.77,
+      "sheet_timestamps": [
+        534.0,
+        535.0,
+        536.0,
+        537.0,
+        538.0,
+        539.0
+      ]
     },
     {
       "scene_number": 128,
@@ -1298,8 +2314,16 @@
       "duration": 1.46,
       "start_time": "09:00.580",
       "end_time": "09:02.040",
-      "screenshot": "scene_0128_09-00.580.jpg",
-      "screenshot_pts": 541.31
+      "screenshot": "sheet_000540-000546.000.jpg",
+      "screenshot_pts": 541.31,
+      "sheet_timestamps": [
+        540.0,
+        541.0,
+        542.0,
+        543.0,
+        544.0,
+        545.0
+      ]
     },
     {
       "scene_number": 129,
@@ -1308,8 +2332,16 @@
       "duration": 4.8,
       "start_time": "09:02.040",
       "end_time": "09:06.840",
-      "screenshot": "scene_0129_09-02.040.jpg",
-      "screenshot_pts": 544.44
+      "screenshot": "sheet_000540-000546.000.jpg",
+      "screenshot_pts": 544.44,
+      "sheet_timestamps": [
+        540.0,
+        541.0,
+        542.0,
+        543.0,
+        544.0,
+        545.0
+      ]
     },
     {
       "scene_number": 130,
@@ -1318,8 +2350,16 @@
       "duration": 5.67,
       "start_time": "09:06.840",
       "end_time": "09:12.510",
-      "screenshot": "scene_0130_09-06.840.jpg",
-      "screenshot_pts": 549.675
+      "screenshot": "sheet_000546-000552.000.jpg",
+      "screenshot_pts": 549.675,
+      "sheet_timestamps": [
+        546.0,
+        547.0,
+        548.0,
+        549.0,
+        550.0,
+        551.0
+      ]
     },
     {
       "scene_number": 131,
@@ -1328,8 +2368,16 @@
       "duration": 2.96,
       "start_time": "09:12.510",
       "end_time": "09:15.470",
-      "screenshot": "scene_0131_09-12.510.jpg",
-      "screenshot_pts": 553.99
+      "screenshot": "sheet_000552-000558.000.jpg",
+      "screenshot_pts": 553.99,
+      "sheet_timestamps": [
+        552.0,
+        553.0,
+        554.0,
+        555.0,
+        556.0,
+        557.0
+      ]
     },
     {
       "scene_number": 132,
@@ -1338,8 +2386,16 @@
       "duration": 0.75,
       "start_time": "09:15.470",
       "end_time": "09:16.220",
-      "screenshot": "scene_0132_09-15.470.jpg",
-      "screenshot_pts": 555.845
+      "screenshot": "sheet_000552-000558.000.jpg",
+      "screenshot_pts": 555.845,
+      "sheet_timestamps": [
+        552.0,
+        553.0,
+        554.0,
+        555.0,
+        556.0,
+        557.0
+      ]
     },
     {
       "scene_number": 133,
@@ -1348,8 +2404,16 @@
       "duration": 3.17,
       "start_time": "09:16.220",
       "end_time": "09:19.390",
-      "screenshot": "scene_0133_09-16.220.jpg",
-      "screenshot_pts": 557.805
+      "screenshot": "sheet_000552-000558.000.jpg",
+      "screenshot_pts": 557.805,
+      "sheet_timestamps": [
+        552.0,
+        553.0,
+        554.0,
+        555.0,
+        556.0,
+        557.0
+      ]
     },
     {
       "scene_number": 134,
@@ -1358,8 +2422,16 @@
       "duration": 5.72,
       "start_time": "09:19.390",
       "end_time": "09:25.110",
-      "screenshot": "scene_0134_09-19.390.jpg",
-      "screenshot_pts": 562.25
+      "screenshot": "sheet_000558-000564.000.jpg",
+      "screenshot_pts": 562.25,
+      "sheet_timestamps": [
+        558.0,
+        559.0,
+        560.0,
+        561.0,
+        562.0,
+        563.0
+      ]
     },
     {
       "scene_number": 135,
@@ -1368,8 +2440,16 @@
       "duration": 1.29,
       "start_time": "09:25.110",
       "end_time": "09:26.400",
-      "screenshot": "scene_0135_09-25.110.jpg",
-      "screenshot_pts": 565.755
+      "screenshot": "sheet_000564-000570.000.jpg",
+      "screenshot_pts": 565.755,
+      "sheet_timestamps": [
+        564.0,
+        565.0,
+        566.0,
+        567.0,
+        568.0,
+        569.0
+      ]
     },
     {
       "scene_number": 136,
@@ -1378,8 +2458,16 @@
       "duration": 3.46,
       "start_time": "09:26.400",
       "end_time": "09:29.860",
-      "screenshot": "scene_0136_09-26.400.jpg",
-      "screenshot_pts": 568.13
+      "screenshot": "sheet_000564-000570.000.jpg",
+      "screenshot_pts": 568.13,
+      "sheet_timestamps": [
+        564.0,
+        565.0,
+        566.0,
+        567.0,
+        568.0,
+        569.0
+      ]
     },
     {
       "scene_number": 137,
@@ -1388,8 +2476,16 @@
       "duration": 9.76,
       "start_time": "09:29.860",
       "end_time": "09:39.620",
-      "screenshot": "scene_0137_09-29.860.jpg",
-      "screenshot_pts": 574.74
+      "screenshot": "sheet_000570-000576.000.jpg",
+      "screenshot_pts": 574.74,
+      "sheet_timestamps": [
+        570.0,
+        571.0,
+        572.0,
+        573.0,
+        574.0,
+        575.0
+      ]
     },
     {
       "scene_number": 138,
@@ -1398,8 +2494,16 @@
       "duration": 7.38,
       "start_time": "09:39.620",
       "end_time": "09:47.000",
-      "screenshot": "scene_0138_09-39.620.jpg",
-      "screenshot_pts": 583.31
+      "screenshot": "sheet_000582-000588.000.jpg",
+      "screenshot_pts": 583.31,
+      "sheet_timestamps": [
+        582.0,
+        583.0,
+        584.0,
+        585.0,
+        586.0,
+        587.0
+      ]
     },
     {
       "scene_number": 139,
@@ -1408,8 +2512,16 @@
       "duration": 9.39,
       "start_time": "09:47.000",
       "end_time": "09:56.390",
-      "screenshot": "scene_0139_09-47.000.jpg",
-      "screenshot_pts": 591.695
+      "screenshot": "sheet_000588-000594.000.jpg",
+      "screenshot_pts": 591.695,
+      "sheet_timestamps": [
+        588.0,
+        589.0,
+        590.0,
+        591.0,
+        592.0,
+        593.0
+      ]
     },
     {
       "scene_number": 140,
@@ -1418,8 +2530,16 @@
       "duration": 4.67,
       "start_time": "09:56.390",
       "end_time": "10:01.060",
-      "screenshot": "scene_0140_09-56.390.jpg",
-      "screenshot_pts": 598.725
+      "screenshot": "sheet_000594-000600.000.jpg",
+      "screenshot_pts": 598.725,
+      "sheet_timestamps": [
+        594.0,
+        595.0,
+        596.0,
+        597.0,
+        598.0,
+        599.0
+      ]
     },
     {
       "scene_number": 141,
@@ -1428,8 +2548,16 @@
       "duration": 5.34,
       "start_time": "10:01.060",
       "end_time": "10:06.400",
-      "screenshot": "scene_0141_10-01.060.jpg",
-      "screenshot_pts": 603.73
+      "screenshot": "sheet_000600-000606.000.jpg",
+      "screenshot_pts": 603.73,
+      "sheet_timestamps": [
+        600.0,
+        601.0,
+        602.0,
+        603.0,
+        604.0,
+        605.0
+      ]
     },
     {
       "scene_number": 142,
@@ -1438,8 +2566,16 @@
       "duration": 4.71,
       "start_time": "10:06.400",
       "end_time": "10:11.110",
-      "screenshot": "scene_0142_10-06.400.jpg",
-      "screenshot_pts": 608.755
+      "screenshot": "sheet_000606-000612.000.jpg",
+      "screenshot_pts": 608.755,
+      "sheet_timestamps": [
+        606.0,
+        607.0,
+        608.0,
+        609.0,
+        610.0,
+        611.0
+      ]
     },
     {
       "scene_number": 143,
@@ -1448,8 +2584,16 @@
       "duration": 2.84,
       "start_time": "10:11.110",
       "end_time": "10:13.950",
-      "screenshot": "scene_0143_10-11.110.jpg",
-      "screenshot_pts": 612.53
+      "screenshot": "sheet_000612-000618.000.jpg",
+      "screenshot_pts": 612.53,
+      "sheet_timestamps": [
+        612.0,
+        613.0,
+        614.0,
+        615.0,
+        616.0,
+        617.0
+      ]
     },
     {
       "scene_number": 144,
@@ -1458,8 +2602,16 @@
       "duration": 3.5,
       "start_time": "10:13.950",
       "end_time": "10:17.450",
-      "screenshot": "scene_0144_10-13.950.jpg",
-      "screenshot_pts": 615.7
+      "screenshot": "sheet_000612-000618.000.jpg",
+      "screenshot_pts": 615.7,
+      "sheet_timestamps": [
+        612.0,
+        613.0,
+        614.0,
+        615.0,
+        616.0,
+        617.0
+      ]
     },
     {
       "scene_number": 145,
@@ -1468,8 +2620,16 @@
       "duration": 3.67,
       "start_time": "10:17.450",
       "end_time": "10:21.120",
-      "screenshot": "scene_0145_10-17.450.jpg",
-      "screenshot_pts": 619.285
+      "screenshot": "sheet_000618-000624.000.jpg",
+      "screenshot_pts": 619.285,
+      "sheet_timestamps": [
+        618.0,
+        619.0,
+        620.0,
+        621.0,
+        622.0,
+        623.0
+      ]
     },
     {
       "scene_number": 146,
@@ -1478,8 +2638,16 @@
       "duration": 1.09,
       "start_time": "10:21.120",
       "end_time": "10:22.210",
-      "screenshot": "scene_0146_10-21.120.jpg",
-      "screenshot_pts": 621.665
+      "screenshot": "sheet_000618-000624.000.jpg",
+      "screenshot_pts": 621.665,
+      "sheet_timestamps": [
+        618.0,
+        619.0,
+        620.0,
+        621.0,
+        622.0,
+        623.0
+      ]
     },
     {
       "scene_number": 147,
@@ -1488,8 +2656,16 @@
       "duration": 8.84,
       "start_time": "10:22.210",
       "end_time": "10:31.050",
-      "screenshot": "scene_0147_10-22.210.jpg",
-      "screenshot_pts": 626.63
+      "screenshot": "sheet_000624-000630.000.jpg",
+      "screenshot_pts": 626.63,
+      "sheet_timestamps": [
+        624.0,
+        625.0,
+        626.0,
+        627.0,
+        628.0,
+        629.0
+      ]
     },
     {
       "scene_number": 148,
@@ -1498,8 +2674,16 @@
       "duration": 2.58,
       "start_time": "10:31.050",
       "end_time": "10:33.630",
-      "screenshot": "scene_0148_10-31.050.jpg",
-      "screenshot_pts": 632.34
+      "screenshot": "sheet_000630-000636.000.jpg",
+      "screenshot_pts": 632.34,
+      "sheet_timestamps": [
+        630.0,
+        631.0,
+        632.0,
+        633.0,
+        634.0,
+        635.0
+      ]
     },
     {
       "scene_number": 149,
@@ -1508,8 +2692,16 @@
       "duration": 5.59,
       "start_time": "10:33.630",
       "end_time": "10:39.220",
-      "screenshot": "scene_0149_10-33.630.jpg",
-      "screenshot_pts": 636.425
+      "screenshot": "sheet_000636-000642.000.jpg",
+      "screenshot_pts": 636.425,
+      "sheet_timestamps": [
+        636.0,
+        637.0,
+        638.0,
+        639.0,
+        640.0,
+        641.0
+      ]
     },
     {
       "scene_number": 150,
@@ -1518,8 +2710,16 @@
       "duration": 3.38,
       "start_time": "10:39.220",
       "end_time": "10:42.600",
-      "screenshot": "scene_0150_10-39.220.jpg",
-      "screenshot_pts": 640.91
+      "screenshot": "sheet_000636-000642.000.jpg",
+      "screenshot_pts": 640.91,
+      "sheet_timestamps": [
+        636.0,
+        637.0,
+        638.0,
+        639.0,
+        640.0,
+        641.0
+      ]
     },
     {
       "scene_number": 151,
@@ -1528,8 +2728,16 @@
       "duration": 5.21,
       "start_time": "10:42.600",
       "end_time": "10:47.810",
-      "screenshot": "scene_0151_10-42.600.jpg",
-      "screenshot_pts": 645.205
+      "screenshot": "sheet_000642-000648.000.jpg",
+      "screenshot_pts": 645.205,
+      "sheet_timestamps": [
+        642.0,
+        643.0,
+        644.0,
+        645.0,
+        646.0,
+        647.0
+      ]
     },
     {
       "scene_number": 152,
@@ -1538,8 +2746,16 @@
       "duration": 6.97,
       "start_time": "10:47.810",
       "end_time": "10:54.780",
-      "screenshot": "scene_0152_10-47.810.jpg",
-      "screenshot_pts": 651.295
+      "screenshot": "sheet_000648-000654.000.jpg",
+      "screenshot_pts": 651.295,
+      "sheet_timestamps": [
+        648.0,
+        649.0,
+        650.0,
+        651.0,
+        652.0,
+        653.0
+      ]
     },
     {
       "scene_number": 153,
@@ -1548,8 +2764,16 @@
       "duration": 3.5,
       "start_time": "10:54.780",
       "end_time": "10:58.280",
-      "screenshot": "scene_0153_10-54.780.jpg",
-      "screenshot_pts": 656.53
+      "screenshot": "sheet_000654-000660.000.jpg",
+      "screenshot_pts": 656.53,
+      "sheet_timestamps": [
+        654.0,
+        655.0,
+        656.0,
+        657.0,
+        658.0,
+        659.0
+      ]
     },
     {
       "scene_number": 154,
@@ -1558,8 +2782,16 @@
       "duration": 5.68,
       "start_time": "10:58.280",
       "end_time": "11:03.960",
-      "screenshot": "scene_0154_10-58.280.jpg",
-      "screenshot_pts": 661.12
+      "screenshot": "sheet_000660-000666.000.jpg",
+      "screenshot_pts": 661.12,
+      "sheet_timestamps": [
+        660.0,
+        661.0,
+        662.0,
+        663.0,
+        664.0,
+        665.0
+      ]
     },
     {
       "scene_number": 155,
@@ -1568,8 +2800,16 @@
       "duration": 2.41,
       "start_time": "11:03.960",
       "end_time": "11:06.370",
-      "screenshot": "scene_0155_11-03.960.jpg",
-      "screenshot_pts": 665.165
+      "screenshot": "sheet_000660-000666.000.jpg",
+      "screenshot_pts": 665.165,
+      "sheet_timestamps": [
+        660.0,
+        661.0,
+        662.0,
+        663.0,
+        664.0,
+        665.0
+      ]
     },
     {
       "scene_number": 156,
@@ -1578,8 +2818,16 @@
       "duration": 9.51,
       "start_time": "11:06.370",
       "end_time": "11:15.880",
-      "screenshot": "scene_0156_11-06.370.jpg",
-      "screenshot_pts": 671.125
+      "screenshot": "sheet_000666-000672.000.jpg",
+      "screenshot_pts": 671.125,
+      "sheet_timestamps": [
+        666.0,
+        667.0,
+        668.0,
+        669.0,
+        670.0,
+        671.0
+      ]
     },
     {
       "scene_number": 157,
@@ -1588,8 +2836,16 @@
       "duration": 1.05,
       "start_time": "11:15.880",
       "end_time": "11:16.930",
-      "screenshot": "scene_0157_11-15.880.jpg",
-      "screenshot_pts": 676.405
+      "screenshot": "sheet_000672-000678.000.jpg",
+      "screenshot_pts": 676.405,
+      "sheet_timestamps": [
+        672.0,
+        673.0,
+        674.0,
+        675.0,
+        676.0,
+        677.0
+      ]
     },
     {
       "scene_number": 158,
@@ -1598,8 +2854,16 @@
       "duration": 6.21,
       "start_time": "11:16.930",
       "end_time": "11:23.140",
-      "screenshot": "scene_0158_11-16.930.jpg",
-      "screenshot_pts": 680.035
+      "screenshot": "sheet_000678-000684.000.jpg",
+      "screenshot_pts": 680.035,
+      "sheet_timestamps": [
+        678.0,
+        679.0,
+        680.0,
+        681.0,
+        682.0,
+        683.0
+      ]
     },
     {
       "scene_number": 159,
@@ -1608,8 +2872,16 @@
       "duration": 5.63,
       "start_time": "11:23.140",
       "end_time": "11:28.770",
-      "screenshot": "scene_0159_11-23.140.jpg",
-      "screenshot_pts": 685.955
+      "screenshot": "sheet_000684-000690.000.jpg",
+      "screenshot_pts": 685.955,
+      "sheet_timestamps": [
+        684.0,
+        685.0,
+        686.0,
+        687.0,
+        688.0,
+        689.0
+      ]
     },
     {
       "scene_number": 160,
@@ -1618,8 +2890,16 @@
       "duration": 11.14,
       "start_time": "11:28.770",
       "end_time": "11:39.910",
-      "screenshot": "scene_0160_11-28.770.jpg",
-      "screenshot_pts": 694.34
+      "screenshot": "sheet_000690-000696.000.jpg",
+      "screenshot_pts": 694.34,
+      "sheet_timestamps": [
+        690.0,
+        691.0,
+        692.0,
+        693.0,
+        694.0,
+        695.0
+      ]
     },
     {
       "scene_number": 161,
@@ -1628,8 +2908,16 @@
       "duration": 1.37,
       "start_time": "11:39.910",
       "end_time": "11:41.280",
-      "screenshot": "scene_0161_11-39.910.jpg",
-      "screenshot_pts": 700.595
+      "screenshot": "sheet_000696-000702.000.jpg",
+      "screenshot_pts": 700.595,
+      "sheet_timestamps": [
+        696.0,
+        697.0,
+        698.0,
+        699.0,
+        700.0,
+        701.0
+      ]
     },
     {
       "scene_number": 162,
@@ -1638,8 +2926,16 @@
       "duration": 5.88,
       "start_time": "11:41.280",
       "end_time": "11:47.160",
-      "screenshot": "scene_0162_11-41.280.jpg",
-      "screenshot_pts": 704.22
+      "screenshot": "sheet_000702-000708.000.jpg",
+      "screenshot_pts": 704.22,
+      "sheet_timestamps": [
+        702.0,
+        703.0,
+        704.0,
+        705.0,
+        706.0,
+        707.0
+      ]
     },
     {
       "scene_number": 163,
@@ -1648,8 +2944,16 @@
       "duration": 3.43,
       "start_time": "11:47.160",
       "end_time": "11:50.590",
-      "screenshot": "scene_0163_11-47.160.jpg",
-      "screenshot_pts": 708.875
+      "screenshot": "sheet_000708-000714.000.jpg",
+      "screenshot_pts": 708.875,
+      "sheet_timestamps": [
+        708.0,
+        709.0,
+        710.0,
+        711.0,
+        712.0,
+        713.0
+      ]
     },
     {
       "scene_number": 164,
@@ -1658,8 +2962,16 @@
       "duration": 3.66,
       "start_time": "11:50.590",
       "end_time": "11:54.250",
-      "screenshot": "scene_0164_11-50.590.jpg",
-      "screenshot_pts": 712.42
+      "screenshot": "sheet_000708-000714.000.jpg",
+      "screenshot_pts": 712.42,
+      "sheet_timestamps": [
+        708.0,
+        709.0,
+        710.0,
+        711.0,
+        712.0,
+        713.0
+      ]
     },
     {
       "scene_number": 165,
@@ -1668,8 +2980,16 @@
       "duration": 4.13,
       "start_time": "11:54.250",
       "end_time": "11:58.380",
-      "screenshot": "scene_0165_11-54.250.jpg",
-      "screenshot_pts": 716.315
+      "screenshot": "sheet_000714-000720.000.jpg",
+      "screenshot_pts": 716.315,
+      "sheet_timestamps": [
+        714.0,
+        715.0,
+        716.0,
+        717.0,
+        718.0,
+        719.0
+      ]
     },
     {
       "scene_number": 166,
@@ -1678,8 +2998,16 @@
       "duration": 4.88,
       "start_time": "11:58.380",
       "end_time": "12:03.260",
-      "screenshot": "scene_0166_11-58.380.jpg",
-      "screenshot_pts": 720.82
+      "screenshot": "sheet_000720-000726.000.jpg",
+      "screenshot_pts": 720.82,
+      "sheet_timestamps": [
+        720.0,
+        721.0,
+        722.0,
+        723.0,
+        724.0,
+        725.0
+      ]
     },
     {
       "scene_number": 167,
@@ -1688,8 +3016,16 @@
       "duration": 1.21,
       "start_time": "12:03.260",
       "end_time": "12:04.470",
-      "screenshot": "scene_0167_12-03.260.jpg",
-      "screenshot_pts": 723.865
+      "screenshot": "sheet_000720-000726.000.jpg",
+      "screenshot_pts": 723.865,
+      "sheet_timestamps": [
+        720.0,
+        721.0,
+        722.0,
+        723.0,
+        724.0,
+        725.0
+      ]
     },
     {
       "scene_number": 168,
@@ -1698,8 +3034,16 @@
       "duration": 1.09,
       "start_time": "12:04.470",
       "end_time": "12:05.560",
-      "screenshot": "scene_0168_12-04.470.jpg",
-      "screenshot_pts": 725.015
+      "screenshot": "sheet_000720-000726.000.jpg",
+      "screenshot_pts": 725.015,
+      "sheet_timestamps": [
+        720.0,
+        721.0,
+        722.0,
+        723.0,
+        724.0,
+        725.0
+      ]
     },
     {
       "scene_number": 169,
@@ -1708,8 +3052,16 @@
       "duration": 3.08,
       "start_time": "12:05.560",
       "end_time": "12:08.640",
-      "screenshot": "scene_0169_12-05.560.jpg",
-      "screenshot_pts": 727.1
+      "screenshot": "sheet_000726-000732.000.jpg",
+      "screenshot_pts": 727.1,
+      "sheet_timestamps": [
+        726.0,
+        727.0,
+        728.0,
+        729.0,
+        730.0,
+        731.0
+      ]
     },
     {
       "scene_number": 170,
@@ -1718,8 +3070,16 @@
       "duration": 4.72,
       "start_time": "12:08.640",
       "end_time": "12:13.360",
-      "screenshot": "scene_0170_12-08.640.jpg",
-      "screenshot_pts": 731.0
+      "screenshot": "sheet_000726-000732.000.jpg",
+      "screenshot_pts": 731.0,
+      "sheet_timestamps": [
+        726.0,
+        727.0,
+        728.0,
+        729.0,
+        730.0,
+        731.0
+      ]
     },
     {
       "scene_number": 171,
@@ -1728,8 +3088,16 @@
       "duration": 0.87,
       "start_time": "12:13.360",
       "end_time": "12:14.230",
-      "screenshot": "scene_0171_12-13.360.jpg",
-      "screenshot_pts": 733.795
+      "screenshot": "sheet_000732-000738.000.jpg",
+      "screenshot_pts": 733.795,
+      "sheet_timestamps": [
+        732.0,
+        733.0,
+        734.0,
+        735.0,
+        736.0,
+        737.0
+      ]
     },
     {
       "scene_number": 172,
@@ -1738,8 +3106,16 @@
       "duration": 6.01,
       "start_time": "12:14.230",
       "end_time": "12:20.240",
-      "screenshot": "scene_0172_12-14.230.jpg",
-      "screenshot_pts": 737.235
+      "screenshot": "sheet_000732-000738.000.jpg",
+      "screenshot_pts": 737.235,
+      "sheet_timestamps": [
+        732.0,
+        733.0,
+        734.0,
+        735.0,
+        736.0,
+        737.0
+      ]
     },
     {
       "scene_number": 173,
@@ -1748,8 +3124,16 @@
       "duration": 3.25,
       "start_time": "12:20.240",
       "end_time": "12:23.490",
-      "screenshot": "scene_0173_12-20.240.jpg",
-      "screenshot_pts": 741.865
+      "screenshot": "sheet_000738-000744.000.jpg",
+      "screenshot_pts": 741.865,
+      "sheet_timestamps": [
+        738.0,
+        739.0,
+        740.0,
+        741.0,
+        742.0,
+        743.0
+      ]
     },
     {
       "scene_number": 174,
@@ -1758,8 +3142,16 @@
       "duration": 3.21,
       "start_time": "12:23.490",
       "end_time": "12:26.700",
-      "screenshot": "scene_0174_12-23.490.jpg",
-      "screenshot_pts": 745.095
+      "screenshot": "sheet_000744-000750.000.jpg",
+      "screenshot_pts": 745.095,
+      "sheet_timestamps": [
+        744.0,
+        745.0,
+        746.0,
+        747.0,
+        748.0,
+        749.0
+      ]
     },
     {
       "scene_number": 175,
@@ -1768,8 +3160,16 @@
       "duration": 3.47,
       "start_time": "12:26.700",
       "end_time": "12:30.170",
-      "screenshot": "scene_0175_12-26.700.jpg",
-      "screenshot_pts": 748.435
+      "screenshot": "sheet_000744-000750.000.jpg",
+      "screenshot_pts": 748.435,
+      "sheet_timestamps": [
+        744.0,
+        745.0,
+        746.0,
+        747.0,
+        748.0,
+        749.0
+      ]
     },
     {
       "scene_number": 176,
@@ -1778,8 +3178,16 @@
       "duration": 2.37,
       "start_time": "12:30.170",
       "end_time": "12:32.540",
-      "screenshot": "scene_0176_12-30.170.jpg",
-      "screenshot_pts": 751.355
+      "screenshot": "sheet_000750-000756.000.jpg",
+      "screenshot_pts": 751.355,
+      "sheet_timestamps": [
+        750.0,
+        751.0,
+        752.0,
+        753.0,
+        754.0,
+        755.0
+      ]
     },
     {
       "scene_number": 177,
@@ -1788,8 +3196,16 @@
       "duration": 4.97,
       "start_time": "12:32.540",
       "end_time": "12:37.510",
-      "screenshot": "scene_0177_12-32.540.jpg",
-      "screenshot_pts": 755.025
+      "screenshot": "sheet_000750-000756.000.jpg",
+      "screenshot_pts": 755.025,
+      "sheet_timestamps": [
+        750.0,
+        751.0,
+        752.0,
+        753.0,
+        754.0,
+        755.0
+      ]
     },
     {
       "scene_number": 178,
@@ -1798,8 +3214,16 @@
       "duration": 3.5,
       "start_time": "12:37.510",
       "end_time": "12:41.010",
-      "screenshot": "scene_0178_12-37.510.jpg",
-      "screenshot_pts": 759.26
+      "screenshot": "sheet_000756-000762.000.jpg",
+      "screenshot_pts": 759.26,
+      "sheet_timestamps": [
+        756.0,
+        757.0,
+        758.0,
+        759.0,
+        760.0,
+        761.0
+      ]
     },
     {
       "scene_number": 179,
@@ -1808,8 +3232,16 @@
       "duration": 1.04,
       "start_time": "12:41.010",
       "end_time": "12:42.050",
-      "screenshot": "scene_0179_12-41.010.jpg",
-      "screenshot_pts": 761.53
+      "screenshot": "sheet_000756-000762.000.jpg",
+      "screenshot_pts": 761.53,
+      "sheet_timestamps": [
+        756.0,
+        757.0,
+        758.0,
+        759.0,
+        760.0,
+        761.0
+      ]
     },
     {
       "scene_number": 180,
@@ -1818,8 +3250,16 @@
       "duration": 3.67,
       "start_time": "12:42.050",
       "end_time": "12:45.720",
-      "screenshot": "scene_0180_12-42.050.jpg",
-      "screenshot_pts": 763.885
+      "screenshot": "sheet_000762-000768.000.jpg",
+      "screenshot_pts": 763.885,
+      "sheet_timestamps": [
+        762.0,
+        763.0,
+        764.0,
+        765.0,
+        766.0,
+        767.0
+      ]
     },
     {
       "scene_number": 181,
@@ -1828,8 +3268,16 @@
       "duration": 4.34,
       "start_time": "12:45.720",
       "end_time": "12:50.060",
-      "screenshot": "scene_0181_12-45.720.jpg",
-      "screenshot_pts": 767.89
+      "screenshot": "sheet_000762-000768.000.jpg",
+      "screenshot_pts": 767.89,
+      "sheet_timestamps": [
+        762.0,
+        763.0,
+        764.0,
+        765.0,
+        766.0,
+        767.0
+      ]
     },
     {
       "scene_number": 182,
@@ -1838,8 +3286,16 @@
       "duration": 1.67,
       "start_time": "12:50.060",
       "end_time": "12:51.730",
-      "screenshot": "scene_0182_12-50.060.jpg",
-      "screenshot_pts": 770.895
+      "screenshot": "sheet_000768-000774.000.jpg",
+      "screenshot_pts": 770.895,
+      "sheet_timestamps": [
+        768.0,
+        769.0,
+        770.0,
+        771.0,
+        772.0,
+        773.0
+      ]
     },
     {
       "scene_number": 183,
@@ -1848,8 +3304,16 @@
       "duration": 9.55,
       "start_time": "12:51.730",
       "end_time": "13:01.280",
-      "screenshot": "scene_0183_12-51.730.jpg",
-      "screenshot_pts": 776.505
+      "screenshot": "sheet_000774-000780.000.jpg",
+      "screenshot_pts": 776.505,
+      "sheet_timestamps": [
+        774.0,
+        775.0,
+        776.0,
+        777.0,
+        778.0,
+        779.0
+      ]
     },
     {
       "scene_number": 184,
@@ -1858,8 +3322,16 @@
       "duration": 6.3,
       "start_time": "13:01.280",
       "end_time": "13:07.580",
-      "screenshot": "scene_0184_13-01.280.jpg",
-      "screenshot_pts": 784.43
+      "screenshot": "sheet_000780-000786.000.jpg",
+      "screenshot_pts": 784.43,
+      "sheet_timestamps": [
+        780.0,
+        781.0,
+        782.0,
+        783.0,
+        784.0,
+        785.0
+      ]
     },
     {
       "scene_number": 185,
@@ -1868,8 +3340,16 @@
       "duration": 3.67,
       "start_time": "13:07.580",
       "end_time": "13:11.250",
-      "screenshot": "scene_0185_13-07.580.jpg",
-      "screenshot_pts": 789.415
+      "screenshot": "sheet_000786-000792.000.jpg",
+      "screenshot_pts": 789.415,
+      "sheet_timestamps": [
+        786.0,
+        787.0,
+        788.0,
+        789.0,
+        790.0,
+        791.0
+      ]
     },
     {
       "scene_number": 186,
@@ -1878,8 +3358,16 @@
       "duration": 1.08,
       "start_time": "13:11.250",
       "end_time": "13:12.330",
-      "screenshot": "scene_0186_13-11.250.jpg",
-      "screenshot_pts": 791.79
+      "screenshot": "sheet_000786-000792.000.jpg",
+      "screenshot_pts": 791.79,
+      "sheet_timestamps": [
+        786.0,
+        787.0,
+        788.0,
+        789.0,
+        790.0,
+        791.0
+      ]
     },
     {
       "scene_number": 187,
@@ -1888,8 +3376,16 @@
       "duration": 6.68,
       "start_time": "13:12.330",
       "end_time": "13:19.010",
-      "screenshot": "scene_0187_13-12.330.jpg",
-      "screenshot_pts": 795.67
+      "screenshot": "sheet_000792-000798.000.jpg",
+      "screenshot_pts": 795.67,
+      "sheet_timestamps": [
+        792.0,
+        793.0,
+        794.0,
+        795.0,
+        796.0,
+        797.0
+      ]
     },
     {
       "scene_number": 188,
@@ -1898,8 +3394,16 @@
       "duration": 4.04,
       "start_time": "13:19.010",
       "end_time": "13:23.050",
-      "screenshot": "scene_0188_13-19.010.jpg",
-      "screenshot_pts": 801.03
+      "screenshot": "sheet_000798-000804.000.jpg",
+      "screenshot_pts": 801.03,
+      "sheet_timestamps": [
+        798.0,
+        799.0,
+        800.0,
+        801.0,
+        802.0,
+        803.0
+      ]
     },
     {
       "scene_number": 189,
@@ -1908,8 +3412,16 @@
       "duration": 3.59,
       "start_time": "13:23.050",
       "end_time": "13:26.640",
-      "screenshot": "scene_0189_13-23.050.jpg",
-      "screenshot_pts": 804.845
+      "screenshot": "sheet_000804-000810.000.jpg",
+      "screenshot_pts": 804.845,
+      "sheet_timestamps": [
+        804.0,
+        805.0,
+        806.0,
+        807.0,
+        808.0,
+        809.0
+      ]
     },
     {
       "scene_number": 190,
@@ -1918,8 +3430,16 @@
       "duration": 2.79,
       "start_time": "13:26.640",
       "end_time": "13:29.430",
-      "screenshot": "scene_0190_13-26.640.jpg",
-      "screenshot_pts": 808.035
+      "screenshot": "sheet_000804-000810.000.jpg",
+      "screenshot_pts": 808.035,
+      "sheet_timestamps": [
+        804.0,
+        805.0,
+        806.0,
+        807.0,
+        808.0,
+        809.0
+      ]
     },
     {
       "scene_number": 191,
@@ -1928,8 +3448,16 @@
       "duration": 6.93,
       "start_time": "13:29.430",
       "end_time": "13:36.360",
-      "screenshot": "scene_0191_13-29.430.jpg",
-      "screenshot_pts": 812.895
+      "screenshot": "sheet_000810-000816.000.jpg",
+      "screenshot_pts": 812.895,
+      "sheet_timestamps": [
+        810.0,
+        811.0,
+        812.0,
+        813.0,
+        814.0,
+        815.0
+      ]
     },
     {
       "scene_number": 192,
@@ -1938,8 +3466,16 @@
       "duration": 4.96,
       "start_time": "13:36.360",
       "end_time": "13:41.320",
-      "screenshot": "scene_0192_13-36.360.jpg",
-      "screenshot_pts": 818.84
+      "screenshot": "sheet_000816-000822.000.jpg",
+      "screenshot_pts": 818.84,
+      "sheet_timestamps": [
+        816.0,
+        817.0,
+        818.0,
+        819.0,
+        820.0,
+        821.0
+      ]
     },
     {
       "scene_number": 193,
@@ -1948,8 +3484,16 @@
       "duration": 2.13,
       "start_time": "13:41.320",
       "end_time": "13:43.450",
-      "screenshot": "scene_0193_13-41.320.jpg",
-      "screenshot_pts": 822.385
+      "screenshot": "sheet_000822-000828.000.jpg",
+      "screenshot_pts": 822.385,
+      "sheet_timestamps": [
+        822.0,
+        823.0,
+        824.0,
+        825.0,
+        826.0,
+        827.0
+      ]
     },
     {
       "scene_number": 194,
@@ -1958,8 +3502,16 @@
       "duration": 5.8,
       "start_time": "13:43.450",
       "end_time": "13:49.250",
-      "screenshot": "scene_0194_13-43.450.jpg",
-      "screenshot_pts": 826.35
+      "screenshot": "sheet_000822-000828.000.jpg",
+      "screenshot_pts": 826.35,
+      "sheet_timestamps": [
+        822.0,
+        823.0,
+        824.0,
+        825.0,
+        826.0,
+        827.0
+      ]
     },
     {
       "scene_number": 195,
@@ -1968,8 +3520,16 @@
       "duration": 3.54,
       "start_time": "13:49.250",
       "end_time": "13:52.790",
-      "screenshot": "scene_0195_13-49.250.jpg",
-      "screenshot_pts": 831.02
+      "screenshot": "sheet_000828-000834.000.jpg",
+      "screenshot_pts": 831.02,
+      "sheet_timestamps": [
+        828.0,
+        829.0,
+        830.0,
+        831.0,
+        832.0,
+        833.0
+      ]
     },
     {
       "scene_number": 196,
@@ -1978,8 +3538,16 @@
       "duration": 3.59,
       "start_time": "13:52.790",
       "end_time": "13:56.380",
-      "screenshot": "scene_0196_13-52.790.jpg",
-      "screenshot_pts": 834.585
+      "screenshot": "sheet_000834-000840.000.jpg",
+      "screenshot_pts": 834.585,
+      "sheet_timestamps": [
+        834.0,
+        835.0,
+        836.0,
+        837.0,
+        838.0,
+        839.0
+      ]
     },
     {
       "scene_number": 197,
@@ -1988,8 +3556,16 @@
       "duration": 3.79,
       "start_time": "13:56.380",
       "end_time": "14:00.170",
-      "screenshot": "scene_0197_13-56.380.jpg",
-      "screenshot_pts": 838.275
+      "screenshot": "sheet_000834-000840.000.jpg",
+      "screenshot_pts": 838.275,
+      "sheet_timestamps": [
+        834.0,
+        835.0,
+        836.0,
+        837.0,
+        838.0,
+        839.0
+      ]
     },
     {
       "scene_number": 198,
@@ -1998,8 +3574,16 @@
       "duration": 7.97,
       "start_time": "14:00.170",
       "end_time": "14:08.140",
-      "screenshot": "scene_0198_14-00.170.jpg",
-      "screenshot_pts": 844.155
+      "screenshot": "sheet_000840-000846.000.jpg",
+      "screenshot_pts": 844.155,
+      "sheet_timestamps": [
+        840.0,
+        841.0,
+        842.0,
+        843.0,
+        844.0,
+        845.0
+      ]
     },
     {
       "scene_number": 199,
@@ -2008,8 +3592,16 @@
       "duration": 12.47,
       "start_time": "14:08.140",
       "end_time": "14:20.610",
-      "screenshot": "scene_0199_14-08.140.jpg",
-      "screenshot_pts": 854.375
+      "screenshot": "sheet_000852-000858.000.jpg",
+      "screenshot_pts": 854.375,
+      "sheet_timestamps": [
+        852.0,
+        853.0,
+        854.0,
+        855.0,
+        856.0,
+        857.0
+      ]
     },
     {
       "scene_number": 200,
@@ -2018,8 +3610,16 @@
       "duration": 1.71,
       "start_time": "14:20.610",
       "end_time": "14:22.320",
-      "screenshot": "scene_0200_14-20.610.jpg",
-      "screenshot_pts": 861.465
+      "screenshot": "sheet_000858-000864.000.jpg",
+      "screenshot_pts": 861.465,
+      "sheet_timestamps": [
+        858.0,
+        859.0,
+        860.0,
+        861.0,
+        862.0,
+        863.0
+      ]
     },
     {
       "scene_number": 201,
@@ -2028,8 +3628,16 @@
       "duration": 6.84,
       "start_time": "14:22.320",
       "end_time": "14:29.160",
-      "screenshot": "scene_0201_14-22.320.jpg",
-      "screenshot_pts": 865.74
+      "screenshot": "sheet_000864-000870.000.jpg",
+      "screenshot_pts": 865.74,
+      "sheet_timestamps": [
+        864.0,
+        865.0,
+        866.0,
+        867.0,
+        868.0,
+        869.0
+      ]
     },
     {
       "scene_number": 202,
@@ -2038,8 +3646,16 @@
       "duration": 6.51,
       "start_time": "14:29.160",
       "end_time": "14:35.670",
-      "screenshot": "scene_0202_14-29.160.jpg",
-      "screenshot_pts": 872.415
+      "screenshot": "sheet_000870-000876.000.jpg",
+      "screenshot_pts": 872.415,
+      "sheet_timestamps": [
+        870.0,
+        871.0,
+        872.0,
+        873.0,
+        874.0,
+        875.0
+      ]
     },
     {
       "scene_number": 203,
@@ -2048,8 +3664,16 @@
       "duration": 7.59,
       "start_time": "14:35.670",
       "end_time": "14:43.260",
-      "screenshot": "scene_0203_14-35.670.jpg",
-      "screenshot_pts": 879.465
+      "screenshot": "sheet_000876-000882.000.jpg",
+      "screenshot_pts": 879.465,
+      "sheet_timestamps": [
+        876.0,
+        877.0,
+        878.0,
+        879.0,
+        880.0,
+        881.0
+      ]
     },
     {
       "scene_number": 204,
@@ -2058,8 +3682,16 @@
       "duration": 2.42,
       "start_time": "14:43.260",
       "end_time": "14:45.680",
-      "screenshot": "scene_0204_14-43.260.jpg",
-      "screenshot_pts": 884.47
+      "screenshot": "sheet_000882-000888.000.jpg",
+      "screenshot_pts": 884.47,
+      "sheet_timestamps": [
+        882.0,
+        883.0,
+        884.0,
+        885.0,
+        886.0,
+        887.0
+      ]
     },
     {
       "scene_number": 205,
@@ -2068,8 +3700,16 @@
       "duration": 4.33,
       "start_time": "14:45.680",
       "end_time": "14:50.010",
-      "screenshot": "scene_0205_14-45.680.jpg",
-      "screenshot_pts": 887.845
+      "screenshot": "sheet_000882-000888.000.jpg",
+      "screenshot_pts": 887.845,
+      "sheet_timestamps": [
+        882.0,
+        883.0,
+        884.0,
+        885.0,
+        886.0,
+        887.0
+      ]
     },
     {
       "scene_number": 206,
@@ -2078,8 +3718,16 @@
       "duration": 3.26,
       "start_time": "14:50.010",
       "end_time": "14:53.270",
-      "screenshot": "scene_0206_14-50.010.jpg",
-      "screenshot_pts": 891.64
+      "screenshot": "sheet_000888-000894.000.jpg",
+      "screenshot_pts": 891.64,
+      "sheet_timestamps": [
+        888.0,
+        889.0,
+        890.0,
+        891.0,
+        892.0,
+        893.0
+      ]
     },
     {
       "scene_number": 207,
@@ -2088,8 +3736,16 @@
       "duration": 7.71,
       "start_time": "14:53.270",
       "end_time": "15:00.980",
-      "screenshot": "scene_0207_14-53.270.jpg",
-      "screenshot_pts": 897.125
+      "screenshot": "sheet_000894-000900.000.jpg",
+      "screenshot_pts": 897.125,
+      "sheet_timestamps": [
+        894.0,
+        895.0,
+        896.0,
+        897.0,
+        898.0,
+        899.0
+      ]
     },
     {
       "scene_number": 208,
@@ -2098,8 +3754,16 @@
       "duration": 1.46,
       "start_time": "15:00.980",
       "end_time": "15:02.440",
-      "screenshot": "scene_0208_15-00.980.jpg",
-      "screenshot_pts": 901.71
+      "screenshot": "sheet_000900-000906.000.jpg",
+      "screenshot_pts": 901.71,
+      "sheet_timestamps": [
+        900.0,
+        901.0,
+        902.0,
+        903.0,
+        904.0,
+        905.0
+      ]
     },
     {
       "scene_number": 209,
@@ -2108,8 +3772,16 @@
       "duration": 3.17,
       "start_time": "15:02.440",
       "end_time": "15:05.610",
-      "screenshot": "scene_0209_15-02.440.jpg",
-      "screenshot_pts": 904.025
+      "screenshot": "sheet_000900-000906.000.jpg",
+      "screenshot_pts": 904.025,
+      "sheet_timestamps": [
+        900.0,
+        901.0,
+        902.0,
+        903.0,
+        904.0,
+        905.0
+      ]
     },
     {
       "scene_number": 210,
@@ -2118,8 +3790,16 @@
       "duration": 11.47,
       "start_time": "15:05.610",
       "end_time": "15:17.080",
-      "screenshot": "scene_0210_15-05.610.jpg",
-      "screenshot_pts": 911.345
+      "screenshot": "sheet_000906-000912.000.jpg",
+      "screenshot_pts": 911.345,
+      "sheet_timestamps": [
+        906.0,
+        907.0,
+        908.0,
+        909.0,
+        910.0,
+        911.0
+      ]
     },
     {
       "scene_number": 211,
@@ -2128,8 +3808,16 @@
       "duration": 5.76,
       "start_time": "15:17.080",
       "end_time": "15:22.840",
-      "screenshot": "scene_0211_15-17.080.jpg",
-      "screenshot_pts": 919.96
+      "screenshot": "sheet_000918-000924.000.jpg",
+      "screenshot_pts": 919.96,
+      "sheet_timestamps": [
+        918.0,
+        919.0,
+        920.0,
+        921.0,
+        922.0,
+        923.0
+      ]
     },
     {
       "scene_number": 212,
@@ -2138,8 +3826,16 @@
       "duration": 4.92,
       "start_time": "15:22.840",
       "end_time": "15:27.760",
-      "screenshot": "scene_0212_15-22.840.jpg",
-      "screenshot_pts": 925.3
+      "screenshot": "sheet_000924-000930.000.jpg",
+      "screenshot_pts": 925.3,
+      "sheet_timestamps": [
+        924.0,
+        925.0,
+        926.0,
+        927.0,
+        928.0,
+        929.0
+      ]
     },
     {
       "scene_number": 213,
@@ -2148,8 +3844,16 @@
       "duration": 4.46,
       "start_time": "15:27.760",
       "end_time": "15:32.220",
-      "screenshot": "scene_0213_15-27.760.jpg",
-      "screenshot_pts": 929.99
+      "screenshot": "sheet_000924-000930.000.jpg",
+      "screenshot_pts": 929.99,
+      "sheet_timestamps": [
+        924.0,
+        925.0,
+        926.0,
+        927.0,
+        928.0,
+        929.0
+      ]
     },
     {
       "scene_number": 214,
@@ -2158,8 +3862,16 @@
       "duration": 2.92,
       "start_time": "15:32.220",
       "end_time": "15:35.140",
-      "screenshot": "scene_0214_15-32.220.jpg",
-      "screenshot_pts": 933.68
+      "screenshot": "sheet_000930-000936.000.jpg",
+      "screenshot_pts": 933.68,
+      "sheet_timestamps": [
+        930.0,
+        931.0,
+        932.0,
+        933.0,
+        934.0,
+        935.0
+      ]
     },
     {
       "scene_number": 215,
@@ -2168,8 +3880,16 @@
       "duration": 6.97,
       "start_time": "15:35.140",
       "end_time": "15:42.110",
-      "screenshot": "scene_0215_15-35.140.jpg",
-      "screenshot_pts": 938.625
+      "screenshot": "sheet_000936-000942.000.jpg",
+      "screenshot_pts": 938.625,
+      "sheet_timestamps": [
+        936.0,
+        937.0,
+        938.0,
+        939.0,
+        940.0,
+        941.0
+      ]
     },
     {
       "scene_number": 216,
@@ -2178,8 +3898,16 @@
       "duration": 4.88,
       "start_time": "15:42.110",
       "end_time": "15:46.990",
-      "screenshot": "scene_0216_15-42.110.jpg",
-      "screenshot_pts": 944.55
+      "screenshot": "sheet_000942-000948.000.jpg",
+      "screenshot_pts": 944.55,
+      "sheet_timestamps": [
+        942.0,
+        943.0,
+        944.0,
+        945.0,
+        946.0,
+        947.0
+      ]
     },
     {
       "scene_number": 217,
@@ -2188,8 +3916,16 @@
       "duration": 4.71,
       "start_time": "15:46.990",
       "end_time": "15:51.700",
-      "screenshot": "scene_0217_15-46.990.jpg",
-      "screenshot_pts": 949.345
+      "screenshot": "sheet_000948-000954.000.jpg",
+      "screenshot_pts": 949.345,
+      "sheet_timestamps": [
+        948.0,
+        949.0,
+        950.0,
+        951.0,
+        952.0,
+        953.0
+      ]
     },
     {
       "scene_number": 218,
@@ -2198,8 +3934,16 @@
       "duration": 4.51,
       "start_time": "15:51.700",
       "end_time": "15:56.210",
-      "screenshot": "scene_0218_15-51.700.jpg",
-      "screenshot_pts": 953.955
+      "screenshot": "sheet_000948-000954.000.jpg",
+      "screenshot_pts": 953.955,
+      "sheet_timestamps": [
+        948.0,
+        949.0,
+        950.0,
+        951.0,
+        952.0,
+        953.0
+      ]
     },
     {
       "scene_number": 219,
@@ -2208,8 +3952,16 @@
       "duration": 9.71,
       "start_time": "15:56.210",
       "end_time": "16:05.920",
-      "screenshot": "scene_0219_15-56.210.jpg",
-      "screenshot_pts": 961.065
+      "screenshot": "sheet_000960-000966.000.jpg",
+      "screenshot_pts": 961.065,
+      "sheet_timestamps": [
+        960.0,
+        961.0,
+        962.0,
+        963.0,
+        964.0,
+        965.0
+      ]
     },
     {
       "scene_number": 220,
@@ -2218,8 +3970,16 @@
       "duration": 5.26,
       "start_time": "16:05.920",
       "end_time": "16:11.180",
-      "screenshot": "scene_0220_16-05.920.jpg",
-      "screenshot_pts": 968.55
+      "screenshot": "sheet_000966-000972.000.jpg",
+      "screenshot_pts": 968.55,
+      "sheet_timestamps": [
+        966.0,
+        967.0,
+        968.0,
+        969.0,
+        970.0,
+        971.0
+      ]
     },
     {
       "scene_number": 221,
@@ -2228,8 +3988,16 @@
       "duration": 2.5,
       "start_time": "16:11.180",
       "end_time": "16:13.680",
-      "screenshot": "scene_0221_16-11.180.jpg",
-      "screenshot_pts": 972.43
+      "screenshot": "sheet_000972-000978.000.jpg",
+      "screenshot_pts": 972.43,
+      "sheet_timestamps": [
+        972.0,
+        973.0,
+        974.0,
+        975.0,
+        976.0,
+        977.0
+      ]
     },
     {
       "scene_number": 222,
@@ -2238,8 +4006,16 @@
       "duration": 3.09,
       "start_time": "16:13.680",
       "end_time": "16:16.770",
-      "screenshot": "scene_0222_16-13.680.jpg",
-      "screenshot_pts": 975.225
+      "screenshot": "sheet_000972-000978.000.jpg",
+      "screenshot_pts": 975.225,
+      "sheet_timestamps": [
+        972.0,
+        973.0,
+        974.0,
+        975.0,
+        976.0,
+        977.0
+      ]
     },
     {
       "scene_number": 223,
@@ -2248,8 +4024,16 @@
       "duration": 5.09,
       "start_time": "16:16.770",
       "end_time": "16:21.860",
-      "screenshot": "scene_0223_16-16.770.jpg",
-      "screenshot_pts": 979.315
+      "screenshot": "sheet_000978-000984.000.jpg",
+      "screenshot_pts": 979.315,
+      "sheet_timestamps": [
+        978.0,
+        979.0,
+        980.0,
+        981.0,
+        982.0,
+        983.0
+      ]
     },
     {
       "scene_number": 224,
@@ -2258,8 +4042,16 @@
       "duration": 8.46,
       "start_time": "16:21.860",
       "end_time": "16:30.320",
-      "screenshot": "scene_0224_16-21.860.jpg",
-      "screenshot_pts": 986.09
+      "screenshot": "sheet_000984-000990.000.jpg",
+      "screenshot_pts": 986.09,
+      "sheet_timestamps": [
+        984.0,
+        985.0,
+        986.0,
+        987.0,
+        988.0,
+        989.0
+      ]
     },
     {
       "scene_number": 225,
@@ -2268,8 +4060,16 @@
       "duration": 4.38,
       "start_time": "16:30.320",
       "end_time": "16:34.700",
-      "screenshot": "scene_0225_16-30.320.jpg",
-      "screenshot_pts": 992.51
+      "screenshot": "sheet_000990-000996.000.jpg",
+      "screenshot_pts": 992.51,
+      "sheet_timestamps": [
+        990.0,
+        991.0,
+        992.0,
+        993.0,
+        994.0,
+        995.0
+      ]
     },
     {
       "scene_number": 226,
@@ -2278,8 +4078,16 @@
       "duration": 1.67,
       "start_time": "16:34.700",
       "end_time": "16:36.370",
-      "screenshot": "scene_0226_16-34.700.jpg",
-      "screenshot_pts": 995.535
+      "screenshot": "sheet_000990-000996.000.jpg",
+      "screenshot_pts": 995.535,
+      "sheet_timestamps": [
+        990.0,
+        991.0,
+        992.0,
+        993.0,
+        994.0,
+        995.0
+      ]
     },
     {
       "scene_number": 227,
@@ -2288,8 +4096,16 @@
       "duration": 4.96,
       "start_time": "16:36.370",
       "end_time": "16:41.330",
-      "screenshot": "scene_0227_16-36.370.jpg",
-      "screenshot_pts": 998.85
+      "screenshot": "sheet_000996-001002.000.jpg",
+      "screenshot_pts": 998.85,
+      "sheet_timestamps": [
+        996.0,
+        997.0,
+        998.0,
+        999.0,
+        1000.0,
+        1001.0
+      ]
     },
     {
       "scene_number": 228,
@@ -2298,8 +4114,16 @@
       "duration": 6.93,
       "start_time": "16:41.330",
       "end_time": "16:48.260",
-      "screenshot": "scene_0228_16-41.330.jpg",
-      "screenshot_pts": 1004.795
+      "screenshot": "sheet_001002-001008.000.jpg",
+      "screenshot_pts": 1004.795,
+      "sheet_timestamps": [
+        1002.0,
+        1003.0,
+        1004.0,
+        1005.0,
+        1006.0,
+        1007.0
+      ]
     },
     {
       "scene_number": 229,
@@ -2308,8 +4132,16 @@
       "duration": 0.96,
       "start_time": "16:48.260",
       "end_time": "16:49.220",
-      "screenshot": "scene_0229_16-48.260.jpg",
-      "screenshot_pts": 1008.74
+      "screenshot": "sheet_001008-001014.000.jpg",
+      "screenshot_pts": 1008.74,
+      "sheet_timestamps": [
+        1008.0,
+        1009.0,
+        1010.0,
+        1011.0,
+        1012.0,
+        1013.0
+      ]
     },
     {
       "scene_number": 230,
@@ -2318,8 +4150,16 @@
       "duration": 4.08,
       "start_time": "16:49.220",
       "end_time": "16:53.300",
-      "screenshot": "scene_0230_16-49.220.jpg",
-      "screenshot_pts": 1011.26
+      "screenshot": "sheet_001008-001014.000.jpg",
+      "screenshot_pts": 1011.26,
+      "sheet_timestamps": [
+        1008.0,
+        1009.0,
+        1010.0,
+        1011.0,
+        1012.0,
+        1013.0
+      ]
     },
     {
       "scene_number": 231,
@@ -2328,8 +4168,16 @@
       "duration": 6.18,
       "start_time": "16:53.300",
       "end_time": "16:59.480",
-      "screenshot": "scene_0231_16-53.300.jpg",
-      "screenshot_pts": 1016.39
+      "screenshot": "sheet_001014-001020.000.jpg",
+      "screenshot_pts": 1016.39,
+      "sheet_timestamps": [
+        1014.0,
+        1015.0,
+        1016.0,
+        1017.0,
+        1018.0,
+        1019.0
+      ]
     },
     {
       "scene_number": 232,
@@ -2338,8 +4186,16 @@
       "duration": 7.63,
       "start_time": "16:59.480",
       "end_time": "17:07.110",
-      "screenshot": "scene_0232_16-59.480.jpg",
-      "screenshot_pts": 1023.295
+      "screenshot": "sheet_001020-001026.000.jpg",
+      "screenshot_pts": 1023.295,
+      "sheet_timestamps": [
+        1020.0,
+        1021.0,
+        1022.0,
+        1023.0,
+        1024.0,
+        1025.0
+      ]
     },
     {
       "scene_number": 233,
@@ -2348,8 +4204,16 @@
       "duration": 1.33,
       "start_time": "17:07.110",
       "end_time": "17:08.440",
-      "screenshot": "scene_0233_17-07.110.jpg",
-      "screenshot_pts": 1027.775
+      "screenshot": "sheet_001026-001032.000.jpg",
+      "screenshot_pts": 1027.775,
+      "sheet_timestamps": [
+        1026.0,
+        1027.0,
+        1028.0,
+        1029.0,
+        1030.0,
+        1031.0
+      ]
     },
     {
       "scene_number": 234,
@@ -2358,8 +4222,16 @@
       "duration": 6.18,
       "start_time": "17:08.440",
       "end_time": "17:14.620",
-      "screenshot": "scene_0234_17-08.440.jpg",
-      "screenshot_pts": 1031.53
+      "screenshot": "sheet_001026-001032.000.jpg",
+      "screenshot_pts": 1031.53,
+      "sheet_timestamps": [
+        1026.0,
+        1027.0,
+        1028.0,
+        1029.0,
+        1030.0,
+        1031.0
+      ]
     },
     {
       "scene_number": 235,
@@ -2368,8 +4240,16 @@
       "duration": 4.38,
       "start_time": "17:14.620",
       "end_time": "17:19.000",
-      "screenshot": "scene_0235_17-14.620.jpg",
-      "screenshot_pts": 1036.81
+      "screenshot": "sheet_001032-001038.000.jpg",
+      "screenshot_pts": 1036.81,
+      "sheet_timestamps": [
+        1032.0,
+        1033.0,
+        1034.0,
+        1035.0,
+        1036.0,
+        1037.0
+      ]
     },
     {
       "scene_number": 236,
@@ -2378,8 +4258,16 @@
       "duration": 2.29,
       "start_time": "17:19.000",
       "end_time": "17:21.290",
-      "screenshot": "scene_0236_17-19.000.jpg",
-      "screenshot_pts": 1040.145
+      "screenshot": "sheet_001038-001044.000.jpg",
+      "screenshot_pts": 1040.145,
+      "sheet_timestamps": [
+        1038.0,
+        1039.0,
+        1040.0,
+        1041.0,
+        1042.0,
+        1043.0
+      ]
     },
     {
       "scene_number": 237,
@@ -2388,8 +4276,16 @@
       "duration": 3.96,
       "start_time": "17:21.290",
       "end_time": "17:25.250",
-      "screenshot": "scene_0237_17-21.290.jpg",
-      "screenshot_pts": 1043.27
+      "screenshot": "sheet_001038-001044.000.jpg",
+      "screenshot_pts": 1043.27,
+      "sheet_timestamps": [
+        1038.0,
+        1039.0,
+        1040.0,
+        1041.0,
+        1042.0,
+        1043.0
+      ]
     },
     {
       "scene_number": 238,
@@ -2398,8 +4294,16 @@
       "duration": 4.3,
       "start_time": "17:25.250",
       "end_time": "17:29.550",
-      "screenshot": "scene_0238_17-25.250.jpg",
-      "screenshot_pts": 1047.4
+      "screenshot": "sheet_001044-001050.000.jpg",
+      "screenshot_pts": 1047.4,
+      "sheet_timestamps": [
+        1044.0,
+        1045.0,
+        1046.0,
+        1047.0,
+        1048.0,
+        1049.0
+      ]
     },
     {
       "scene_number": 239,
@@ -2408,8 +4312,16 @@
       "duration": 3.0,
       "start_time": "17:29.550",
       "end_time": "17:32.550",
-      "screenshot": "scene_0239_17-29.550.jpg",
-      "screenshot_pts": 1051.05
+      "screenshot": "sheet_001050-001056.000.jpg",
+      "screenshot_pts": 1051.05,
+      "sheet_timestamps": [
+        1050.0,
+        1051.0,
+        1052.0,
+        1053.0,
+        1054.0,
+        1055.0
+      ]
     },
     {
       "scene_number": 240,
@@ -2418,8 +4330,16 @@
       "duration": 5.17,
       "start_time": "17:32.550",
       "end_time": "17:37.720",
-      "screenshot": "scene_0240_17-32.550.jpg",
-      "screenshot_pts": 1055.135
+      "screenshot": "sheet_001050-001056.000.jpg",
+      "screenshot_pts": 1055.135,
+      "sheet_timestamps": [
+        1050.0,
+        1051.0,
+        1052.0,
+        1053.0,
+        1054.0,
+        1055.0
+      ]
     },
     {
       "scene_number": 241,
@@ -2428,8 +4348,16 @@
       "duration": 2.21,
       "start_time": "17:37.720",
       "end_time": "17:39.930",
-      "screenshot": "scene_0241_17-37.720.jpg",
-      "screenshot_pts": 1058.825
+      "screenshot": "sheet_001056-001062.000.jpg",
+      "screenshot_pts": 1058.825,
+      "sheet_timestamps": [
+        1056.0,
+        1057.0,
+        1058.0,
+        1059.0,
+        1060.0,
+        1061.0
+      ]
     },
     {
       "scene_number": 242,
@@ -2438,8 +4366,16 @@
       "duration": 4.51,
       "start_time": "17:39.930",
       "end_time": "17:44.440",
-      "screenshot": "scene_0242_17-39.930.jpg",
-      "screenshot_pts": 1062.185
+      "screenshot": "sheet_001062-001068.000.jpg",
+      "screenshot_pts": 1062.185,
+      "sheet_timestamps": [
+        1062.0,
+        1063.0,
+        1064.0,
+        1065.0,
+        1066.0,
+        1067.0
+      ]
     },
     {
       "scene_number": 243,
@@ -2448,8 +4384,16 @@
       "duration": 4.25,
       "start_time": "17:44.440",
       "end_time": "17:48.690",
-      "screenshot": "scene_0243_17-44.440.jpg",
-      "screenshot_pts": 1066.565
+      "screenshot": "sheet_001062-001068.000.jpg",
+      "screenshot_pts": 1066.565,
+      "sheet_timestamps": [
+        1062.0,
+        1063.0,
+        1064.0,
+        1065.0,
+        1066.0,
+        1067.0
+      ]
     },
     {
       "scene_number": 244,
@@ -2458,8 +4402,16 @@
       "duration": 1.59,
       "start_time": "17:48.690",
       "end_time": "17:50.280",
-      "screenshot": "scene_0244_17-48.690.jpg",
-      "screenshot_pts": 1069.485
+      "screenshot": "sheet_001068-001074.000.jpg",
+      "screenshot_pts": 1069.485,
+      "sheet_timestamps": [
+        1068.0,
+        1069.0,
+        1070.0,
+        1071.0,
+        1072.0,
+        1073.0
+      ]
     },
     {
       "scene_number": 245,
@@ -2468,8 +4420,16 @@
       "duration": 3.33,
       "start_time": "17:50.280",
       "end_time": "17:53.610",
-      "screenshot": "scene_0245_17-50.280.jpg",
-      "screenshot_pts": 1071.945
+      "screenshot": "sheet_001068-001074.000.jpg",
+      "screenshot_pts": 1071.945,
+      "sheet_timestamps": [
+        1068.0,
+        1069.0,
+        1070.0,
+        1071.0,
+        1072.0,
+        1073.0
+      ]
     },
     {
       "scene_number": 246,
@@ -2478,8 +4438,16 @@
       "duration": 6.76,
       "start_time": "17:53.610",
       "end_time": "18:00.370",
-      "screenshot": "scene_0246_17-53.610.jpg",
-      "screenshot_pts": 1076.99
+      "screenshot": "sheet_001074-001080.000.jpg",
+      "screenshot_pts": 1076.99,
+      "sheet_timestamps": [
+        1074.0,
+        1075.0,
+        1076.0,
+        1077.0,
+        1078.0,
+        1079.0
+      ]
     },
     {
       "scene_number": 247,
@@ -2488,8 +4456,16 @@
       "duration": 2.46,
       "start_time": "18:00.370",
       "end_time": "18:02.830",
-      "screenshot": "scene_0247_18-00.370.jpg",
-      "screenshot_pts": 1081.6
+      "screenshot": "sheet_001080-001086.000.jpg",
+      "screenshot_pts": 1081.6,
+      "sheet_timestamps": [
+        1080.0,
+        1081.0,
+        1082.0,
+        1083.0,
+        1084.0,
+        1085.0
+      ]
     },
     {
       "scene_number": 248,
@@ -2498,8 +4474,16 @@
       "duration": 3.76,
       "start_time": "18:02.830",
       "end_time": "18:06.590",
-      "screenshot": "scene_0248_18-02.830.jpg",
-      "screenshot_pts": 1084.71
+      "screenshot": "sheet_001080-001086.000.jpg",
+      "screenshot_pts": 1084.71,
+      "sheet_timestamps": [
+        1080.0,
+        1081.0,
+        1082.0,
+        1083.0,
+        1084.0,
+        1085.0
+      ]
     },
     {
       "scene_number": 249,
@@ -2508,8 +4492,16 @@
       "duration": 2.92,
       "start_time": "18:06.590",
       "end_time": "18:09.510",
-      "screenshot": "scene_0249_18-06.590.jpg",
-      "screenshot_pts": 1088.05
+      "screenshot": "sheet_001086-001092.000.jpg",
+      "screenshot_pts": 1088.05,
+      "sheet_timestamps": [
+        1086.0,
+        1087.0,
+        1088.0,
+        1089.0,
+        1090.0,
+        1091.0
+      ]
     },
     {
       "scene_number": 250,
@@ -2518,8 +4510,16 @@
       "duration": 5.71,
       "start_time": "18:09.510",
       "end_time": "18:15.220",
-      "screenshot": "scene_0250_18-09.510.jpg",
-      "screenshot_pts": 1092.365
+      "screenshot": "sheet_001092-001098.000.jpg",
+      "screenshot_pts": 1092.365,
+      "sheet_timestamps": [
+        1092.0,
+        1093.0,
+        1094.0,
+        1095.0,
+        1096.0,
+        1097.0
+      ]
     },
     {
       "scene_number": 251,
@@ -2528,8 +4528,16 @@
       "duration": 5.92,
       "start_time": "18:15.220",
       "end_time": "18:21.140",
-      "screenshot": "scene_0251_18-15.220.jpg",
-      "screenshot_pts": 1098.18
+      "screenshot": "sheet_001098-001104.000.jpg",
+      "screenshot_pts": 1098.18,
+      "sheet_timestamps": [
+        1098.0,
+        1099.0,
+        1100.0,
+        1101.0,
+        1102.0,
+        1103.0
+      ]
     },
     {
       "scene_number": 252,
@@ -2538,8 +4546,16 @@
       "duration": 6.63,
       "start_time": "18:21.140",
       "end_time": "18:27.770",
-      "screenshot": "scene_0252_18-21.140.jpg",
-      "screenshot_pts": 1104.455
+      "screenshot": "sheet_001104-001110.000.jpg",
+      "screenshot_pts": 1104.455,
+      "sheet_timestamps": [
+        1104.0,
+        1105.0,
+        1106.0,
+        1107.0,
+        1108.0,
+        1109.0
+      ]
     },
     {
       "scene_number": 253,
@@ -2548,8 +4564,16 @@
       "duration": 2.84,
       "start_time": "18:27.770",
       "end_time": "18:30.610",
-      "screenshot": "scene_0253_18-27.770.jpg",
-      "screenshot_pts": 1109.19
+      "screenshot": "sheet_001104-001110.000.jpg",
+      "screenshot_pts": 1109.19,
+      "sheet_timestamps": [
+        1104.0,
+        1105.0,
+        1106.0,
+        1107.0,
+        1108.0,
+        1109.0
+      ]
     },
     {
       "scene_number": 254,
@@ -2558,8 +4582,16 @@
       "duration": 2.54,
       "start_time": "18:30.610",
       "end_time": "18:33.150",
-      "screenshot": "scene_0254_18-30.610.jpg",
-      "screenshot_pts": 1111.88
+      "screenshot": "sheet_001110-001116.000.jpg",
+      "screenshot_pts": 1111.88,
+      "sheet_timestamps": [
+        1110.0,
+        1111.0,
+        1112.0,
+        1113.0,
+        1114.0,
+        1115.0
+      ]
     },
     {
       "scene_number": 255,
@@ -2568,8 +4600,16 @@
       "duration": 3.26,
       "start_time": "18:33.150",
       "end_time": "18:36.410",
-      "screenshot": "scene_0255_18-33.150.jpg",
-      "screenshot_pts": 1114.78
+      "screenshot": "sheet_001110-001116.000.jpg",
+      "screenshot_pts": 1114.78,
+      "sheet_timestamps": [
+        1110.0,
+        1111.0,
+        1112.0,
+        1113.0,
+        1114.0,
+        1115.0
+      ]
     },
     {
       "scene_number": 256,
@@ -2578,8 +4618,16 @@
       "duration": 4.13,
       "start_time": "18:36.410",
       "end_time": "18:40.540",
-      "screenshot": "scene_0256_18-36.410.jpg",
-      "screenshot_pts": 1118.475
+      "screenshot": "sheet_001116-001122.000.jpg",
+      "screenshot_pts": 1118.475,
+      "sheet_timestamps": [
+        1116.0,
+        1117.0,
+        1118.0,
+        1119.0,
+        1120.0,
+        1121.0
+      ]
     },
     {
       "scene_number": 257,
@@ -2588,8 +4636,16 @@
       "duration": 4.12,
       "start_time": "18:40.540",
       "end_time": "18:44.660",
-      "screenshot": "scene_0257_18-40.540.jpg",
-      "screenshot_pts": 1122.6
+      "screenshot": "sheet_001122-001128.000.jpg",
+      "screenshot_pts": 1122.6,
+      "sheet_timestamps": [
+        1122.0,
+        1123.0,
+        1124.0,
+        1125.0,
+        1126.0,
+        1127.0
+      ]
     },
     {
       "scene_number": 258,
@@ -2598,8 +4654,16 @@
       "duration": 0.84,
       "start_time": "18:44.660",
       "end_time": "18:45.500",
-      "screenshot": "scene_0258_18-44.660.jpg",
-      "screenshot_pts": 1125.08
+      "screenshot": "sheet_001122-001128.000.jpg",
+      "screenshot_pts": 1125.08,
+      "sheet_timestamps": [
+        1122.0,
+        1123.0,
+        1124.0,
+        1125.0,
+        1126.0,
+        1127.0
+      ]
     },
     {
       "scene_number": 259,
@@ -2608,8 +4672,16 @@
       "duration": 4.8,
       "start_time": "18:45.500",
       "end_time": "18:50.300",
-      "screenshot": "scene_0259_18-45.500.jpg",
-      "screenshot_pts": 1127.9
+      "screenshot": "sheet_001122-001128.000.jpg",
+      "screenshot_pts": 1127.9,
+      "sheet_timestamps": [
+        1122.0,
+        1123.0,
+        1124.0,
+        1125.0,
+        1126.0,
+        1127.0
+      ]
     },
     {
       "scene_number": 260,
@@ -2618,8 +4690,16 @@
       "duration": 2.37,
       "start_time": "18:50.300",
       "end_time": "18:52.670",
-      "screenshot": "scene_0260_18-50.300.jpg",
-      "screenshot_pts": 1131.485
+      "screenshot": "sheet_001128-001134.000.jpg",
+      "screenshot_pts": 1131.485,
+      "sheet_timestamps": [
+        1128.0,
+        1129.0,
+        1130.0,
+        1131.0,
+        1132.0,
+        1133.0
+      ]
     },
     {
       "scene_number": 261,
@@ -2628,8 +4708,16 @@
       "duration": 4.26,
       "start_time": "18:52.670",
       "end_time": "18:56.930",
-      "screenshot": "scene_0261_18-52.670.jpg",
-      "screenshot_pts": 1134.8
+      "screenshot": "sheet_001134-001140.000.jpg",
+      "screenshot_pts": 1134.8,
+      "sheet_timestamps": [
+        1134.0,
+        1135.0,
+        1136.0,
+        1137.0,
+        1138.0,
+        1139.0
+      ]
     },
     {
       "scene_number": 262,
@@ -2638,8 +4726,16 @@
       "duration": 1.92,
       "start_time": "18:56.930",
       "end_time": "18:58.850",
-      "screenshot": "scene_0262_18-56.930.jpg",
-      "screenshot_pts": 1137.89
+      "screenshot": "sheet_001134-001140.000.jpg",
+      "screenshot_pts": 1137.89,
+      "sheet_timestamps": [
+        1134.0,
+        1135.0,
+        1136.0,
+        1137.0,
+        1138.0,
+        1139.0
+      ]
     },
     {
       "scene_number": 263,
@@ -2648,8 +4744,16 @@
       "duration": 5.67,
       "start_time": "18:58.850",
       "end_time": "19:04.520",
-      "screenshot": "scene_0263_18-58.850.jpg",
-      "screenshot_pts": 1141.685
+      "screenshot": "sheet_001140-001146.000.jpg",
+      "screenshot_pts": 1141.685,
+      "sheet_timestamps": [
+        1140.0,
+        1141.0,
+        1142.0,
+        1143.0,
+        1144.0,
+        1145.0
+      ]
     },
     {
       "scene_number": 264,
@@ -2658,8 +4762,16 @@
       "duration": 6.42,
       "start_time": "19:04.520",
       "end_time": "19:10.940",
-      "screenshot": "scene_0264_19-04.520.jpg",
-      "screenshot_pts": 1147.73
+      "screenshot": "sheet_001146-001152.000.jpg",
+      "screenshot_pts": 1147.73,
+      "sheet_timestamps": [
+        1146.0,
+        1147.0,
+        1148.0,
+        1149.0,
+        1150.0,
+        1151.0
+      ]
     },
     {
       "scene_number": 265,
@@ -2668,8 +4780,16 @@
       "duration": 3.0,
       "start_time": "19:10.940",
       "end_time": "19:13.940",
-      "screenshot": "scene_0265_19-10.940.jpg",
-      "screenshot_pts": 1152.44
+      "screenshot": "sheet_001152-001158.000.jpg",
+      "screenshot_pts": 1152.44,
+      "sheet_timestamps": [
+        1152.0,
+        1153.0,
+        1154.0,
+        1155.0,
+        1156.0,
+        1157.0
+      ]
     },
     {
       "scene_number": 266,
@@ -2678,8 +4798,16 @@
       "duration": 9.93,
       "start_time": "19:13.940",
       "end_time": "19:23.870",
-      "screenshot": "scene_0266_19-13.940.jpg",
-      "screenshot_pts": 1158.905
+      "screenshot": "sheet_001158-001164.000.jpg",
+      "screenshot_pts": 1158.905,
+      "sheet_timestamps": [
+        1158.0,
+        1159.0,
+        1160.0,
+        1161.0,
+        1162.0,
+        1163.0
+      ]
     },
     {
       "scene_number": 267,
@@ -2688,8 +4816,16 @@
       "duration": 7.43,
       "start_time": "19:23.870",
       "end_time": "19:31.300",
-      "screenshot": "scene_0267_19-23.870.jpg",
-      "screenshot_pts": 1167.585
+      "screenshot": "sheet_001164-001170.000.jpg",
+      "screenshot_pts": 1167.585,
+      "sheet_timestamps": [
+        1164.0,
+        1165.0,
+        1166.0,
+        1167.0,
+        1168.0,
+        1169.0
+      ]
     },
     {
       "scene_number": 268,
@@ -2698,8 +4834,16 @@
       "duration": 7.59,
       "start_time": "19:31.300",
       "end_time": "19:38.890",
-      "screenshot": "scene_0268_19-31.300.jpg",
-      "screenshot_pts": 1175.095
+      "screenshot": "sheet_001170-001176.000.jpg",
+      "screenshot_pts": 1175.095,
+      "sheet_timestamps": [
+        1170.0,
+        1171.0,
+        1172.0,
+        1173.0,
+        1174.0,
+        1175.0
+      ]
     },
     {
       "scene_number": 269,
@@ -2708,8 +4852,16 @@
       "duration": 1.5,
       "start_time": "19:38.890",
       "end_time": "19:40.390",
-      "screenshot": "scene_0269_19-38.890.jpg",
-      "screenshot_pts": 1179.64
+      "screenshot": "sheet_001176-001182.000.jpg",
+      "screenshot_pts": 1179.64,
+      "sheet_timestamps": [
+        1176.0,
+        1177.0,
+        1178.0,
+        1179.0,
+        1180.0,
+        1181.0
+      ]
     },
     {
       "scene_number": 270,
@@ -2718,8 +4870,16 @@
       "duration": 5.84,
       "start_time": "19:40.390",
       "end_time": "19:46.230",
-      "screenshot": "scene_0270_19-40.390.jpg",
-      "screenshot_pts": 1183.31
+      "screenshot": "sheet_001182-001188.000.jpg",
+      "screenshot_pts": 1183.31,
+      "sheet_timestamps": [
+        1182.0,
+        1183.0,
+        1184.0,
+        1185.0,
+        1186.0,
+        1187.0
+      ]
     },
     {
       "scene_number": 271,
@@ -2728,8 +4888,16 @@
       "duration": 3.75,
       "start_time": "19:46.230",
       "end_time": "19:49.980",
-      "screenshot": "scene_0271_19-46.230.jpg",
-      "screenshot_pts": 1188.105
+      "screenshot": "sheet_001188-001194.000.jpg",
+      "screenshot_pts": 1188.105,
+      "sheet_timestamps": [
+        1188.0,
+        1189.0,
+        1190.0,
+        1191.0,
+        1192.0,
+        1193.0
+      ]
     },
     {
       "scene_number": 272,
@@ -2738,8 +4906,16 @@
       "duration": 8.51,
       "start_time": "19:49.980",
       "end_time": "19:58.490",
-      "screenshot": "scene_0272_19-49.980.jpg",
-      "screenshot_pts": 1194.235
+      "screenshot": "sheet_001194-001200.000.jpg",
+      "screenshot_pts": 1194.235,
+      "sheet_timestamps": [
+        1194.0,
+        1195.0,
+        1196.0,
+        1197.0,
+        1198.0,
+        1199.0
+      ]
     },
     {
       "scene_number": 273,
@@ -2748,8 +4924,16 @@
       "duration": 4.5,
       "start_time": "19:58.490",
       "end_time": "20:02.990",
-      "screenshot": "scene_0273_19-58.490.jpg",
-      "screenshot_pts": 1200.74
+      "screenshot": "sheet_001200-001206.000.jpg",
+      "screenshot_pts": 1200.74,
+      "sheet_timestamps": [
+        1200.0,
+        1201.0,
+        1202.0,
+        1203.0,
+        1204.0,
+        1205.0
+      ]
     },
     {
       "scene_number": 274,
@@ -2758,8 +4942,16 @@
       "duration": 5.34,
       "start_time": "20:02.990",
       "end_time": "20:08.330",
-      "screenshot": "scene_0274_20-02.990.jpg",
-      "screenshot_pts": 1205.66
+      "screenshot": "sheet_001200-001206.000.jpg",
+      "screenshot_pts": 1205.66,
+      "sheet_timestamps": [
+        1200.0,
+        1201.0,
+        1202.0,
+        1203.0,
+        1204.0,
+        1205.0
+      ]
     },
     {
       "scene_number": 275,
@@ -2768,8 +4960,16 @@
       "duration": 7.09,
       "start_time": "20:08.330",
       "end_time": "20:15.420",
-      "screenshot": "scene_0275_20-08.330.jpg",
-      "screenshot_pts": 1211.875
+      "screenshot": "sheet_001206-001212.000.jpg",
+      "screenshot_pts": 1211.875,
+      "sheet_timestamps": [
+        1206.0,
+        1207.0,
+        1208.0,
+        1209.0,
+        1210.0,
+        1211.0
+      ]
     },
     {
       "scene_number": 276,
@@ -2778,8 +4978,16 @@
       "duration": 2.25,
       "start_time": "20:15.420",
       "end_time": "20:17.670",
-      "screenshot": "scene_0276_20-15.420.jpg",
-      "screenshot_pts": 1216.545
+      "screenshot": "sheet_001212-001218.000.jpg",
+      "screenshot_pts": 1216.545,
+      "sheet_timestamps": [
+        1212.0,
+        1213.0,
+        1214.0,
+        1215.0,
+        1216.0,
+        1217.0
+      ]
     },
     {
       "scene_number": 277,
@@ -2788,8 +4996,16 @@
       "duration": 4.51,
       "start_time": "20:17.670",
       "end_time": "20:22.180",
-      "screenshot": "scene_0277_20-17.670.jpg",
-      "screenshot_pts": 1219.925
+      "screenshot": "sheet_001218-001224.000.jpg",
+      "screenshot_pts": 1219.925,
+      "sheet_timestamps": [
+        1218.0,
+        1219.0,
+        1220.0,
+        1221.0,
+        1222.0,
+        1223.0
+      ]
     },
     {
       "scene_number": 278,
@@ -2798,8 +5014,16 @@
       "duration": 6.8,
       "start_time": "20:22.180",
       "end_time": "20:28.980",
-      "screenshot": "scene_0278_20-22.180.jpg",
-      "screenshot_pts": 1225.58
+      "screenshot": "sheet_001224-001230.000.jpg",
+      "screenshot_pts": 1225.58,
+      "sheet_timestamps": [
+        1224.0,
+        1225.0,
+        1226.0,
+        1227.0,
+        1228.0,
+        1229.0
+      ]
     },
     {
       "scene_number": 279,
@@ -2808,8 +5032,16 @@
       "duration": 7.13,
       "start_time": "20:28.980",
       "end_time": "20:36.110",
-      "screenshot": "scene_0279_20-28.980.jpg",
-      "screenshot_pts": 1232.545
+      "screenshot": "sheet_001230-001236.000.jpg",
+      "screenshot_pts": 1232.545,
+      "sheet_timestamps": [
+        1230.0,
+        1231.0,
+        1232.0,
+        1233.0,
+        1234.0,
+        1235.0
+      ]
     },
     {
       "scene_number": 280,
@@ -2818,8 +5050,16 @@
       "duration": 4.21,
       "start_time": "20:36.110",
       "end_time": "20:40.320",
-      "screenshot": "scene_0280_20-36.110.jpg",
-      "screenshot_pts": 1238.215
+      "screenshot": "sheet_001236-001242.000.jpg",
+      "screenshot_pts": 1238.215,
+      "sheet_timestamps": [
+        1236.0,
+        1237.0,
+        1238.0,
+        1239.0,
+        1240.0,
+        1241.0
+      ]
     },
     {
       "scene_number": 281,
@@ -2828,8 +5068,16 @@
       "duration": 4.47,
       "start_time": "20:40.320",
       "end_time": "20:44.790",
-      "screenshot": "scene_0281_20-40.320.jpg",
-      "screenshot_pts": 1242.555
+      "screenshot": "sheet_001242-001248.000.jpg",
+      "screenshot_pts": 1242.555,
+      "sheet_timestamps": [
+        1242.0,
+        1243.0,
+        1244.0,
+        1245.0,
+        1246.0,
+        1247.0
+      ]
     },
     {
       "scene_number": 282,
@@ -2838,8 +5086,16 @@
       "duration": 3.21,
       "start_time": "20:44.790",
       "end_time": "20:48.000",
-      "screenshot": "scene_0282_20-44.790.jpg",
-      "screenshot_pts": 1246.395
+      "screenshot": "sheet_001242-001248.000.jpg",
+      "screenshot_pts": 1246.395,
+      "sheet_timestamps": [
+        1242.0,
+        1243.0,
+        1244.0,
+        1245.0,
+        1246.0,
+        1247.0
+      ]
     },
     {
       "scene_number": 283,
@@ -2848,8 +5104,16 @@
       "duration": 1.21,
       "start_time": "20:48.000",
       "end_time": "20:49.210",
-      "screenshot": "scene_0283_20-48.000.jpg",
-      "screenshot_pts": 1248.605
+      "screenshot": "sheet_001248-001254.000.jpg",
+      "screenshot_pts": 1248.605,
+      "sheet_timestamps": [
+        1248.0,
+        1249.0,
+        1250.0,
+        1251.0,
+        1252.0,
+        1253.0
+      ]
     },
     {
       "scene_number": 284,
@@ -2858,8 +5122,16 @@
       "duration": 5.71,
       "start_time": "20:49.210",
       "end_time": "20:54.920",
-      "screenshot": "scene_0284_20-49.210.jpg",
-      "screenshot_pts": 1252.065
+      "screenshot": "sheet_001248-001254.000.jpg",
+      "screenshot_pts": 1252.065,
+      "sheet_timestamps": [
+        1248.0,
+        1249.0,
+        1250.0,
+        1251.0,
+        1252.0,
+        1253.0
+      ]
     },
     {
       "scene_number": 285,
@@ -2868,8 +5140,16 @@
       "duration": 3.96,
       "start_time": "20:54.920",
       "end_time": "20:58.880",
-      "screenshot": "scene_0285_20-54.920.jpg",
-      "screenshot_pts": 1256.9
+      "screenshot": "sheet_001254-001260.000.jpg",
+      "screenshot_pts": 1256.9,
+      "sheet_timestamps": [
+        1254.0,
+        1255.0,
+        1256.0,
+        1257.0,
+        1258.0,
+        1259.0
+      ]
     },
     {
       "scene_number": 286,
@@ -2878,8 +5158,16 @@
       "duration": 3.01,
       "start_time": "20:58.880",
       "end_time": "21:01.890",
-      "screenshot": "scene_0286_20-58.880.jpg",
-      "screenshot_pts": 1260.385
+      "screenshot": "sheet_001260-001266.000.jpg",
+      "screenshot_pts": 1260.385,
+      "sheet_timestamps": [
+        1260.0,
+        1261.0,
+        1262.0,
+        1263.0,
+        1264.0,
+        1265.0
+      ]
     },
     {
       "scene_number": 287,
@@ -2888,8 +5176,16 @@
       "duration": 0.71,
       "start_time": "21:01.890",
       "end_time": "21:02.600",
-      "screenshot": "scene_0287_21-01.890.jpg",
-      "screenshot_pts": 1262.245
+      "screenshot": "sheet_001260-001266.000.jpg",
+      "screenshot_pts": 1262.245,
+      "sheet_timestamps": [
+        1260.0,
+        1261.0,
+        1262.0,
+        1263.0,
+        1264.0,
+        1265.0
+      ]
     },
     {
       "scene_number": 288,
@@ -2898,8 +5194,16 @@
       "duration": 5.29,
       "start_time": "21:02.600",
       "end_time": "21:07.890",
-      "screenshot": "scene_0288_21-02.600.jpg",
-      "screenshot_pts": 1265.245
+      "screenshot": "sheet_001260-001266.000.jpg",
+      "screenshot_pts": 1265.245,
+      "sheet_timestamps": [
+        1260.0,
+        1261.0,
+        1262.0,
+        1263.0,
+        1264.0,
+        1265.0
+      ]
     },
     {
       "scene_number": 289,
@@ -2908,8 +5212,16 @@
       "duration": 13.1,
       "start_time": "21:07.890",
       "end_time": "21:20.990",
-      "screenshot": "scene_0289_21-07.890.jpg",
-      "screenshot_pts": 1274.44
+      "screenshot": "sheet_001272-001278.000.jpg",
+      "screenshot_pts": 1274.44,
+      "sheet_timestamps": [
+        1272.0,
+        1273.0,
+        1274.0,
+        1275.0,
+        1276.0,
+        1277.0
+      ]
     },
     {
       "scene_number": 290,
@@ -2918,8 +5230,16 @@
       "duration": 4.59,
       "start_time": "21:20.990",
       "end_time": "21:25.580",
-      "screenshot": "scene_0290_21-20.990.jpg",
-      "screenshot_pts": 1283.285
+      "screenshot": "sheet_001278-001284.000.jpg",
+      "screenshot_pts": 1283.285,
+      "sheet_timestamps": [
+        1278.0,
+        1279.0,
+        1280.0,
+        1281.0,
+        1282.0,
+        1283.0
+      ]
     },
     {
       "scene_number": 291,
@@ -2928,8 +5248,16 @@
       "duration": 3.08,
       "start_time": "21:25.580",
       "end_time": "21:28.660",
-      "screenshot": "scene_0291_21-25.580.jpg",
-      "screenshot_pts": 1287.12
+      "screenshot": "sheet_001284-001290.000.jpg",
+      "screenshot_pts": 1287.12,
+      "sheet_timestamps": [
+        1284.0,
+        1285.0,
+        1286.0,
+        1287.0,
+        1288.0,
+        1289.0
+      ]
     },
     {
       "scene_number": 292,
@@ -2938,8 +5266,16 @@
       "duration": 6.09,
       "start_time": "21:28.660",
       "end_time": "21:34.750",
-      "screenshot": "scene_0292_21-28.660.jpg",
-      "screenshot_pts": 1291.705
+      "screenshot": "sheet_001290-001296.000.jpg",
+      "screenshot_pts": 1291.705,
+      "sheet_timestamps": [
+        1290.0,
+        1291.0,
+        1292.0,
+        1293.0,
+        1294.0,
+        1295.0
+      ]
     },
     {
       "scene_number": 293,
@@ -2948,8 +5284,16 @@
       "duration": 3.17,
       "start_time": "21:34.750",
       "end_time": "21:37.920",
-      "screenshot": "scene_0293_21-34.750.jpg",
-      "screenshot_pts": 1296.335
+      "screenshot": "sheet_001296-001302.000.jpg",
+      "screenshot_pts": 1296.335,
+      "sheet_timestamps": [
+        1296.0,
+        1297.0,
+        1298.0,
+        1299.0,
+        1300.0,
+        1301.0
+      ]
     },
     {
       "scene_number": 294,
@@ -2958,8 +5302,16 @@
       "duration": 4.21,
       "start_time": "21:37.920",
       "end_time": "21:42.130",
-      "screenshot": "scene_0294_21-37.920.jpg",
-      "screenshot_pts": 1300.025
+      "screenshot": "sheet_001296-001302.000.jpg",
+      "screenshot_pts": 1300.025,
+      "sheet_timestamps": [
+        1296.0,
+        1297.0,
+        1298.0,
+        1299.0,
+        1300.0,
+        1301.0
+      ]
     },
     {
       "scene_number": 295,
@@ -2968,8 +5320,16 @@
       "duration": 4.34,
       "start_time": "21:42.130",
       "end_time": "21:46.470",
-      "screenshot": "scene_0295_21-42.130.jpg",
-      "screenshot_pts": 1304.3
+      "screenshot": "sheet_001302-001308.000.jpg",
+      "screenshot_pts": 1304.3,
+      "sheet_timestamps": [
+        1302.0,
+        1303.0,
+        1304.0,
+        1305.0,
+        1306.0,
+        1307.0
+      ]
     },
     {
       "scene_number": 296,
@@ -2978,8 +5338,16 @@
       "duration": 3.88,
       "start_time": "21:46.470",
       "end_time": "21:50.350",
-      "screenshot": "scene_0296_21-46.470.jpg",
-      "screenshot_pts": 1308.41
+      "screenshot": "sheet_001308-001314.000.jpg",
+      "screenshot_pts": 1308.41,
+      "sheet_timestamps": [
+        1308.0,
+        1309.0,
+        1310.0,
+        1311.0,
+        1312.0,
+        1313.0
+      ]
     },
     {
       "scene_number": 297,
@@ -2988,8 +5356,16 @@
       "duration": 4.8,
       "start_time": "21:50.350",
       "end_time": "21:55.150",
-      "screenshot": "scene_0297_21-50.350.jpg",
-      "screenshot_pts": 1312.75
+      "screenshot": "sheet_001308-001314.000.jpg",
+      "screenshot_pts": 1312.75,
+      "sheet_timestamps": [
+        1308.0,
+        1309.0,
+        1310.0,
+        1311.0,
+        1312.0,
+        1313.0
+      ]
     },
     {
       "scene_number": 298,
@@ -2998,8 +5374,16 @@
       "duration": 4.63,
       "start_time": "21:55.150",
       "end_time": "21:59.780",
-      "screenshot": "scene_0298_21-55.150.jpg",
-      "screenshot_pts": 1317.465
+      "screenshot": "sheet_001314-001320.000.jpg",
+      "screenshot_pts": 1317.465,
+      "sheet_timestamps": [
+        1314.0,
+        1315.0,
+        1316.0,
+        1317.0,
+        1318.0,
+        1319.0
+      ]
     },
     {
       "scene_number": 299,
@@ -3008,8 +5392,16 @@
       "duration": 5.88,
       "start_time": "21:59.780",
       "end_time": "22:05.660",
-      "screenshot": "scene_0299_21-59.780.jpg",
-      "screenshot_pts": 1322.72
+      "screenshot": "sheet_001320-001326.000.jpg",
+      "screenshot_pts": 1322.72,
+      "sheet_timestamps": [
+        1320.0,
+        1321.0,
+        1322.0,
+        1323.0,
+        1324.0,
+        1325.0
+      ]
     },
     {
       "scene_number": 300,
@@ -3018,8 +5410,16 @@
       "duration": 31.91,
       "start_time": "22:05.660",
       "end_time": "22:37.570",
-      "screenshot": "scene_0300_22-05.660.jpg",
-      "screenshot_pts": 1341.615
+      "screenshot": "sheet_001338-001344.000.jpg",
+      "screenshot_pts": 1341.615,
+      "sheet_timestamps": [
+        1338.0,
+        1339.0,
+        1340.0,
+        1341.0,
+        1342.0,
+        1343.0
+      ]
     },
     {
       "scene_number": 301,
@@ -3028,8 +5428,16 @@
       "duration": 4.833,
       "start_time": "22:37.570",
       "end_time": "22:42.403",
-      "screenshot": "scene_0301_22-37.570.jpg",
-      "screenshot_pts": 1359.986
+      "screenshot": "sheet_001356-001362.000.jpg",
+      "screenshot_pts": 1359.986,
+      "sheet_timestamps": [
+        1356.0,
+        1357.0,
+        1358.0,
+        1359.0,
+        1360.0,
+        1361.0
+      ]
     }
   ]
 }
