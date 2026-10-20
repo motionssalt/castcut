@@ -1,0 +1,13 @@
+{
+  "job_id": "job-1792455597017-qjkc",
+  "title": "",
+  "torrent_name": "",
+  "content_type": "irl",
+  "created_at_epoch": 1792455597,
+  "created_at": "2026-10-20T00:19:57Z",
+  "updated_at": "2026-10-20T00:19:57Z",
+  "updated_at_epoch": 1792455597,
+  "expires_at_epoch": 1792541997,
+  "state": "selecting",
+  "message": "Fetching torrent metadata (listing files — no content download)"
+}
