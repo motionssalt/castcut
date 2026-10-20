@@ -1045,7 +1045,7 @@
   },
   "export_copy_clipforge": {
     "status": "in_progress",
-    "last_updated": "2026-10-20T23:04:52.538483+00:00",
+    "last_updated": "2026-10-20T23:08:54.273368+00:00",
     "clipforge_reference": {
       "repository": "motionssalt/clipforge",
       "commit": "a05846de7c76a66ad42ba6fd37126514bc452167",
@@ -1514,9 +1514,39 @@
         "clipforge": "site/js/github.js downloadReleaseAsset authenticated octet-stream + site/js/media.js saveBytes",
         "castcut_before": "exports.js bare private browser_download_url opens tab; no PAT header or length/hash checks",
         "decision": "copy reference authenticated bytes + browser save; reject HTML/incomplete/wrong hash before saving"
+      },
+      {
+        "aspect": "Owner-facing historical export cards",
+        "before": "Unverified old files still status=done and Download MP4 enabled; fixed exports separately named",
+        "after": "Require full decode/readback receipt and exact release asset SHA256/ID/size; rebuild original export IDs",
+        "evidence": "Old faces asset659863397 497293076B; scene659956830 69636349B; exports.js used uploaded-state-only eligibility"
+      },
+      {
+        "aspect": "Download storage path",
+        "before": "fetch entire file -> chunks -> Uint8Array -> WebCrypto -> Blob -> synthetic anchor; site must finish before OS save",
+        "after": "PAT POST returns encrypted scoped HttpOnly cookie; document GET streams response.body to browser native manager; MIME video/mp4; short filename; byte ranges",
+        "evidence": {
+          "native_requests": [
+            {
+              "method": "POST",
+              "type": "fetch",
+              "path": "/api/release-assets/660584184",
+              "query": ""
+            },
+            {
+              "method": "GET",
+              "type": "document",
+              "path": "/api/release-assets/660584184",
+              "query": "?download=1"
+            }
+          ],
+          "saved_bytes": 27697735,
+          "saved_sha256": "71088e2b788f4371f934a40e88c1dc6fc85c747c06a039fafdfc2ca1bbc7da58",
+          "range_status": 206
+        }
       }
     ],
-    "root_cause": "Git evidence: a5f68a7 wrote an independent encode/profile in pipeline/utils.py and retained the TS per-cut encode + concat-demuxer architecture; it did NOT reuse ClipForge produce_merged_video and terminal compress. The old real file is High@5.0, B-frames=2, isom and 4.748 Mbps; the subsequent scene-fixed file ALREADY has High@4.0, bf0 and mp42, so headline flags do not prove the reason the phone rejected that later file. Literal reference graph and final compressor plus authenticated hash-checked byte delivery are now in use, and fresh real-source/reference comparisons, decodes and browser playback pass. NO isolated causal explanation of the physical Android failure has been established without that device/file. Direct authenticated API fetch actually takes the same-origin CORS fallback in fresh live tests. Caveat: current repository API metadata reports public, so bare-link authentication alone must not be asserted as the proven historical phone cause; previous private-link assumptions remain in the retained investigation history, not as a newly proven fact.",
+    "root_cause": "Git evidence: a5f68a7 wrote an independent encode/profile in pipeline/utils.py and retained the TS per-cut encode + concat-demuxer architecture; it did NOT reuse ClipForge produce_merged_video and terminal compress. The old real file is High@5.0, B-frames=2, isom and 4.748 Mbps; the subsequent scene-fixed file ALREADY has High@4.0, bf0 and mp42, so headline flags do not prove the reason the phone rejected that later file. Literal reference graph and final compressor plus authenticated hash-checked byte delivery are now in use, and fresh real-source/reference comparisons, decodes and browser playback pass. NO isolated causal explanation of the physical Android failure has been established without that device/file. Direct authenticated API fetch actually takes the same-origin CORS fallback in fresh live tests. Caveat: current repository API metadata reports public, so bare-link authentication alone must not be asserted as the proven historical phone cause; previous private-link assumptions remain in the retained investigation history, not as a newly proven fact.\n2026-10-20 reopening: two NEW concrete delivery defects identified: original owner-facing 497293076-byte faces and 69636349-byte scene export records still exposed obsolete unverified files alongside separately named fixed versions; frontend accepted any uploaded MP4 and substring filename matching. Also downloaded complete media into JS chunks, copied to a contiguous buffer then Blob before handing to OS, exactly matching owner's double-download complaint. UI now requires full-decode + post-upload exact hash/ID/size receipts; ORIGINAL IDs are being rebuilt with literal vendored ClipForge. Direct native HTTP attachment stream passes live mobile-viewport Chromium test with matching release SHA256, 206 resume and HEAD. This is a confirmed delivery fix, NOT proof of the unidentified physical gallery decoder failure on a verified file.",
     "done": [
       "Cloned both repositories; ClipForge is read-only.",
       "Independently reviewed previous port and git history: upstream snapshots match ClipForge HEAD a05846de; prior a5f68a7 wrote a custom utils.py profile instead of reusing renderer.",
@@ -1535,7 +1565,8 @@
       "Removed JS media fetching/chunk assembly/hash/Blob-save path from export UI; the button now authorizes a short same-origin handoff then navigates to HTTP attachment. Exact filename matching prevents picking stale prefix-matching assets. UI truthfully says download started, not saved.",
       "All 10 native-download regression tests pass: no JS media buffer, scoped encrypted cookie, expiry/tampering/wrong-asset rejection, PAT gate, native navigation, full/range/HEAD byte semantics, MIME/filename, redirect and truncation rejection.",
       "Found concrete stale-output bug: original project still offers old 497293076-byte faces and 69636349-byte scene assets as done, alongside newer separately named replacements. UI formerly accepted any uploaded MP4 regardless of verification. Downloads now require matching full-decode and release-readback receipts, asset ID, SHA256, size and exact filename; 10 regression tests pass. Rebuilding original export IDs next.",
-      "Dispatched real faces and scene exports under the ORIGINAL owner-facing export IDs, not separately named test replacements. Original selection/production JSON and chosen audio track 0 retained."
+      "Dispatched real faces and scene exports under the ORIGINAL owner-facing export IDs, not separately named test replacements. Original selection/production JSON and chosen audio track 0 retained.",
+      "Live production native attachment downloaded byte-identical 27697735B MP4 without JS media fetching; scoped HttpOnly/Secure/Strict cookie, range206, HEAD200, unauthorized401; real-source upstream/port comparison matches stream fields/container box shape and both decode."
     ],
     "pending": [
       "Inspect actual reference and delivered outputs",
@@ -8772,6 +8803,948 @@
       {
         "workflow": "scene-export.yml",
         "export_id": "exp-job-1792507438516-dehl-scene-mvgxsz3y"
+      }
+    ],
+    "native_download_verification": {
+      "suggestedFilename": "CastCut-660584184.mp4",
+      "failure": null,
+      "size": 27697735,
+      "sha256": "71088e2b788f4371f934a40e88c1dc6fc85c747c06a039fafdfc2ca1bbc7da58",
+      "requests": [
+        {
+          "method": "POST",
+          "type": "fetch",
+          "path": "/api/release-assets/660584184",
+          "query": ""
+        },
+        {
+          "method": "GET",
+          "type": "document",
+          "path": "/api/release-assets/660584184",
+          "query": "?download=1"
+        }
+      ],
+      "cookie": {
+        "httpOnly": true,
+        "secure": true,
+        "sameSite": "Strict",
+        "path": "/api/release-assets/660584184"
+      },
+      "range": {
+        "status": 206,
+        "headers": {
+          "content-type": "video/mp4",
+          "content-length": "32",
+          "content-range": "bytes 0-31/27697735",
+          "accept-ranges": "bytes",
+          "cache-control": "private, no-store",
+          "content-disposition": "attachment; filename=\"CastCut-660584184.mp4\"",
+          "x-asset-sha256": "71088e2b788f4371f934a40e88c1dc6fc85c747c06a039fafdfc2ca1bbc7da58"
+        },
+        "bytes": 32
+      },
+      "head": {
+        "status": 200,
+        "headers": {
+          "content-type": "video/mp4",
+          "content-length": "27697735",
+          "accept-ranges": "bytes",
+          "cache-control": "private, no-store",
+          "content-disposition": "attachment; filename=\"CastCut-660584184.mp4\"",
+          "x-asset-sha256": "71088e2b788f4371f934a40e88c1dc6fc85c747c06a039fafdfc2ca1bbc7da58"
+        }
+      },
+      "unauthorizedStatus": 401,
+      "platform": "Chromium mobile viewport, not physical Android"
+    },
+    "latest_same_source_comparison": {
+      "source_sha256": "9c51723f18078eda6dfd8924aaa53697d52c08cd26fbe9f166c114477ccee3f7",
+      "segments": [
+        [
+          405.4,
+          408.4
+        ],
+        [
+          510.125,
+          513.125
+        ],
+        [
+          1020.0,
+          1023.0
+        ]
+      ],
+      "stream_comparison": [
+        {
+          "stream": 0,
+          "field": "codec_type",
+          "reference": "video",
+          "castcut": "video",
+          "match": true
+        },
+        {
+          "stream": 0,
+          "field": "codec_name",
+          "reference": "h264",
+          "castcut": "h264",
+          "match": true
+        },
+        {
+          "stream": 0,
+          "field": "codec_tag_string",
+          "reference": "avc1",
+          "castcut": "avc1",
+          "match": true
+        },
+        {
+          "stream": 0,
+          "field": "profile",
+          "reference": "High",
+          "castcut": "High",
+          "match": true
+        },
+        {
+          "stream": 0,
+          "field": "level",
+          "reference": 40,
+          "castcut": 40,
+          "match": true
+        },
+        {
+          "stream": 0,
+          "field": "pix_fmt",
+          "reference": "yuv420p",
+          "castcut": "yuv420p",
+          "match": true
+        },
+        {
+          "stream": 0,
+          "field": "has_b_frames",
+          "reference": 0,
+          "castcut": 0,
+          "match": true
+        },
+        {
+          "stream": 0,
+          "field": "sample_aspect_ratio",
+          "reference": "1:1",
+          "castcut": "1:1",
+          "match": true
+        },
+        {
+          "stream": 0,
+          "field": "time_base",
+          "reference": "1/15360",
+          "castcut": "1/15360",
+          "match": true
+        },
+        {
+          "stream": 0,
+          "field": "start_time",
+          "reference": "0.000000",
+          "castcut": "0.000000",
+          "match": true
+        },
+        {
+          "stream": 0,
+          "field": "sample_rate",
+          "reference": null,
+          "castcut": null,
+          "match": true
+        },
+        {
+          "stream": 0,
+          "field": "channels",
+          "reference": null,
+          "castcut": null,
+          "match": true
+        },
+        {
+          "stream": 0,
+          "field": "color_range",
+          "reference": null,
+          "castcut": null,
+          "match": true
+        },
+        {
+          "stream": 0,
+          "field": "color_space",
+          "reference": null,
+          "castcut": null,
+          "match": true
+        },
+        {
+          "stream": 0,
+          "field": "color_transfer",
+          "reference": null,
+          "castcut": null,
+          "match": true
+        },
+        {
+          "stream": 0,
+          "field": "color_primaries",
+          "reference": null,
+          "castcut": null,
+          "match": true
+        },
+        {
+          "stream": 1,
+          "field": "codec_type",
+          "reference": "audio",
+          "castcut": "audio",
+          "match": true
+        },
+        {
+          "stream": 1,
+          "field": "codec_name",
+          "reference": "aac",
+          "castcut": "aac",
+          "match": true
+        },
+        {
+          "stream": 1,
+          "field": "codec_tag_string",
+          "reference": "mp4a",
+          "castcut": "mp4a",
+          "match": true
+        },
+        {
+          "stream": 1,
+          "field": "profile",
+          "reference": "LC",
+          "castcut": "LC",
+          "match": true
+        },
+        {
+          "stream": 1,
+          "field": "level",
+          "reference": null,
+          "castcut": null,
+          "match": true
+        },
+        {
+          "stream": 1,
+          "field": "pix_fmt",
+          "reference": null,
+          "castcut": null,
+          "match": true
+        },
+        {
+          "stream": 1,
+          "field": "has_b_frames",
+          "reference": null,
+          "castcut": null,
+          "match": true
+        },
+        {
+          "stream": 1,
+          "field": "sample_aspect_ratio",
+          "reference": null,
+          "castcut": null,
+          "match": true
+        },
+        {
+          "stream": 1,
+          "field": "time_base",
+          "reference": "1/48000",
+          "castcut": "1/48000",
+          "match": true
+        },
+        {
+          "stream": 1,
+          "field": "start_time",
+          "reference": "0.000000",
+          "castcut": "0.000000",
+          "match": true
+        },
+        {
+          "stream": 1,
+          "field": "sample_rate",
+          "reference": "48000",
+          "castcut": "48000",
+          "match": true
+        },
+        {
+          "stream": 1,
+          "field": "channels",
+          "reference": 2,
+          "castcut": 2,
+          "match": true
+        },
+        {
+          "stream": 1,
+          "field": "color_range",
+          "reference": null,
+          "castcut": null,
+          "match": true
+        },
+        {
+          "stream": 1,
+          "field": "color_space",
+          "reference": null,
+          "castcut": null,
+          "match": true
+        },
+        {
+          "stream": 1,
+          "field": "color_transfer",
+          "reference": null,
+          "castcut": null,
+          "match": true
+        },
+        {
+          "stream": 1,
+          "field": "color_primaries",
+          "reference": null,
+          "castcut": null,
+          "match": true
+        }
+      ],
+      "identical_box_shape": true,
+      "both_full_decode_passed": true,
+      "reference": {
+        "fps": "30/1",
+        "video_bitrate": "5458677",
+        "audio_bitrate": "193550",
+        "boxes": [
+          {
+            "type": "ftyp",
+            "offset": 0,
+            "size": 32,
+            "major_brand": "mp42"
+          },
+          {
+            "type": "moov",
+            "offset": 32,
+            "size": 9090,
+            "children": [
+              {
+                "type": "mvhd",
+                "offset": 40,
+                "size": 108
+              },
+              {
+                "type": "trak",
+                "offset": 148,
+                "size": 2751,
+                "children": [
+                  {
+                    "type": "tkhd",
+                    "offset": 156,
+                    "size": 92
+                  },
+                  {
+                    "type": "mdia",
+                    "offset": 248,
+                    "size": 2651,
+                    "children": [
+                      {
+                        "type": "mdhd",
+                        "offset": 256,
+                        "size": 32
+                      },
+                      {
+                        "type": "hdlr",
+                        "offset": 288,
+                        "size": 45
+                      },
+                      {
+                        "type": "minf",
+                        "offset": 333,
+                        "size": 2566,
+                        "children": [
+                          {
+                            "type": "vmhd",
+                            "offset": 341,
+                            "size": 20
+                          },
+                          {
+                            "type": "dinf",
+                            "offset": 361,
+                            "size": 36,
+                            "children": [
+                              {
+                                "type": "dref",
+                                "offset": 369,
+                                "size": 28
+                              }
+                            ]
+                          },
+                          {
+                            "type": "stbl",
+                            "offset": 397,
+                            "size": 2502,
+                            "children": [
+                              {
+                                "type": "stsd",
+                                "offset": 405,
+                                "size": 194
+                              },
+                              {
+                                "type": "stts",
+                                "offset": 599,
+                                "size": 24
+                              },
+                              {
+                                "type": "stss",
+                                "offset": 623,
+                                "size": 36
+                              },
+                              {
+                                "type": "stsc",
+                                "offset": 659,
+                                "size": 28
+                              },
+                              {
+                                "type": "stsz",
+                                "offset": 687,
+                                "size": 1108
+                              },
+                              {
+                                "type": "stco",
+                                "offset": 1795,
+                                "size": 1104
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "trak",
+                "offset": 2899,
+                "size": 6125,
+                "children": [
+                  {
+                    "type": "tkhd",
+                    "offset": 2907,
+                    "size": 92
+                  },
+                  {
+                    "type": "mdia",
+                    "offset": 2999,
+                    "size": 6025,
+                    "children": [
+                      {
+                        "type": "mdhd",
+                        "offset": 3007,
+                        "size": 32
+                      },
+                      {
+                        "type": "hdlr",
+                        "offset": 3039,
+                        "size": 45
+                      },
+                      {
+                        "type": "minf",
+                        "offset": 3084,
+                        "size": 5940,
+                        "children": [
+                          {
+                            "type": "smhd",
+                            "offset": 3092,
+                            "size": 16
+                          },
+                          {
+                            "type": "dinf",
+                            "offset": 3108,
+                            "size": 36,
+                            "children": [
+                              {
+                                "type": "dref",
+                                "offset": 3116,
+                                "size": 28
+                              }
+                            ]
+                          },
+                          {
+                            "type": "stbl",
+                            "offset": 3144,
+                            "size": 5880,
+                            "children": [
+                              {
+                                "type": "stsd",
+                                "offset": 3152,
+                                "size": 126
+                              },
+                              {
+                                "type": "stts",
+                                "offset": 3278,
+                                "size": 32
+                              },
+                              {
+                                "type": "stsc",
+                                "offset": 3310,
+                                "size": 2848
+                              },
+                              {
+                                "type": "stsz",
+                                "offset": 6158,
+                                "size": 1712
+                              },
+                              {
+                                "type": "stco",
+                                "offset": 7870,
+                                "size": 1100
+                              },
+                              {
+                                "type": "sgpd",
+                                "offset": 8970,
+                                "size": 26
+                              },
+                              {
+                                "type": "sbgp",
+                                "offset": 8996,
+                                "size": 28
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "udta",
+                "offset": 9024,
+                "size": 98
+              }
+            ]
+          },
+          {
+            "type": "free",
+            "offset": 9122,
+            "size": 8
+          },
+          {
+            "type": "mdat",
+            "offset": 9130,
+            "size": 6404769
+          }
+        ]
+      },
+      "castcut": {
+        "ok": true,
+        "sha256": "35a2d7e0d60b5b975f4e3d071f43142c72851d201cf44c9352bb4f64f52a8e85",
+        "duration": 9.050716,
+        "size_bytes": 2281134,
+        "size_human": "2.18 MiB",
+        "mb_per_minute": 15.122343911796593,
+        "bitrate_bps": 2016313,
+        "bitrate_kbps": 2016.313,
+        "video_bitrate_kbps": 1880.655,
+        "video_average_kbps": 1880.6547459891572,
+        "video_peak_10s_kbps": 1702.1272,
+        "video_packets": 217,
+        "audio_packets": 424,
+        "all_packet_timestamps_contiguous": true,
+        "video_pts_equal_dts": true,
+        "fixed_gop": 60,
+        "duration_video": 9.050716,
+        "vcodec": "h264",
+        "profile": "High",
+        "level": 40,
+        "width": 1920,
+        "height": 1080,
+        "fps": 23.976023976023978,
+        "audio_streams": 1,
+        "audio_codec": "aac",
+        "audio_channels": 2,
+        "audio_lang": "und",
+        "faststart": true,
+        "has_elst": false,
+        "full_decode_passed": true,
+        "mp4_boxes": [
+          {
+            "type": "ftyp",
+            "offset": 0,
+            "size": 32,
+            "major_brand": "mp42"
+          },
+          {
+            "type": "moov",
+            "offset": 32,
+            "size": 7088,
+            "children": [
+              {
+                "type": "mvhd",
+                "offset": 40,
+                "size": 108
+              },
+              {
+                "type": "trak",
+                "offset": 148,
+                "size": 3553,
+                "children": [
+                  {
+                    "type": "tkhd",
+                    "offset": 156,
+                    "size": 92
+                  },
+                  {
+                    "type": "mdia",
+                    "offset": 248,
+                    "size": 3453,
+                    "children": [
+                      {
+                        "type": "mdhd",
+                        "offset": 256,
+                        "size": 32
+                      },
+                      {
+                        "type": "hdlr",
+                        "offset": 288,
+                        "size": 45
+                      },
+                      {
+                        "type": "minf",
+                        "offset": 333,
+                        "size": 3368,
+                        "children": [
+                          {
+                            "type": "vmhd",
+                            "offset": 341,
+                            "size": 20
+                          },
+                          {
+                            "type": "dinf",
+                            "offset": 361,
+                            "size": 36,
+                            "children": [
+                              {
+                                "type": "dref",
+                                "offset": 369,
+                                "size": 28
+                              }
+                            ]
+                          },
+                          {
+                            "type": "stbl",
+                            "offset": 397,
+                            "size": 3304,
+                            "children": [
+                              {
+                                "type": "stsd",
+                                "offset": 405,
+                                "size": 192
+                              },
+                              {
+                                "type": "stts",
+                                "offset": 597,
+                                "size": 1272
+                              },
+                              {
+                                "type": "stss",
+                                "offset": 1869,
+                                "size": 32
+                              },
+                              {
+                                "type": "stsc",
+                                "offset": 1901,
+                                "size": 28
+                              },
+                              {
+                                "type": "stsz",
+                                "offset": 1929,
+                                "size": 888
+                              },
+                              {
+                                "type": "stco",
+                                "offset": 2817,
+                                "size": 884
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "trak",
+                "offset": 3701,
+                "size": 3321,
+                "children": [
+                  {
+                    "type": "tkhd",
+                    "offset": 3709,
+                    "size": 92
+                  },
+                  {
+                    "type": "mdia",
+                    "offset": 3801,
+                    "size": 3221,
+                    "children": [
+                      {
+                        "type": "mdhd",
+                        "offset": 3809,
+                        "size": 32
+                      },
+                      {
+                        "type": "hdlr",
+                        "offset": 3841,
+                        "size": 45
+                      },
+                      {
+                        "type": "minf",
+                        "offset": 3886,
+                        "size": 3136,
+                        "children": [
+                          {
+                            "type": "smhd",
+                            "offset": 3894,
+                            "size": 16
+                          },
+                          {
+                            "type": "dinf",
+                            "offset": 3910,
+                            "size": 36,
+                            "children": [
+                              {
+                                "type": "dref",
+                                "offset": 3918,
+                                "size": 28
+                              }
+                            ]
+                          },
+                          {
+                            "type": "stbl",
+                            "offset": 3946,
+                            "size": 3076,
+                            "children": [
+                              {
+                                "type": "stsd",
+                                "offset": 3954,
+                                "size": 126
+                              },
+                              {
+                                "type": "stts",
+                                "offset": 4080,
+                                "size": 32
+                              },
+                              {
+                                "type": "stsc",
+                                "offset": 4112,
+                                "size": 256
+                              },
+                              {
+                                "type": "stsz",
+                                "offset": 4368,
+                                "size": 1716
+                              },
+                              {
+                                "type": "stco",
+                                "offset": 6084,
+                                "size": 884
+                              },
+                              {
+                                "type": "sgpd",
+                                "offset": 6968,
+                                "size": 26
+                              },
+                              {
+                                "type": "sbgp",
+                                "offset": 6994,
+                                "size": 28
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "udta",
+                "offset": 7022,
+                "size": 98
+              }
+            ]
+          },
+          {
+            "type": "free",
+            "offset": 7120,
+            "size": 8
+          },
+          {
+            "type": "mdat",
+            "offset": 7128,
+            "size": 2274006
+          }
+        ],
+        "streams": [
+          {
+            "index": 0,
+            "codec_name": "h264",
+            "codec_long_name": "H.264 / AVC / MPEG-4 AVC / MPEG-4 part 10",
+            "profile": "High",
+            "codec_type": "video",
+            "codec_tag_string": "avc1",
+            "codec_tag": "0x31637661",
+            "width": 1920,
+            "height": 1080,
+            "coded_width": 1920,
+            "coded_height": 1080,
+            "closed_captions": 0,
+            "film_grain": 0,
+            "has_b_frames": 0,
+            "sample_aspect_ratio": "1:1",
+            "display_aspect_ratio": "16:9",
+            "pix_fmt": "yuv420p",
+            "level": 40,
+            "chroma_location": "left",
+            "field_order": "progressive",
+            "refs": 1,
+            "is_avc": "true",
+            "nal_length_size": "4",
+            "id": "0x1",
+            "r_frame_rate": "24000/1001",
+            "avg_frame_rate": "3333120/139019",
+            "time_base": "1/15360",
+            "start_pts": 0,
+            "start_time": "0.000000",
+            "duration_ts": 139019,
+            "duration": "9.050716",
+            "bit_rate": "1880654",
+            "bits_per_raw_sample": "8",
+            "nb_frames": "217",
+            "extradata_size": 46,
+            "disposition": {
+              "default": 1,
+              "dub": 0,
+              "original": 0,
+              "comment": 0,
+              "lyrics": 0,
+              "karaoke": 0,
+              "forced": 0,
+              "hearing_impaired": 0,
+              "visual_impaired": 0,
+              "clean_effects": 0,
+              "attached_pic": 0,
+              "timed_thumbnails": 0,
+              "non_diegetic": 0,
+              "captions": 0,
+              "descriptions": 0,
+              "metadata": 0,
+              "dependent": 0,
+              "still_image": 0
+            },
+            "tags": {
+              "language": "und",
+              "handler_name": "VideoHandler",
+              "vendor_id": "[0][0][0][0]",
+              "encoder": "Lavc60.31.102 libx264"
+            }
+          },
+          {
+            "index": 1,
+            "codec_name": "aac",
+            "codec_long_name": "AAC (Advanced Audio Coding)",
+            "profile": "LC",
+            "codec_type": "audio",
+            "codec_tag_string": "mp4a",
+            "codec_tag": "0x6134706d",
+            "sample_fmt": "fltp",
+            "sample_rate": "48000",
+            "channels": 2,
+            "channel_layout": "stereo",
+            "bits_per_sample": 0,
+            "initial_padding": 0,
+            "id": "0x2",
+            "r_frame_rate": "0/0",
+            "avg_frame_rate": "0/0",
+            "time_base": "1/48000",
+            "start_pts": 0,
+            "start_time": "0.000000",
+            "duration_ts": 433312,
+            "duration": "9.027333",
+            "bit_rate": "129685",
+            "nb_frames": "424",
+            "extradata_size": 5,
+            "disposition": {
+              "default": 1,
+              "dub": 0,
+              "original": 0,
+              "comment": 0,
+              "lyrics": 0,
+              "karaoke": 0,
+              "forced": 0,
+              "hearing_impaired": 0,
+              "visual_impaired": 0,
+              "clean_effects": 0,
+              "attached_pic": 0,
+              "timed_thumbnails": 0,
+              "non_diegetic": 0,
+              "captions": 0,
+              "descriptions": 0,
+              "metadata": 0,
+              "dependent": 0,
+              "still_image": 0
+            },
+            "tags": {
+              "language": "und",
+              "handler_name": "SoundHandler",
+              "vendor_id": "[0][0][0][0]"
+            }
+          }
+        ],
+        "source_audio_index": 0,
+        "source_audio_stream_index": 1,
+        "audio_target_kbps": 128,
+        "source_fps": "24000/1001",
+        "target_fps": "24000/1001",
+        "source_width": 1920,
+        "source_height": 1080,
+        "segments": [
+          [
+            405.4,
+            408.4
+          ],
+          [
+            510.125,
+            513.125
+          ],
+          [
+            1020.0,
+            1023.0
+          ]
+        ],
+        "join_times": [
+          3.0,
+          6.0
+        ],
+        "reference_commit": "a05846de7c76a66ad42ba6fd37126514bc452167",
+        "path": "clipforge_vendor.render.produce_merged_video -> clipforge_vendor.compress.compress",
+        "size_before_bytes": 12273458,
+        "compressed": true
+      },
+      "note": "Both use actual ClipForge render and compression. Allowed fps 30 -> 24000/1001, video VBV1800k, audio192k ->128k. No phone hardware claim."
+    },
+    "regression_checks_latest": {
+      "python": "168 passed in18.25s",
+      "native_download_node": "10 passed",
+      "workflow_lint": "12 files,55 run blocks passed",
+      "selftest": "ALL PIPELINE STAGES PASSED CLEANLY",
+      "ci_run_id": 39512555300,
+      "deploy_run_id": 39512555363
+    },
+    "rebuild_runs": [
+      {
+        "flow": "faces",
+        "run_id": 39512589723,
+        "export_id": "exp-job-1792507438516-dehl-clips-mvgvn5a4",
+        "status": "in_progress"
+      },
+      {
+        "flow": "scene",
+        "run_id": 39512592354,
+        "export_id": "exp-job-1792507438516-dehl-scene-mvgxsz3y",
+        "status": "in_progress"
       }
     ]
   },
