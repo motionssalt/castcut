@@ -53,6 +53,10 @@ def extract_pipeline_calls():
                 if m:
                     mod_name = m.group(1)
                     raw_args = m.group(2).strip()
+                    # A shell command array's closing ')' is syntax, not part
+                    # of its last CLI flag (e.g. --failed in cmd=(python ...)).
+                    if re.search(r'\w+=\(python -m pipeline\.', full_cmd):
+                        raw_args = raw_args.removesuffix(')').rstrip()
                     calls.append((os.path.basename(path), start_line, mod_name, raw_args))
             i += 1
     return calls
