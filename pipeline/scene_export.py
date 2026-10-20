@@ -1,8 +1,8 @@
 """CastCut Mode 2 export — validate production JSON, cut, join, and compress.
 Tolerant of markdown fences, surrounding text, BOM, smart quotes, and trailing commas.
 The JSON is validated with clear, numbered error messages written into job status.
-Cuts are performed using fast intermediate slicing and joined with hard cuts, followed by
-the shared HandBrake-style visually-lossless anime compression pass (x264 CRF 23, medium, tune animation, AAC 128k stereo).
+Cuts use the vendored ClipForge concat filter and its terminal compression pass,
+with only the owner's resolution/frame-rate/audio and bitrate caps applied.
 Guarantees exactly ONE audio track in output (the chosen track).
 """
 from __future__ import annotations
@@ -14,8 +14,8 @@ import os
 import sys
 import time
 
-from .utils import (clean_and_parse_json, concat_segments, encode_final_export,
-                    human_size, parse_time, probe_video)
+from .clipforge_export import export_segments
+from .utils import clean_and_parse_json, human_size, parse_time, probe_video
 
 
 def validate_production(data, duration: float) -> tuple[list, list]:
