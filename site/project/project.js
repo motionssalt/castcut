@@ -2,7 +2,7 @@
 
 const ACTIVE_STATES = new Set([
   "created", "queued", "queued_for_ingest", "selecting", "ingest_running",
-  "faces_running", "scene_analyzing", "hybrid_running", "clips_exporting", "scene_exporting"
+  "analyzing", "faces_running", "scene_analyzing", "hybrid_running", "clips_exporting", "scene_exporting"
 ]);
 
 let jobId = null;
@@ -52,7 +52,7 @@ function renderProject(data) {
   const st = data.status || {};
   const statusInfo = statusView(st.state);
   const title = st.title || st.torrent_name || jobId;
-  const ct = st.content_type || "anime";
+  const ct = st.content_type || "unknown";
 
   renderProjectNav(jobId, "overview", title);
 
@@ -76,6 +76,8 @@ function renderProject(data) {
       ${st.message ? `<div class="dim sm" style="margin-top: 6px;">${esc(st.message)}</div>` : ""}
     </div>
 
+    <button id="repairAnalysis" class="btn ghost">Repair analysis assets</button>
+    ${(st.missing_assets || []).length ? `<p class="err">Missing assets: ${esc(st.missing_assets.join(', '))}</p>` : ''}
     <!-- Stepper -->
     <div class="card" style="margin-bottom: 12px; padding: 12px 14px;">
       <div style="font-size:12px; font-weight:600; color:#8b949e; margin-bottom:8px;">PIPELINE STATUS</div>
@@ -160,6 +162,11 @@ function renderProject(data) {
       </a>
     </div>
   `;
+  document.getElementById('repairAnalysis').onclick = async function() {
+    this.disabled=true;
+    try { await api(`/api/jobs/${encodeURIComponent(jobId)}/repair`,{method:'POST',body:{part:'scene'}}); this.textContent='Repair queued'; setTimeout(()=>loadProject(true),3000); }
+    catch(e) { this.textContent=e.message; this.disabled=false; }
+  };
 }
 
 window.addEventListener("DOMContentLoaded", initProject);
