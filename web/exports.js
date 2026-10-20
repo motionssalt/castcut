@@ -1,3 +1,4 @@
+import { verifiedDownload, saveMp4 } from './download.js';
 import { requireAuth, api, escapeHtml, formatBytes, formatSeconds, formatDate, toast, withButtonFeedback, setupPrefetching } from "./core.js";
 
 let projectId = null;
@@ -84,11 +85,10 @@ function renderExportsUI(data) {
     const dur = exp.total_duration ? formatSeconds(exp.total_duration) : (exp.duration ? formatSeconds(exp.duration) : "");
     const date = exp.created_at || (exp.created_at_epoch ? formatDate(new Date(exp.created_at_epoch * 1000).toISOString()) : "");
     const audioTrack = exp.audio_track !== undefined ? `Audio Track ${Number(exp.audio_track) + 1}` : "";
-    const quality = exp.quality ? `Quality: ${exp.quality}` : "";
 
     // Find download url matching asset
     const matchingAsset = assets.find(a => (a.name && (a.name.includes(expId) || a.name === exp.asset_name))) || null;
-    const downloadUrl = matchingAsset?.browser_download_url || exp.download_url || null;
+    const canDownload = matchingAsset?.id && matchingAsset.name?.endsWith(".mp4") && matchingAsset.state === "uploaded";
     const fileSize = matchingAsset?.size ? formatBytes(matchingAsset.size) : (exp.size_bytes ? formatBytes(exp.size_bytes) : "");
 
     return `
@@ -110,15 +110,14 @@ function renderExportsUI(data) {
         <div class="metadata-line" style="margin-bottom: 12px; font-size: 0.8125rem;">
           ${fileSize ? `<span>${escapeHtml(fileSize)}</span>` : ""}
           ${audioTrack ? `<span class="metadata-sep" aria-hidden="true">·</span><span>${escapeHtml(audioTrack)}</span>` : ""}
-          ${quality ? `<span class="metadata-sep" aria-hidden="true">·</span><span>${escapeHtml(quality)}</span>` : ""}
         </div>
 
         <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border-subtle); padding-top: 10px;">
           <div>
-            ${downloadUrl ? `
-              <a href="${escapeHtml(downloadUrl)}" class="btn btn-primary btn-sm" download target="_blank" rel="noopener noreferrer">
-                ⬇ Download MP4/MKV
-              </a>
+            ${canDownload ? `
+              <button type="button" class="btn btn-primary btn-sm btn-download-export" data-asset-id="${Number(matchingAsset.id)}">
+                ⬇ Download MP4
+              </button>
             ` : `
               <span style="font-size: 0.8125rem; color: var(--text-muted);">Asset processing or in release</span>
             `}
@@ -130,6 +129,22 @@ function renderExportsUI(data) {
       </div>
     `;
   }).join("");
+
+  listEl.querySelectorAll('.btn-download-export').forEach(btn => {
+    btn.onclick = async () => {
+      const asset = assets.find(a => Number(a.id) === Number(btn.dataset.assetId));
+      btn.disabled = true;
+      try {
+        const bytes = await verifiedDownload(asset, (received,total) => {
+          btn.textContent = `Downloading ${total ? Math.round(received/total*100) : 0}%…`;
+        });
+        btn.textContent = 'Verified — saving…';
+        const method = await saveMp4(bytes, asset.name);
+        toast(method === 'cancelled' ? 'Save cancelled' : 'MP4 verified and saved — open it directly in Files or Gallery.', 'info');
+      } catch (error) { toast(error.message, 'error'); }
+      finally { btn.disabled = false; btn.textContent = '⬇ Download MP4'; }
+    };
+  });
 
   listEl.querySelectorAll(".btn-delete-export").forEach(btn => {
     btn.onclick = async () => {
