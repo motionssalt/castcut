@@ -573,5 +573,14 @@
     ],
     "notes": "Issues 3, 4, and 5 fully implemented and verified. Real end-to-end runs succeeded for both AI scene export and clips export."
   },
-  "ui_refinement": "pending, separate session"
+  "ui_refinement": "pending, separate session",
+  "castcut_irl_faces": {
+    "status": "in_progress",
+    "last_updated": "2026-10-20T07:24:18.949573+00:00",
+    "root_cause_notes": "",
+    "done": [],
+    "pending": [],
+    "verified_runs": [],
+    "notes": ""
+  }
 }
