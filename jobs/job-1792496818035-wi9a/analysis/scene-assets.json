@@ -1,0 +1,54 @@
+{
+  "content_type": "irl",
+  "assets": [
+    {
+      "name": "00_READ_THIS_FIRST.txt",
+      "release_tag": "castcut-job-1792496818035-wi9a",
+      "size": 5327,
+      "sha256": "4aa9400851bc7ecfdce6cf56cf2bbad157c2749c550ec043447e07bfa2de9384",
+      "purpose": "instructions"
+    },
+    {
+      "name": "scene_index.json",
+      "release_tag": "castcut-job-1792496818035-wi9a",
+      "size": 115259,
+      "sha256": "f24cac9d3a1c8b48ba511f46141b19e33f0302dcc03071b5f7e0df9212c521ae",
+      "purpose": "scene_index"
+    },
+    {
+      "name": "transcript.json",
+      "release_tag": "castcut-job-1792496818035-wi9a",
+      "size": 47703,
+      "sha256": "aae7c0bf02d9080928f44dec727d6859c3efa43eadbae0724bccb156715d0c47",
+      "purpose": "transcript"
+    },
+    {
+      "name": "video_meta.json",
+      "release_tag": "castcut-job-1792496818035-wi9a",
+      "size": 486,
+      "sha256": "820731cb4ff02b37c39284da3bdc0d326040bf0839ebfb9b939b2212187484e4",
+      "purpose": "video_metadata"
+    },
+    {
+      "name": "sheets.json",
+      "release_tag": "castcut-job-1792496818035-wi9a",
+      "size": 49744,
+      "sha256": "b5cafe9934043f202a7c82f36837d62c897d51b858ca7ed64ef1d17d99b41661",
+      "purpose": "sheet_index"
+    },
+    {
+      "name": "screenshots.zip",
+      "release_tag": "castcut-job-1792496818035-wi9a",
+      "size": 53257335,
+      "sha256": "ec549fd1d328f033edca6f1c58432ae0bada29d438350ec5d749421e50be4393",
+      "purpose": "screenshot_sheets"
+    },
+    {
+      "name": "agent_prompt.txt",
+      "release_tag": "castcut-job-1792496818035-wi9a",
+      "size": 1663,
+      "sha256": "790cbc3541ebdcfbe81d472e64b86fc7c55ce44c97a768404a5a21a42f811694",
+      "purpose": "short_prompt"
+    }
+  ]
+}
