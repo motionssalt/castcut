@@ -1,0 +1,12 @@
+{
+  "job_id": "job-1792504893909-direct",
+  "title": "Verification Direct Link Video",
+  "content_type": "irl",
+  "state": "queued",
+  "message": "Queued for ingest",
+  "created_at_epoch": 1792504893,
+  "created_at": "2026-10-20T14:01:33Z",
+  "updated_at": "2026-10-20T14:01:33Z",
+  "updated_at_epoch": 1792504893,
+  "expires_at_epoch": 1792591293
+}
