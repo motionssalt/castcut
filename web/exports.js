@@ -1,4 +1,4 @@
-import { startNativeDownload } from './download.js';
+import { startNativeDownload, verifiedExportAsset } from './download.js';
 import { requireAuth, api, escapeHtml, formatBytes, formatSeconds, formatDate, toast, withButtonFeedback, setupPrefetching } from "./core.js";
 
 let projectId = null;
@@ -86,9 +86,9 @@ function renderExportsUI(data) {
     const date = exp.created_at || (exp.created_at_epoch ? formatDate(new Date(exp.created_at_epoch * 1000).toISOString()) : "");
     const audioTrack = exp.audio_track !== undefined ? `Audio Track ${Number(exp.audio_track) + 1}` : "";
 
-    // Exact asset binding: never pick an older file with a matching prefix.
-    const matchingAsset = assets.find(a => a.name === (exp.asset_name || `castcut-export-${expId}.mp4`)) || null;
-    const canDownload = matchingAsset?.id && matchingAsset.name?.endsWith(".mp4") && matchingAsset.state === "uploaded";
+    // Only offer the exact bytes that passed the current export/delivery gates.
+    const matchingAsset = verifiedExportAsset(exp, assets);
+    const canDownload = Boolean(matchingAsset);
     const fileSize = matchingAsset?.size ? formatBytes(matchingAsset.size) : (exp.size_bytes ? formatBytes(exp.size_bytes) : "");
 
     return `
@@ -104,7 +104,7 @@ function renderExportsUI(data) {
               ${dur ? `<span class="metadata-sep" aria-hidden="true">·</span><span>Duration: ${escapeHtml(dur)}</span>` : ""}
             </div>
           </div>
-          <span class="status-badge status-ready">✓ Rendered</span>
+          <span class="status-badge ${canDownload ? 'status-ready' : 'status-awaiting'}">${canDownload ? '✓ Verified' : 'Not verified'}</span>
         </div>
 
         <div class="metadata-line" style="margin-bottom: 12px; font-size: 0.8125rem;">
@@ -119,7 +119,7 @@ function renderExportsUI(data) {
                 ⬇ Download MP4
               </button>
             ` : `
-              <span style="font-size: 0.8125rem; color: var(--text-muted);">Asset processing or in release</span>
+              <span style="font-size: 0.8125rem; color: var(--text-muted);">Not verified for download — export again to rebuild this older file</span>
             `}
           </div>
           <button class="btn btn-ghost btn-sm btn-delete-export" data-id="${escapeHtml(expId)}" style="color: var(--state-error);">

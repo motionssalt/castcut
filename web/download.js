@@ -3,6 +3,17 @@
  * owns transfer progress, disk writes, cancellation and byte-range resume.
  */
 import { loadPat } from './core.js';
+// Old exports must not stay downloadable just because their record says done.
+// Bind the actual asset to a successful decode AND post-upload SHA256 receipt.
+export function verifiedExportAsset(exp, assets) {
+  if (exp?.status !== 'done' || !exp.ok || !exp.checks?.ok || !exp.checks.full_decode_passed || !exp.delivery?.runner_release_download_identical) return null;
+  if (!/^[a-f0-9]{64}$/.test(exp.sha256 || '') || exp.sha256 !== exp.checks.sha256 || exp.sha256 !== exp.delivery.sha256) return null;
+  const name = exp.asset_name || `castcut-export-${exp.export_id || exp.id}.mp4`;
+  return assets.find(a => a.name === name && a.state === 'uploaded' && a.name.endsWith('.mp4') &&
+    Number(a.id) === Number(exp.delivery.asset_id) && Number(a.size) === Number(exp.checks.size_bytes) &&
+    a.digest === `sha256:${exp.sha256}`) || null;
+}
+
 export async function startNativeDownload(asset) {
   const id = Number(asset?.id);
   if (!Number.isSafeInteger(id) || id < 1 || !String(asset?.name).endsWith('.mp4') || asset.state !== 'uploaded') {

@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { webcrypto } from 'node:crypto';
 import fs from 'node:fs';
-import { startNativeDownload } from '../web/download.js';
+import { startNativeDownload, verifiedExportAsset } from '../web/download.js';
 import { issueTicket, readTicket, ticketCookie, COOKIE, TTL } from '../web/functions/_lib/download-ticket.js';
 import { onRequest as route } from '../web/functions/api/release-assets/[assetId].js';
 import { onRequest as middleware } from '../web/functions/_middleware.js';
@@ -108,6 +108,17 @@ test('Cookie only authorizes native GET/HEAD for the scoped asset; other APIs st
   assert.equal((await check('/api/release-assets/124?download=1')).status,401);
   assert.equal((await check('/api/release-assets/123?download=1','POST')).status,401);
   assert.equal((await check('/api/jobs')).status,401);
+});
+
+test('Old done records and mismatched bytes cannot still offer the obsolete export',()=>{
+  assert.equal(verifiedExportAsset({status:'done',asset_name:asset.name},[asset]),null);
+  const digest=asset.digest.slice(7);
+  const exp={status:'done',ok:true,asset_name:asset.name,sha256:digest,checks:{ok:true,full_decode_passed:true,sha256:digest,size_bytes:asset.size},delivery:{runner_release_download_identical:true,sha256:digest,asset_id:asset.id}};
+  assert.equal(verifiedExportAsset(exp,[asset]),asset);
+  assert.equal(verifiedExportAsset(exp,[{...asset,digest:'sha256:'+'0'.repeat(64)}]),null);
+  assert.equal(verifiedExportAsset(exp,[{...asset,id:124}]),null);
+  assert.equal(verifiedExportAsset(exp,[{...asset,size:asset.size-1}]),null);
+  assert.equal(verifiedExportAsset(exp,[{...asset,name:'export.mp4-old.mp4'}]),null);
 });
 
 test('Export UI starts native download and never claims an async transfer was saved',()=>{
