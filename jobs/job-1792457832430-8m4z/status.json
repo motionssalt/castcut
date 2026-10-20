@@ -6,11 +6,16 @@
   "created_at_epoch": 1792457832,
   "created_at": "2026-10-20T00:57:12Z",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
   "updated_at": "2026-10-20T01:23:43Z",
   "updated_at_epoch": 1792459423,
 =======
   "updated_at": "2026-10-20T01:25:33Z",
   "updated_at_epoch": 1792459533,
+>>>>>>> Stashed changes
+=======
+  "updated_at": "2026-10-20T01:28:04Z",
+  "updated_at_epoch": 1792459684,
 >>>>>>> Stashed changes
   "expires_at_epoch": 1792544232,
   "state": "analyzing",
@@ -33,14 +38,16 @@
 <<<<<<< Updated upstream
     "scene": {
       "name": "Scene",
-      "state": "running",
-      "message": "Transcribing and detecting scene boundaries",
-      "percent": 20.0,
-      "updated_at": "2026-10-20T01:23:43Z"
+      "state": "ready",
+      "message": "AI scene analysis ready. Copy prompt anytime.",
+      "percent": 100.0,
+      "updated_at": "2026-10-20T01:28:04Z",
+      "url": "https://github.com/motionssalt/castcut/releases/tag/castcut-job-1792457832430-8m4z"
     }
   },
   "release_tag": "castcut-job-1792457832430-8m4z",
   "workflow_run_url": "https://github.com/motionssalt/castcut/actions/runs/39353135055",
+<<<<<<< Updated upstream
 =======
     "faces": {
       "name": "Faces",
@@ -54,4 +61,8 @@
   "workflow_run_url": "https://github.com/motionssalt/castcut/actions/runs/39353135125",
 >>>>>>> Stashed changes
   "video_in_release": true
+=======
+  "video_in_release": true,
+  "release_url": "https://github.com/motionssalt/castcut/releases/tag/castcut-job-1792457832430-8m4z"
+>>>>>>> Stashed changes
 }
