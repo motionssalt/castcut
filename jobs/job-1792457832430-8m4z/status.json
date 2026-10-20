@@ -1,5 +1,6 @@
 {
   "job_id": "job-1792457832430-8m4z",
+<<<<<<< Updated upstream
   "title": "Sam & Cat (2013) Season 1 S01 (1080p AMZN WEB-DL x265 HEVC 10bit EAC3 2.0 RZeroX)",
   "torrent_name": "Sam & Cat (2013) Season 1 S01 (1080p AMZN WEB-DL x265 HEVC 10bit EAC3 2.0 RZeroX)",
   "content_type": "irl",
@@ -19,15 +20,16 @@
 >>>>>>> Stashed changes
   "expires_at_epoch": 1792544232,
   "state": "analyzing",
+=======
+  "created_at_epoch": 1792460260,
+  "created_at": "2026-10-20T01:37:40Z",
+  "state": "ready",
+>>>>>>> Stashed changes
   "message": "",
-  "selected_files": [
-    {
-      "index": 16,
-      "path": "Sam & Cat (2013) - S01E16 - #PeezyB (1080p AMZN WEB-DL x265 RZeroX).mkv",
-      "length": 634427539
-    }
-  ],
+  "updated_at_epoch": 1792460260,
+  "updated_at": "2026-10-20T01:37:40Z",
   "tasks": {
+<<<<<<< Updated upstream
     "ingest": {
       "name": "Ingest",
       "state": "ready",
@@ -49,14 +51,17 @@
   "workflow_run_url": "https://github.com/motionssalt/castcut/actions/runs/39353135055",
 <<<<<<< Updated upstream
 =======
+=======
+>>>>>>> Stashed changes
     "faces": {
       "name": "Faces",
-      "state": "running",
-      "message": "Sampling frames and clustering unique faces",
-      "percent": 20.0,
-      "updated_at": "2026-10-20T01:25:33Z"
+      "state": "ready",
+      "message": "Face gallery ready. Select characters to extract.",
+      "percent": 100.0,
+      "updated_at": "2026-10-20T01:37:40Z"
     }
   },
+<<<<<<< Updated upstream
   "release_tag": "castcut-job-1792457832430-8m4z",
   "workflow_run_url": "https://github.com/motionssalt/castcut/actions/runs/39353135125",
 >>>>>>> Stashed changes
@@ -64,5 +69,9 @@
 =======
   "video_in_release": true,
   "release_url": "https://github.com/motionssalt/castcut/releases/tag/castcut-job-1792457832430-8m4z"
+>>>>>>> Stashed changes
+=======
+  "title": "Sam & Cat (2013) Season 1 S01 (1080p AMZN WEB-DL x265 HEVC 10bit EAC3 2.0 RZeroX)",
+  "torrent_name": "Sam & Cat (2013) Season 1 S01 (1080p AMZN WEB-DL x265 HEVC 10bit EAC3 2.0 RZeroX)"
 >>>>>>> Stashed changes
 }
