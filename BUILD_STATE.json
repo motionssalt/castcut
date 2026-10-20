@@ -1045,7 +1045,7 @@
   },
   "export_copy_clipforge": {
     "status": "in_progress",
-    "last_updated": "2026-10-20T22:16:54.188536+00:00",
+    "last_updated": "2026-10-20T22:21:08.124218+00:00",
     "clipforge_reference": {
       "repository": "motionssalt/clipforge",
       "commit": "a05846de7c76a66ad42ba6fd37126514bc452167",
@@ -1521,35 +1521,34 @@
       "Cloned both repositories; ClipForge is read-only.",
       "Independently reviewed previous port and git history: upstream snapshots match ClipForge HEAD a05846de; prior a5f68a7 wrote a custom utils.py profile instead of reusing renderer.",
       "Re-downloaded real ClipForge final, new 1:54 scene, real 10-minute scene, and original 125-segment faces export; all byte lengths and SHA256 agree with GitHub.",
-      "Recovered exact prior reference command/filter and historical media evidence without deleting earlier history."
+      "Recovered exact prior reference command/filter and historical media evidence without deleting earlier history.",
+      "Independent full ffmpeg decode and every-packet monotonicity/contiguity plus sliding 10-second video rate checks passed on both long real export flows and 1:54 scene.",
+      "Live deployed site downloaded 27.70MB, 143.94MB and 207.80MB via authenticated same-origin bridge; saved byte counts/SHA256 identical to release and runner receipts; mobile-viewport Chromium decoded, advanced, seeked to 20/50/80 percent and ended, no media errors. This is NOT a physical Android test.",
+      "Added and pushed three new CI guards: exact upstream terminal command/order minus only owner VBV pair, over-limit original fallback blocked, in-limit smaller original fallback preserved."
     ],
     "pending": [
-      "Trace both paths and previous history",
-      "Inspect real delivered assets",
-      "Port confirmed differences",
-      "Verify both real flows and CI"
+      "Complete fresh actual-reference repository execution on same real original-source segments",
+      "Wait for new CI and remaining isolated duplicate faces run; record outcome",
+      "Final done state and push"
     ],
     "verified_runs": [
       {
         "run_id": 39502823816,
         "flow": "scene",
-        "source": "job-1792507438516-dehl",
-        "status": "success",
-        "output": {
-          "name": "castcut-export-exp-job-1792507438516-dehl-scene-clipforge-port.mp4",
-          "bytes": 27697735,
-          "sha256": "71088e2b788f4371f934a40e88c1dc6fc85c747c06a039fafdfc2ca1bbc7da58"
-        },
-        "browser_playback": {
-          "canPlayType": "probably",
-          "duration": 114.113997,
-          "firstTime": 1.71945,
-          "firstFrames": 42,
-          "ended": true,
-          "videoWidth": 1920,
-          "videoHeight": 1080,
-          "error": null
-        }
+        "asset_id": 660584184,
+        "success": true
+      },
+      {
+        "run_id": 39502820251,
+        "flow": "faces",
+        "asset_id": 660618952,
+        "success": true
+      },
+      {
+        "run_id": 39503229843,
+        "flow": "scene-10-minute",
+        "asset_id": 660629407,
+        "success": true
       }
     ],
     "notes": "The branch already contained the required literal port and delivery fix, but previous investigation was left in_progress. This pass independently verifies it, adds missing regression guards if needed, and completes run evidence rather than inventing a new decoder root cause.",
@@ -2318,6 +2317,201 @@
           }
         ]
       }
+    },
+    "independent_browser_verification": [
+      {
+        "asset_id": 660584184,
+        "name": "castcut-export-exp-job-1792507438516-dehl-scene-clipforge-port.mp4",
+        "bytes": 27697735,
+        "sha256": "71088e2b788f4371f934a40e88c1dc6fc85c747c06a039fafdfc2ca1bbc7da58",
+        "download_matches_release": true,
+        "delivery_routes": [
+          "same_origin_authenticated_bridge"
+        ],
+        "playback": {
+          "duration": 114.113997,
+          "firstTime": 0.991981,
+          "firstFrames": 28,
+          "seeks": [
+            22.822799,
+            57.056998,
+            91.291197,
+            113.113997
+          ],
+          "ended": true,
+          "width": 1920,
+          "height": 1080,
+          "error": null,
+          "canPlayType": "probably"
+        },
+        "physical_android_test": false
+      },
+      {
+        "asset_id": 660629407,
+        "name": "castcut-export-exp-job-clipforge-verify-20261020-scene-clipforge.mp4",
+        "bytes": 143942223,
+        "sha256": "b46a6f36c2085f4d5001f51610e0301e10bd87092e283b16cce47c6ee7a59bb4",
+        "download_matches_release": true,
+        "delivery_routes": [
+          "same_origin_authenticated_bridge"
+        ],
+        "playback": {
+          "duration": 600.391471,
+          "firstTime": 1.122796,
+          "firstFrames": 31,
+          "seeks": [
+            120.078294,
+            300.195735,
+            480.313176,
+            599.391471
+          ],
+          "ended": true,
+          "width": 1920,
+          "height": 1080,
+          "error": null,
+          "canPlayType": "probably"
+        },
+        "physical_android_test": false
+      },
+      {
+        "asset_id": 660618952,
+        "name": "castcut-export-exp-job-1792507438516-dehl-clips-clipforge-port.mp4",
+        "bytes": 207798604,
+        "sha256": "10fe59f8de02a35c20bbc7a7e35d7c1d486c2b3fd041966591c0c8466a719b1b",
+        "download_matches_release": true,
+        "delivery_routes": [
+          "same_origin_authenticated_bridge"
+        ],
+        "playback": {
+          "duration": 858.858008,
+          "firstTime": 1.052032,
+          "firstFrames": 31,
+          "seeks": [
+            171.771601,
+            429.429004,
+            687.086406,
+            857.858008
+          ],
+          "ended": true,
+          "width": 1920,
+          "height": 1080,
+          "error": null,
+          "canPlayType": "probably"
+        },
+        "physical_android_test": false
+      }
+    ],
+    "independent_inspections": {
+      "clipforge-final.mp4": {
+        "full_decode_passed": true,
+        "sha256": "7ec0c386d79bcfbf257ee9455b690be7f08bb579df4f4ea07670887c685c0039"
+      },
+      "castcut-castcut-export-exp-job-1792507438516-dehl-clips-clipforge-port.mp4": {
+        "ok": true,
+        "sha256": "10fe59f8de02a35c20bbc7a7e35d7c1d486c2b3fd041966591c0c8466a719b1b",
+        "duration": 858.858008,
+        "size_bytes": 207798604,
+        "size_human": "198.17 MiB",
+        "mb_per_minute": 14.51685391981581,
+        "bitrate_bps": 1935581,
+        "bitrate_kbps": 1935.581,
+        "video_bitrate_kbps": 1799.452,
+        "video_average_kbps": 1799.452353712,
+        "video_peak_10s_kbps": 1915.0664,
+        "video_packets": 20592,
+        "audio_packets": 40254,
+        "all_packet_timestamps_contiguous": true,
+        "video_pts_equal_dts": true,
+        "fixed_gop": 60,
+        "duration_video": 858.858008,
+        "vcodec": "h264",
+        "profile": "High",
+        "level": 40,
+        "width": 1920,
+        "height": 1080,
+        "fps": 23.976023976023978,
+        "audio_streams": 1,
+        "audio_codec": "aac",
+        "audio_channels": 2,
+        "audio_lang": "und",
+        "faststart": true,
+        "has_elst": false,
+        "full_decode_passed": true
+      },
+      "castcut-castcut-export-exp-job-1792507438516-dehl-scene-clipforge-port.mp4": {
+        "ok": true,
+        "sha256": "71088e2b788f4371f934a40e88c1dc6fc85c747c06a039fafdfc2ca1bbc7da58",
+        "duration": 114.113997,
+        "size_bytes": 27697735,
+        "size_human": "26.41 MiB",
+        "mb_per_minute": 14.563192453945856,
+        "bitrate_bps": 1941759,
+        "bitrate_kbps": 1941.759,
+        "video_bitrate_kbps": 1806.245,
+        "video_average_kbps": 1806.245225059944,
+        "video_peak_10s_kbps": 1881.7008,
+        "video_packets": 2736,
+        "audio_packets": 5347,
+        "all_packet_timestamps_contiguous": true,
+        "video_pts_equal_dts": true,
+        "fixed_gop": 60,
+        "duration_video": 114.113998,
+        "vcodec": "h264",
+        "profile": "High",
+        "level": 40,
+        "width": 1920,
+        "height": 1080,
+        "fps": 23.976023976023978,
+        "audio_streams": 1,
+        "audio_codec": "aac",
+        "audio_channels": 2,
+        "audio_lang": "und",
+        "faststart": true,
+        "has_elst": false,
+        "full_decode_passed": true
+      },
+      "castcut-castcut-export-exp-job-clipforge-verify-20261020-scene-clipforge.mp4": {
+        "ok": true,
+        "sha256": "b46a6f36c2085f4d5001f51610e0301e10bd87092e283b16cce47c6ee7a59bb4",
+        "duration": 600.391471,
+        "size_bytes": 143942223,
+        "size_human": "137.27 MiB",
+        "mb_per_minute": 14.384836889196915,
+        "bitrate_bps": 1917978,
+        "bitrate_kbps": 1917.978,
+        "video_bitrate_kbps": 1782.678,
+        "video_average_kbps": 1782.6780324421397,
+        "video_peak_10s_kbps": 1918.7336,
+        "video_packets": 14395,
+        "audio_packets": 28140,
+        "all_packet_timestamps_contiguous": true,
+        "video_pts_equal_dts": true,
+        "fixed_gop": 60,
+        "duration_video": 600.391472,
+        "vcodec": "h264",
+        "profile": "High",
+        "level": 40,
+        "width": 1920,
+        "height": 1080,
+        "fps": 23.976023976023978,
+        "audio_streams": 1,
+        "audio_codec": "aac",
+        "audio_channels": 2,
+        "audio_lang": "und",
+        "faststart": true,
+        "has_elst": false,
+        "full_decode_passed": true
+      }
+    },
+    "regression_checks": {
+      "python_tests_passed_before_new_guards": 165,
+      "additional_terminal_parity_tests_passed": 3,
+      "workflow_lint": "12 files / 55 run blocks pass",
+      "node_download_tests": "5 pass",
+      "node_site_dom_pages_torrent": "all pass",
+      "pipeline_selftest": "pass",
+      "upstream_render_snapshot_sha256": "22ecbaf665c7bde294d3aaffbd1a24ea593900327bde69b2dd1afc244a60eb2c",
+      "upstream_compress_snapshot_sha256": "548eebbd16fa10ca95e8f51665d95d0874546380da9ffee572744105a5036d7a"
     }
   },
   "export_copy_clipforge_history": [
