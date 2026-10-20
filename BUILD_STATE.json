@@ -1044,8 +1044,8 @@
     "notes": ""
   },
   "export_copy_clipforge": {
-    "status": "in_progress",
-    "last_updated": "2026-10-20T23:12:03.484980+00:00",
+    "status": "completed",
+    "last_updated": "2026-10-20T23:53:33.648632+00:00",
     "clipforge_reference": {
       "repository": "motionssalt/clipforge",
       "commit": "a05846de7c76a66ad42ba6fd37126514bc452167",
@@ -1567,10 +1567,13 @@
       "Found concrete stale-output bug: original project still offers old 497293076-byte faces and 69636349-byte scene assets as done, alongside newer separately named replacements. UI formerly accepted any uploaded MP4 regardless of verification. Downloads now require matching full-decode and release-readback receipts, asset ID, SHA256, size and exact filename; 10 regression tests pass. Rebuilding original export IDs next.",
       "Dispatched real faces and scene exports under the ORIGINAL owner-facing export IDs, not separately named test replacements. Original selection/production JSON and chosen audio track 0 retained.",
       "Live production native attachment downloaded byte-identical 27697735B MP4 without JS media fetching; scoped HttpOnly/Secure/Strict cookie, range206, HEAD200, unauthorized401; real-source upstream/port comparison matches stream fields/container box shape and both decode.",
-      "Google Chrome full playback reached ended=true with no media error for actual ClipForge release, live native-downloaded CastCut114s file, and both same-real-source reference/CastCut multicut samples. Accelerated16x test drops presentation frames by design; separate full ffmpeg decoding passes."
+      "Google Chrome full playback reached ended=true with no media error for actual ClipForge release, live native-downloaded CastCut114s file, and both same-real-source reference/CastCut multicut samples. Accelerated16x test drops presentation frames by design; separate full ffmpeg decoding passes.",
+      "Rebuilt original scene export exp-job-1792507438516-dehl-scene-mvgxsz3y via GitHub Actions run 39512592354 using exact ClipForge vendored render and compress: 27,698,908 bytes (26.4 MB for 114s, 1941.8 kbps <= 2000 kbps limit).",
+      "Rebuilt original faces export exp-job-1792507438516-dehl-clips-mvgvn5a4 via GitHub Actions run 39512589723 using exact ClipForge vendored render and compress: 207,815,429 bytes (198.2 MB for 850.9s / ~14.2 min, 1935.7 kbps <= 2000 kbps limit).",
+      "Verified live Cloudflare Pages production downloads for both rebuilt assets on https://castcut.pages.dev: both return HTTP 200 video/mp4 with Content-Disposition attachment, byte-exact Content-Length and matching SHA-256 etags without in-memory browser Blob bloat.",
+      "Both rebuilt exports conform 1:1 to ClipForge media profile: H.264 High@L4.0, yuv420p, 0 B-frames (PTS==DTS, start_time=0), 1080p max, original fps capped at 30, mp42 brand, faststart, no edit lists, AAC-LC 128k stereo 48kHz, single selected audio track."
     ],
     "pending": [
-      "Wait for original faces rebuild and verify both original owner-facing downloads",
       "Physical phone confirmation by owner"
     ],
     "verified_runs": [
@@ -9735,13 +9738,23 @@
         "flow": "faces",
         "run_id": 39512589723,
         "export_id": "exp-job-1792507438516-dehl-clips-mvgvn5a4",
-        "status": "in_progress"
+        "status": "success",
+        "asset_id": 660796126,
+        "asset_name": "castcut-export-exp-job-1792507438516-dehl-clips-mvgvn5a4.mp4",
+        "size_bytes": 207815429,
+        "bitrate_kbps": 1935.737,
+        "sha256": "70b8801a3af6cf2b562b7bb09fb406e0fc19cfbd9733bdea93b9e163c0712abb"
       },
       {
         "flow": "scene",
         "run_id": 39512592354,
         "export_id": "exp-job-1792507438516-dehl-scene-mvgxsz3y",
-        "status": "in_progress"
+        "status": "success",
+        "asset_id": 660740016,
+        "asset_name": "castcut-export-exp-job-1792507438516-dehl-scene-mvgxsz3y.mp4",
+        "size_bytes": 27698908,
+        "bitrate_kbps": 1941.841,
+        "sha256": "8775bf4d297859d827523fa6b8e8e2ba67daabcf7a46e23afda7e00665b668f6"
       }
     ],
     "browser_playback_latest": [
