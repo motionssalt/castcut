@@ -1,76 +1,24 @@
 {
   "job_id": "job-1792455597017-qjkc",
-<<<<<<< Updated upstream
-  "title": "iCarly (2007) Season 1-6 S01-06 (1080p AMZN.WEBDL x265 10bit EAC3 Mixed EDGE2020)",
-  "torrent_name": "iCarly (2007) Season 1-6 S01-06 (1080p AMZN.WEBDL x265 10bit EAC3 Mixed EDGE2020)",
   "content_type": "irl",
+  "title": "job-1792455597017-qjkc",
+  "torrent_name": "",
   "created_at_epoch": 1792455597,
-  "created_at": "2026-10-20T00:19:57Z",
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-  "updated_at": "2026-10-20T00:57:22Z",
-  "updated_at_epoch": 1792457842,
-=======
-  "updated_at": "2026-10-20T01:03:05Z",
-  "updated_at_epoch": 1792458185,
->>>>>>> Stashed changes
-  "expires_at_epoch": 1792541997,
-  "state": "analyzing",
-=======
-  "created_at_epoch": 1792458710,
-  "created_at": "2026-10-20T01:11:50Z",
-  "state": "ready",
->>>>>>> Stashed changes
-  "message": "",
-  "updated_at_epoch": 1792458710,
-  "updated_at": "2026-10-20T01:11:50Z",
+  "created_at": "2026-10-20T00:19:57+00:00",
+  "state": "incomplete",
+  "message": "Recovered immutable project type and corrupt status. Analysis needs verified repair.",
   "tasks": {
-<<<<<<< Updated upstream
-    "ingest": {
-      "name": "Ingest",
-      "state": "ready",
-      "message": "Source downloaded successfully",
-      "percent": 100.0,
-      "updated_at": "2026-10-20T00:26:25Z"
+    "faces": {
+      "state": "incomplete",
+      "message": "Prior detector profile incorrect; rerun required",
+      "updated_at": "2026-10-20T07:32:16.801462+00:00"
     },
-<<<<<<< Updated upstream
     "scene": {
-      "name": "Scene",
-<<<<<<< Updated upstream
-      "state": "running",
-      "message": "Transcribing and detecting scene boundaries",
-      "percent": 20.0,
-      "updated_at": "2026-10-20T00:57:22Z"
-=======
-    "faces": {
-      "name": "Faces",
-      "state": "running",
-      "message": "Sampling frames and clustering unique faces",
-      "percent": 20.0,
-      "updated_at": "2026-10-20T01:00:47Z"
->>>>>>> Stashed changes
-=======
-      "state": "ready",
-      "message": "AI scene analysis ready. Copy prompt anytime.",
-      "percent": 100.0,
-      "updated_at": "2026-10-20T01:03:05Z",
-      "url": "https://github.com/motionssalt/castcut/releases/tag/castcut-job-1792455597017-qjkc"
->>>>>>> Stashed changes
+      "state": "incomplete",
+      "message": "Labeled grids and complete asset verification required",
+      "updated_at": "2026-10-20T07:32:16.801462+00:00"
     }
   },
-  "release_tag": "castcut-job-1792455597017-qjkc",
-  "video_in_release": true,
-  "release_url": "https://github.com/motionssalt/castcut/releases/tag/castcut-job-1792455597017-qjkc"
-=======
-    "faces": {
-      "name": "Faces",
-      "state": "ready",
-      "message": "Face gallery ready. Select characters to extract.",
-      "percent": 100.0,
-      "updated_at": "2026-10-20T01:11:50Z"
-    }
-  },
-  "title": "iCarly (2007) Season 1-6 S01-06 (1080p AMZN.WEBDL x265 10bit EAC3 Mixed EDGE2020)",
-  "torrent_name": "iCarly (2007) Season 1-6 S01-06 (1080p AMZN.WEBDL x265 10bit EAC3 Mixed EDGE2020)"
->>>>>>> Stashed changes
+  "release_verified": false,
+  "updated_at": "2026-10-20T07:32:16.801462+00:00"
 }
