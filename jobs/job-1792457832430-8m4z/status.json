@@ -5,16 +5,27 @@
   "content_type": "irl",
   "created_at_epoch": 1792457832,
   "created_at": "2026-10-20T00:57:12Z",
-  "updated_at": "2026-10-20T00:57:12Z",
-  "updated_at_epoch": 1792457832,
+  "updated_at": "2026-10-20T00:57:53Z",
+  "updated_at_epoch": 1792457873,
   "expires_at_epoch": 1792544232,
-  "state": "queued_for_ingest",
-  "message": "Downloading 1 selected file(s)…",
+  "state": "ingest_running",
+  "message": "Downloading source",
   "selected_files": [
     {
       "index": 16,
       "path": "Sam & Cat (2013) - S01E16 - #PeezyB (1080p AMZN WEB-DL x265 RZeroX).mkv",
       "length": 634427539
     }
-  ]
+  ],
+  "tasks": {
+    "ingest": {
+      "name": "Ingest",
+      "state": "running",
+      "message": "Downloading source",
+      "percent": 10.0,
+      "updated_at": "2026-10-20T00:57:53Z"
+    }
+  },
+  "release_tag": "castcut-job-1792457832430-8m4z",
+  "workflow_run_url": "https://github.com/motionssalt/castcut/actions/runs/39350679806"
 }
