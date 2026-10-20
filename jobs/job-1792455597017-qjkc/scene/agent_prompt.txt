@@ -1,0 +1,14 @@
+Open this GitHub release: https://github.com/motionssalt/castcut/releases/tag/castcut-job-1792455597017-qjkc
+Download and read 00_READ_THIS_FIRST.txt FIRST, then inspect the evidence assets (scene_index.json, transcript.json, and screenshots.zip as needed).
+
+Project: iCarly (2007) Season 1-6 S01-06 (1080p AMZN.WEBDL x265 10bit EAC3 Mixed EDGE2020)
+Content type: LIVE-ACTION / REAL-WORLD (not anime). Focus on conversational beats and natural live pacing.
+
+Task:
+The user left the scene request EMPTY. Pick the single best, most coherent, and impactful scene or sequence from the video that carries the narrative.
+
+Rules:
+- Read 00_READ_THIS_FIRST.txt in the release before selecting any cuts.
+- Produce exactly one production.json containing the selected segments.
+- Segments must be in chronological playback order with start and end timestamps within the source video.
+- Deliver the production JSON either as a downloadable .json file (recommended filename: castcut-scene-job-1792455597017-qjkc.json) if you can create files, or inside a single ```json code block (one block, valid JSON, nothing else inside it). If you include a short explanation, place it outside the file or code block.

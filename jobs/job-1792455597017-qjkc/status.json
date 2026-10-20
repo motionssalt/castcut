@@ -6,8 +6,13 @@
   "created_at_epoch": 1792455597,
   "created_at": "2026-10-20T00:19:57Z",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
   "updated_at": "2026-10-20T00:57:22Z",
   "updated_at_epoch": 1792457842,
+=======
+  "updated_at": "2026-10-20T01:03:05Z",
+  "updated_at_epoch": 1792458185,
+>>>>>>> Stashed changes
   "expires_at_epoch": 1792541997,
   "state": "analyzing",
   "message": "",
@@ -38,6 +43,7 @@
 <<<<<<< Updated upstream
     "scene": {
       "name": "Scene",
+<<<<<<< Updated upstream
       "state": "running",
       "message": "Transcribing and detecting scene boundaries",
       "percent": 20.0,
@@ -50,8 +56,16 @@
       "percent": 20.0,
       "updated_at": "2026-10-20T01:00:47Z"
 >>>>>>> Stashed changes
+=======
+      "state": "ready",
+      "message": "AI scene analysis ready. Copy prompt anytime.",
+      "percent": 100.0,
+      "updated_at": "2026-10-20T01:03:05Z",
+      "url": "https://github.com/motionssalt/castcut/releases/tag/castcut-job-1792455597017-qjkc"
+>>>>>>> Stashed changes
     }
   },
   "release_tag": "castcut-job-1792455597017-qjkc",
-  "video_in_release": true
+  "video_in_release": true,
+  "release_url": "https://github.com/motionssalt/castcut/releases/tag/castcut-job-1792455597017-qjkc"
 }
