@@ -1042,5 +1042,23 @@
     ],
     "verified_runs": [],
     "notes": ""
+  },
+  "export_copy_clipforge": {
+    "status": "in_progress",
+    "last_updated": "2026-10-20T21:35:33.166319+00:00",
+    "clipforge_reference": {},
+    "diff_table": [],
+    "root_cause": "",
+    "done": [
+      "Cloned both private repositories; ClipForge read-only."
+    ],
+    "pending": [
+      "Inspect reference code and delivered media",
+      "Compare historical CastCut path",
+      "Vendor shared export",
+      "Validate local and real Actions exports"
+    ],
+    "verified_runs": [],
+    "notes": ""
   }
 }
