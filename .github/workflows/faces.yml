@@ -1,101 +1,45 @@
 name: Mode 1 — Faces analyze
-run-name: faces — ${{ inputs.job_id }}
-
+run-name: "faces analysis — ${{ inputs.job_id }}"
 on:
   workflow_dispatch:
     inputs:
       job_id: { required: true, type: string }
-      sample_fps: { required: false, type: string, default: "1.0" }
-      content_type: { required: false, type: string, default: "anime" }
-
+      content_type: { required: false, type: string, default: "" }
+      sample_fps: { required: false, type: string, default: "2.0" }
 permissions:
   contents: write
-
 concurrency:
-  group: castcut-faces-${{ inputs.job_id }}
+  group: castcut-analysis-${{ inputs.job_id }}
   cancel-in-progress: false
-
 jobs:
-  faces:
+  analyze:
     runs-on: ubuntu-latest
-    timeout-minutes: 300
+    timeout-minutes: 90
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - uses: actions/checkout@v4
         with: { fetch-depth: 0 }
       - uses: actions/setup-python@v5
-        with: { python-version: "3.12" }
-      - name: Deps
+        with: { python-version: "3.11" }
+      - name: Install CPU analysis tools
         run: |
           sudo apt-get update -qq
           sudo apt-get install -y -qq ffmpeg aria2
-          python -m pip install --upgrade pip -q
-          python -m pip install -q requests opencv-python-headless pillow numpy onnxruntime
-          python -m pip install -q --index-url https://download.pytorch.org/whl/cpu "torch==2.3.1"
-          python -m pip install -q "openmim"
-          mim install -q "mmengine" "mmcv>=2.0.0,<2.2" "mmdet>=3,<4" "mmpose>=1,<2" || true
-          python -m pip install -q anime-face-detector || true
-          python -m pip install -q "imgutils[metrics]" || python -m pip install -q dghs-imgutils || true
-      - name: Status — faces running
+          python -m pip install -q requests opencv-python-headless pillow numpy onnxruntime faster-whisper
+      - name: Install anime detector and embedder only for anime projects
         run: |
-          python -m pipeline.status "${{ inputs.job_id }}" \
-            --task faces \
-            --task-state running \
-            --task-message "Sampling frames and clustering unique faces" \
-            --task-percent 20.0 \
-            --workflow-run-url "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git pull --rebase --autostash || true
-          git add "jobs/${{ inputs.job_id }}/"
-          git commit -m "castcut: faces running ${{ inputs.job_id }}" || true
-          for attempt in 1 2 3; do git push && break; echo "Push attempt $attempt failed; retrying"; git pull --rebase --autostash; sleep 2; done
-      - name: Fetch source (release, or re-download when excluded)
-        env: { GH_TOKEN: "${{ secrets.GITHUB_TOKEN }}" }
-        run: |
-          mkdir -p work
-          df -h .
-          python -m pipeline.refetch "${{ inputs.job_id }}" --release-tag "castcut-${{ inputs.job_id }}"
-      - name: Analyze faces
-        run: python -m pipeline.faces "${{ inputs.job_id }}" --fps ${{ inputs.sample_fps }} --content-type "${{ inputs.content_type }}"
-      - name: Commit face manifest
-        run: |
-          python -m pipeline.status "${{ inputs.job_id }}" \
-            --task faces \
-            --task-state ready \
-            --task-message "Face gallery ready. Select characters to extract." \
-            --task-percent 100.0
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git pull --rebase --autostash || true
-          git add "jobs/${{ inputs.job_id }}/"
-          git commit -m "castcut: faces ready ${{ inputs.job_id }}" || true
-          for attempt in 1 2 3; do git push && break; echo "Push attempt $attempt failed; retrying"; git pull --rebase --autostash; sleep 2; done
-      - name: Status — failed
-        if: failure()
-        run: |
-          python -m pipeline.status "${{ inputs.job_id }}" \
-            --task faces \
-            --task-state failed \
-            --task-message "Face analysis failed; see workflow log: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" \
-            --workflow-run-url "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git pull --rebase --autostash || true
-          git add "jobs/${{ inputs.job_id }}/"
-          git commit -m "castcut: faces failed ${{ inputs.job_id }}" || true
-          for attempt in 1 2 3; do git push && break; echo "Push attempt $attempt failed; retrying"; git pull --rebase --autostash; sleep 2; done
-      - name: Status — cancelled
-        if: cancelled()
-        run: |
-          prev=$(python -c "import json;print(json.load(open('jobs/${{ inputs.job_id }}/status.json')).get('state',''))" 2>/dev/null || true)
-          python -m pipeline.status "${{ inputs.job_id }}" \
-            --task faces \
-            --task-state cancelled \
-            --task-message "Face analysis was cancelled." \
-            --set-json "{\"cancelled_from\":\"$prev\"}" || true
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git pull --rebase --autostash || true
-          git add "jobs/${{ inputs.job_id }}/"
-          git commit -m "castcut: cancelled faces ${{ inputs.job_id }}" || true
-          for attempt in 1 2 3; do git push && break; echo "Push attempt $attempt failed; retrying"; git pull --rebase --autostash; sleep 2; done
+          kind=$(python -c "import json;print(json.load(open('jobs/${{ inputs.job_id }}/ingest-request.json'))['content_type'])")
+          if [ "$kind" = "anime" ]; then python -m pip install -q dghs-imgutils; fi
+      - name: Analyze and verify required release assets
+        run: python -m pipeline.analyze "${{ inputs.job_id }}" --content-type "${{ inputs.content_type }}" --fps "${{ inputs.sample_fps }}" --repair faces
+      - name: Preserve funnel logs and sampling diagnostics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: analysis-diagnostics-${{ inputs.job_id }}
+          path: |
+            work/face_sampling.log
+            jobs/${{ inputs.job_id }}/analysis/
+            jobs/${{ inputs.job_id }}/clips/manifest.json
+            work/sheets.json
