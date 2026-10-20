@@ -5,8 +5,8 @@
   "content_type": "irl",
   "created_at_epoch": 1792496818,
   "created_at": "2026-10-20T11:46:58Z",
-  "updated_at": "2026-10-20T13:48:45Z",
-  "updated_at_epoch": 1792504125,
+  "updated_at": "2026-10-20T13:49:08Z",
+  "updated_at_epoch": 1792504148,
   "expires_at_epoch": 1792583218,
   "state": "incomplete",
   "message": "Analysis incomplete: scene: Command '['/opt/hostedtoolcache/Python/3.11.17/x64/bin/python', '-m', 'pipeline.refetch', 'job-1792496818035-wi9a', '--release-tag', 'castcut-job-1792496818035-wi9a']' returned non-zero exit status 1.",
@@ -27,9 +27,10 @@
     },
     "faces": {
       "name": "Faces",
-      "state": "queued",
-      "message": "Queued for analysis",
-      "updated_at": "2026-10-20T13:48:45Z"
+      "state": "running",
+      "message": "IRL faces analysis running",
+      "updated_at": "2026-10-20T13:49:08Z",
+      "percent": 10
     },
     "scene": {
       "name": "Scene",
