@@ -1,0 +1,19 @@
+{
+  "content_type": "irl",
+  "assets": [
+    {
+      "name": "faces-manifest.json",
+      "release_tag": "castcut-job-1792496818035-wi9a",
+      "size": 10375815,
+      "sha256": "3e245789144408449b3d285601eeeefffc09e2f94e33599e037ea3d07aba3491",
+      "purpose": "face_manifest"
+    },
+    {
+      "name": "face_thumbnails.zip",
+      "release_tag": "castcut-job-1792496818035-wi9a",
+      "size": 7806939,
+      "sha256": "984819da2a7d6ce3781035488db3c4e784b8e83127700d362abe6b663b541af7",
+      "purpose": "face_thumbnails"
+    }
+  ]
+}
