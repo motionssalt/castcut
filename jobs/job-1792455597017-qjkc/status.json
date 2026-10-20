@@ -5,12 +5,21 @@
   "content_type": "irl",
   "created_at_epoch": 1792455597,
   "created_at": "2026-10-20T00:19:57Z",
+<<<<<<< Updated upstream
   "updated_at": "2026-10-20T00:57:22Z",
   "updated_at_epoch": 1792457842,
   "expires_at_epoch": 1792541997,
   "state": "analyzing",
   "message": "",
   "workflow_run_url": "https://github.com/motionssalt/castcut/actions/runs/39350609777",
+=======
+  "updated_at": "2026-10-20T01:00:47Z",
+  "updated_at_epoch": 1792458047,
+  "expires_at_epoch": 1792541997,
+  "state": "analyzing",
+  "message": "",
+  "workflow_run_url": "https://github.com/motionssalt/castcut/actions/runs/39350609748",
+>>>>>>> Stashed changes
   "selected_files": [
     {
       "index": 40,
@@ -26,12 +35,21 @@
       "percent": 100.0,
       "updated_at": "2026-10-20T00:26:25Z"
     },
+<<<<<<< Updated upstream
     "scene": {
       "name": "Scene",
       "state": "running",
       "message": "Transcribing and detecting scene boundaries",
       "percent": 20.0,
       "updated_at": "2026-10-20T00:57:22Z"
+=======
+    "faces": {
+      "name": "Faces",
+      "state": "running",
+      "message": "Sampling frames and clustering unique faces",
+      "percent": 20.0,
+      "updated_at": "2026-10-20T01:00:47Z"
+>>>>>>> Stashed changes
     }
   },
   "release_tag": "castcut-job-1792455597017-qjkc",
