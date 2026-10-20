@@ -11,7 +11,8 @@ export async function onRequest({ request, data }) {
     const recent = ids.slice().reverse().slice(0, 50);
     for (const id of recent) {
       const j = await readJson(pat, `jobs/${id}/status.json`);
-      if (!j) { jobs.push({ job_id: id }); continue; }
+      const project = await readJson(pat, `jobs/${id}/ingest-request.json`);
+      if (!j) { jobs.push({ job_id:id, content_type:project?.content_type || null, state:"incomplete", message:"Invalid status record; repair analysis required." }); continue; }
       let title = j.title || j.torrent_name || null;
       if (!title) {
         // Fallback for existing jobs without saved title in status.json
@@ -23,7 +24,7 @@ export async function onRequest({ request, data }) {
         }
       }
       jobs.push({
-        job_id: id, state: j.state, message: j.message, title: title, content_type: j.content_type || "anime",
+        job_id: id, state: j.state, message: j.message, title: title, content_type: project?.content_type || null,
         torrent_name: j.torrent_name || null,
         updated_at: j.updated_at, workflow_run_url: j.workflow_run_url || j.run_url || null,
       });
@@ -50,7 +51,8 @@ export async function onRequest({ request, data }) {
     const userTitle = String(body.title || "").trim().slice(0, 200);
     const torrentName = String(body.torrent_name || "").trim().slice(0, 255);
     const resolvedTitle = userTitle || torrentName || "";
-    const contentType = body?.content_type === "irl" ? "irl" : "anime";
+    if (!["irl","anime"].includes(body?.content_type)) return json({error:"content_type must be explicitly anime or irl"},400);
+    const contentType = body.content_type;
 
     const req = {
       version: 1, job_id: jobId, title: userTitle, torrent_name: torrentName,
