@@ -53,7 +53,7 @@
     }
   ],
   "decisions": [
-    "Face detector: hysts/anime-face-detector YOLOv3 (CPU) over RetinaFace/FasterRCNN \u2014 best accuracy-per-second on free runners; lbpcascade_animeface is fallback only.",
+    "Face detector: hysts/anime-face-detector YOLOv3 (CPU) over RetinaFace/FasterRCNN — best accuracy-per-second on free runners; lbpcascade_animeface is fallback only.",
     "Embeddings: deepghs CCIP via imgutils (512-d), cosine threshold 0.35; HSV histogram fallback if model download fails.",
     "Clustering: online nearest-centroid, no sklearn dependency.",
     "Sampling: 1 fps default (tunable 0.5-2), frames scaled to 480p; capped at 3600 frames for long videos.",
@@ -62,7 +62,7 @@
     "Mode 1 export: ordered per-character, no interleave, no duplicated ranges, hard cuts only, x264 CRF 23 slow final pass (sizes logged).",
     "Mode 2 export: full quality (CRF 14), hard cuts, strict JSON schema v1 with numbered validation errors.",
     "Auth: Pages middleware checks GitHub /user login==motionssalt on every /api/* call; PAT stays client-side.",
-    "fix_round_2 oversized-source fallback: copied from ClipForge bug-69 design \u2014 pipeline/stage_a/release_gate.py (2 GiB per-asset LIMIT_BYTES gate, verified vs GitHub docs 2026-10: 2 GiB per release asset, no total-release cap) and pipeline/stage_a/refetch_source.py (re-fetch from the durably committed ingest request, reusing the same ingest downloaders incl. saved torrent file indices). CastCut adaptation: ingest.py decides BEFORE upload using the real on-disk size with a 128 MiB safety margin (CASTCUT_RELEASE_LIMIT_BYTES env override for testing), records video_in_release:false + re-fetch info in jobs/<id>/ingest.json; pipeline/refetch.py re-downloads into work/ before every downstream step (faces, scene_analyze, clips_export, scene_export); workflow keeps an upload-error safety net that falls back to the exclusion path.",
+    "fix_round_2 oversized-source fallback: copied from ClipForge bug-69 design — pipeline/stage_a/release_gate.py (2 GiB per-asset LIMIT_BYTES gate, verified vs GitHub docs 2026-10: 2 GiB per release asset, no total-release cap) and pipeline/stage_a/refetch_source.py (re-fetch from the durably committed ingest request, reusing the same ingest downloaders incl. saved torrent file indices). CastCut adaptation: ingest.py decides BEFORE upload using the real on-disk size with a 128 MiB safety margin (CASTCUT_RELEASE_LIMIT_BYTES env override for testing), records video_in_release:false + re-fetch info in jobs/<id>/ingest.json; pipeline/refetch.py re-downloads into work/ before every downstream step (faces, scene_analyze, clips_export, scene_export); workflow keeps an upload-error safety net that falls back to the exclusion path.",
     "fix_round_3: removed the only inline heredoc (ingest.yml publish safety-net) and moved it into pipeline/mark_excluded.py; added actionlint CI + README rule so no new heredocs can land.",
     "fix_round_5: Base64 serialization on large .torrent files uses FileReader.readAsDataURL and 8KB chunking to eliminate RangeError call stack overflow on 50+ file torrents; added error stack capture.",
     "fix_round_5: Default file selection picks 0 videos if >1 video file exists in the torrent; 1 video if exactly 1. Live search filter retains selections; Select all / Clear dynamically targets filtered view; 2 GiB warning.",
@@ -119,7 +119,7 @@
       },
       {
         "id": "2",
-        "name": "pipeline/release_size.py \u2014 shared size gate",
+        "name": "pipeline/release_size.py — shared size gate",
         "status": "done",
         "notes": "pipeline/release_size.py: LIMIT_BYTES=2GiB (GitHub docs, no total-release cap), 128MiB margin, CASTCUT_RELEASE_LIMIT_BYTES env override, CLI --check gate (exit 1 + clear message).",
         "next_action": "none"
@@ -133,7 +133,7 @@
       },
       {
         "id": "4",
-        "name": "pipeline/refetch.py \u2014 re-download from original source",
+        "name": "pipeline/refetch.py — re-download from original source",
         "status": "done",
         "notes": "pipeline/refetch.py (port of ClipForge refetch_source.py): ensure_source() - release download when video_in_release, else re-download via ingest.py's own downloaders (direct_url/gdrive/magnet/torrent_file with saved selection.json indices); logs+checks free disk (1.15x source + 512MiB), deletes aria2 dir after copy, probes result. One code path for all 4 downstream steps.",
         "next_action": "none"
@@ -184,7 +184,7 @@
         "id": "B",
         "name": "Make the publish step robust",
         "status": "done",
-        "notes": "Upload failure must never kill the job: run mark_excluded and continue with exit 0. Confirm empty CASTCUT_RELEASE_LIMIT_BYTES is treated as unset (release_size.py already does: empty -> default; keep it that way). After this step the job must reach 'ingested' (ready for mode selection), not ingest_failed. Ensure Status \u2014 failed only runs on genuine failures (it already does via if: failure(), and the safety net will now exit 0 so success() is true). Done: publish step now calls pipeline.mark_excluded and exits 0 on upload failure (with a guard that even if mark_excluded itself fails the step still exits 0 so the job is never killed). 'Status \u2014 done' (if: success()) writes state=ingested; 'Status \u2014 failed' (if: failure()) only runs on genuine failures. Empty CASTCUT_RELEASE_LIMIT_BYTES confirmed safe (release_size.limit_bytes falls back to 2 GiB for empty/unset/whitespace/non-numeric).",
+        "notes": "Upload failure must never kill the job: run mark_excluded and continue with exit 0. Confirm empty CASTCUT_RELEASE_LIMIT_BYTES is treated as unset (release_size.py already does: empty -> default; keep it that way). After this step the job must reach 'ingested' (ready for mode selection), not ingest_failed. Ensure Status — failed only runs on genuine failures (it already does via if: failure(), and the safety net will now exit 0 so success() is true). Done: publish step now calls pipeline.mark_excluded and exits 0 on upload failure (with a guard that even if mark_excluded itself fails the step still exits 0 so the job is never killed). 'Status — done' (if: success()) writes state=ingested; 'Status — failed' (if: failure()) only runs on genuine failures. Empty CASTCUT_RELEASE_LIMIT_BYTES confirmed safe (release_size.limit_bytes falls back to 2 GiB for empty/unset/whitespace/non-numeric).",
         "next_action": "none"
       },
       {
@@ -210,7 +210,7 @@
       }
     ],
     "decisions": [
-      "Heredoc safety net removed from ingest.yml and moved into pipeline/mark_excluded.py; workflows must never contain << heredocs \u2014 use pipeline/ modules called as single-line commands. actionlint CI added to prevent regression."
+      "Heredoc safety net removed from ingest.yml and moved into pipeline/mark_excluded.py; workflows must never contain << heredocs — use pipeline/ modules called as single-line commands. actionlint CI added to prevent regression."
     ],
     "finished_at": "2026-10-03T07:40:00Z"
   },
@@ -274,7 +274,7 @@
         "id": "3",
         "name": "Fix git identity in export workflows and lint",
         "status": "done",
-        "notes": "Ensured git config is set in Status \u2014 failed and Status \u2014 cancelled steps across export workflows.",
+        "notes": "Ensured git config is set in Status — failed and Status — cancelled steps across export workflows.",
         "next_action": "none"
       },
       {
@@ -326,7 +326,7 @@
         "id": "E",
         "name": "Verification",
         "status": "done",
-        "notes": "DONE at CI level (2026-10-03): 147 pytest passed (status states, workflow contract across all workflows, release helpers), lint_workflows 11 files / 68 run blocks clean, actionlint wired in CI, pipeline.selftest exit 0 (ingest->analysis->export->status on synthetic video, terminal guard verified). Live full-flow on real GitHub runners (real project, oversized source, back-to-back exports) not executed from sandbox \u2014 recommend one real-project smoke test by the user; all components are covered by tests.",
+        "notes": "DONE at CI level (2026-10-03): 147 pytest passed (status states, workflow contract across all workflows, release helpers), lint_workflows 11 files / 68 run blocks clean, actionlint wired in CI, pipeline.selftest exit 0 (ingest->analysis->export->status on synthetic video, terminal guard verified). Live full-flow on real GitHub runners (real project, oversized source, back-to-back exports) not executed from sandbox — recommend one real-project smoke test by the user; all components are covered by tests.",
         "next_action": "none"
       },
       {
@@ -343,7 +343,7 @@
       "Workflow failure steps made truthful: verify if export outputs and upload succeeded before writing clips_failed/scene_failed; failure messages explicitly link GitHub Actions run URL.",
       "Job job-1791013658900-mp21 reconciled to clips_ready using existing 100.6 MB release asset and export metadata.",
       "Contract test test_workflow_contract.py added to automatically inspect all workflow YAML files and ensure every python -m pipeline.* call adheres to the target CLI spec before deployment.",
-      "Persistence: 24h auto-expiry removed for projects \u2014 cleanup.py skips any persistent or ready-state record; only the raw source video may be absent because pipeline.refetch re-downloads it from the committed ingest request + selection indices."
+      "Persistence: 24h auto-expiry removed for projects — cleanup.py skips any persistent or ready-state record; only the raw source video may be absent because pipeline.refetch re-downloads it from the committed ingest request + selection indices."
     ],
     "finished_at": "2026-10-03T19:30:00Z"
   },
@@ -369,7 +369,7 @@
         "id": "C",
         "name": "Show full names with expand controls",
         "status": "done",
-        "notes": "DONE: Applied overflow-wrap: anywhere and word-break: break-all with 2-line clamp across torrent header, file list rows, project list cards, project view headers, and export labels. Added dedicated >=44px chevron buttons (\u25be/\u25b4) and direct text tap handlers that toggle multi-line expansion without toggling checkboxes or opening projects. Tested with long filenames containing brackets, underscores, and no spaces.",
+        "notes": "DONE: Applied overflow-wrap: anywhere and word-break: break-all with 2-line clamp across torrent header, file list rows, project list cards, project view headers, and export labels. Added dedicated >=44px chevron buttons (▾/▴) and direct text tap handlers that toggle multi-line expansion without toggling checkboxes or opening projects. Tested with long filenames containing brackets, underscores, and no spaces.",
         "next_action": "none"
       },
       {
@@ -509,10 +509,10 @@
     "verified_runs": [
       {
         "run_id": 39216746366,
-        "workflow": "Mode 2 \u2014 Scene export",
+        "workflow": "Mode 2 — Scene export",
         "export_id": "exp-test-scene-eng",
         "chosen_audio_track": 2,
-        "chosen_audio_label": "Track 3 \u00b7 ENG \u00b7 2.0 \u00b7 opus \u00b7 'English'",
+        "chosen_audio_label": "Track 3 · ENG · 2.0 · opus · 'English'",
         "duration": "146.1s (5 segments)",
         "size_before": "123.46 MB (old) / 43.8 MB (intermediate)",
         "size_after": "27.9 MB (29,304,314 bytes)",
@@ -522,10 +522,10 @@
       },
       {
         "run_id": 39217216341,
-        "workflow": "Mode 1 \u2014 Clips export",
+        "workflow": "Mode 1 — Clips export",
         "export_id": "exp-test-clips-ja",
         "chosen_audio_track": 1,
-        "chosen_audio_label": "Track 2 \u00b7 JPN \u00b7 2.0 \u00b7 opus \u00b7 'Japanese'",
+        "chosen_audio_label": "Track 2 · JPN · 2.0 · opus · 'Japanese'",
         "duration": "251.4s (58 segments)",
         "size_before": "92.4 MB (intermediate)",
         "size_after": "59.9 MB (62,772,909 bytes)",
@@ -562,12 +562,12 @@
       },
       {
         "run_id": 39216746366,
-        "workflow": "Mode 2 \u2014 Scene export",
+        "workflow": "Mode 2 — Scene export",
         "conclusion": "success"
       },
       {
         "run_id": 39217216341,
-        "workflow": "Mode 1 \u2014 Clips export",
+        "workflow": "Mode 1 — Clips export",
         "conclusion": "success"
       }
     ],
@@ -765,7 +765,7 @@
         "mobile_ergonomics": "slow taps, no touch feedback, monolithic single-page"
       },
       "after": {
-        "first_load_transfer_bytes": "47.5 KB (48,666 B) \u2014 59.2% payload reduction",
+        "first_load_transfer_bytes": "47.5 KB (48,666 B) — 59.2% payload reduction",
         "page_load_time_ms": 540,
         "requests_count": 4,
         "tap_feedback_latency_ms": "<50ms (immediate :active transform and spinner)",
@@ -791,5 +791,76 @@
       "web/screenshots/task_diagnostics_dark.png"
     ],
     "notes": "Rebuild complete. Parity verified against live backend and GitHub Actions. All 7 separate real pages verified with Playwright in light and dark modes. Cloudflare Pages successfully deployed from web/."
+  },
+  "job_creation_fix": {
+    "status": "in_progress",
+    "last_updated": "2026-10-20T13:32:12.277Z",
+    "failures_found": [
+      {
+        "run_id": 39427755853,
+        "run_number": 5,
+        "workflow": "Torrent metadata — list files",
+        "file": ".github/workflows/select.yml",
+        "step": "Status — fetching metadata",
+        "error": "ModuleNotFoundError: No module named 'requests' in /home/runner/work/castcut/castcut/pipeline/sync_job.py, line 11",
+        "root_cause": "select.yml workflow environment only installed aria2 and missed 'python -m pip install -q requests', crashing immediately on pipeline.sync_job import"
+      },
+      {
+        "run_id": 39427757639,
+        "run_number": 279,
+        "workflow": "CI (Tests, Lint, Selftest)",
+        "file": ".github/workflows/ci.yml",
+        "step": "Run automated test suite",
+        "error": "ENOENT: no such file or directory, open '/home/runner/work/castcut/castcut/site/index.html'",
+        "root_cause": "Test suite (test_site_dom.test.mjs and test_pages.test.mjs) referenced old /site directory deleted when site was rewritten to web/"
+      },
+      {
+        "run_id": 39428626646,
+        "run_number": 9,
+        "workflow": "Mode 1 — Faces analyze",
+        "file": "pipeline/ingest.py",
+        "step": "Analyze and verify required release assets",
+        "error": "SyntaxError: f-string: expecting '}' at line 126 in pipeline/ingest.py on Python 3.11",
+        "root_cause": "Nested double quotes within f-string f\"--bt-tracker={\",\".join(fallback_trackers)}\" in pipeline/ingest.py line 126 and pipeline/select.py line 50 syntax-errors on Python 3.11 when pipeline.refetch imports pipeline.ingest"
+      },
+      {
+        "run_id": 39428631208,
+        "run_number": 5,
+        "workflow": "AI Scene analyze",
+        "file": "pipeline/ingest.py",
+        "step": "Analyze and verify required release assets",
+        "error": "SyntaxError: f-string: expecting '}' at line 126 in pipeline/ingest.py on Python 3.11",
+        "root_cause": "Same syntax error in pipeline/ingest.py when pipeline.refetch imports pipeline.ingest on Python 3.11 runner"
+      },
+      {
+        "run_id": 39426886617,
+        "run_number": 15,
+        "workflow": "Ingest source video",
+        "file": ".github/workflows/ingest.yml",
+        "step": "Ingest",
+        "error": "None - run succeeded after 12m downloading 634MB payload from torrent peers",
+        "root_cause": "Job was not stuck; it completed ingest and uploaded to release castcut-job-1792496818035-wi9a, then triggered faces/scene which crashed due to the Python 3.11 syntax error"
+      },
+      {
+        "workflow": "Deploy site to Cloudflare Pages & CI",
+        "file": ".github/workflows/deploy.yml and ci.yml",
+        "step": "Trigger conditions",
+        "error": "Job-state and status commits trigger full site deploys and CI test suites",
+        "root_cause": "Neither deploy.yml nor ci.yml had path filters (paths-ignore: jobs/**), causing every job event to trigger CI and Pages deploy"
+      }
+    ],
+    "done": [],
+    "pending": [
+      "Fix f-string syntax error in pipeline/ingest.py and pipeline/select.py for Python 3.11 compatibility",
+      "Add python -m pip install -q requests to .github/workflows/select.yml",
+      "Add path filters (paths-ignore: jobs/**) to ci.yml and deploy.yml to prevent job record commits from triggering CI and site deploys",
+      "Update node tests to target web/ and verify web/ DOM and core runtime functions",
+      "Add progress heartbeat and timeout handling to long steps in ingest.py / select.py",
+      "Verify error reporting on web/ so job creation failures display clear errors",
+      "Add smoke test workflow/script and verify end-to-end jobs (magnet, torrent, direct link)",
+      "Rerun faces/scene analysis for job-1792496818035-wi9a to verify resolution of the screenshot failure"
+    ],
+    "verified_runs": [],
+    "notes": "Root causes identified and verified with raw GitHub Actions logs. Initializing job_creation_fix in BUILD_STATE.json."
   }
 }
