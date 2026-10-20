@@ -12,6 +12,8 @@ import os
 import sys
 
 from .utils import fmt_time
+from .project import content_type as project_content_type
+from .sheets import DESCRIPTION
 
 SCHEMA_TEXT = """{
   "version": 1,
@@ -29,7 +31,7 @@ def build_release_linked_prompt(
     job_id: str,
     title: str = "",
     request: str = "",
-    content_type: str = "anime",
+    content_type: str = "",
     release_url: str = "",
 ) -> str:
     """Assemble the short release-linked prompt."""
@@ -62,6 +64,7 @@ Task:
 
 Rules:
 - Read 00_READ_THIS_FIRST.txt in the release before selecting any cuts.
+- {DESCRIPTION}
 - Produce exactly one production.json containing the selected segments.
 - Segments must be in chronological playback order with start and end timestamps within the source video.
 - Deliver the production JSON either as a downloadable .json file (recommended filename: castcut-scene-{job_id}.json) if you can create files, or inside a single ```json code block (one block, valid JSON, nothing else inside it). If you include a short explanation, place it outside the file or code block."""
@@ -91,7 +94,7 @@ def main() -> None:
             request = ""
 
     title = ""
-    content_type = "anime"
+    content_type = project_content_type(args.job_id,args.jobs_root)
     release_url = ""
     for p in (
         os.path.join(args.jobs_root, args.job_id, "status.json"),
