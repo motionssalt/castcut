@@ -21,6 +21,8 @@ import subprocess
 import sys
 
 from .utils import fmt_time, probe_video, run
+from .project import content_type as project_content_type
+from .sheets import extract as extract_sheets, DESCRIPTION
 
 
 def parse_srt(srt_text: str) -> list[dict]:
@@ -229,14 +231,7 @@ def _scene_index(src: str, work_dir: str, duration: float, threshold: float = 0.
         shot_filename = f"scene_{scene_num:04d}_{fmt_time(s).replace(':', '-')}.jpg"
         out_path = os.path.join(shots_dir, shot_filename)
         
-        # Extract 480p representative JPEG screenshot for each scene
-        subprocess.run(
-            ["ffmpeg", "-hide_banner", "-loglevel", "error", "-y",
-             "-ss", str(mid), "-i", src, "-frames:v", "1", "-vf", "scale=480:-2",
-             "-q:v", "6", out_path],
-            stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL
-        )
-
+        shot_filename = f'sheet_{int(mid//6)*6:06d}'
         scenes.append({
             "scene_number": scene_num,
             "start": s,
@@ -327,7 +322,7 @@ This release contains the following evidence files:
 - manifest.json          : Machine-readable listing of all release assets.
 - scene_index.json       : Complete, contiguous index of all detected scenes (1 to {len(scenes)}).
                            Every scene lists start, end, duration, and matching screenshot.
-- screenshots.zip        : Representative 480p frames for each scene (scene_0001_*.jpg).
+- screenshots.zip        : 6-second sheets of six timestamp-labeled frames, 3x2 at up to 640px/panel.
                            Inspect these frames to verify visual content, characters, and action!
 - transcript.json        : Timestamped dialogue (from embedded subtitles or audio transcription).
                            Use these lines to match dialogue, speeches, and character interactions.
@@ -384,7 +379,7 @@ def main() -> None:
     duration = meta.get("duration", 0.0)
     print(f"[scene] analyzing {duration:.1f}s source: {src}", flush=True)
 
-    content_type = args.content_type
+    content_type = project_content_type(args.job_id,args.jobs_root,args.content_type)
     title = ""
     for p in (
         os.path.join(args.jobs_root, args.job_id, "ingest-request.json"),
@@ -399,8 +394,6 @@ def main() -> None:
                     title = doc.get("title") or doc.get("torrent_name") or ""
             except Exception:
                 pass
-    if not content_type:
-        content_type = "anime"
 
     # Live-action / IRL scene detection threshold (0.28) vs anime hard cuts (0.35)
     threshold = 0.28 if content_type == "irl" else 0.35
@@ -427,6 +420,14 @@ def main() -> None:
         json.dump(scene_index, fh, indent=2)
     print(f"[scene] contiguous scene index written: {len(scenes)} scenes", flush=True)
 
+    sheets = extract_sheets(src, os.path.join(args.work_dir,'shots'), duration)
+    for scene in scene_index['scenes']:
+        sheet = sheets[min(int(scene['screenshot_pts']//6),len(sheets)-1)]
+        scene['screenshot'] = sheet['name']
+        scene['sheet_timestamps'] = sheet['timestamps']
+    with open(os.path.join(args.work_dir,'scene_index.json'),'w') as fh:
+        json.dump(scene_index,fh,indent=2)
+
     # 3. 00_READ_THIS_FIRST.txt Instructions
     instructions = generate_instructions(
         job_id=args.job_id,
@@ -438,7 +439,7 @@ def main() -> None:
         transcript=transcript,
     )
     with open(os.path.join(args.work_dir, "00_READ_THIS_FIRST.txt"), "w", encoding="utf-8") as fh:
-        fh.write(instructions)
+        fh.write(instructions+"\n\nSCREENSHOT CONTRACT\n"+DESCRIPTION)
 
     # 4. Manifest
     manifest = {
@@ -465,7 +466,7 @@ def main() -> None:
     # 5. Copy to jobs/<job_id>/scene/
     out_dir = os.path.join(args.jobs_root, args.job_id, "scene")
     os.makedirs(out_dir, exist_ok=True)
-    for name in ("transcript.json", "scene_index.json", "00_READ_THIS_FIRST.txt", "manifest.json", "video_meta.json"):
+    for name in ("transcript.json", "scene_index.json", "00_READ_THIS_FIRST.txt", "manifest.json", "video_meta.json", "sheets.json"):
         src_path = os.path.join(args.work_dir, name)
         if os.path.exists(src_path):
             with open(src_path, encoding="utf-8") as sf:
