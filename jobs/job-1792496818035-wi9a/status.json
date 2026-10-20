@@ -5,8 +5,8 @@
   "content_type": "irl",
   "created_at_epoch": 1792496818,
   "created_at": "2026-10-20T11:46:58Z",
-  "updated_at": "2026-10-20T14:08:49Z",
-  "updated_at_epoch": 1792505329,
+  "updated_at": "2026-10-20T14:09:04Z",
+  "updated_at_epoch": 1792505344,
   "expires_at_epoch": 1792583218,
   "state": "analyzing",
   "message": "",
@@ -27,9 +27,9 @@
     },
     "faces": {
       "name": "Faces",
-      "state": "queued",
-      "message": "Queued for analysis",
-      "updated_at": "2026-10-20T14:01:02Z",
+      "state": "running",
+      "message": "IRL faces analysis running",
+      "updated_at": "2026-10-20T14:09:04Z",
       "percent": 10
     },
     "scene": {
