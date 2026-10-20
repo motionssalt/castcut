@@ -1045,7 +1045,7 @@
   },
   "export_copy_clipforge": {
     "status": "in_progress",
-    "last_updated": "2026-10-20T23:08:54.273368+00:00",
+    "last_updated": "2026-10-20T23:12:03.484980+00:00",
     "clipforge_reference": {
       "repository": "motionssalt/clipforge",
       "commit": "a05846de7c76a66ad42ba6fd37126514bc452167",
@@ -1566,12 +1566,12 @@
       "All 10 native-download regression tests pass: no JS media buffer, scoped encrypted cookie, expiry/tampering/wrong-asset rejection, PAT gate, native navigation, full/range/HEAD byte semantics, MIME/filename, redirect and truncation rejection.",
       "Found concrete stale-output bug: original project still offers old 497293076-byte faces and 69636349-byte scene assets as done, alongside newer separately named replacements. UI formerly accepted any uploaded MP4 regardless of verification. Downloads now require matching full-decode and release-readback receipts, asset ID, SHA256, size and exact filename; 10 regression tests pass. Rebuilding original export IDs next.",
       "Dispatched real faces and scene exports under the ORIGINAL owner-facing export IDs, not separately named test replacements. Original selection/production JSON and chosen audio track 0 retained.",
-      "Live production native attachment downloaded byte-identical 27697735B MP4 without JS media fetching; scoped HttpOnly/Secure/Strict cookie, range206, HEAD200, unauthorized401; real-source upstream/port comparison matches stream fields/container box shape and both decode."
+      "Live production native attachment downloaded byte-identical 27697735B MP4 without JS media fetching; scoped HttpOnly/Secure/Strict cookie, range206, HEAD200, unauthorized401; real-source upstream/port comparison matches stream fields/container box shape and both decode.",
+      "Google Chrome full playback reached ended=true with no media error for actual ClipForge release, live native-downloaded CastCut114s file, and both same-real-source reference/CastCut multicut samples. Accelerated16x test drops presentation frames by design; separate full ffmpeg decoding passes."
     ],
     "pending": [
-      "Inspect actual reference and delivered outputs",
-      "Fix gallery compatibility and direct authenticated streaming download",
-      "Run automated and real-flow verification; physical phone unavailable"
+      "Wait for original faces rebuild and verify both original owner-facing downloads",
+      "Physical phone confirmation by owner"
     ],
     "verified_runs": [
       {
@@ -4925,10 +4925,7 @@
       ]
     },
     "unverified": [
-      "Physical owner Android phone and its native gallery/file-manager player: cannot access from this workspace.",
-      "Common editor import on a real editor was not tested; ffmpeg full decode and actual Chromium playback/seek tests passed.",
-      "Exact isolated cause of the reported hardware playback failure remains unproven. Current successful browser delivery is not proof of physical phone success.",
-      "No new >2GiB actual torrent ingestion test in this pass; original byte-preserving refetch/oversized fallback was not modified and existing regression/selftest checks pass."
+      "Physical Android Gallery/hardware decoder cannot be tested from this workspace; no causal claim about rejection of a verified byte-identical file."
     ],
     "phone_first_test": {
       "site": "https://castcut.pages.dev/exports/",
@@ -9745,6 +9742,56 @@
         "run_id": 39512592354,
         "export_id": "exp-job-1792507438516-dehl-scene-mvgxsz3y",
         "status": "in_progress"
+      }
+    ],
+    "browser_playback_latest": [
+      {
+        "name": "reference.mp4",
+        "canPlayType": "probably",
+        "duration": 31.162667,
+        "width": 1080,
+        "height": 1200,
+        "ended": true,
+        "currentTime": 31.162667,
+        "totalFrames": 932,
+        "droppedFrames": 815,
+        "error": null
+      },
+      {
+        "name": "native-download.mp4",
+        "canPlayType": "probably",
+        "duration": 114.113997,
+        "width": 1920,
+        "height": 1080,
+        "ended": true,
+        "currentTime": 114.113997,
+        "totalFrames": 2736,
+        "droppedFrames": 2301,
+        "error": null
+      },
+      {
+        "name": "comparison/reference-final.mp4",
+        "canPlayType": "probably",
+        "duration": 9.066667,
+        "width": 1920,
+        "height": 1080,
+        "ended": true,
+        "currentTime": 9.066667,
+        "totalFrames": 272,
+        "droppedFrames": 231,
+        "error": null
+      },
+      {
+        "name": "comparison/castcut-final.mp4",
+        "canPlayType": "probably",
+        "duration": 9.050716,
+        "width": 1920,
+        "height": 1080,
+        "ended": true,
+        "currentTime": 9.050716,
+        "totalFrames": 217,
+        "droppedFrames": 179,
+        "error": null
       }
     ]
   },
