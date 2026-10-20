@@ -105,11 +105,25 @@ def _download_torrent(payload: str, is_file: bool, work_dir: str,
     """
     dl_dir = os.path.join(work_dir, "torrent")
     os.makedirs(dl_dir, exist_ok=True)
+    fallback_trackers = [
+        "udp://tracker.opentrackr.org:1337/announce",
+        "udp://open.tracker.cl:1337/announce",
+        "udp://opentracker.i2p.rocks:6969/announce",
+        "udp://tracker.openbittorrent.com:6969/announce",
+        "udp://open.stealth.si:80/announce",
+        "udp://tracker.torrent.eu.org:451/announce",
+        "udp://explodie.org:6969/announce",
+        "http://tracker.openbittorrent.com:80/announce",
+    ]
     cmd = [
-        "aria2c", "--dir", dl_dir, "--seed-time=0", "--max-upload-limit=1K",
-        "--bt-tracker-connect-timeout=20", "--bt-tracker-timeout=20",
+        "aria2c", "--dir", dl_dir, "--seed-time=0",
+        "--bt-tracker-connect-timeout=5", "--bt-tracker-timeout=5",
         "--summary-interval=15", "--max-connection-per-server=16", "--split=16",
         "--file-allocation=none", "--follow-torrent=mem",
+        "--enable-dht=true", "--enable-peer-exchange=true",
+        "--dht-listen-port=6881-6999", "--listen-port=6881-6999",
+        "--dht-entry-point=router.bittorrent.com:6881",
+        f"--bt-tracker={",".join(fallback_trackers)}",
     ]
     if select_indices:
         cmd.append("--select-file=" + ",".join(str(i) for i in select_indices))

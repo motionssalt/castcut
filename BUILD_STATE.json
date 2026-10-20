@@ -667,7 +667,7 @@
   "ui_rebuild": "pending, separate session",
   "website_rebuild": {
     "status": "in_progress",
-    "last_updated": "2026-10-20T12:28:27.694722+00:00",
+    "last_updated": "2026-10-20T12:29:37.739383+00:00",
     "feature_inventory": [
       "Owner PAT access gate with remember-me in localStorage, instant load without flash, and clear sign out",
       "Projects list with title, content type tag (Anime/IRL), status pill, last updated, quick action links, client search filter, and active-only polling",
@@ -745,11 +745,11 @@
     "done": [
       "feature_inventory",
       "api_contract",
-      "new_website_architecture"
+      "new_website_architecture",
+      "torrent_download_fix",
+      "network_resilience_fix"
     ],
     "pending": [
-      "torrent_download_fix",
-      "network_resilience_fix",
       "light_and_dark_tokens",
       "pages_implementation",
       "perf_measurement",
@@ -758,6 +758,6 @@
       "cleanup_old_frontend"
     ],
     "perf": {},
-    "notes": "Completed feature inventory and API contract. Proceeding to fix torrent download issues and network task dispatch resilience."
+    "notes": "Fixed torrent download stalls: removed upload throttling (1K choke), added 8 high-availability fallback trackers, reduced dead-tracker timeouts from 20s to 5s, added DHT/PEX and bootstrap nodes. Added actions:write permission to ingest.yml. Added 3-attempt exponential backoff retry in gh.js for network resilience."
   }
 }

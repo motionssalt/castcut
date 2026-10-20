@@ -13,22 +13,51 @@ const BUSY_JOB_STATES = new Set([
   "faces_running", "scene_analyzing", "hybrid_analyzing", "clips_exporting", "scene_exporting",
 ]);
 
-export async function gh(pat, path, { method = "GET", body = null, raw = false, acceptRaw = false } = {}) {
+export async function gh(pat, path, { method = "GET", body = null, raw = false, acceptRaw = false } = {}, maxRetries = 3) {
   const headers = {
     Authorization: `Bearer ${pat}`,
     Accept: acceptRaw ? "application/vnd.github.raw" : "application/vnd.github+json",
     "User-Agent": UA,
   };
   if (body) headers["content-type"] = "application/json";
-  const r = await fetch(`https://api.github.com${path}`, { method, headers, body: body ? JSON.stringify(body) : undefined });
-  if (!r.ok) {
-    const t = await r.text();
-    throw new Error(`github ${method} ${path} -> ${r.status}: ${t.slice(0, 200)}`);
+  const url = path.startsWith("http") ? path : `https://api.github.com${path}`;
+  
+  let lastErr;
+  for (let attempt = 1; attempt <= maxRetries; attempt++) {
+    try {
+      const r = await fetch(url, {
+        method,
+        headers,
+        body: body ? JSON.stringify(body) : undefined,
+      });
+      if (!r.ok) {
+        const t = await r.text();
+        // Retry transient server errors (500, 502, 503, 504) and rate limits (429)
+        if ([500, 502, 503, 504, 429].includes(r.status) && attempt < maxRetries) {
+          await new Promise(res => setTimeout(res, 350 * Math.pow(2, attempt - 1)));
+          continue;
+        }
+        throw new Error(`github ${method} ${path} -> ${r.status}: ${t.slice(0, 200)}`);
+      }
+      if (raw) return r;
+      if (acceptRaw) return r.text();
+      if (r.status === 204) return null;
+      return r.json();
+    } catch (err) {
+      lastErr = err;
+      // Do not retry 404 or 401 client errors
+      const msg = String(err.message || "");
+      if (msg.includes("-> 404") || msg.includes("-> 401") || msg.includes("-> 400")) {
+        throw err;
+      }
+      if (attempt < maxRetries) {
+        await new Promise(res => setTimeout(res, 350 * Math.pow(2, attempt - 1)));
+        continue;
+      }
+      throw err;
+    }
   }
-  if (raw) return r;
-  if (acceptRaw) return r.text();
-  if (r.status === 204) return null;
-  return r.json();
+  throw lastErr;
 }
 
 export const esc = (p) => encodeURIComponent(p).replace(/%2F/g, "/");

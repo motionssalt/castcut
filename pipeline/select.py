@@ -29,11 +29,25 @@ METADATA_TIMEOUT_SECONDS = 420  # 7 min to find a peer with the metadata
 def fetch_magnet_metadata(magnet: str, meta_dir: str, timeout: int = METADATA_TIMEOUT_SECONDS) -> Path:
     """Fetch ONLY the .torrent metadata for a magnet via aria2 (no content)."""
     os.makedirs(meta_dir, exist_ok=True)
+    fallback_trackers = [
+        "udp://tracker.opentrackr.org:1337/announce",
+        "udp://open.tracker.cl:1337/announce",
+        "udp://opentracker.i2p.rocks:6969/announce",
+        "udp://tracker.openbittorrent.com:6969/announce",
+        "udp://open.stealth.si:80/announce",
+        "udp://tracker.torrent.eu.org:451/announce",
+        "udp://explodie.org:6969/announce",
+        "http://tracker.openbittorrent.com:80/announce",
+    ]
     cmd = [
         "aria2c", "--bt-metadata-only=true", "--bt-save-metadata=true",
-        "--dir", meta_dir, "--seed-time=0", "--max-upload-limit=1K",
-        "--bt-tracker-connect-timeout=15", "--bt-tracker-timeout=15",
+        "--dir", meta_dir, "--seed-time=0",
+        "--bt-tracker-connect-timeout=5", "--bt-tracker-timeout=5",
         "--summary-interval=15", "--file-allocation=none",
+        "--enable-dht=true", "--enable-peer-exchange=true",
+        "--dht-listen-port=6881-6999", "--listen-port=6881-6999",
+        "--dht-entry-point=router.bittorrent.com:6881",
+        f"--bt-tracker={",".join(fallback_trackers)}",
         magnet,
     ]
     print("+ aria2c --bt-metadata-only=true --bt-save-metadata=true <magnet>", flush=True)
