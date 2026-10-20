@@ -683,7 +683,7 @@ async function refreshJobs() {
       const displayTitle = j.title || j.torrent_name || j.job_id;
       const isCustomTitle = !!(j.title || j.torrent_name) && (j.title || j.torrent_name) !== j.job_id;
 
-      const ctTag = j.content_type === "irl" ? '<span class="badge sm pill tag-irl">IRL</span>' : '<span class="badge sm pill tag-anime">Anime</span>';
+      const ctTag = !j.content_type ? '<span class="badge">Unknown type — recover project</span>' : j.content_type === "irl" ? '<span class="badge sm pill tag-irl">IRL</span>' : '<span class="badge sm pill tag-anime">Anime</span>';
       div.innerHTML = `<span class="badge ${cls}">${label}</span> ${ctTag}
         <span class="jt">
           <div class="jt-title-wrap">
