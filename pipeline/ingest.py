@@ -123,7 +123,7 @@ def _download_torrent(payload: str, is_file: bool, work_dir: str,
         "--enable-dht=true", "--enable-peer-exchange=true",
         "--dht-listen-port=6881-6999", "--listen-port=6881-6999",
         "--dht-entry-point=router.bittorrent.com:6881",
-        f"--bt-tracker={",".join(fallback_trackers)}",
+        "--bt-tracker=" + ",".join(fallback_trackers),
     ]
     if select_indices:
         cmd.append("--select-file=" + ",".join(str(i) for i in select_indices))

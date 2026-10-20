@@ -237,10 +237,45 @@ export async function failedStepInfo(pat, runId) {
 export async function reconcileStatus(pat, jobId, status) {
   if (!status || !status.state || !BUSY_JOB_STATES.has(status.state)) return status;
   const runs = await listJobRuns(pat, jobId);
-  if (!runs.length) return status;
-  if (runs.some(r => ACTIVE_RUN_STATES.has(r.status))) return status; // genuinely running
+  const nowEpoch = Math.floor(Date.now() / 1000);
+  const updatedEpoch = Number(status.updated_at_epoch) || (status.updated_at ? Math.floor(new Date(status.updated_at).getTime() / 1000) : 0);
+  const ageSeconds = updatedEpoch ? Math.max(0, nowEpoch - updatedEpoch) : 0;
+
+  if (!runs.length) {
+    if (ageSeconds > 300) {
+      const out = {
+        ...status,
+        state: "failed",
+        failed_from: status.state,
+        message: "Job timed out: no workflow run was found or started within 5 minutes.",
+        updated_at: new Date().toISOString().replace(/\.\d+Z$/, "Z"),
+        updated_at_epoch: nowEpoch,
+      };
+      await putFile(pat, `jobs/${jobId}/status.json`, JSON.stringify(out, null, 2), `castcut: status ${jobId} (timeout)`).catch(() => {});
+      return out;
+    }
+    return status;
+  }
+
+  if (runs.some(r => ACTIVE_RUN_STATES.has(r.status))) {
+    const maxAllowed = status.state === "selecting" ? 1800 : 7200;
+    if (ageSeconds > maxAllowed) {
+      const out = {
+        ...status,
+        state: "failed",
+        failed_from: status.state,
+        message: `Job timed out after ${Math.floor(ageSeconds / 60)} minutes without progress.`,
+        updated_at: new Date().toISOString().replace(/\.\d+Z$/, "Z"),
+        updated_at_epoch: nowEpoch,
+      };
+      await putFile(pat, `jobs/${jobId}/status.json`, JSON.stringify(out, null, 2), `castcut: status ${jobId} (timeout)`).catch(() => {});
+      return out;
+    }
+    return status;
+  }
+
   const latest = runs[0];
-  if (status.workflow_run_url && latest.html_url !== status.workflow_run_url) return status; // a newer run is coming
+  if (status.workflow_run_url && latest.html_url !== status.workflow_run_url) return status;
   if (latest.status !== "completed") return status;
   const out = { ...status, run_url: latest.html_url };
   if (latest.conclusion === "cancelled") {

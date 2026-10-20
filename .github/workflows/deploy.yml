@@ -3,6 +3,9 @@ name: Deploy site to Cloudflare Pages
 on:
   push:
     branches: [main]
+    paths:
+      - 'web/**'
+      - '.github/workflows/deploy.yml'
   workflow_dispatch: {}
 
 permissions:

@@ -248,3 +248,16 @@ The frontend is reimagined and built from scratch in `web/` for mid-range Androi
 - **Separate Real Pages**: Real deep-linkable URLs with back button support (`/`, `/new/`, `/project/?id=`, `/faces/?id=`, `/scene/?id=`, `/exports/?id=`, `/task/?id=`).
 - **Resilient Network Client**: Client and server-side exponential backoff retry for spotty mobile connections.
 - **Deploy**: Cloudflare Pages connects to GitHub and auto-deploys `web/` on push to `main`.
+
+## Smoke Testing & Verification
+
+CastCut provides an automated end-to-end smoke test script and manually triggerable GitHub Actions workflow to verify job intake paths (direct URLs and torrents) without risking production data:
+
+- **Local Execution:**
+  ```bash
+  python3 scripts/smoke_test.py --type direct_url
+  # Or run all intake paths:
+  python3 scripts/smoke_test.py --type all
+  ```
+- **GitHub Actions Workflow:**
+  Trigger `.github/workflows/smoke-test.yml` from the GitHub Actions tab (`Smoke Test — Job Creation and Intake`) via `workflow_dispatch`.

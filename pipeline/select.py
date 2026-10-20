@@ -47,7 +47,7 @@ def fetch_magnet_metadata(magnet: str, meta_dir: str, timeout: int = METADATA_TI
         "--enable-dht=true", "--enable-peer-exchange=true",
         "--dht-listen-port=6881-6999", "--listen-port=6881-6999",
         "--dht-entry-point=router.bittorrent.com:6881",
-        f"--bt-tracker={",".join(fallback_trackers)}",
+        "--bt-tracker=" + ",".join(fallback_trackers),
         magnet,
     ]
     print("+ aria2c --bt-metadata-only=true --bt-save-metadata=true <magnet>", flush=True)

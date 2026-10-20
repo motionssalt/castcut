@@ -270,13 +270,19 @@ function setupFormSubmit() {
     }
 
     await withButtonFeedback(btnSubmit, async () => {
+      const errEl = document.getElementById("projectSubmitError");
+      if (errEl) errEl.hidden = true;
       try {
         const res = await api("/api/jobs", { method: "POST", body: payload });
         toast("Project created successfully!", "success");
         // Instant navigation to project overview
         location.href = `/project/?id=${encodeURIComponent(res.job_id)}`;
       } catch (err) {
-        toast(`Failed to start project: ${err.message}`, "error", 5000);
+        if (errEl) {
+          errEl.textContent = `Error starting project: ${err.message}`;
+          errEl.hidden = false;
+        }
+        toast(`Failed to start project: ${err.message}`, "error", 7000);
       }
     }, "Starting Project…");
   };

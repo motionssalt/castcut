@@ -3,8 +3,14 @@ name: CI (Tests, Lint, Selftest)
 on:
   push:
     branches: [main]
+    paths-ignore:
+      - 'jobs/**'
+      - 'BUILD_STATE.json'
   pull_request:
     branches: [main]
+    paths-ignore:
+      - 'jobs/**'
+      - 'BUILD_STATE.json'
   workflow_dispatch:
 
 permissions:
