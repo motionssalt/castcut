@@ -15,7 +15,7 @@ import sys
 import time
 
 from .utils import (clean_and_parse_json, concat_segments, encode_final_export,
-                    human_size, parse_time, probe_video, resolve_quality_settings)
+                    human_size, parse_time, probe_video)
 
 
 def validate_production(data, duration: float) -> tuple[list, list]:
@@ -68,8 +68,6 @@ def main() -> None:
     ap.add_argument("job_id")
     ap.add_argument("--jobs-root", default="jobs")
     ap.add_argument("--work-dir", default="work")
-    ap.add_argument("--crf", type=int, default=23)
-    ap.add_argument("--quality", default="normal", help="Quality profile: normal (default), small, high")
     ap.add_argument("--audio-track", default=None, help="Audio track index (0-based audio_index)")
     ap.add_argument("--export-id", default=None, help="Unique export ID for hybrid project model")
     args = ap.parse_args()
@@ -119,7 +117,9 @@ def main() -> None:
                     chosen_audio_track = int(json.load(open(choice_p)).get("audio_track"))
                 except Exception:
                     pass
-        if chosen_audio_track is None or chosen_audio_track >= len(audio_tracks):
+        if chosen_audio_track is not None and not 0 <= chosen_audio_track < len(audio_tracks):
+            raise ValueError("Selected audio track is unavailable; refusing to substitute another track")
+        if chosen_audio_track is None:
             def_t = next((t for t in audio_tracks if t.get("is_default")), None)
             chosen_audio_track = def_t["audio_index"] if def_t else 0
 
@@ -138,30 +138,13 @@ def main() -> None:
     total_cut_duration = sum(e - s for s, e in segments)
     print(f"[scene-export] {len(segments)} segments, total duration {total_cut_duration:.1f}s", flush=True)
 
-    # Pass 1: fast intermediate join
-    joined = os.path.join(args.work_dir, "scene_joined.mp4")
-    concat_segments(
-        src=src,
-        segments=segments,
-        output_path=joined,
-        has_audio=has_audio,
-        audio_track=chosen_audio_track,
-        crf=18,
-        preset="veryfast",
-        temp_dir=args.work_dir,
-    )
-    s_before = os.path.getsize(joined)
-
-    # Pass 2: shared fixed mobile-safe encode (H.264 High@L4.0, 1080p max, <=30fps CFR, AAC 128k, <=2000 kbps)
+    # One shared literal ClipForge render -> terminal compression path.
     export_id = args.export_id or f"exp-{args.job_id}-scene"
     asset_name = f"castcut-export-{export_id}.mp4" if args.export_id else f"castcut-scene-{args.job_id}.mp4"
     final = os.path.join(args.work_dir, asset_name)
-    verif = encode_final_export(
-        input_path=joined,
-        output_path=final,
-        has_audio=has_audio,
-        audio_bitrate="128k",
-    )
+    verif = export_segments(src, segments, final, audio_track=chosen_audio_track,
+                            temp_dir=args.work_dir)
+    s_before = verif['size_before_bytes']
     s_after = verif["size_bytes"]
 
     print(f"[scene-export] size before compression: {human_size(s_before)}", flush=True)
@@ -194,7 +177,7 @@ def main() -> None:
         "audio_track": chosen_audio_track,
         "audio_track_label": chosen_track_info.get("label") if chosen_track_info else ("No audio" if not has_audio else None),
         "asset_name": os.path.basename(final),
-        "quality": "Fixed mobile-safe profile: H.264 High@L4.0, 1080p, 0 B-frames, mp42, faststart, AAC 128k stereo, <=2000 kbps",
+        "encode_path": "ClipForge vendored render/compress: H.264 High@L4.0, 1080p, 0 B-frames, mp42, faststart, AAC 128k stereo, <=2000 kbps",
         "status": "done",
     }
 
