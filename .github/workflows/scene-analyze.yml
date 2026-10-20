@@ -1,121 +1,45 @@
 name: Mode 2 — Scene analyze + agent prompt
-run-name: scene-analyze — ${{ inputs.job_id }}
-
+run-name: "scene analysis — ${{ inputs.job_id }}"
 on:
   workflow_dispatch:
     inputs:
       job_id: { required: true, type: string }
-
+      content_type: { required: false, type: string, default: "" }
+      sample_fps: { required: false, type: string, default: "2.0" }
 permissions:
   contents: write
-
 concurrency:
-  group: castcut-scene-${{ inputs.job_id }}
+  group: castcut-analysis-${{ inputs.job_id }}
   cancel-in-progress: false
-
 jobs:
   analyze:
     runs-on: ubuntu-latest
-    timeout-minutes: 240
+    timeout-minutes: 90
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - uses: actions/checkout@v4
         with: { fetch-depth: 0 }
       - uses: actions/setup-python@v5
-        with: { python-version: "3.12" }
-      - run: |
+        with: { python-version: "3.11" }
+      - name: Install CPU analysis tools
+        run: |
           sudo apt-get update -qq
-          sudo apt-get install -y -qq ffmpeg aria2 zip
-          python -m pip install -q requests faster-whisper
-      - name: Status — analyzing
+          sudo apt-get install -y -qq ffmpeg aria2
+          python -m pip install -q requests opencv-python-headless pillow numpy onnxruntime faster-whisper
+      - name: Install anime detector and embedder only for anime projects
         run: |
-          python -m pipeline.status "${{ inputs.job_id }}" \
-            --task scene \
-            --task-state running \
-            --task-message "Transcribing and detecting scene boundaries" \
-            --task-percent 20.0 \
-            --workflow-run-url "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git pull --rebase --autostash || true
-          git add "jobs/${{ inputs.job_id }}/"
-          git commit -m "castcut: scene analyzing ${{ inputs.job_id }}" || true
-          for attempt in 1 2 3; do git push && break; echo "Push attempt $attempt failed; retrying"; git pull --rebase --autostash; sleep 2; done
-      - name: Fetch source (release, or re-download when excluded)
-        env: { GH_TOKEN: "${{ secrets.GITHUB_TOKEN }}" }
-        run: |
-          mkdir -p work
-          df -h .
-          python -m pipeline.refetch "${{ inputs.job_id }}" --release-tag "castcut-${{ inputs.job_id }}"
-      - name: Analyze
-        run: python -m pipeline.scene_analyze "${{ inputs.job_id }}"
-      - name: Generate default agent prompt
-        run: python -m pipeline.scene_prompt "${{ inputs.job_id }}"
-      - name: Zip screenshots
-        run: |
-          if [ -d work/shots ]; then (cd work && zip -q -r screenshots.zip shots) ; fi
-          ls -l work/screenshots.zip || true
-      - name: Upload scene bundle to release
-        env: { GH_TOKEN: "${{ secrets.GITHUB_TOKEN }}" }
-        run: |
-          tag="castcut-${{ inputs.job_id }}"
-          gh release view "$tag" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1 || \
-            gh release create "$tag" --repo "$GITHUB_REPOSITORY" --title "castcut $tag" --notes "Project assets for ${{ inputs.job_id }}."
-          files=(work/00_READ_THIS_FIRST.txt
-                 work/scene_index.json
-                 work/transcript.json
-                 work/video_meta.json
-                 work/manifest.json
-                 jobs/${{ inputs.job_id }}/scene/agent_prompt.txt)
-          [ -f work/screenshots.zip ] && files+=(work/screenshots.zip)
-          gh release upload "$tag" "${files[@]}" --clobber
-      - name: Resolve release URL
-        id: rel
-        env: { GH_TOKEN: "${{ secrets.GITHUB_TOKEN }}" }
-        run: |
-          rel_url=$(gh release view "castcut-${{ inputs.job_id }}" --repo "$GITHUB_REPOSITORY" --json url -q .url 2>/dev/null || echo "https://github.com/${GITHUB_REPOSITORY}/releases/tag/castcut-${{ inputs.job_id }}")
-          echo "url=$rel_url" >> "$GITHUB_OUTPUT"
-      - name: Status — ready
-        if: success()
-        run: |
-          python -m pipeline.status "${{ inputs.job_id }}" \
-            --task scene \
-            --task-state ready \
-            --task-message "AI scene analysis ready. Copy prompt anytime." \
-            --task-percent 100.0 \
-            --task-url "${{ steps.rel.outputs.url }}" \
-            --set-json "{\"release_url\":\"${{ steps.rel.outputs.url }}\"}"
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git pull --rebase --autostash || true
-          git add "jobs/${{ inputs.job_id }}/"
-          git commit -m "castcut: scene ready ${{ inputs.job_id }}" || true
-          for attempt in 1 2 3; do git push && break; echo "Push attempt $attempt failed; retrying"; git pull --rebase --autostash; sleep 2; done
-      - name: Status — failed
-        if: failure()
-        run: |
-          python -m pipeline.status "${{ inputs.job_id }}" \
-            --task scene \
-            --task-state failed \
-            --task-message "Scene analysis failed; see workflow log: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" \
-            --workflow-run-url "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git pull --rebase --autostash || true
-          git add "jobs/${{ inputs.job_id }}/"
-          git commit -m "castcut: scene failed ${{ inputs.job_id }}" || true
-          for attempt in 1 2 3; do git push && break; echo "Push attempt $attempt failed; retrying"; git pull --rebase --autostash; sleep 2; done
-      - name: Status — cancelled
-        if: cancelled()
-        run: |
-          prev=$(python -c "import json;print(json.load(open('jobs/${{ inputs.job_id }}/status.json')).get('state',''))" 2>/dev/null || true)
-          python -m pipeline.status "${{ inputs.job_id }}" \
-            --task scene \
-            --task-state cancelled \
-            --task-message "Scene analysis was cancelled." \
-            --set-json "{\"cancelled_from\":\"$prev\"}" || true
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git pull --rebase --autostash || true
-          git add "jobs/${{ inputs.job_id }}/"
-          git commit -m "castcut: cancelled scene ${{ inputs.job_id }}" || true
-          for attempt in 1 2 3; do git push && break; echo "Push attempt $attempt failed; retrying"; git pull --rebase --autostash; sleep 2; done
+          kind=$(python -c "import json;print(json.load(open('jobs/${{ inputs.job_id }}/ingest-request.json'))['content_type'])")
+          if [ "$kind" = "anime" ]; then python -m pip install -q dghs-imgutils; fi
+      - name: Analyze and verify required release assets
+        run: python -m pipeline.analyze "${{ inputs.job_id }}" --content-type "${{ inputs.content_type }}" --fps "${{ inputs.sample_fps }}" --repair scene
+      - name: Preserve funnel logs and sampling diagnostics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: analysis-diagnostics-${{ inputs.job_id }}
+          path: |
+            work/face_sampling.log
+            jobs/${{ inputs.job_id }}/analysis/
+            jobs/${{ inputs.job_id }}/clips/manifest.json
+            work/sheets.json
