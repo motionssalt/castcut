@@ -5,11 +5,11 @@
   "content_type": "irl",
   "created_at_epoch": 1792496818,
   "created_at": "2026-10-20T11:46:58Z",
-  "updated_at": "2026-10-20T14:22:57Z",
-  "updated_at_epoch": 1792506177,
+  "updated_at": "2026-10-20T14:29:58Z",
+  "updated_at_epoch": 1792506598,
   "expires_at_epoch": 1792583218,
-  "state": "analyzing",
-  "message": "",
+  "state": "incomplete",
+  "message": "Analysis incomplete: scene: Analysis incomplete; missing release assets: castcut-job-1792496818035-wi9a/faces-manifest.json, castcut-job-1792496818035-wi9a/face_thumbnails.zip",
   "selected_files": [
     {
       "index": 16,
@@ -34,9 +34,9 @@
     },
     "scene": {
       "name": "Scene",
-      "state": "running",
-      "message": "IRL scene analysis running",
-      "updated_at": "2026-10-20T14:22:57Z",
+      "state": "failed",
+      "message": "Analysis incomplete; missing release assets: castcut-job-1792496818035-wi9a/faces-manifest.json, castcut-job-1792496818035-wi9a/face_thumbnails.zip",
+      "updated_at": "2026-10-20T14:29:58Z",
       "percent": 10
     }
   },
@@ -44,6 +44,9 @@
   "workflow_run_url": "https://github.com/motionssalt/castcut/actions/runs/39426886617",
   "video_in_release": true,
   "release_verified": false,
-  "missing_assets": [],
+  "missing_assets": [
+    "castcut-job-1792496818035-wi9a/faces-manifest.json",
+    "castcut-job-1792496818035-wi9a/face_thumbnails.zip"
+  ],
   "release_url": "https://github.com/motionssalt/castcut/releases/tag/castcut-job-1792496818035-wi9a"
 }
