@@ -1,0 +1,36 @@
+{
+  "version": 1,
+  "export_id": "exp-job-1792507438516-dehl-clips-mvgvn5a4",
+  "project_id": "job-1792507438516-dehl",
+  "job_id": "job-1792507438516-dehl",
+  "type": "clips",
+  "label": "char1, char30, char35 (+1 others)",
+  "order": [
+    "char1",
+    "char30",
+    "char35",
+    "char6"
+  ],
+  "per_char_segments": {
+    "char1": 71,
+    "char30": 1,
+    "char35": 2,
+    "char6": 51
+  },
+  "total_segments": 125,
+  "total_duration": 850.9,
+  "size_before_bytes": 918908121,
+  "size_after_bytes": 497293076,
+  "size_bytes": 497293076,
+  "size_before_human": "876.3 MB",
+  "size_after_human": "474.3 MB",
+  "size_human": "474.3 MB",
+  "bitrate_kbps": 4640.9,
+  "bitrate_bps": 4640922,
+  "effective_bitrate": "4640.9 kbps",
+  "audio_track": 0,
+  "audio_track_label": "Track 1 \u00b7 ENG \u00b7 2.0 \u00b7 eac3",
+  "asset_name": "castcut-export-exp-job-1792507438516-dehl-clips-mvgvn5a4.mp4",
+  "quality": "anime HandBrake (x264 CRF 23, medium, tune animation, AAC 128k)",
+  "status": "done"
+}
