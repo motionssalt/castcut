@@ -82,8 +82,8 @@ function renderJobs(jobs) {
 
   listEl.innerHTML = jobs.map(j => {
     const st = statusView(j.state);
-    const ct = j.content_type || "anime";
-    const ctLabel = ct === "irl" ? "IRL" : "Anime";
+    const ct = j.content_type || "unknown";
+    const ctLabel = ct === "irl" ? "IRL" : ct === "anime" ? "Anime" : "Unknown";
     const title = j.title || j.torrent_name || j.job_id;
     const updated = j.updated_at ? new Date(j.updated_at).toLocaleString() : "";
     const pUrl = `/project/?id=${encodeURIComponent(j.job_id)}`;
