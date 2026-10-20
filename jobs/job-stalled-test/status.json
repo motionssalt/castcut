@@ -1,0 +1,12 @@
+{
+  "job_id": "job-stalled-test",
+  "title": "Deliberately Stalled Test Job",
+  "content_type": "irl",
+  "state": "queued",
+  "message": "Queued for ingest",
+  "created_at_epoch": 1792504390,
+  "created_at": "2026-10-20T13:53:10Z",
+  "updated_at": "2026-10-20T13:53:10Z",
+  "updated_at_epoch": 1792504390,
+  "expires_at_epoch": 1792590790
+}
