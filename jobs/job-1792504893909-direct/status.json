@@ -3,11 +3,11 @@
   "title": "Verification Direct Link Video",
   "content_type": "irl",
   "state": "analyzing",
-  "message": "Source ready. Analyzing faces and AI scene...",
+  "message": "",
   "created_at_epoch": 1792504893,
   "created_at": "2026-10-20T14:01:33Z",
-  "updated_at": "2026-10-20T14:02:24Z",
-  "updated_at_epoch": 1792504944,
+  "updated_at": "2026-10-20T14:02:56Z",
+  "updated_at_epoch": 1792504976,
   "expires_at_epoch": 1792591293,
   "tasks": {
     "ingest": {
@@ -16,9 +16,16 @@
       "message": "Source downloaded successfully",
       "percent": 100.0,
       "updated_at": "2026-10-20T14:02:24Z"
+    },
+    "faces": {
+      "name": "Faces",
+      "state": "queued",
+      "message": "Queued for analysis",
+      "updated_at": "2026-10-20T14:02:56Z"
     }
   },
   "release_tag": "castcut-job-1792504893909-direct",
   "workflow_run_url": "https://github.com/motionssalt/castcut/actions/runs/39435547666",
-  "video_in_release": true
+  "video_in_release": true,
+  "release_verified": false
 }
