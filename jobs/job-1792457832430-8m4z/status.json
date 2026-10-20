@@ -5,8 +5,13 @@
   "content_type": "irl",
   "created_at_epoch": 1792457832,
   "created_at": "2026-10-20T00:57:12Z",
+<<<<<<< Updated upstream
   "updated_at": "2026-10-20T01:23:43Z",
   "updated_at_epoch": 1792459423,
+=======
+  "updated_at": "2026-10-20T01:25:33Z",
+  "updated_at_epoch": 1792459533,
+>>>>>>> Stashed changes
   "expires_at_epoch": 1792544232,
   "state": "analyzing",
   "message": "",
@@ -25,6 +30,7 @@
       "percent": 100.0,
       "updated_at": "2026-10-20T01:05:50Z"
     },
+<<<<<<< Updated upstream
     "scene": {
       "name": "Scene",
       "state": "running",
@@ -35,5 +41,17 @@
   },
   "release_tag": "castcut-job-1792457832430-8m4z",
   "workflow_run_url": "https://github.com/motionssalt/castcut/actions/runs/39353135055",
+=======
+    "faces": {
+      "name": "Faces",
+      "state": "running",
+      "message": "Sampling frames and clustering unique faces",
+      "percent": 20.0,
+      "updated_at": "2026-10-20T01:25:33Z"
+    }
+  },
+  "release_tag": "castcut-job-1792457832430-8m4z",
+  "workflow_run_url": "https://github.com/motionssalt/castcut/actions/runs/39353135125",
+>>>>>>> Stashed changes
   "video_in_release": true
 }
