@@ -164,25 +164,36 @@ def _load_irl_detector_and_embedder():
             yunet_path,
             "",
             (320, 320),
-            score_threshold=0.60,
+            score_threshold=0.35,
             nms_threshold=0.30,
             top_k=5000,
         )
         recognizer = cv2.FaceRecognizerSF.create(sface_path, "")
 
+        stats = {'raw_detections':0,'kept_after_quality':0,'embeddings':0,'embedding_failures':0,'small_invalid':0}
         def detect_and_embed_irl(img_bgr):
             h, w = img_bgr.shape[:2]
             detector.setInputSize((w, h))
             _, faces = detector.detect(img_bgr)
+            # Wide shots / no detections: upscale once, remap coordinates/landmarks.
+            if faces is None or any(min(f[2],f[3]) < 48 for f in faces):
+                larger = cv2.resize(img_bgr, None, fx=1.5, fy=1.5)
+                detector.setInputSize((larger.shape[1],larger.shape[0]))
+                _, extra = detector.detect(larger)
+                if extra is not None:
+                    extra[:,:14] /= 1.5
+                    faces = extra if faces is None else np.vstack([faces,extra])
             detections = []
             if faces is None or len(faces) == 0:
                 return detections
 
+            stats["raw_detections"] += len(faces)
             for face in faces:
                 x, y, bw, bh = int(face[0]), int(face[1]), int(face[2]), int(face[3])
                 score = float(face[14])
                 # Filter small background faces or low score
-                if bw < 30 or bh < 30 or (bw * bh) < 900 or score < 0.60:
+                if bw < 10 or bh < 10 or score < 0.35:
+                    stats["small_invalid"] += 1
                     continue
 
                 x0 = max(0, min(w - 1, x))
@@ -198,8 +209,7 @@ def _load_irl_detector_and_embedder():
 
                 gray = cv2.cvtColor(face_crop, cv2.COLOR_BGR2GRAY)
                 blur_var = float(cv2.Laplacian(gray, cv2.CV_64F).var())
-                if blur_var < 25.0 and score < 0.85:
-                    continue
+                stats["kept_after_quality"] += 1  # blur ranks thumbnails, never discards a person
 
                 try:
                     aligned = recognizer.alignCrop(img_bgr, face)
@@ -207,6 +217,7 @@ def _load_irl_detector_and_embedder():
                     norm = np.linalg.norm(feat)
                     if norm > 0:
                         feat /= norm
+                    stats["embeddings"] += 1
                     detections.append({
                         "box": (float(x0), float(y0), float(x1), float(y1)),
                         "score": score,
@@ -214,11 +225,14 @@ def _load_irl_detector_and_embedder():
                         "blur": blur_var,
                     })
                 except Exception:
-                    continue
+                    stats['embedding_failures'] += 1
+                    # Preserve a gallery entry even when alignment/embedding fails.
+                    detections.append({'box':(float(x0),float(y0),float(x1),float(y1)), 'score':score,'vector':None,'blur':blur_var})
 
             return detections
 
-        return detect_and_embed_irl, "YuNet+SFace(ArcFace)", 0.363
+        detect_and_embed_irl.stats = stats
+        return detect_and_embed_irl, "YuNet+SFace(ArcFace) recall score>=0.35 min10px no-blur-drop", 0.25
     except Exception as exc:
         print(f"[faces] IRL model init failed ({exc}); falling back to OpenCV Haar cascade", flush=True)
         haar_path = cv2.data.haarcascades + "haarcascade_frontalface_default.xml"
@@ -284,20 +298,8 @@ def _thumb(img_bgr, box, size=112, pad_ratio=0.25) -> str:
 
 
 def get_project_content_type(job_id: str, jobs_root: str = "jobs", cli_override: str | None = None) -> str:
-    if cli_override and cli_override.lower() in ("anime", "irl"):
-        return cli_override.lower()
-    for fname in ("ingest-request.json", "status.json"):
-        p = os.path.join(jobs_root, job_id, fname)
-        if os.path.isfile(p):
-            try:
-                with open(p, "r", encoding="utf-8") as fh:
-                    doc = json.load(fh)
-                    ct = doc.get("content_type")
-                    if ct in ("anime", "irl"):
-                        return ct
-            except Exception:
-                pass
-    return "anime"
+    from .project import content_type
+    return content_type(job_id, jobs_root, cli_override)
 
 
 def main() -> None:
@@ -306,10 +308,10 @@ def main() -> None:
     ap.add_argument("--jobs-root", default="jobs")
     ap.add_argument("--work-dir", default="work")
     ap.add_argument("--content-type", default=None, choices=["anime", "irl"], help="anime or irl footage")
-    ap.add_argument("--fps", type=float, default=1.0, help="frame sampling rate (tunable)")
+    ap.add_argument("--fps", type=float, default=2.0, help="frame sampling rate (tunable)")
     ap.add_argument("--presence-gap", type=float, default=3.0, help="seconds gap to merge presence (tunable)")
-    ap.add_argument("--min-appearances", type=int, default=3, help="drop clusters with fewer detections")
-    ap.add_argument("--max-frames", type=int, default=3600, help="safety cap on sampled frames")
+    ap.add_argument("--min-appearances", type=int, default=1, help="retain singleton faces (recall-first)")
+    ap.add_argument("--max-frames", type=int, default=7200, help="safety cap on sampled frames")
     args = ap.parse_args()
 
     import cv2
@@ -332,16 +334,40 @@ def main() -> None:
 
     frames_dir = os.path.join(args.work_dir, "frames")
     os.makedirs(frames_dir, exist_ok=True)
-    fps = max(0.5, min(args.fps, 2.0))
-    est = min(int(duration * fps) + 2, args.max_frames)
-    if duration * fps > args.max_frames:
-        fps = args.max_frames / duration
-        print(f"[faces] long video — reducing sampling to {fps:.3f} fps to stay under {args.max_frames} frames", flush=True)
-
-    run(["ffmpeg", "-hide_banner", "-loglevel", "error", "-i", src,
-         "-vf", f"fps={fps},scale=480:-2", "-q:v", "5", os.path.join(frames_dir, "%06d.jpg")])
-    frames = sorted(glob.glob(os.path.join(frames_dir, "*.jpg")))[: args.max_frames]
-    print(f"[faces] sampled {len(frames)} frames (~{est} expected)", flush=True)
+    fps = max(1.0, min(args.fps, 2.0))
+    if duration * fps > args.max_frames * 0.80:
+        fps = args.max_frames * 0.80 / duration
+    import subprocess, re, shutil
+    # Start/middle/end of every detected shot plus a whole-video minimum rate.
+    # Scene analysis runs first in the unified workflow. Reserve 20% for shot anchors.
+    anchors = []
+    scene_path = os.path.join(args.jobs_root,args.job_id,'scene','scene_index.json')
+    if os.path.isfile(scene_path):
+        for scene in json.load(open(scene_path)).get('scenes',[]):
+            start,end = float(scene['start']),float(scene['end'])
+            anchors.extend([min(end-.001,start+.04),(start+end)/2,max(start,end-.04)])
+    anchors = sorted(set(t for t in anchors if 0<=t<duration))
+    budget = max(0,args.max_frames-int(duration*fps)-2)
+    if len(anchors)>budget and budget:
+        anchors = [anchors[int(i*len(anchors)/budget)] for i in range(budget)]
+    elif not budget: anchors=[]
+    anchor_expr = '+'.join(f'between(t,{max(0,t-.022):.3f},{t+.022:.3f})' for t in anchors)
+    selection = f'isnan(prev_selected_t)+gte(t-prev_selected_t,{1/fps:.6f})'
+    if anchor_expr: selection += '+'+anchor_expr
+    # Clean previous frames on retries, preventing stale frames/crops from leaking.
+    for old in glob.glob(os.path.join(frames_dir,'*.jpg')): os.unlink(old)
+    log_path = os.path.join(args.work_dir,'face_sampling.log')
+    with open(log_path,'w') as log:
+        subprocess.run(['ffmpeg','-y','-hide_banner','-i',src,'-vf',f"select='{selection}',showinfo,scale='min(960,iw)':-2",'-vsync','vfr','-q:v','4',os.path.join(frames_dir,'%06d.jpg')],stderr=log,stdout=subprocess.DEVNULL,check=True)
+    timestamps = [float(t) for t in re.findall(r'pts_time:([0-9.]+)',open(log_path).read())]
+    all_frames = sorted(glob.glob(os.path.join(frames_dir,'*.jpg')))
+    if len(all_frames)>args.max_frames:
+        # Stratify over the ENTIRE duration, never truncate the end of a long video.
+        indices = [int(i*len(all_frames)/args.max_frames) for i in range(args.max_frames)]
+    else: indices=list(range(len(all_frames)))
+    frames = [all_frames[i] for i in indices]
+    frame_times = [timestamps[i] for i in indices]
+    print(f'[faces] sampled {len(frames)} frames, {len(anchors)} shot anchors; min rate={fps:.3f}; cap={args.max_frames}',flush=True)
 
     is_irl = (content_type == "irl")
     if is_irl:
@@ -353,10 +379,11 @@ def main() -> None:
         embed, emb_name, cos_threshold = _load_anime_embedder()
         print(f"[faces] mode=ANIME detector={det_name} embedder={emb_name} thr={cos_threshold}", flush=True)
 
+    counters = {"frames_sampled":len(frames),"raw_detections":0,"kept_after_quality":0,"embeddings":0,"embedding_failures":0}
     clusters = []  # each: {centroid, count, best_score, best_blur, best_frame, best_box, times: [t]}
 
     for idx, frame_path in enumerate(frames):
-        t = idx / fps
+        t = frame_times[idx]
         img = cv2.imread(frame_path)
         if img is None:
             continue
@@ -375,19 +402,22 @@ def main() -> None:
                 print(f"[faces] anime detect failed on frame {idx}: {exc}", flush=True)
                 continue
 
+            counters["raw_detections"] += len(boxes)
             for (x0, y0, x1, y1, score) in boxes:
                 h, w = img.shape[:2]
                 ix0 = max(0, min(w - 1, int(x0)))
                 iy0 = max(0, min(h - 1, int(y0)))
                 ix1 = max(0, min(w, int(x1)))
                 iy1 = max(0, min(h, int(y1)))
-                if (ix1 - ix0) < 20 or (iy1 - iy0) < 20:
+                if (ix1 - ix0) < 10 or (iy1 - iy0) < 10:
                     continue
                 face = img[iy0:iy1, ix0:ix1]
                 if face.size == 0:
                     continue
+                counters["kept_after_quality"] += 1
                 try:
                     vec = embed(face)
+                    counters["embeddings"] += 1
                     detections.append({
                         "box": (ix0, iy0, ix1, iy1),
                         "score": score,
@@ -395,7 +425,8 @@ def main() -> None:
                         "blur": 50.0,
                     })
                 except Exception:
-                    continue
+                    counters['embedding_failures'] += 1
+                    detections.append({'box':(ix0,iy0,ix1,iy1),'score':score,'vector':None,'blur':0})
 
         for det in detections:
             vec = det["vector"]
@@ -405,6 +436,10 @@ def main() -> None:
 
             best_i, best_sim = -1, -1.0
             for i, cl in enumerate(clusters):
+                # Never merge two simultaneously visible people, unembedded faces,
+                # or histogram-only lookalikes. Duplicates are preferable to hiding people.
+                if vec is None or cl['centroid'] is None or cl['times'][-1] == t or 'fallback' in emb_name:
+                    continue
                 sim = _cosine(vec, cl["centroid"])
                 if sim > best_sim:
                     best_i, best_sim = i, sim
@@ -431,11 +466,16 @@ def main() -> None:
         if idx % 60 == 0:
             print(f"[faces] frame {idx}/{len(frames)} — {len(clusters)} clusters", flush=True)
 
-    valid_clusters = [c for c in clusters if c["count"] >= args.min_appearances]
-    if not valid_clusters and clusters:
-        print(f"[faces] No clusters reached min_appearances={args.min_appearances}; keeping {len(clusters)} clusters with count >= 1", flush=True)
-        valid_clusters = clusters
-    clusters = valid_clusters
+    counters['clusters_formed'] = len(clusters)
+    # Singleton faces are always retained; --min-appearances is legacy input only.
+    if args.min_appearances > 1:
+        print('[faces] recall-first: ignoring min-appearances > 1; singleton faces retained',flush=True)
+    if is_irl and hasattr(detect_and_embed_irl,'stats'):
+        counters.update(detect_and_embed_irl.stats)
+    elif is_irl:
+        counters.update(raw_detections=sum(c['count'] for c in clusters),kept_after_quality=sum(c['count'] for c in clusters),embeddings=sum(c['count'] for c in clusters))
+    counters['gallery_entries'] = len(clusters)
+    print('[faces] FUNNEL '+json.dumps(counters),flush=True)
 
     # Sort characters by appearances / total screen time
     characters = []
@@ -463,6 +503,8 @@ def main() -> None:
 
     manifest = {
         "version": 1,
+        "funnel": counters,
+        "sampling_profile": "recall-first 960px, up to 2fps plus shot start/middle/end; singleton retention",
         "job_id": args.job_id,
         "content_type": content_type,
         "detector": det_name,
