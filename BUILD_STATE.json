@@ -1045,12 +1045,483 @@
   },
   "export_copy_clipforge": {
     "status": "in_progress",
-    "last_updated": "2026-10-20T22:14:38.791354+00:00",
-    "clipforge_reference": {},
-    "diff_table": [],
-    "root_cause": "",
+    "last_updated": "2026-10-20T22:16:54.188536+00:00",
+    "clipforge_reference": {
+      "repository": "motionssalt/clipforge",
+      "commit": "a05846de7c76a66ad42ba6fd37126514bc452167",
+      "ingest": "stage_a/ingest.py copies downloaded bytes to original.<detected extension>; no normalization or intermediate video encode. stage_b refetch_source restores the original bytes when excluded.",
+      "render_produce_merged_video_exact": "def produce_merged_video(src: str | Path, plan: list[dict], vo_wavs: list[str],\n                         dst: str | Path, music: str | Path | None,\n                         music_volume: float = MUSIC_VOLUME) -> None:\n    \"\"\"Cut every reconciled range from ``src``, retime per-cut video by its\n    stretch factor, mute source audio, lay in the voiceover WAVs (padded to the\n    cut length), concat everything, optionally mix ducked music under the\n    voiceover, and write ONE mobile-safe MP4.\"\"\"\n    if not plan:\n        raise common.StageBError(\"produce_merged_video called with no cuts\")\n\n    n = len(plan)\n    cmd: list[str] = [\"ffmpeg\", \"-y\"]\n\n    # One `-ss <start> -to <end> -i <src>` block per cut. Input-side seek is\n    # fast, and because the concat filter downstream re-encodes with fresh PTS\n    # we inherit none of the edit-list / non-zero-start problems a stream-copy\n    # pipeline would have.\n    for p in plan:\n        cmd += [\"-ss\", f\"{p['start_seconds']:.3f}\", \"-to\", f\"{p['end_seconds']:.3f}\", \"-i\", str(src)]\n\n    for w in vo_wavs:\n        cmd += [\"-i\", str(w)]\n\n    music_idx = None\n    if music:\n        music_idx = 2 * n\n        # `-stream_loop -1` must precede the input it applies to; loop short\n        # music so the atrim below always has enough material to cut from.\n        cmd += [\"-stream_loop\", \"-1\", \"-i\", str(music)]\n\n    parts: list[str] = []\n    concat_inputs: list[str] = []\n    for i, p in enumerate(plan):\n        stretch = p[\"stretch\"]\n        parts.append(\n            f\"[{i}:v:0]\"\n            f\"setpts={stretch:.6f}*PTS,\"\n            f\"fps={TARGET_FPS},\"\n            f\"format={TARGET_PIX_FMT},\"\n            f\"setsar=1\"\n            f\"[v{i}]\"\n        )\n        # Audio: normalized voiceover only \u2014 source audio is never mapped.\n        # Pad to the exact post-resample sample count so concat sees equal A/V\n        # segment lengths. end_sample avoids millisecond rounding truncating a\n        # final consonant or vowel.\n        parts.append(\n            f\"[{n + i}:a:0]\"\n            f\"aformat=sample_fmts=fltp:sample_rates={AAC_SAMPLE_RATE}:channel_layouts=stereo,\"\n            f\"aresample=async=1:first_pts=0,\"\n            f\"apad,atrim=end_sample={p['audio_samples']},\"\n            f\"volume={VOICEOVER_VOLUME}\"\n            f\"[a{i}]\"\n        )\n        concat_inputs.append(f\"[v{i}][a{i}]\")\n\n    parts.append(\"\".join(concat_inputs) + f\"concat=n={n}:v=1:a=1[vcat][acat]\")\n\n    total_seconds = sum(p[\"video_seconds\"] for p in plan)\n\n    if music_idx is not None:\n        parts.append(\n            f\"[{music_idx}:a:0]\"\n            f\"aformat=sample_fmts=fltp:sample_rates={AAC_SAMPLE_RATE}:channel_layouts=stereo,\"\n            f\"aresample=async=1:first_pts=0,\"\n            f\"atrim=0:{total_seconds:.3f},\"\n            f\"volume={music_volume:.6f}\"\n            f\"[music_reduced]\"\n        )\n        # bug-59: the bed is already gain-staged to a CONSTANT loudness-matched\n        # level by resolve_music_volume() above (MUSIC_TO_VOICE_LOUDNESS_RATIO,\n        # measured via LUFS so a quiet upload is boosted and a loud one is cut\n        # down to the same target ratio). Previously this constant level was\n        # then fed through sidechaincompress, ducking it further any time the\n        # voiceover was present and letting it rise back in gaps \u2014 the\n        # operator wants a flat, non-fluctuating background level for the\n        # whole clip instead. music_reduced is mixed in directly at its\n        # already-correct constant gain; no per-moment compression is applied.\n        parts.append(\n            f\"[acat][music_reduced]amix=inputs=2:duration=first:normalize=0,\"\n            f\"alimiter=limit={MIX_LIMITER_CEILING}\"\n            f\"[aout]\"\n        )\n        audio_map = \"[aout]\"\n    else:\n        audio_map = \"[acat]\"\n\n    filter_complex = \";\".join(parts)\n\n    cmd += [\n        \"-filter_complex\", filter_complex,\n        \"-map\", \"[vcat]\",\n        \"-map\", audio_map,\n\n        # Video: H.264 High@L4.0, CRF 18, yuv420p \u2014 universally decodable.\n        \"-c:v\", \"libx264\",\n        \"-profile:v\", X264_PROFILE,\n        \"-level:v\", X264_LEVEL,\n        \"-preset\", X264_PRESET,\n        \"-crf\", X264_CRF,\n        \"-pix_fmt\", TARGET_PIX_FMT,\n        # No B-frames -> PTS==DTS, start_time==0.\n        \"-bf\", \"0\",\n        \"-g\", str(TARGET_FPS * 2),\n        \"-keyint_min\", str(TARGET_FPS * 2),\n        \"-sc_threshold\", \"0\",\n        \"-x264-params\", \"force-cfr=1\",\n        \"-video_track_timescale\", \"15360\",\n\n        # Audio: AAC-LC stereo 48 kHz 192 kbps.\n        \"-c:a\", \"aac\",\n        \"-profile:a\", \"aac_low\",\n        \"-b:a\", AAC_BITRATE,\n        \"-ar\", AAC_SAMPLE_RATE,\n        \"-ac\", AAC_CHANNELS,\n\n        # Container: MP4, faststart, mp42 brand, no edit lists; strip\n        # metadata/chapters; drop subtitle/data tracks.\n        \"-movflags\", \"+faststart\",\n        \"-use_editlist\", \"0\",\n        \"-brand\", \"mp42\",\n        \"-map_metadata\", \"-1\",\n        \"-map_chapters\", \"-1\",\n        \"-sn\", \"-dn\", \"-ignore_unknown\",\n        \"-fflags\", \"+genpts\",\n        \"-max_muxing_queue_size\", \"9999\",\n        \"-f\", \"mp4\",\n        str(dst),\n    ]\n\n    common.sh(cmd)",
+      "terminal_compress_exact": "\"\"\"Stage B \u2014 final delivery compression for an already-rendered MP4.\n\nThis is deliberately a separate terminal pass: it changes neither captions,\ncrops, timing, nor audio. It applies CRF-based x264 compression to the fully\ncomposited video, stream-copies the audio, verifies the output preserves core\nmedia properties, and never ships a candidate larger than the source (the\noriginal is retained in that pathological case).\n\nPorted from ``_legacy/scripts/compress_final_video.py``.\n\"\"\"\nfrom __future__ import annotations\n\nimport argparse\nimport os\nimport shutil\nfrom pathlib import Path\n\nfrom pipeline.stage_b import common\n\n# CRF 23 is the established delivery-quality setting: materially leaner than\n# the CRF 18 final compositor while remaining visually clean for mobile/social.\nDELIVERY_CRF = \"23\"\nDELIVERY_PRESET = \"medium\"\nX264_PROFILE = \"high\"\nX264_LEVEL = \"4.0\"\n\n\ndef _stream(probe: dict, stream_type: str) -> dict:\n    matches = [s for s in probe.get(\"streams\", []) if s.get(\"codec_type\") == stream_type]\n    if not matches:\n        raise common.StageBError(f\"{stream_type} stream missing\")\n    return matches[0]\n\n\ndef _size_label(size_bytes: int) -> str:\n    return f\"{size_bytes / (1024 * 1024):.2f} MiB ({size_bytes:,} bytes)\"\n\n\ndef _duration(probe: dict) -> float:\n    return float((probe.get(\"format\") or {}).get(\"duration\") or 0.0)\n\n\ndef _validate(source: Path, candidate: Path) -> None:\n    before = common.probe_json(source)\n    after = common.probe_json(candidate)\n    before_video = _stream(before, \"video\")\n    after_video = _stream(after, \"video\")\n\n    # r_frame_rate is the exact nominal playback rate. avg_frame_rate may be\n    # represented by a slightly different rational after remuxing even when the\n    # frame cadence is unchanged, so it is logged but not a byte-for-byte\n    # invariant.\n    invariant_fields = (\"width\", \"height\", \"r_frame_rate\", \"sample_aspect_ratio\")\n    mismatches = [\n        f\"{field}: {before_video.get(field)} -> {after_video.get(field)}\"\n        for field in invariant_fields\n        if before_video.get(field) != after_video.get(field)\n    ]\n    if mismatches:\n        raise common.StageBError(\"Final compression changed video invariants: \" + \"; \".join(mismatches))\n\n    before_duration = _duration(before)\n    after_duration = _duration(after)\n    if abs(before_duration - after_duration) > 0.10:\n        raise common.StageBError(\n            f\"Final compression changed duration: {before_duration:.3f}s -> {after_duration:.3f}s\"\n        )\n\n    source_audio = [s for s in before.get(\"streams\", []) if s.get(\"codec_type\") == \"audio\"]\n    candidate_audio = [s for s in after.get(\"streams\", []) if s.get(\"codec_type\") == \"audio\"]\n    if len(source_audio) != len(candidate_audio):\n        raise common.StageBError(\n            f\"Final compression changed audio stream count: {len(source_audio)} -> {len(candidate_audio)}\"\n        )\n    for index, (original, copied) in enumerate(zip(source_audio, candidate_audio), 1):\n        if original.get(\"codec_name\") != copied.get(\"codec_name\"):\n            raise common.StageBError(\n                f\"Final compression re-encoded audio stream {index}: \"\n                f\"{original.get('codec_name')} -> {copied.get('codec_name')}\"\n            )\n\n\ndef compress(source: Path, destination: Path) -> tuple[int, int, bool]:\n    \"\"\"Write a quality-compressed delivery MP4 and return size metrics\n    ``(before_bytes, final_bytes, reduced)``. If a pathological source does not\n    shrink under constant-quality encoding, the source is copied to the\n    destination rather than making the delivered asset larger.\"\"\"\n    if not source.is_file():\n        raise common.StageBError(f\"Final video not found: {source}\")\n    if source.resolve() == destination.resolve():\n        raise common.StageBError(\"Source and destination must be different paths\")\n\n    destination.parent.mkdir(parents=True, exist_ok=True)\n    candidate = destination.with_name(destination.name + \".compressing.mp4\")\n    candidate.unlink(missing_ok=True)\n    destination.unlink(missing_ok=True)\n    before_bytes = source.stat().st_size\n\n    command = [\n        \"ffmpeg\", \"-y\", \"-i\", str(source),\n        \"-map\", \"0:v:0\", \"-map\", \"0:a?\",\n        \"-c:v\", \"libx264\", \"-profile:v\", X264_PROFILE,\n        \"-level:v\", X264_LEVEL, \"-preset\", DELIVERY_PRESET,\n        \"-crf\", DELIVERY_CRF, \"-pix_fmt\", \"yuv420p\",\n        # Preserve the mobile-safe no-B-frame final-video contract.\n        \"-bf\", \"0\", \"-g\", \"60\", \"-keyint_min\", \"60\", \"-sc_threshold\", \"0\",\n        \"-x264-params\", \"force-cfr=1\", \"-video_track_timescale\", \"15360\",\n        # Audio is copied exactly; no additional generation loss or size churn.\n        \"-c:a\", \"copy\",\n        \"-movflags\", \"+faststart\", \"-use_editlist\", \"0\", \"-brand\", \"mp42\",\n        \"-map_metadata\", \"-1\", \"-map_chapters\", \"-1\", \"-sn\", \"-dn\",\n        \"-ignore_unknown\", \"-fflags\", \"+genpts\", \"-max_muxing_queue_size\", \"9999\",\n        \"-f\", \"mp4\", str(candidate),\n    ]\n    common.sh(command)\n    _validate(source, candidate)\n\n    candidate_bytes = candidate.stat().st_size\n    reduced = candidate_bytes < before_bytes\n    if reduced:\n        os.replace(candidate, destination)\n    else:\n        print(\n            \"WARNING: CRF delivery candidate was not smaller; preserving the \"\n            \"original completed asset rather than increasing delivery size.\",\n            flush=True,\n        )\n        shutil.copy2(source, destination)\n\n    final_bytes = destination.stat().st_size\n    reduction = (1.0 - (final_bytes / before_bytes)) * 100.0 if before_bytes else 0.0\n    print(\"Final delivery compression complete:\", flush=True)\n    print(f\"  before: {_size_label(before_bytes)}\", flush=True)\n    print(f\"  candidate: {_size_label(candidate_bytes)}\", flush=True)\n    print(f\"  after: {_size_label(final_bytes)}\", flush=True)\n    print(f\"  reduction: {reduction:.1f}% ({'compressed' if reduced else 'original retained'})\", flush=True)\n    return before_bytes, final_bytes, reduced\n\n\ndef main(argv: list[str] | None = None) -> int:\n    parser = argparse.ArgumentParser(description=\"Final delivery compression for a rendered MP4.\")\n    parser.add_argument(\"input_final_mp4\")\n    parser.add_argument(\"output_final_mp4\")\n    args = parser.parse_args(argv)\n    compress(Path(args.input_final_mp4).resolve(), Path(args.output_final_mp4).resolve())\n    return 0\n\n\nif __name__ == \"__main__\":\n    try:\n        raise SystemExit(main())\n    except common.StageBError as exc:\n        import sys\n\n        print(f\"ERROR: {exc}\", file=sys.stderr, flush=True)\n        raise SystemExit(3)\n",
+      "additional_passes": {
+        "order": "render -> optional enhance -> captions/title/reframe -> optional watermark -> compress -> validate_mp4 -> ZIP plus raw final.mp4 release assets",
+        "enhance_exact": "\"\"\"Stage B \u2014 optional, mobile-safe enhancement pass on the merged final MP4.\n\nThe picture chain is, in order:\n\n    light hqdn3d shimmer denoise \u2192 supplied 3D color-cube grade \u2192\n    sharpen at the frame's NATIVE resolution \u2192 gradfun debanding \u2192 yuv420p\n\nRationale (hard-won, do not relitigate):\n\n* ``hqdn3d`` is used lightly and only to remove H.264 compression shimmer\n  BEFORE it can be amplified by later sharpening. Do NOT swap back to\n  ``nlmeans`` \u2014 it is orders of magnitude slower and produced the exact\n  \"plastered / over-smooth\" look this pass exists to avoid.\n* The bundled 64\u00b3 color cube (``assets/vibrant_glow_color_cube_l8.png``,\n  FFmpeg Hald level-8) is bug-59's \"vibrant multi-hue glow\" grade,\n  synthesised by ``pipeline/stage_b/build_glow_lut.py`` from the user's\n  960x540 gradient-tile reference image (a mood reference, NOT a valid HALD\n  CLUT identity \u2014 never feed that image to ``haldclut`` directly). It is the\n  only color transform in this stage and runs BEFORE the sharpeners.\n* bug-60: the sharpeners run at the merged video's native resolution. The\n  2x upscale/sharpen/rescale-back scaffold that used to sit between the LUT\n  and the sharpeners (bug-11's technique, bug-25's rescale fix \u2014 see those\n  comments below for the history) was removed: its per-axis caps made the\n  upscale non-uniform on 16:9 sources (1920x1080 -> 2160x2160, then a flat\n  /2 rescale -> 1080x1080, stretching every non-square source before the\n  reframe stage), and its final lanczos downscale low-pass-blurred away most\n  of the sharpening that had just been applied. Do NOT reintroduce it.\n* ``cas`` restores texture/edge definition in a locally content-aware way.\n* ``unsharp`` sharpens line ink specifically (luma threshold keeps it off flat\n  regions; zeroed chroma matrix avoids chromatic fringing).\n* ``gradfun`` cleans 8-bit banding; ``setsar=1`` guarantees square pixels.\n\nWhen disabled, the input is left completely untouched. The output is validated\nagainst the same mobile-safe contract before it replaces the input (atomic\nswap; no partial file is ever left in place).\n\nPorted from ``_legacy/scripts/enhance_scenes.py``.\n\"\"\"\nfrom __future__ import annotations\n\nimport argparse\nimport os\nfrom pathlib import Path\n\nfrom pipeline.stage_b import common\n\nDENOISE = \"hqdn3d=0.8:0.6:3.0:2.0\"\nLUT_FILTER = \"haldclut=shortest=1\"\n\nLUT_GRID_SOURCE = common.LUT_GRID_SOURCE\nLUT_ASSET = common.LUT_HALD_ASSET\n\n# bug-11 history: a detail-preserving 2x lanczos upscale to pseudo-4K used\n# to be inserted between the color grade and the sharpeners, so cas/unsharp\n# worked on the upsampled frame (the AE-style \"scale up, then sharpen\" pass).\n# bug-25 history: that upscale used to leak into the delivered file, and a\n# rescale-back-to-source stage was added so enhance stayed resolution-neutral.\n# bug-60: BOTH stages were then removed entirely. The upscale's per-axis caps\n# (2160 width / 3840 height) made the scale factor non-uniform on 16:9 sources\n# (1920x1080 -> 2160x2160, not a proportional 2160x1215), and the rescale-back\n# divided both axes by a flat /2 \u2014 output came out 1080x1080, visibly\n# stretched, before the reframe/crop stage ever saw it. Independently, the\n# final lanczos downscale was itself a low-pass blur that undid a large\n# fraction of the sharpening just applied. Sharpening at native resolution is\n# measurably sharper AND aspect-correct, with zero upscale complexity. setsar=1\n# is still applied at the end of the chain below; never drop it.\nEDGE_SHARPEN = \"cas=strength=0.9\"\n# bug-61: retuned for the native-resolution chain (bug-60). cas raised\n# 0.75 -> 0.9 and unsharp luma 0.85 -> 1.0: on a compressed anime-style test\n# render (line art, flat fills, gradient sky, sensor-noise shimmer) this\n# measured ~1.6x sharper than the old native 0.75/0.85 pair (Laplian var\n# ~2846 vs ~1790, ~8.6x over the ~332 unsharpened baseline) with NO ringing\n# increase per unit of sharpening (edge |Laplacian| scales linearly with the\n# sharpen amount, and flat-fill noise stays at baseline ~0.17 vs the source's\n# 0.14 \u2014 hqdn3d 0.8:0.6:3.0:2.0 stays matched, do NOT strengthen it; heavier\n# denoise is the \"plastered\" failure mode). Chroma amount stays exactly 0.35:\n# raising it risks the chromatic fringing the zeroed-chroma design avoids.\n# Rejected on measurement: cas 0.95 + luma 1.1 was sharper still (~4278) but\n# flat-region noise doubled (0.38) \u2014 visible grain crawl in sky/skin fills,\n# a worse trade than the extra edge gain. A smartblur difference-blend\n# \"clarity\" stage was also tried and REJECTED: it *lowered* fine sharpness\n# (~1348) while doubling flat-region noise (0.39) \u2014 the grainextract blend\n# is subtractive at fine scales, fighting the sharpeners it follows.\nLINE_SHARPEN = \"unsharp=7:7:1.0:5:5:0.35\"\nDEBAND = \"gradfun=1.2:16\"\n\nFILTER_CHAIN = (\n    f\"{DENOISE},{LUT_FILTER},{EDGE_SHARPEN},{LINE_SHARPEN},\"\n    f\"{DEBAND},format=yuv420p,setsar=1\"\n)\n\n# Mobile-safe encoding parameters (same contract as render.py).\nTARGET_FPS = 30\nTARGET_PIX_FMT = \"yuv420p\"\nX264_PROFILE = \"high\"\nX264_LEVEL = \"4.0\"\nX264_PRESET = \"medium\"\nX264_TUNE = \"animation\"\nX264_CRF = \"24\"\nX264_MAXRATE = \"8M\"\nX264_BUFSIZE = \"16M\"\n\n\ndef _level_and_vbv(src: str) -> tuple[str, str, str]:\n    \"\"\"Return (level, maxrate, bufsize) for the enhanced output.\n\n    bug-60: output now stays at the source's own resolution (the 2x upscale\n    scaffold is gone), so the fixed Level 4.0 / 8M / 16M contract below covers\n    every realistic input. The probe is kept only as a safety net for inputs\n    already larger than ~2048px on an axis, which still get Level 5.1.\n    \"\"\"\n    try:\n        data = common.probe_json(src)\n        width = height = 0\n        for stream in data.get(\"streams\", []):\n            if stream.get(\"codec_type\") == \"video\":\n                width = int(stream.get(\"width\") or 0)\n                height = int(stream.get(\"height\") or 0)\n                break\n        if max(width, height) > 2048 or (width * height) > (2048 * 2048):\n            return \"5.1\", \"20M\", \"40M\"\n    except Exception:\n        pass\n    return X264_LEVEL, X264_MAXRATE, X264_BUFSIZE\n\n\ndef enhance_one(src: str, dst: str) -> None:\n    \"\"\"Denoise, apply the supplied color cube, and sharpen one video.\"\"\"\n    level, maxrate, bufsize = _level_and_vbv(src)\n    graph = (\n        f\"[0:v]{DENOISE}[denoised];\"\n        f\"[denoised][1:v]{LUT_FILTER},{EDGE_SHARPEN},\"\n        f\"{LINE_SHARPEN},{DEBAND},format=yuv420p,setsar=1[enhanced]\"\n    )\n    cmd = [\n        \"ffmpeg\", \"-y\",\n        \"-i\", src,\n        # The color cube is a looping second video input; ``shortest=1`` makes\n        # output duration follow the scene, not this infinite image stream.\n        \"-loop\", \"1\", \"-framerate\", str(TARGET_FPS), \"-i\", str(LUT_ASSET),\n        \"-filter_complex\", graph,\n        \"-map\", \"[enhanced]\", \"-map\", \"0:a:0\",\n        \"-c:v\", \"libx264\",\n        \"-profile:v\", X264_PROFILE,\n        \"-level:v\", level,\n        \"-preset\", X264_PRESET,\n        \"-tune\", X264_TUNE,\n        \"-crf\", X264_CRF,\n        \"-maxrate\", maxrate,\n        \"-bufsize\", bufsize,\n        \"-pix_fmt\", TARGET_PIX_FMT,\n        \"-bf\", \"0\",\n        \"-g\", str(TARGET_FPS * 2),\n        \"-keyint_min\", str(TARGET_FPS * 2),\n        \"-sc_threshold\", \"0\",\n        \"-x264-params\", \"force-cfr=1\",\n        \"-r\", str(TARGET_FPS),\n        \"-video_track_timescale\", \"15360\",\n        \"-c:a\", \"copy\",\n        \"-movflags\", \"+faststart\",\n        \"-use_editlist\", \"0\",\n        \"-brand\", \"mp42\",\n        \"-map_metadata\", \"-1\",\n        \"-map_chapters\", \"-1\",\n        \"-sn\", \"-dn\", \"-ignore_unknown\",\n        \"-fflags\", \"+genpts\",\n        \"-max_muxing_queue_size\", \"9999\",\n        \"-f\", \"mp4\", dst,\n    ]\n    common.sh(cmd)\n\n\ndef validate_enhanced(path: str) -> None:\n    \"\"\"Fail before swapping unless the enhanced MP4 is mobile-safe.\"\"\"\n    with open(path, \"rb\") as handle:\n        head = handle.read(12)\n    if len(head) < 12 or head[4:8] != b\"ftyp\":\n        raise common.StageBError(f\"{path} is missing an MP4 ftyp box\")\n\n    data = common.probe_json(path)\n    streams = data.get(\"streams\", [])\n    fmt = data.get(\"format\", {})\n    video = [s for s in streams if s.get(\"codec_type\") == \"video\"]\n    audio = [s for s in streams if s.get(\"codec_type\") == \"audio\"]\n    if len(video) != 1 or len(audio) != 1 or len(streams) != 2:\n        kinds = [f\"{s.get('codec_type')}:{s.get('codec_name')}\" for s in streams]\n        raise common.StageBError(\n            f\"{path} must contain exactly one video and one audio stream; got {kinds}\"\n        )\n\n    stream = video[0]\n    if stream.get(\"codec_name\") != \"h264\":\n        raise common.StageBError(f\"video codec {stream.get('codec_name')!r}, expected h264\")\n    if stream.get(\"profile\") not in (\"High\", \"High 10\"):\n        raise common.StageBError(f\"video profile {stream.get('profile')!r}, expected High\")\n    if stream.get(\"pix_fmt\") != TARGET_PIX_FMT:\n        raise common.StageBError(f\"pixel format {stream.get('pix_fmt')!r}, expected {TARGET_PIX_FMT!r}\")\n    if stream.get(\"has_b_frames\") not in (0, \"0\"):\n        raise common.StageBError(f\"has_b_frames={stream.get('has_b_frames')!r}, expected 0\")\n    if stream.get(\"r_frame_rate\") != f\"{TARGET_FPS}/1\":\n        raise common.StageBError(f\"frame rate {stream.get('r_frame_rate')!r}, expected {TARGET_FPS}/1\")\n\n    for label, value in ((\"container\", fmt.get(\"start_time\", \"0\")),\n                         (\"video\", stream.get(\"start_time\", \"0\"))):\n        try:\n            if abs(float(value)) > 0.05:\n                raise common.StageBError(f\"{label} start_time={value}, expected ~0\")\n        except (TypeError, ValueError):\n            # ffprobe may omit an optional start_time; the muxer settings above\n            # still guarantee a zero-origin output and avoid edit lists.\n            pass\n    print(f\"  OK: {path} still mobile-safe after enhancement.\", flush=True)\n\n\ndef enhance_video(target: Path, *, enabled: bool = True) -> bool:\n    \"\"\"Enhance one MP4 in place (atomic swap after validation).\n\n    Returns True when enhancement was applied, False when disabled/no-op.\n    \"\"\"\n    if not enabled:\n        print(\"Quality enhancement DISABLED \u2014 video left untouched.\", flush=True)\n        return False\n    if not LUT_GRID_SOURCE.is_file():\n        raise common.StageBError(f\"graded .cube source missing: {LUT_GRID_SOURCE}\")\n    if not LUT_ASSET.is_file():\n        raise common.StageBError(f\"bundled color-cube asset missing: {LUT_ASSET}\")\n    if not target.is_file():\n        raise common.StageBError(f\"video to enhance does not exist: {target}\")\n\n    before = target.stat().st_size\n    tmp = target.with_suffix(\".enhanced.mp4\")\n    print(\n        f\"Enhancing {target.name} ({before / 1024 / 1024:.2f} MB) with supplied \"\n        f\"color-cube chain:\\n  {FILTER_CHAIN} (LUT: {LUT_ASSET.name})\\n\"\n        f\"  H.264 High@L{X264_LEVEL}, {TARGET_PIX_FMT}, CRF {X264_CRF}, \"\n        f\"preset={X264_PRESET}, tune={X264_TUNE}, CFR {TARGET_FPS}, no B-frames.\",\n        flush=True,\n    )\n    try:\n        enhance_one(str(target), str(tmp))\n        validate_enhanced(str(tmp))\n        after = tmp.stat().st_size\n        print(\n            f\"  size: {before / 1024 / 1024:.2f} MB -> {after / 1024 / 1024:.2f} MB \"\n            f\"({(after - before) / before * 100 if before else 0:+.1f}%)\",\n            flush=True,\n        )\n        os.replace(tmp, target)\n    finally:\n        # No incomplete .enhanced.mp4 is left behind if ffmpeg/validation fails.\n        if tmp.exists():\n            tmp.unlink()\n    return True\n\n\ndef main(argv: list[str] | None = None) -> int:\n    parser = argparse.ArgumentParser(\n        description=\"Apply the anime Hald-LUT enhancement chain to an MP4 in place.\"\n    )\n    parser.add_argument(\"video\", help=\"the merged MP4 to enhance in place\")\n    parser.add_argument(\"--enabled\", dest=\"enabled\", action=\"store_true\", default=True,\n                        help=\"Apply enhancement (default).\")\n    parser.add_argument(\"--no-enabled\", dest=\"enabled\", action=\"store_false\",\n                        help=\"No-op: leave the file completely untouched.\")\n    args = parser.parse_args(argv)\n    enhance_video(Path(args.video), enabled=args.enabled)\n    return 0\n\n\nif __name__ == \"__main__\":\n    try:\n        raise SystemExit(main())\n    except common.StageBError as exc:\n        import sys\n\n        print(f\"ERROR: {exc}\", file=sys.stderr, flush=True)\n        raise SystemExit(3)\n",
+        "captions_command_exact": "                   banner: dict | None = None, crop_plan: dict | None = None) -> None:\n    \"\"\"Apply scene-static crops, then composite caption overlay and banner.\"\"\"\n    inputs = [\"-i\", video, \"-i\", caption_foreground_mov]\n    if crop_plan is None:\n        crop_plan = {\n            \"target_width\": CIN_FRAME_WIDTH,\n            \"target_height\": CIN_FRAME_HEIGHT,\n            \"scenes\": [\n                {\n                    \"start_seconds\": 0.0,\n                    \"end_seconds\": common.probe_duration_seconds(video),\n                    \"crop_offset_x\": 0.5,\n                    \"crop_offset_y\": 0.5,\n                }\n            ],\n        }\n    crop_filters, crop_label = reframe.scene_crop_filter(crop_plan, \"0:v\")\n    filters = [\n        *crop_filters,\n        f\"[{crop_label}]format=gbrp[base]\",\n        \"[1:v]setpts=PTS-STARTPTS,format=rgba[foreground]\",\n        \"[base][foreground]overlay=eof_action=pass:repeatlast=0[v0]\",\n    ]\n    out_label = \"v0\"\n    if banner is not None:\n        rest_top = int(round(CIN_FRAME_HEIGHT * CIN_BANNER_TOP_FRACTION))\n        inputs += [\"-loop\", \"1\", \"-i\", banner[\"png\"]]\n        y_expr = _banner_y_expr(rest_top)\n        filters.append(\"[2:v]setpts=PTS-STARTPTS[bimg]\")\n        filters.append(\n            f\"[v0][bimg]overlay=x=0:y='{y_expr}':eval=frame\"\n            f\":eof_action=pass:repeatlast=0:shortest=1[v1]\"\n        )\n        out_label = \"v1\"\n    cmd = [\n        \"ffmpeg\", \"-y\", *inputs, \"-filter_complex\", \";\".join(filters),\n        \"-map\", f\"[{out_label}]\", \"-map\", \"0:a:0\", \"-c:v\", \"libx264\",\n        \"-profile:v\", \"high\", \"-level:v\", \"4.0\", \"-preset\", \"veryfast\",\n        \"-crf\", \"18\", \"-pix_fmt\", \"yuv420p\", \"-bf\", \"0\", \"-g\", \"60\",\n        \"-keyint_min\", \"60\", \"-sc_threshold\", \"0\",\n        \"-x264-params\", \"force-cfr=1\", \"-video_track_timescale\", \"15360\",\n        \"-c:a\", \"copy\", \"-movflags\", \"+faststart\", \"-use_editlist\", \"0\",\n        \"-brand\", \"mp42\", \"-map_metadata\", \"-1\", \"-map_chapters\", \"-1\",\n        \"-sn\", \"-dn\", \"-ignore_unknown\", \"-fflags\", \"+genpts\",\n        \"-max_muxing_queue_size\", \"9999\", \"-f\", \"mp4\", dst,\n    ]\n    common.sh(cmd)",
+        "watermark_exact": "\"\"\"Stage B \u2014 burn a persistent creator watermark into the final video.\n\nThe compositor deliberately creates two transparent full-frame overlays:\n\n* a soft, semi-transparent black drop shadow that follows the individual\n  letterforms; and\n* a partially transparent letter mask whose pixels are sampled from an FFmpeg\n  ``screen`` blend of the current frame and white, producing the intended light\n  overlay treatment on both dark and bright footage.\n\nThe result is a real frame-level watermark, not metadata or a sidecar. It runs\nafter cinematic captions and before the terminal delivery compression. An empty\nconfigured name is an explicit no-op (source copied unchanged).\n\nPorted from ``_legacy/scripts/apply_creator_watermark.py``.\n\"\"\"\nfrom __future__ import annotations\n\nimport argparse\nimport shutil\nimport subprocess\nimport tempfile\nfrom pathlib import Path\n\nfrom PIL import Image, ImageDraw, ImageFilter, ImageFont\n\nfrom pipeline.stage_b import common\n\nFONT_PATH = common.COOLVETICA_FONT\nFONT_CONDENSE_RATIO = 0.76\nFONT_HEIGHT_FRACTION = 0.055\nMIN_FONT_SIZE = 38\nMAX_FONT_SIZE = 76\nBOTTOM_SAFE_FRACTION = 0.062\nSHADOW_BLUR_RADIUS_PX = 2.0\nSHADOW_OPACITY = 0.74\nSHADOW_OFFSET_Y_PX = 5\nTEXT_MASK_OPACITY = 0.63\n\n\ndef fit_text_mask(name: str, width: int, height: int) -> tuple[Image.Image, tuple[int, int]]:\n    \"\"\"Create a centered, horizontally condensed antialiased text mask.\"\"\"\n    if not FONT_PATH.is_file():\n        raise common.StageBError(f\"Bundled watermark font is missing: {FONT_PATH}\")\n    font_size = max(MIN_FONT_SIZE, min(MAX_FONT_SIZE, round(height * FONT_HEIGHT_FRACTION)))\n    font = ImageFont.truetype(str(FONT_PATH), size=font_size)\n    scratch = Image.new(\"L\", (1, 1))\n    draw = ImageDraw.Draw(scratch)\n    left, top, right, bottom = draw.textbbox((0, 0), name, font=font, stroke_width=0)\n    natural_width = max(1, right - left)\n    natural_height = max(1, bottom - top)\n    # Reserve blur falloff and the offset so no part of the letter-shaped\n    # shadow can be clipped at the safe-area boundary.\n    pad = int(SHADOW_BLUR_RADIUS_PX * 3) + SHADOW_OFFSET_Y_PX + 4\n    glyph = Image.new(\"L\", (natural_width + pad * 2, natural_height + pad * 2), 0)\n    glyph_draw = ImageDraw.Draw(glyph)\n    glyph_draw.text((pad - left, pad - top), name, font=font, fill=255)\n\n    condensed_width = max(1, round(glyph.width * FONT_CONDENSE_RATIO))\n    glyph = glyph.resize((condensed_width, glyph.height), Image.Resampling.LANCZOS)\n    max_width = round(width * 0.72)\n    if glyph.width > max_width:\n        scale = max_width / glyph.width\n        glyph = glyph.resize((max_width, max(1, round(glyph.height * scale))), Image.Resampling.LANCZOS)\n\n    x = (width - glyph.width) // 2\n    y = height - round(height * BOTTOM_SAFE_FRACTION) - glyph.height\n    return glyph, (x, y)\n\n\ndef build_layers(name: str, width: int, height: int, directory: Path) -> tuple[Path, Path]:\n    glyph, (x, y) = fit_text_mask(name, width, height)\n    text_mask = Image.new(\"L\", (width, height), 0)\n    text_mask.paste(glyph, (x, y))\n    # The foreground alpha intentionally remains below 1.0: its actual RGB\n    # arrives from FFmpeg's Screen blend rather than an opaque caption color.\n    text_mask = text_mask.point(lambda value: round(value * TEXT_MASK_OPACITY))\n\n    # A Gaussian drop shadow keeps the silhouette of each letter.\n    shadow_source = Image.new(\"L\", (width, height), 0)\n    shadow_source.paste(glyph, (x, y + SHADOW_OFFSET_Y_PX))\n    shadow_alpha = shadow_source.filter(ImageFilter.GaussianBlur(SHADOW_BLUR_RADIUS_PX))\n    shadow_alpha = shadow_alpha.point(lambda value: round(value * SHADOW_OPACITY))\n    shadow_rgba = Image.new(\"RGBA\", (width, height), (0, 0, 0, 0))\n    shadow_rgba.putalpha(shadow_alpha)\n\n    shadow_path = directory / \"watermark_shadow.png\"\n    mask_path = directory / \"watermark_mask.png\"\n    shadow_rgba.save(shadow_path)\n    text_mask.save(mask_path)\n    return shadow_path, mask_path\n\n\ndef apply_watermark(source: Path, destination: Path, name: str) -> bool:\n    \"\"\"Burn the watermark into ``destination``. Returns True when a watermark\n    was applied; an empty name copies the source unchanged and returns False.\"\"\"\n    name = \" \".join((name or \"\").split())\n    if not name:\n        shutil.copyfile(source, destination)\n        print(\"Creator watermark empty \u2014 copied video without watermark.\", flush=True)\n        return False\n    width, height = common.probe_video_size(source)\n    with tempfile.TemporaryDirectory(prefix=\"clipforge_watermark_\") as tmp:\n        shadow_path, mask_path = build_layers(name, width, height, Path(tmp))\n        graph = (\n            \"[0:v]setpts=PTS-STARTPTS,format=rgba[base];\"\n            \"[1:v]setpts=PTS-STARTPTS,format=rgba[shadow];\"\n            \"[base][shadow]overlay=shortest=1:format=auto[shadowed];\"\n            \"[shadowed]split[composite_base][blend_base];\"\n            f\"color=c=white:s={width}x{height}:r=30,format=rgb24[white];\"\n            \"[blend_base][white]blend=all_mode=screen:shortest=1[screen_text];\"\n            \"[2:v]setpts=PTS-STARTPTS,format=gray[text_mask];\"\n            \"[screen_text][text_mask]alphamerge[watermark_text];\"\n            \"[composite_base][watermark_text]overlay=shortest=1:format=auto[watermarked]\"\n        )\n        command = [\n            \"ffmpeg\", \"-y\", \"-i\", str(source),\n            \"-loop\", \"1\", \"-framerate\", \"30\", \"-i\", str(shadow_path),\n            \"-loop\", \"1\", \"-framerate\", \"30\", \"-i\", str(mask_path),\n            \"-filter_complex\", graph,\n            \"-map\", \"[watermarked]\", \"-map\", \"0:a?\",\n            \"-c:v\", \"libx264\", \"-preset\", \"medium\", \"-crf\", \"18\",\n            \"-pix_fmt\", \"yuv420p\", \"-c:a\", \"copy\",\n            \"-movflags\", \"+faststart\", \"-map_metadata\", \"-1\", \"-map_chapters\", \"-1\",\n            \"-shortest\", str(destination),\n        ]\n        print(\"Applying creator watermark: screen-blended condensed text + soft letter-shaped shadow\", flush=True)\n        try:\n            subprocess.run(command, check=True)\n        except subprocess.CalledProcessError as exc:\n            raise common.StageBError(f\"watermark render failed (exit {exc.returncode})\") from exc\n    return True\n\n\ndef main(argv: list[str] | None = None) -> int:\n    parser = argparse.ArgumentParser(description=__doc__)\n    parser.add_argument(\"source\", type=Path)\n    parser.add_argument(\"destination\", type=Path)\n    parser.add_argument(\"--name\", required=True,\n                        help=\"Creator watermark text; empty copies source unchanged\")\n    args = parser.parse_args(argv)\n    apply_watermark(args.source, args.destination, args.name)\n    return 0\n\n\nif __name__ == \"__main__\":\n    try:\n        raise SystemExit(main())\n    except common.StageBError as exc:\n        import sys\n\n        print(f\"ERROR: {exc}\", file=sys.stderr, flush=True)\n        raise SystemExit(3)\n"
+      },
+      "delivery": "stage-b.yml softprops/action-gh-release uploads final.mp4, ZIP containing identical final.mp4, metadata.txt; retry via gh release upload --clobber. No transcoding during upload.",
+      "real_output": {
+        "sha256": "7ec0c386d79bcfbf257ee9455b690be7f08bb579df4f4ea07670887c685c0039",
+        "probe": {
+          "streams": [
+            {
+              "index": 0,
+              "codec_name": "h264",
+              "codec_long_name": "H.264 / AVC / MPEG-4 AVC / MPEG-4 part 10",
+              "profile": "High",
+              "codec_type": "video",
+              "codec_tag_string": "avc1",
+              "codec_tag": "0x31637661",
+              "width": 1080,
+              "height": 1200,
+              "coded_width": 1080,
+              "coded_height": 1200,
+              "closed_captions": 0,
+              "film_grain": 0,
+              "has_b_frames": 0,
+              "sample_aspect_ratio": "1:1",
+              "display_aspect_ratio": "9:10",
+              "pix_fmt": "yuv420p",
+              "level": 40,
+              "color_range": "tv",
+              "color_transfer": "bt709",
+              "color_primaries": "bt709",
+              "chroma_location": "left",
+              "field_order": "progressive",
+              "refs": 1,
+              "is_avc": "true",
+              "nal_length_size": "4",
+              "id": "0x1",
+              "r_frame_rate": "30/1",
+              "avg_frame_rate": "30/1",
+              "time_base": "1/15360",
+              "start_pts": 0,
+              "start_time": "0.000000",
+              "duration_ts": 477184,
+              "duration": "31.066667",
+              "bit_rate": "2490528",
+              "bits_per_raw_sample": "8",
+              "nb_frames": "932",
+              "extradata_size": 50,
+              "disposition": {
+                "default": 1,
+                "dub": 0,
+                "original": 0,
+                "comment": 0,
+                "lyrics": 0,
+                "karaoke": 0,
+                "forced": 0,
+                "hearing_impaired": 0,
+                "visual_impaired": 0,
+                "clean_effects": 0,
+                "attached_pic": 0,
+                "timed_thumbnails": 0,
+                "non_diegetic": 0,
+                "captions": 0,
+                "descriptions": 0,
+                "metadata": 0,
+                "dependent": 0,
+                "still_image": 0
+              },
+              "tags": {
+                "language": "und",
+                "handler_name": "VideoHandler",
+                "vendor_id": "[0][0][0][0]",
+                "encoder": "Lavc60.31.102 libx264"
+              }
+            },
+            {
+              "index": 1,
+              "codec_name": "aac",
+              "codec_long_name": "AAC (Advanced Audio Coding)",
+              "profile": "LC",
+              "codec_type": "audio",
+              "codec_tag_string": "mp4a",
+              "codec_tag": "0x6134706d",
+              "sample_fmt": "fltp",
+              "sample_rate": "48000",
+              "channels": 2,
+              "channel_layout": "stereo",
+              "bits_per_sample": 0,
+              "initial_padding": 0,
+              "id": "0x2",
+              "r_frame_rate": "0/0",
+              "avg_frame_rate": "0/0",
+              "time_base": "1/48000",
+              "start_pts": 0,
+              "start_time": "0.000000",
+              "duration_ts": 1495808,
+              "duration": "31.162667",
+              "bit_rate": "197181",
+              "nb_frames": "1461",
+              "extradata_size": 5,
+              "disposition": {
+                "default": 1,
+                "dub": 0,
+                "original": 0,
+                "comment": 0,
+                "lyrics": 0,
+                "karaoke": 0,
+                "forced": 0,
+                "hearing_impaired": 0,
+                "visual_impaired": 0,
+                "clean_effects": 0,
+                "attached_pic": 0,
+                "timed_thumbnails": 0,
+                "non_diegetic": 0,
+                "captions": 0,
+                "descriptions": 0,
+                "metadata": 0,
+                "dependent": 0,
+                "still_image": 0
+              },
+              "tags": {
+                "language": "und",
+                "handler_name": "SoundHandler",
+                "vendor_id": "[0][0][0][0]"
+              }
+            }
+          ],
+          "format": {
+            "filename": "/home/user/castcut_work/evidence/clipforge-final.mp4",
+            "nb_streams": 2,
+            "nb_programs": 0,
+            "format_name": "mov,mp4,m4a,3gp,3g2,mj2",
+            "format_long_name": "QuickTime / MOV",
+            "start_time": "0.000000",
+            "duration": "31.162667",
+            "size": "10467848",
+            "bit_rate": "2687279",
+            "probe_score": 100,
+            "tags": {
+              "major_brand": "mp42",
+              "minor_version": "512",
+              "compatible_brands": "mp42iso2avc1mp41",
+              "encoder": "Lavf60.16.100"
+            }
+          }
+        },
+        "boxes": [
+          {
+            "type": "ftyp",
+            "offset": 0,
+            "size": 32,
+            "payload_hex": "6d703432000002006d70343269736f32617663316d703431"
+          },
+          {
+            "type": "moov",
+            "offset": 32,
+            "size": 28160,
+            "children": [
+              {
+                "type": "mvhd",
+                "offset": 40,
+                "size": 108,
+                "payload_hex": "000000000000000000000000000003e8000079bb0001000001000000000000000000000000010000000000000000000000000000000100000000000000000000000000004000000000000000000000000000000000000000000000000000000000000003"
+              },
+              {
+                "type": "trak",
+                "offset": 148,
+                "size": 8077,
+                "children": [
+                  {
+                    "type": "tkhd",
+                    "offset": 156,
+                    "size": 92
+                  },
+                  {
+                    "type": "mdia",
+                    "offset": 248,
+                    "size": 7977,
+                    "children": [
+                      {
+                        "type": "mdhd",
+                        "offset": 256,
+                        "size": 32,
+                        "payload_hex": "00000000000000000000000000003c000007480055c40000"
+                      },
+                      {
+                        "type": "hdlr",
+                        "offset": 288,
+                        "size": 45
+                      },
+                      {
+                        "type": "minf",
+                        "offset": 333,
+                        "size": 7892,
+                        "children": [
+                          {
+                            "type": "vmhd",
+                            "offset": 341,
+                            "size": 20
+                          },
+                          {
+                            "type": "dinf",
+                            "offset": 361,
+                            "size": 36,
+                            "children": [
+                              {
+                                "type": "dref",
+                                "offset": 369,
+                                "size": 28
+                              }
+                            ]
+                          },
+                          {
+                            "type": "stbl",
+                            "offset": 397,
+                            "size": 7828,
+                            "children": [
+                              {
+                                "type": "stsd",
+                                "offset": 405,
+                                "size": 196,
+                                "payload_hex": "0000000000000001000000b461766331000000000000000100000000000000000000000000000000043804b00048000000480000000000000001154c61766336302e33312e313032206c696278323634000000000000000000000018ffff0000003a6176634301640028ffe1001d67640028acb2008804bf"
+                              },
+                              {
+                                "type": "stts",
+                                "offset": 601,
+                                "size": 24,
+                                "payload_hex": "0000000000000001000003a400000200"
+                              },
+                              {
+                                "type": "stss",
+                                "offset": 625,
+                                "size": 80
+                              },
+                              {
+                                "type": "stsc",
+                                "offset": 705,
+                                "size": 28
+                              },
+                              {
+                                "type": "stsz",
+                                "offset": 733,
+                                "size": 3748
+                              },
+                              {
+                                "type": "stco",
+                                "offset": 4481,
+                                "size": 3744
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "trak",
+                "offset": 8225,
+                "size": 19869,
+                "children": [
+                  {
+                    "type": "tkhd",
+                    "offset": 8233,
+                    "size": 92
+                  },
+                  {
+                    "type": "mdia",
+                    "offset": 8325,
+                    "size": 19769,
+                    "children": [
+                      {
+                        "type": "mdhd",
+                        "offset": 8333,
+                        "size": 32,
+                        "payload_hex": "0000000000000000000000000000bb800016d30055c40000"
+                      },
+                      {
+                        "type": "hdlr",
+                        "offset": 8365,
+                        "size": 45
+                      },
+                      {
+                        "type": "minf",
+                        "offset": 8410,
+                        "size": 19684,
+                        "children": [
+                          {
+                            "type": "smhd",
+                            "offset": 8418,
+                            "size": 16
+                          },
+                          {
+                            "type": "dinf",
+                            "offset": 8434,
+                            "size": 36,
+                            "children": [
+                              {
+                                "type": "dref",
+                                "offset": 8442,
+                                "size": 28
+                              }
+                            ]
+                          },
+                          {
+                            "type": "stbl",
+                            "offset": 8470,
+                            "size": 19624,
+                            "children": [
+                              {
+                                "type": "stsd",
+                                "offset": 8478,
+                                "size": 126,
+                                "payload_hex": "00000000000000010000006e6d703461000000000000000100000000000000000002001000000000bb8000000000003665736473000000000380808025000200048080801740150000000003023d0003023d0580808005119056e5000680808001020000001462747274000000000003023d0003023d"
+                              },
+                              {
+                                "type": "stts",
+                                "offset": 8604,
+                                "size": 32,
+                                "payload_hex": "0000000000000002000005b4000004000000000100000300"
+                              },
+                              {
+                                "type": "stsc",
+                                "offset": 8636,
+                                "size": 9796
+                              },
+                              {
+                                "type": "stsz",
+                                "offset": 18432,
+                                "size": 5864
+                              },
+                              {
+                                "type": "stco",
+                                "offset": 24296,
+                                "size": 3744
+                              },
+                              {
+                                "type": "sgpd",
+                                "offset": 28040,
+                                "size": 26
+                              },
+                              {
+                                "type": "sbgp",
+                                "offset": 28066,
+                                "size": 28
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "udta",
+                "offset": 28094,
+                "size": 98
+              }
+            ]
+          },
+          {
+            "type": "free",
+            "offset": 28192,
+            "size": 8
+          },
+          {
+            "type": "mdat",
+            "offset": 28200,
+            "size": 10439648
+          }
+        ]
+      },
+      "browser_download_exact": "export async function downloadReleaseAsset(credentials, asset, onProgress) {\n  const response = await fetch(String(asset.url || asset.browserUrl), {\n    headers: {\n      'Accept': 'application/octet-stream',\n      'Authorization': `Bearer ${credentials.githubPat}`\n    }\n  });\n  if (!response.ok) throw new Error(`Release download failed (${response.status}); no file saved.`);\n  const total = Number(response.headers.get('content-length') || asset.size || 0);\n  if (!response.body) {\n    const buf = new Uint8Array(await response.arrayBuffer());\n    if (onProgress) onProgress(buf.length, total || buf.length);\n    return buf;\n  }\n  const reader = response.body.getReader();\n  const chunks = [];\n  let received = 0;\n  for (;;) {\n    const { done, value } = await reader.read();\n    if (done) break;\n    chunks.push(value);\n    received += value.length;\n    if (onProgress) onProgress(received, total);\n  }\n  const out = new Uint8Array(received);\n  let offset = 0;\n  for (const chunk of chunks) { out.set(chunk, offset); offset += chunk.length; }\n  return out;\n}\n\n"
+    },
+    "diff_table": [
+      {
+        "aspect": "source preparation",
+        "clipforge": "original download bytes, no normalization",
+        "castcut_before": "original MKV, no normalization",
+        "decision": "same; preserve refetch"
+      },
+      {
+        "aspect": "cut seek",
+        "clipforge": "input -ss <start> -to <end> -i original per cut",
+        "castcut_before": "input -ss -i -t; encode each TS / single MP4",
+        "decision": "copy reference seek blocks"
+      },
+      {
+        "aspect": "join",
+        "clipforge": "concat filter n=v=1:a=1 within one encode",
+        "castcut_before": "TS chunks + concat demuxer -c copy, or single MP4 special case",
+        "decision": "remove demuxer and special case; reference graph always"
+      },
+      {
+        "aspect": "timestamps",
+        "clipforge": "setpts=stretch*PTS; fps=30; aresample=async=1:first_pts=0; sample-accurate pad/trim",
+        "castcut_before": "TS timebases and repeated AAC priming; final vf fps decimal-rounded",
+        "decision": "reference graph with stretch=1; exact source rational capped at 30"
+      },
+      {
+        "aspect": "codec/profile/level",
+        "clipforge": "libx264 High 4.0",
+        "castcut_before": "old High 5.0; previous fixed file already High 4.0",
+        "decision": "use vendored reference, no invention"
+      },
+      {
+        "aspect": "pixel format",
+        "clipforge": "yuv420p setsar=1",
+        "castcut_before": "yuv420p setsar=1 in final only",
+        "decision": "copy graph order"
+      },
+      {
+        "aspect": "frame rate",
+        "clipforge": "30/1 CFR",
+        "castcut_before": "rounded float original <=30, avg != nominal due timescale",
+        "decision": "only permitted source-rate cap; quantized 15360 timescale remains reference choice"
+      },
+      {
+        "aspect": "audio",
+        "clipforge": "one padded/resampled narration track, AAC192 once; final copy",
+        "castcut_before": "selected source -> AAC128 chunks -> AAC128 final (twice); optional map could silently lose track",
+        "decision": "substitute selected source track; preserve reference pad/resample/concat; AAC128 once then copy"
+      },
+      {
+        "aspect": "container",
+        "clipforge": "mp42 faststart no editlist timebase 1/15360",
+        "castcut_before": "old isom with elst; fixed already mp42 faststart no elst 1/15360",
+        "decision": "all reference flags unchanged"
+      },
+      {
+        "aspect": "GOP",
+        "clipforge": "bf0 g60 keyint_min60 sc_threshold0",
+        "castcut_before": "old bframes/tune animation; fixed dynamic GOP rounded fps*2",
+        "decision": "copy fixed g60/order"
+      },
+      {
+        "aspect": "final pass",
+        "clipforge": "compress.py CRF23 medium -> -c:a copy; fallback original if smaller",
+        "castcut_before": "own command/vf CRF23 maxrate1872 buf3744; reencodes audio",
+        "decision": "vendor compression; only rate params changed, do not allow out-of-cap fallback"
+      },
+      {
+        "aspect": "delivery",
+        "clipforge": "raw final.mp4 plus zipped copy on release",
+        "castcut_before": "raw named MP4 on private release; browser_download_url; no proxy",
+        "decision": "compare hashes/HTTP auth and raw delivery; no conversion"
+      },
+      {
+        "aspect": "verification",
+        "clipforge": "basic validate_mp4 and compression invariant checks",
+        "castcut_before": "avg bitrate only; no packet-window checks",
+        "decision": "add strict packet, boxes, SPS/GOP, source and hashes checks"
+      },
+      {
+        "aspect": "actual browser save",
+        "clipforge": "site/js/github.js downloadReleaseAsset authenticated octet-stream + site/js/media.js saveBytes",
+        "castcut_before": "exports.js bare private browser_download_url opens tab; no PAT header or length/hash checks",
+        "decision": "copy reference authenticated bytes + browser save; reject HTML/incomplete/wrong hash before saving"
+      }
+    ],
+    "root_cause": "Earlier a5f68a7 reimplemented a profile in utils.py instead of importing/vendoring ClipForge: retained the pre-existing TS concat-demuxer architecture and added its own final filter/encode. Real old CastCut is High@5.0 with B-frame reordering, isom/editlists and 4.748 Mbps vs reference High@4.0 bf0 mp42. HOWEVER latest scene-fixed output already matches those headline compatibility fields and has exact release digest. These flags alone do NOT establish why the phone rejects the latest file; no physical phone evidence. Remaining proven divergences are the cut/join graph, audio multiple-generation encoding, rate/GOP handling, and private-link delivery. Replace all divergent construction steps, then test delivery, without claiming isolated physical root cause. Live browser evidence now proves a separate delivery defect: CastCut bare private browser links did not use its PAT, and simply copying the reference authenticated browser fetch hits GitHub CDN CORS on this site. The fixed authenticated same-origin bridge and verified byte saver deliver a byte-identical actual new 1:54 export and Chromium plays it. That establishes a fixed delivery problem, not proof of the exact physical-phone decoder failure. Earlier claims that all Android fails on editlists/Level5 were overbroad; latest fixed-before media already had no elst, bf0, High4.0.",
     "done": [
-      "Cloned both repositories; ClipForge is read-only."
+      "Cloned both repositories; ClipForge is read-only.",
+      "Independently reviewed previous port and git history: upstream snapshots match ClipForge HEAD a05846de; prior a5f68a7 wrote a custom utils.py profile instead of reusing renderer.",
+      "Re-downloaded real ClipForge final, new 1:54 scene, real 10-minute scene, and original 125-segment faces export; all byte lengths and SHA256 agree with GitHub.",
+      "Recovered exact prior reference command/filter and historical media evidence without deleting earlier history."
     ],
     "pending": [
       "Trace both paths and previous history",
@@ -1058,8 +1529,796 @@
       "Port confirmed differences",
       "Verify both real flows and CI"
     ],
-    "verified_runs": [],
-    "notes": "New investigation; prior history retained. No phone playback claim without physical-device verification."
+    "verified_runs": [
+      {
+        "run_id": 39502823816,
+        "flow": "scene",
+        "source": "job-1792507438516-dehl",
+        "status": "success",
+        "output": {
+          "name": "castcut-export-exp-job-1792507438516-dehl-scene-clipforge-port.mp4",
+          "bytes": 27697735,
+          "sha256": "71088e2b788f4371f934a40e88c1dc6fc85c747c06a039fafdfc2ca1bbc7da58"
+        },
+        "browser_playback": {
+          "canPlayType": "probably",
+          "duration": 114.113997,
+          "firstTime": 1.71945,
+          "firstFrames": 42,
+          "ended": true,
+          "videoWidth": 1920,
+          "videoHeight": 1080,
+          "error": null
+        }
+      }
+    ],
+    "notes": "The branch already contained the required literal port and delivery fix, but previous investigation was left in_progress. This pass independently verifies it, adds missing regression guards if needed, and completes run evidence rather than inventing a new decoder root cause.",
+    "historical_outputs": {
+      "castcut-fixed-before": {
+        "sha256": "f05073f534b3ca5850e53634521e444356b126579e597a5e7cf5dbc304bebc38",
+        "probe": {
+          "streams": [
+            {
+              "index": 0,
+              "codec_name": "h264",
+              "codec_long_name": "H.264 / AVC / MPEG-4 AVC / MPEG-4 part 10",
+              "profile": "High",
+              "codec_type": "video",
+              "codec_tag_string": "avc1",
+              "codec_tag": "0x31637661",
+              "width": 1920,
+              "height": 1080,
+              "coded_width": 1920,
+              "coded_height": 1080,
+              "closed_captions": 0,
+              "film_grain": 0,
+              "has_b_frames": 0,
+              "sample_aspect_ratio": "1:1",
+              "display_aspect_ratio": "16:9",
+              "pix_fmt": "yuv420p",
+              "level": 40,
+              "chroma_location": "left",
+              "field_order": "progressive",
+              "refs": 1,
+              "is_avc": "true",
+              "nal_length_size": "4",
+              "id": "0x1",
+              "r_frame_rate": "24000/1001",
+              "avg_frame_rate": "42009600/1752481",
+              "time_base": "1/15360",
+              "start_pts": 0,
+              "start_time": "0.000000",
+              "duration_ts": 1752481,
+              "duration": "114.093815",
+              "bit_rate": "1885111",
+              "bits_per_raw_sample": "8",
+              "nb_frames": "2735",
+              "extradata_size": 47,
+              "disposition": {
+                "default": 1,
+                "dub": 0,
+                "original": 0,
+                "comment": 0,
+                "lyrics": 0,
+                "karaoke": 0,
+                "forced": 0,
+                "hearing_impaired": 0,
+                "visual_impaired": 0,
+                "clean_effects": 0,
+                "attached_pic": 0,
+                "timed_thumbnails": 0,
+                "non_diegetic": 0,
+                "captions": 0,
+                "descriptions": 0,
+                "metadata": 0,
+                "dependent": 0,
+                "still_image": 0
+              },
+              "tags": {
+                "language": "und",
+                "handler_name": "VideoHandler",
+                "vendor_id": "[0][0][0][0]",
+                "encoder": "Lavc60.31.102 libx264"
+              }
+            },
+            {
+              "index": 1,
+              "codec_name": "aac",
+              "codec_long_name": "AAC (Advanced Audio Coding)",
+              "profile": "LC",
+              "codec_type": "audio",
+              "codec_tag_string": "mp4a",
+              "codec_tag": "0x6134706d",
+              "sample_fmt": "fltp",
+              "sample_rate": "48000",
+              "channels": 2,
+              "channel_layout": "stereo",
+              "bits_per_sample": 0,
+              "initial_padding": 0,
+              "id": "0x2",
+              "r_frame_rate": "0/0",
+              "avg_frame_rate": "0/0",
+              "time_base": "1/48000",
+              "start_pts": 0,
+              "start_time": "0.000000",
+              "duration_ts": 5475328,
+              "duration": "114.069333",
+              "bit_rate": "130065",
+              "nb_frames": "5347",
+              "extradata_size": 5,
+              "disposition": {
+                "default": 1,
+                "dub": 0,
+                "original": 0,
+                "comment": 0,
+                "lyrics": 0,
+                "karaoke": 0,
+                "forced": 0,
+                "hearing_impaired": 0,
+                "visual_impaired": 0,
+                "clean_effects": 0,
+                "attached_pic": 0,
+                "timed_thumbnails": 0,
+                "non_diegetic": 0,
+                "captions": 0,
+                "descriptions": 0,
+                "metadata": 0,
+                "dependent": 0,
+                "still_image": 0
+              },
+              "tags": {
+                "language": "und",
+                "handler_name": "SoundHandler",
+                "vendor_id": "[0][0][0][0]"
+              }
+            }
+          ],
+          "format": {
+            "filename": "/home/user/castcut_work/evidence/castcut-fixed-before.mp4",
+            "nb_streams": 2,
+            "nb_programs": 0,
+            "format_name": "mov,mp4,m4a,3gp,3g2,mj2",
+            "format_long_name": "QuickTime / MOV",
+            "start_time": "0.000000",
+            "duration": "114.093815",
+            "size": "28813934",
+            "bit_rate": "2020367",
+            "probe_score": 100,
+            "tags": {
+              "major_brand": "mp42",
+              "minor_version": "512",
+              "compatible_brands": "mp42iso2avc1mp41",
+              "encoder": "Lavf60.16.100"
+            }
+          }
+        },
+        "boxes": [
+          {
+            "type": "ftyp",
+            "offset": 0,
+            "size": 32,
+            "payload_hex": "6d703432000002006d70343269736f32617663316d703431"
+          },
+          {
+            "type": "moov",
+            "offset": 32,
+            "size": 74377,
+            "children": [
+              {
+                "type": "mvhd",
+                "offset": 40,
+                "size": 108,
+                "payload_hex": "000000000000000000000000000003e80001bdae0001000001000000000000000000000000010000000000000000000000000000000100000000000000000000000000004000000000000000000000000000000000000000000000000000000000000003"
+              },
+              {
+                "type": "trak",
+                "offset": 148,
+                "size": 38374,
+                "children": [
+                  {
+                    "type": "tkhd",
+                    "offset": 156,
+                    "size": 92
+                  },
+                  {
+                    "type": "mdia",
+                    "offset": 248,
+                    "size": 38274,
+                    "children": [
+                      {
+                        "type": "mdhd",
+                        "offset": 256,
+                        "size": 32,
+                        "payload_hex": "00000000000000000000000000003c00001abda155c40000"
+                      },
+                      {
+                        "type": "hdlr",
+                        "offset": 288,
+                        "size": 45
+                      },
+                      {
+                        "type": "minf",
+                        "offset": 333,
+                        "size": 38189,
+                        "children": [
+                          {
+                            "type": "vmhd",
+                            "offset": 341,
+                            "size": 20
+                          },
+                          {
+                            "type": "dinf",
+                            "offset": 361,
+                            "size": 36,
+                            "children": [
+                              {
+                                "type": "dref",
+                                "offset": 369,
+                                "size": 28
+                              }
+                            ]
+                          },
+                          {
+                            "type": "stbl",
+                            "offset": 397,
+                            "size": 38125,
+                            "children": [
+                              {
+                                "type": "stsd",
+                                "offset": 405,
+                                "size": 193,
+                                "payload_hex": "0000000000000001000000b161766331000000000000000100000000000000000000000000000000078004380048000000480000000000000001154c61766336302e33312e313032206c696278323634000000000000000000000018ffff000000376176634301640028ffe1001a67640028acb200f0044f"
+                              },
+                              {
+                                "type": "stts",
+                                "offset": 598,
+                                "size": 15736,
+                                "payload_hex": "00000000000007ad00000001000003c90000000100000280000000020000028100000001000002800000000100000281000000010000028000000002000002810000000100000280000000020000028100000001000002800000000200000281000000010000028000000002000002810000000100000280"
+                              },
+                              {
+                                "type": "stss",
+                                "offset": 16334,
+                                "size": 244
+                              },
+                              {
+                                "type": "stsc",
+                                "offset": 16578,
+                                "size": 28
+                              },
+                              {
+                                "type": "stsz",
+                                "offset": 16606,
+                                "size": 10960
+                              },
+                              {
+                                "type": "stco",
+                                "offset": 27566,
+                                "size": 10956
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "trak",
+                "offset": 38522,
+                "size": 35789,
+                "children": [
+                  {
+                    "type": "tkhd",
+                    "offset": 38530,
+                    "size": 92
+                  },
+                  {
+                    "type": "mdia",
+                    "offset": 38622,
+                    "size": 35689,
+                    "children": [
+                      {
+                        "type": "mdhd",
+                        "offset": 38630,
+                        "size": 32,
+                        "payload_hex": "0000000000000000000000000000bb8000538c0055c40000"
+                      },
+                      {
+                        "type": "hdlr",
+                        "offset": 38662,
+                        "size": 45
+                      },
+                      {
+                        "type": "minf",
+                        "offset": 38707,
+                        "size": 35604,
+                        "children": [
+                          {
+                            "type": "smhd",
+                            "offset": 38715,
+                            "size": 16
+                          },
+                          {
+                            "type": "dinf",
+                            "offset": 38731,
+                            "size": 36,
+                            "children": [
+                              {
+                                "type": "dref",
+                                "offset": 38739,
+                                "size": 28
+                              }
+                            ]
+                          },
+                          {
+                            "type": "stbl",
+                            "offset": 38767,
+                            "size": 35544,
+                            "children": [
+                              {
+                                "type": "stsd",
+                                "offset": 38775,
+                                "size": 126,
+                                "payload_hex": "00000000000000010000006e6d703461000000000000000100000000000000000002001000000000bb8000000000003665736473000000000380808025000200048080801740150000000001fc110001fc110580808005119056e5000680808001020000001462747274000000000001fc110001fc11"
+                              },
+                              {
+                                "type": "stts",
+                                "offset": 38901,
+                                "size": 24,
+                                "payload_hex": "0000000000000001000014e300000400"
+                              },
+                              {
+                                "type": "stsc",
+                                "offset": 38925,
+                                "size": 2968
+                              },
+                              {
+                                "type": "stsz",
+                                "offset": 41893,
+                                "size": 21408
+                              },
+                              {
+                                "type": "stco",
+                                "offset": 63301,
+                                "size": 10956
+                              },
+                              {
+                                "type": "sgpd",
+                                "offset": 74257,
+                                "size": 26
+                              },
+                              {
+                                "type": "sbgp",
+                                "offset": 74283,
+                                "size": 28
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "udta",
+                "offset": 74311,
+                "size": 98
+              }
+            ]
+          },
+          {
+            "type": "free",
+            "offset": 74409,
+            "size": 8
+          },
+          {
+            "type": "mdat",
+            "offset": 74417,
+            "size": 28739517
+          }
+        ]
+      },
+      "castcut-old": {
+        "sha256": "6cbbb737401f849b2108beecbb51affd900179924c95126b1e03a929bb195767",
+        "probe": {
+          "streams": [
+            {
+              "index": 0,
+              "codec_name": "h264",
+              "codec_long_name": "H.264 / AVC / MPEG-4 AVC / MPEG-4 part 10",
+              "profile": "High",
+              "codec_type": "video",
+              "codec_tag_string": "avc1",
+              "codec_tag": "0x31637661",
+              "width": 1920,
+              "height": 1080,
+              "coded_width": 1920,
+              "coded_height": 1080,
+              "closed_captions": 0,
+              "film_grain": 0,
+              "has_b_frames": 2,
+              "sample_aspect_ratio": "1:1",
+              "display_aspect_ratio": "16:9",
+              "pix_fmt": "yuv420p",
+              "level": 50,
+              "chroma_location": "left",
+              "field_order": "progressive",
+              "refs": 1,
+              "is_avc": "true",
+              "nal_length_size": "4",
+              "id": "0x1",
+              "r_frame_rate": "24000/1001",
+              "avg_frame_rate": "24000/1001",
+              "time_base": "1/24000",
+              "start_pts": 0,
+              "start_time": "0.000000",
+              "duration_ts": 2737735,
+              "duration": "114.072292",
+              "bit_rate": "4748037",
+              "bits_per_raw_sample": "8",
+              "nb_frames": "2735",
+              "extradata_size": 46,
+              "disposition": {
+                "default": 1,
+                "dub": 0,
+                "original": 0,
+                "comment": 0,
+                "lyrics": 0,
+                "karaoke": 0,
+                "forced": 0,
+                "hearing_impaired": 0,
+                "visual_impaired": 0,
+                "clean_effects": 0,
+                "attached_pic": 0,
+                "timed_thumbnails": 0,
+                "non_diegetic": 0,
+                "captions": 0,
+                "descriptions": 0,
+                "metadata": 0,
+                "dependent": 0,
+                "still_image": 0
+              },
+              "tags": {
+                "language": "und",
+                "handler_name": "VideoHandler",
+                "vendor_id": "[0][0][0][0]",
+                "encoder": "Lavc60.31.102 libx264"
+              }
+            },
+            {
+              "index": 1,
+              "codec_name": "aac",
+              "codec_long_name": "AAC (Advanced Audio Coding)",
+              "profile": "LC",
+              "codec_type": "audio",
+              "codec_tag_string": "mp4a",
+              "codec_tag": "0x6134706d",
+              "sample_fmt": "fltp",
+              "sample_rate": "48000",
+              "channels": 2,
+              "channel_layout": "stereo",
+              "bits_per_sample": 0,
+              "initial_padding": 0,
+              "id": "0x2",
+              "r_frame_rate": "0/0",
+              "avg_frame_rate": "0/0",
+              "time_base": "1/48000",
+              "start_pts": 0,
+              "start_time": "0.000000",
+              "duration_ts": 5474304,
+              "duration": "114.048000",
+              "bit_rate": "130065",
+              "nb_frames": "5347",
+              "extradata_size": 5,
+              "disposition": {
+                "default": 1,
+                "dub": 0,
+                "original": 0,
+                "comment": 0,
+                "lyrics": 0,
+                "karaoke": 0,
+                "forced": 0,
+                "hearing_impaired": 0,
+                "visual_impaired": 0,
+                "clean_effects": 0,
+                "attached_pic": 0,
+                "timed_thumbnails": 0,
+                "non_diegetic": 0,
+                "captions": 0,
+                "descriptions": 0,
+                "metadata": 0,
+                "dependent": 0,
+                "still_image": 0
+              },
+              "tags": {
+                "language": "eng",
+                "handler_name": "SoundHandler",
+                "vendor_id": "[0][0][0][0]"
+              }
+            }
+          ],
+          "format": {
+            "filename": "/home/user/castcut_work/evidence/castcut-old.mp4",
+            "nb_streams": 2,
+            "nb_programs": 0,
+            "format_name": "mov,mp4,m4a,3gp,3g2,mj2",
+            "format_long_name": "QuickTime / MOV",
+            "start_time": "0.000000",
+            "duration": "114.072292",
+            "size": "69636349",
+            "bit_rate": "4883664",
+            "probe_score": 100,
+            "tags": {
+              "major_brand": "isom",
+              "minor_version": "512",
+              "compatible_brands": "isomiso2avc1mp41",
+              "encoder": "Lavf60.16.100"
+            }
+          }
+        },
+        "boxes": [
+          {
+            "type": "ftyp",
+            "offset": 0,
+            "size": 32,
+            "payload_hex": "69736f6d0000020069736f6d69736f32617663316d703431"
+          },
+          {
+            "type": "moov",
+            "offset": 32,
+            "size": 79300,
+            "children": [
+              {
+                "type": "mvhd",
+                "offset": 40,
+                "size": 108,
+                "payload_hex": "000000000000000000000000000003e80001bd990001000001000000000000000000000000010000000000000000000000000000000100000000000000000000000000004000000000000000000000000000000000000000000000000000000000000003"
+              },
+              {
+                "type": "trak",
+                "offset": 148,
+                "size": 43253,
+                "children": [
+                  {
+                    "type": "tkhd",
+                    "offset": 156,
+                    "size": 92
+                  },
+                  {
+                    "type": "edts",
+                    "offset": 248,
+                    "size": 36,
+                    "children": [
+                      {
+                        "type": "elst",
+                        "offset": 256,
+                        "size": 28,
+                        "payload_hex": "00000000000000010001bd99000007d200010000"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "mdia",
+                    "offset": 284,
+                    "size": 43117,
+                    "children": [
+                      {
+                        "type": "mdhd",
+                        "offset": 292,
+                        "size": 32,
+                        "payload_hex": "00000000000000000000000000005dc00029c64755c40000"
+                      },
+                      {
+                        "type": "hdlr",
+                        "offset": 324,
+                        "size": 45
+                      },
+                      {
+                        "type": "minf",
+                        "offset": 369,
+                        "size": 43032,
+                        "children": [
+                          {
+                            "type": "vmhd",
+                            "offset": 377,
+                            "size": 20
+                          },
+                          {
+                            "type": "dinf",
+                            "offset": 397,
+                            "size": 36,
+                            "children": [
+                              {
+                                "type": "dref",
+                                "offset": 405,
+                                "size": 28
+                              }
+                            ]
+                          },
+                          {
+                            "type": "stbl",
+                            "offset": 433,
+                            "size": 42968,
+                            "children": [
+                              {
+                                "type": "stsd",
+                                "offset": 441,
+                                "size": 192,
+                                "payload_hex": "0000000000000001000000b061766331000000000000000100000000000000000000000000000000078004380048000000480000000000000001154c61766336302e33312e313032206c696278323634000000000000000000000018ffff000000366176634301640032ffe1001967640032acd9c0780227"
+                              },
+                              {
+                                "type": "stts",
+                                "offset": 633,
+                                "size": 24,
+                                "payload_hex": "000000000000000100000aaf000003e9"
+                              },
+                              {
+                                "type": "stss",
+                                "offset": 657,
+                                "size": 232
+                              },
+                              {
+                                "type": "ctts",
+                                "offset": 889,
+                                "size": 20560,
+                                "payload_hex": "0000000000000a0800000001000007d20000000100000bbb00000001000003e9000000010000138d00000001000007d2000000010000000000000001000003e9000000010000138d00000001000007d2000000010000000000000001000003e9000000010000138d00000001000007d20000000100000000"
+                              },
+                              {
+                                "type": "stsc",
+                                "offset": 21449,
+                                "size": 40
+                              },
+                              {
+                                "type": "stsz",
+                                "offset": 21489,
+                                "size": 10960
+                              },
+                              {
+                                "type": "stco",
+                                "offset": 32449,
+                                "size": 10952
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "trak",
+                "offset": 43401,
+                "size": 35833,
+                "children": [
+                  {
+                    "type": "tkhd",
+                    "offset": 43409,
+                    "size": 92
+                  },
+                  {
+                    "type": "edts",
+                    "offset": 43501,
+                    "size": 36,
+                    "children": [
+                      {
+                        "type": "elst",
+                        "offset": 43509,
+                        "size": 28,
+                        "payload_hex": "00000000000000010001bd800000040000010000"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "mdia",
+                    "offset": 43537,
+                    "size": 35697,
+                    "children": [
+                      {
+                        "type": "mdhd",
+                        "offset": 43545,
+                        "size": 32,
+                        "payload_hex": "0000000000000000000000000000bb8000538c0015c70000"
+                      },
+                      {
+                        "type": "hdlr",
+                        "offset": 43577,
+                        "size": 45
+                      },
+                      {
+                        "type": "minf",
+                        "offset": 43622,
+                        "size": 35612,
+                        "children": [
+                          {
+                            "type": "smhd",
+                            "offset": 43630,
+                            "size": 16
+                          },
+                          {
+                            "type": "dinf",
+                            "offset": 43646,
+                            "size": 36,
+                            "children": [
+                              {
+                                "type": "dref",
+                                "offset": 43654,
+                                "size": 28
+                              }
+                            ]
+                          },
+                          {
+                            "type": "stbl",
+                            "offset": 43682,
+                            "size": 35552,
+                            "children": [
+                              {
+                                "type": "stsd",
+                                "offset": 43690,
+                                "size": 126,
+                                "payload_hex": "00000000000000010000006e6d703461000000000000000100000000000000000002001000000000bb8000000000003665736473000000000380808025000200048080801740150000000001fc110001fc110580808005119056e5000680808001020000001462747274000000000001fc110001fc11"
+                              },
+                              {
+                                "type": "stts",
+                                "offset": 43816,
+                                "size": 24,
+                                "payload_hex": "0000000000000001000014e300000400"
+                              },
+                              {
+                                "type": "stsc",
+                                "offset": 43840,
+                                "size": 2980
+                              },
+                              {
+                                "type": "stsz",
+                                "offset": 46820,
+                                "size": 21408
+                              },
+                              {
+                                "type": "stco",
+                                "offset": 68228,
+                                "size": 10952
+                              },
+                              {
+                                "type": "sgpd",
+                                "offset": 79180,
+                                "size": 26
+                              },
+                              {
+                                "type": "sbgp",
+                                "offset": 79206,
+                                "size": 28
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "udta",
+                "offset": 79234,
+                "size": 98
+              }
+            ]
+          },
+          {
+            "type": "free",
+            "offset": 79332,
+            "size": 8
+          },
+          {
+            "type": "mdat",
+            "offset": 79340,
+            "size": 69557009
+          }
+        ]
+      }
+    }
   },
   "export_copy_clipforge_history": [
     {
