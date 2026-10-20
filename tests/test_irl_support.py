@@ -8,10 +8,11 @@ from pipeline.faces import get_project_content_type, _load_irl_detector_and_embe
 from pipeline.scene_prompt import SCHEMA_TEXT
 
 
-def test_get_project_content_type_defaults_to_anime():
+def test_get_project_content_type_missing_fails_without_anime_default():
     with tempfile.TemporaryDirectory() as tmpdir:
         job_id = "test-job-default"
-        assert get_project_content_type(job_id, jobs_root=tmpdir) == "anime"
+        with pytest.raises(ValueError, match="missing stored content_type"):
+            get_project_content_type(job_id, jobs_root=tmpdir)
 
 
 def test_get_project_content_type_reads_ingest_request():
