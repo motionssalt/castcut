@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <title>Projects — CastCut</title>
+  <meta name="description" content="CastCut mobile-first video editing projects." />
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <!-- PAT Gate for unauthorized visitors -->
+  <div id="authGate" hidden></div>
+
+  <!-- Main Authenticated Page Content -->
+  <div id="appContent">
+    <header class="top-bar">
+      <div class="top-bar-left">
+        <a href="/" class="brand-wordmark">
+          <span class="brand-dot"></span>
+          <span>CastCut</span>
+        </a>
+        <nav class="desktop-nav">
+          <a href="/" class="nav-link active">Projects</a>
+          <a href="/new/" class="nav-link">+ New Project</a>
+        </nav>
+      </div>
+      <div class="top-bar-right">
+        <button id="btnThemeToggle" class="btn btn-ghost btn-icon-sm" title="Toggle theme" aria-label="Toggle theme">
+          🌓
+        </button>
+        <button id="btnLogout" class="btn btn-ghost btn-sm" title="Sign out of PAT">
+          Sign out
+        </button>
+        <a href="/new/" class="btn btn-primary btn-sm" style="display: none;">
+          + New Project
+        </a>
+      </div>
+    </header>
+
+    <main class="container" style="padding-top: 20px;">
+      <!-- Page Header & Filter -->
+      <div style="display: flex; flex-direction: column; gap: 14px; margin-bottom: 20px;">
+        <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 10px;">
+          <div>
+            <h1 style="font-size: 1.5rem; font-weight: 700; letter-spacing: -0.02em;">Projects</h1>
+            <p id="projectsCountLabel" style="font-size: 0.8125rem; color: var(--text-muted); margin-top: 2px;">
+              Loading projects…
+            </p>
+          </div>
+          <a href="/new/" class="btn btn-primary btn-sm" style="flex-shrink: 0;">
+            + New Project
+          </a>
+        </div>
+
+        <!-- Search Bar -->
+        <div style="position: relative;">
+          <input type="search" id="projectSearchInput" class="input" placeholder="Search projects by name, torrent, or ID…" autocomplete="off" spellcheck="false" />
+        </div>
+      </div>
+
+      <!-- Projects List Container -->
+      <div id="projectsList">
+        <div class="card skeleton" style="height: 100px; margin-bottom: 12px;"></div>
+        <div class="card skeleton" style="height: 100px; margin-bottom: 12px;"></div>
+        <div class="card skeleton" style="height: 100px;"></div>
+      </div>
+
+      <!-- Empty State -->
+      <div id="projectsEmpty" class="card" style="text-align: center; padding: 48px 20px;" hidden>
+        <div style="font-size: 2rem; margin-bottom: 10px;">🎬</div>
+        <h2 style="font-size: 1.125rem; font-weight: 600; margin-bottom: 6px;">No projects found</h2>
+        <p style="font-size: 0.875rem; color: var(--text-secondary); max-width: 380px; margin: 0 auto 20px auto;">
+          Start by uploading a .torrent file or pasting a magnet, Google Drive, or video link.
+        </p>
+        <a href="/new/" class="btn btn-primary">
+          + Start Your First Project
+        </a>
+      </div>
+    </main>
+
+    <!-- Mobile Bottom Thumb Navigation -->
+    <nav class="bottom-nav">
+      <a href="/" class="bottom-tab active" aria-label="Projects">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" /></svg>
+        <span>Projects</span>
+      </a>
+      <a href="/new/" class="bottom-tab" aria-label="New Project">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" /></svg>
+        <span>New</span>
+      </a>
+      <a href="/faces/" class="bottom-tab" aria-label="Faces Flow">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+        <span>Faces</span>
+      </a>
+      <a href="/scene/" class="bottom-tab" aria-label="AI Scene Flow">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M7 4v16M17 4v16M3 8h4m10 0h4M3 12h18M3 16h4m10 0h4M4 20h16a1 1 0 001-1V5a1 1 0 00-1-1H4a1 1 0 00-1 1v14a1 1 0 001 1z" /></svg>
+        <span>Scene</span>
+      </a>
+      <a href="/exports/" class="bottom-tab" aria-label="Finished Exports">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" /></svg>
+        <span>Exports</span>
+      </a>
+    </nav>
+  </div>
+
+  <script type="module" src="/projects.js"></script>
+</body>
+</html>

@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <title>Faces Selector — CastCut</title>
+  <meta name="description" content="CastCut character face detection, clustering, and clips export." />
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <div id="authGate" hidden></div>
+
+  <div id="appContent">
+    <header class="top-bar">
+      <div class="top-bar-left">
+        <a href="/" class="brand-wordmark">
+          <span class="brand-dot"></span>
+          <span>CastCut</span>
+        </a>
+        <span class="page-title-crumb">Faces</span>
+      </div>
+      <div class="top-bar-right">
+        <a id="btnBackToProject" href="#" class="btn btn-ghost btn-sm">
+          ← Project
+        </a>
+      </div>
+    </header>
+
+    <main class="container" style="padding-top: 16px; padding-bottom: 40px;">
+      <!-- Page Header & Selection Actions -->
+      <div style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 16px;">
+        <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 8px;">
+          <div>
+            <h1 style="font-size: 1.375rem; font-weight: 700;">Faces Selector</h1>
+            <p id="facesSubtitle" style="font-size: 0.8125rem; color: var(--text-secondary); margin-top: 2px;">
+              Loading face detection data…
+            </p>
+          </div>
+          <div style="display: flex; gap: 6px;">
+            <button id="btnSelectAll" class="btn btn-secondary btn-sm">
+              All
+            </button>
+            <button id="btnDeselectAll" class="btn btn-ghost btn-sm">
+              None
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Export Configuration Card (Audio track picker, Quality preset, Cut options) -->
+      <div class="card" style="margin-bottom: 16px;">
+        <h2 style="font-size: 0.9375rem; font-weight: 700; margin-bottom: 12px;">Export Settings</h2>
+        
+        <!-- Audio Track Picker -->
+        <div class="form-group">
+          <label class="form-label" for="selectAudioTrack">🔊 Audio Track (Choose exactly one)</label>
+          <select id="selectAudioTrack" class="select mono"></select>
+          <p class="form-hint">
+            The selected audio track is preserved in the rendered cut and remembered for this project.
+          </p>
+        </div>
+
+        <!-- Video Quality Preset -->
+        <div class="form-group" style="margin-bottom: 12px;">
+          <label class="form-label" for="selectQuality">⚡ Video Quality & Preset</label>
+          <select id="selectQuality" class="select">
+            <option value="normal" selected>Normal — HandBrake x264 CRF 23, medium (Visually lossless, ~1-1.5 Mbps)</option>
+            <option value="small">Compact — HandBrake x264 CRF 26, medium (Smallest mobile file, ~0.8 Mbps)</option>
+            <option value="high">High — HandBrake x264 CRF 20, medium (Higher bitrate, ~2.5 Mbps)</option>
+          </select>
+        </div>
+
+        <!-- Export Action Button -->
+        <button id="btnExportClips" class="btn btn-primary btn-block" style="min-height: 48px;" disabled>
+          Export Joined Clips
+        </button>
+        <div id="exportProgressBox" style="margin-top: 10px; font-size: 0.8125rem; text-align: center; color: var(--accent);" hidden></div>
+      </div>
+
+      <!-- Faces Grid -->
+      <div id="facesContainer">
+        <div class="card skeleton" style="height: 180px;"></div>
+      </div>
+
+      <!-- Waiting State if Analysis is Still Running -->
+      <div id="facesWaitingCard" class="card" style="text-align: center; padding: 40px 20px;" hidden>
+        <div style="font-size: 2rem; margin-bottom: 10px;">⏳</div>
+        <h2 style="font-size: 1.125rem; font-weight: 600; margin-bottom: 6px;">Face Analysis In Progress</h2>
+        <p style="font-size: 0.875rem; color: var(--text-secondary); max-width: 360px; margin: 0 auto 16px auto;">
+          Character face clustering is still processing on GitHub Actions. This page will update automatically.
+        </p>
+        <span id="facesWaitingBadge" class="status-badge status-running">Analyzing Faces…</span>
+      </div>
+    </main>
+
+    <!-- Mobile Bottom Thumb Navigation -->
+    <nav class="bottom-nav">
+      <a href="/" class="bottom-tab" aria-label="Projects">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" /></svg>
+        <span>Projects</span>
+      </a>
+      <a href="/new/" class="bottom-tab" aria-label="New Project">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" /></svg>
+        <span>New</span>
+      </a>
+      <a href="/faces/" class="bottom-tab active" aria-label="Faces Flow">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+        <span>Faces</span>
+      </a>
+      <a href="/scene/" class="bottom-tab" aria-label="AI Scene Flow">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M7 4v16M17 4v16M3 8h4m10 0h4M3 12h18M3 16h4m10 0h4M4 20h16a1 1 0 001-1V5a1 1 0 00-1-1H4a1 1 0 00-1 1v14a1 1 0 001 1z" /></svg>
+        <span>Scene</span>
+      </a>
+      <a href="/exports/" class="bottom-tab" aria-label="Finished Exports">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" /></svg>
+        <span>Exports</span>
+      </a>
+    </nav>
+  </div>
+
+  <script type="module" src="/faces.js"></script>
+</body>
+</html>

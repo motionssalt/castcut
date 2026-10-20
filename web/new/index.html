@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <title>New Project — CastCut</title>
+  <meta name="description" content="Create a new CastCut video editing project." />
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <div id="authGate" hidden></div>
+
+  <div id="appContent">
+    <header class="top-bar">
+      <div class="top-bar-left">
+        <a href="/" class="brand-wordmark">
+          <span class="brand-dot"></span>
+          <span>CastCut</span>
+        </a>
+        <span class="page-title-crumb">New Project</span>
+      </div>
+      <div class="top-bar-right">
+        <a href="/" class="btn btn-ghost btn-sm">
+          ← Cancel
+        </a>
+      </div>
+    </header>
+
+    <main class="container" style="padding-top: 20px; padding-bottom: 40px;">
+      <div style="margin-bottom: 20px;">
+        <h1 style="font-size: 1.5rem; font-weight: 700; letter-spacing: -0.02em;">New Project</h1>
+        <p style="font-size: 0.8125rem; color: var(--text-secondary); margin-top: 4px;">
+          Fast ingestion for anime and IRL video cuts.
+        </p>
+      </div>
+
+      <form id="newProjectForm">
+        <!-- Content Type Selection (Anime vs IRL) -->
+        <div class="card" style="margin-bottom: 16px;">
+          <label class="form-label">Content Type</label>
+          <div class="segmented-control" role="radiogroup" aria-label="Content Type">
+            <button type="button" class="segmented-btn active" id="btnTypeAnime" role="radio" aria-checked="true" data-type="anime">
+              🌸 Anime (Default)
+            </button>
+            <button type="button" class="segmented-btn" id="btnTypeIrl" role="radio" aria-checked="false" data-type="irl">
+              🎬 IRL (Live Action)
+            </button>
+          </div>
+          <p class="form-hint" id="typeHintText">
+            Optimized for 2D character faces and dialogue-driven anime scene structures.
+          </p>
+        </div>
+
+        <!-- Project Title (Optional) -->
+        <div class="card" style="margin-bottom: 16px;">
+          <div class="form-group" style="margin-bottom: 0;">
+            <label class="form-label" for="projectTitleInput">Project Title <span style="font-weight: 400; color: var(--text-muted);">(Optional)</span></label>
+            <input type="text" id="projectTitleInput" class="input" placeholder="e.g. Frieren Episode 10 or Leave blank to auto-name" maxlength="200" autocomplete="off" />
+          </div>
+        </div>
+
+        <!-- Intake Inputs: Exactly Two Inputs (Torrent File Upload + Single Auto-Parsing Link) -->
+        <div class="card" style="margin-bottom: 16px;">
+          <h2 style="font-size: 1rem; font-weight: 600; margin-bottom: 14px;">Source Intake</h2>
+
+          <!-- Input 1: Torrent File Upload -->
+          <div class="form-group">
+            <label class="form-label">1. Torrent File (.torrent)</label>
+            <input type="file" id="torrentFileInput" accept=".torrent" style="display: none;" />
+            
+            <div id="torrentPickerEmpty">
+              <button type="button" id="btnSelectTorrent" class="btn btn-secondary btn-block" style="border-style: dashed; border-width: 2px;">
+                📁 Choose .torrent file from phone/computer
+              </button>
+              <p class="form-hint">
+                Instantly parses manifest in-browser. Overrides link input below.
+              </p>
+            </div>
+
+            <div id="torrentPickerLoaded" class="card" style="background-color: var(--bg-sunken); padding: 12px; margin-top: 8px;" hidden>
+              <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 8px;">
+                <div style="min-width: 0;">
+                  <div style="font-size: 0.75rem; text-transform: uppercase; color: var(--accent); font-weight: 700;">Torrent Loaded</div>
+                  <div id="torrentLoadedName" style="font-weight: 600; font-size: 0.9375rem; word-break: break-all; margin-top: 2px;"></div>
+                  <div id="torrentLoadedMeta" class="metadata-line" style="margin-top: 4px;"></div>
+                </div>
+                <button type="button" id="btnClearTorrent" class="btn btn-ghost btn-sm" style="color: var(--state-error);">
+                  ✕ Clear
+                </button>
+              </div>
+
+              <!-- File Selection List for Multi-file Torrents -->
+              <div id="torrentFilesBox" style="margin-top: 14px;" hidden>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                  <span style="font-size: 0.8125rem; font-weight: 600;">Select video file to download:</span>
+                  <span id="selectedCountBadge" class="mono" style="font-size: 0.75rem; color: var(--text-muted);">0 selected</span>
+                </div>
+                
+                <input type="search" id="torrentFileFilter" class="input input-sm" placeholder="Filter files…" style="margin-bottom: 8px; min-height: 36px;" />
+
+                <div class="file-list" id="torrentFilesList"></div>
+              </div>
+            </div>
+            
+            <div id="torrentError" style="color: var(--state-error); font-size: 0.8125rem; margin-top: 6px;" hidden></div>
+          </div>
+
+          <div style="display: flex; align-items: center; gap: 10px; margin: 18px 0;">
+            <div style="flex: 1; height: 1px; background-color: var(--border-subtle);"></div>
+            <span style="font-size: 0.75rem; color: var(--text-muted); font-weight: 600;">OR</span>
+            <div style="flex: 1; height: 1px; background-color: var(--border-subtle);"></div>
+          </div>
+
+          <!-- Input 2: Single Link Field (Auto-detects magnet, direct URL, Google Drive) -->
+          <div class="form-group" style="margin-bottom: 0;">
+            <label class="form-label" for="linkInput">2. Video Link (Auto-detects magnet, direct URL, Google Drive)</label>
+            <input type="url" id="linkInput" class="input mono" placeholder="Paste magnet:?, Google Drive link, or direct video URL" autocomplete="off" spellcheck="false" />
+            <div id="linkDisabledNotice" class="form-hint" style="color: var(--accent);" hidden>
+              Note: Torrent file upload is active. Clear it above to use a URL link.
+            </div>
+            <div id="linkDetectedKind" class="form-hint" style="font-weight: 500;"></div>
+            <div id="linkError" style="color: var(--state-error); font-size: 0.8125rem; margin-top: 6px;" hidden></div>
+          </div>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" id="btnSubmitProject" class="btn btn-primary btn-block" style="font-size: 1rem; min-height: 48px;" disabled>
+          Start Project
+        </button>
+      </form>
+    </main>
+
+    <!-- Mobile Bottom Thumb Navigation -->
+    <nav class="bottom-nav">
+      <a href="/" class="bottom-tab" aria-label="Projects">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" /></svg>
+        <span>Projects</span>
+      </a>
+      <a href="/new/" class="bottom-tab active" aria-label="New Project">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" /></svg>
+        <span>New</span>
+      </a>
+      <a href="/faces/" class="bottom-tab" aria-label="Faces Flow">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+        <span>Faces</span>
+      </a>
+      <a href="/scene/" class="bottom-tab" aria-label="AI Scene Flow">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M7 4v16M17 4v16M3 8h4m10 0h4M3 12h18M3 16h4m10 0h4M4 20h16a1 1 0 001-1V5a1 1 0 00-1-1H4a1 1 0 00-1 1v14a1 1 0 001 1z" /></svg>
+        <span>Scene</span>
+      </a>
+      <a href="/exports/" class="bottom-tab" aria-label="Finished Exports">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" /></svg>
+        <span>Exports</span>
+      </a>
+    </nav>
+  </div>
+
+  <script type="module" src="/new.js"></script>
+</body>
+</html>

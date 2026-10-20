@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <title>Tasks & Pipeline Diagnostics — CastCut</title>
+  <meta name="description" content="CastCut GitHub Actions workflow runs, logs, and diagnostics." />
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <div id="authGate" hidden></div>
+
+  <div id="appContent">
+    <header class="top-bar">
+      <div class="top-bar-left">
+        <a href="/" class="brand-wordmark">
+          <span class="brand-dot"></span>
+          <span>CastCut</span>
+        </a>
+        <span class="page-title-crumb">Tasks</span>
+      </div>
+      <div class="top-bar-right">
+        <a id="btnBackToProject" href="#" class="btn btn-ghost btn-sm">
+          ← Project
+        </a>
+      </div>
+    </header>
+
+    <main class="container" style="padding-top: 16px; padding-bottom: 40px;">
+      <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 16px;">
+        <div>
+          <h1 style="font-size: 1.375rem; font-weight: 700;">Pipeline Tasks</h1>
+          <p id="taskSubtitle" style="font-size: 0.8125rem; color: var(--text-secondary); margin-top: 2px;">
+            Loading workflow runs…
+          </p>
+        </div>
+        <button id="btnRefreshTasks" class="btn btn-ghost btn-sm">
+          ↻ Refresh
+        </button>
+      </div>
+
+      <!-- Current Job Status Banner -->
+      <div id="taskStatusBanner" class="card" style="margin-bottom: 16px;">
+        <div class="skeleton" style="height: 60px;"></div>
+      </div>
+
+      <!-- Workflow Runs List -->
+      <div class="card" style="margin-bottom: 16px;">
+        <h2 style="font-size: 1rem; font-weight: 700; margin-bottom: 12px;">GitHub Actions Runs</h2>
+        <div id="runsList">
+          <div class="skeleton" style="height: 50px; margin-bottom: 8px;"></div>
+          <div class="skeleton" style="height: 50px;"></div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Mobile Bottom Thumb Navigation -->
+    <nav class="bottom-nav">
+      <a href="/" class="bottom-tab" aria-label="Projects">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" /></svg>
+        <span>Projects</span>
+      </a>
+      <a href="/new/" class="bottom-tab" aria-label="New Project">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" /></svg>
+        <span>New</span>
+      </a>
+      <a id="bottomTabFaces" href="#" class="bottom-tab" aria-label="Faces Flow">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+        <span>Faces</span>
+      </a>
+      <a id="bottomTabScene" href="#" class="bottom-tab" aria-label="AI Scene Flow">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M7 4v16M17 4v16M3 8h4m10 0h4M3 12h18M3 16h4m10 0h4M4 20h16a1 1 0 001-1V5a1 1 0 00-1-1H4a1 1 0 00-1 1v14a1 1 0 001 1z" /></svg>
+        <span>Scene</span>
+      </a>
+      <a id="bottomTabExports" href="#" class="bottom-tab" aria-label="Finished Exports">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" /></svg>
+        <span>Exports</span>
+      </a>
+    </nav>
+  </div>
+
+  <script type="module" src="/task.js"></script>
+</body>
+</html>
