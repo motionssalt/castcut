@@ -35,6 +35,12 @@ def upload(job, path, name, purpose, repo):
     path=Path(path)
     if not path.is_file() or not path.stat().st_size:
         raise RuntimeError(f'Required analysis asset missing or empty: {name} ({path})')
+    if path.name != name:
+        import shutil
+        staged=path.parent/'.release_upload'/name
+        staged.parent.mkdir(parents=True,exist_ok=True)
+        shutil.copyfile(path,staged)
+        path=staged
     size=path.stat().st_size
     if size >= 2*1024**3:
         raise RuntimeError(f'Analysis asset {name} exceeds 2 GiB; split this archive, never omit analysis assets.')
@@ -49,7 +55,7 @@ def upload(job, path, name, purpose, repo):
     for delay in (0,2,5):
         time.sleep(delay)
         try:
-            gh('release','upload',tag,f'{path}#{name}','--repo',repo,'--clobber')
+            gh('release','upload',tag,str(path),'--repo',repo,'--clobber')
             if any(a['name']==name and a['size']==size for a in release_assets(tag,repo)):
                 return {'name':name,'release_tag':tag,'size':size,'sha256':hashlib.sha256(path.read_bytes()).hexdigest(),'purpose':purpose}
         except subprocess.CalledProcessError as exc: error=exc
