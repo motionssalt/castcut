@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "job_id": "job-1792455570588-5vxg",
+  "title": "",
+  "torrent_name": "",
+  "content_type": "irl",
+  "source": {
+    "kind": "magnet",
+    "magnet": "magnet:?xt=urn:btih:BED86932FFD7E5579088D087168B02089866CED5&dn=iCarly (2007) Season 1-6 S01-06 (1080p AMZN.WEBDL x265 10bit EAC3 Mixed EDGE2020)&tr=udp://tracker.opentrackr.org:1337/announce&tr=udp://tracker.openbittorrent.com:6969/announce&tr=udp://tracker.torrent.eu.org:451/announce&tr=udp://open.stealth.si:80/announce&tr=udp://tracker.opentrackr.org:1337/announce&tr=http://tracker.openbittorrent.com:80/announce&tr=udp://opentracker.i2p.rocks:6969/announce&tr=udp://tracker.internetwarriors.net:1337/announce&tr=udp://tracker.leechers-paradise.org:6969/announce&tr=udp://coppersurfer.tk:6969/announce&tr=udp://tracker.zer0day.to:1337/announce"
+  },
+  "created_at_epoch": 1792455570
+}
