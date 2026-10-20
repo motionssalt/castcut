@@ -67,6 +67,10 @@ jobs:
           target_tag=$(python -m pipeline.releases --project-id "${{ inputs.job_id }}" --asset "$out_file")
           echo "Target release tag: $target_tag"
           gh release upload "$target_tag" "$out_file" --clobber
+          python -m pipeline.verify_delivery "$out_file" --tag "$target_tag"
+          cmd=(python -m pipeline.export_receipt "${{ inputs.job_id }}" clips)
+          if [ -n "${{ inputs.export_id }}" ]; then cmd+=(--export-id "${{ inputs.export_id }}"); fi
+          "${cmd[@]}"
           echo "TARGET_RELEASE_TAG=$target_tag" >> "$GITHUB_ENV"
 
       - name: Status — done
@@ -81,16 +85,12 @@ jobs:
       - name: Status — failed
         if: failure()
         run: |
-          if [ -f "jobs/${{ inputs.job_id }}/clips/export.json" ] && [ -n "$(find work -name 'castcut-*.mp4' 2>/dev/null)" ]; then
-            echo "::warning::Step failed after export succeeded; preserving clips_ready state"
-            python -m pipeline.status "${{ inputs.job_id }}" --state clips_ready \
-              --message "Final clips file ready. Download from the release." \
-              --set-json "$(cat jobs/${{ inputs.job_id }}/clips/export.json 2>/dev/null || echo '{}')"
-          else
-            python -m pipeline.status "${{ inputs.job_id }}" --state clips_failed \
-              --message "Clips export failed; see workflow log: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" \
-              --workflow-run-url "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-          fi
+          cmd=(python -m pipeline.export_receipt "${{ inputs.job_id }}" clips --failed)
+          if [ -n "${{ inputs.export_id }}" ]; then cmd+=(--export-id "${{ inputs.export_id }}"); fi
+          "${cmd[@]}"
+          python -m pipeline.status "${{ inputs.job_id }}" --state clips_failed --force \
+            --message "Export failed verification or delivery; nothing approved for download. See ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" \
+            --workflow-run-url "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
           python -m pipeline.sync_job "${{ inputs.job_id }}"
 
       - name: Status — cancelled
@@ -100,3 +100,13 @@ jobs:
           python -m pipeline.status "${{ inputs.job_id }}" --state cancelled \
             --message "Run cancelled." --set-json "{\"cancelled_from\":\"$prev\"}" || true
           python -m pipeline.sync_job "${{ inputs.job_id }}"
+
+      - name: Preserve export verification evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: export-evidence-clips-${{ github.run_id }}
+          path: |
+            work/castcut-*.verify.json
+            work/castcut-*.delivery.json
+          if-no-files-found: ignore
