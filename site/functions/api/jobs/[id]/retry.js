@@ -55,6 +55,7 @@ export async function onRequest({ request, params, data }) {
   };
   delete next.failed_step; delete next.run_url;
   await putFile(pat, `jobs/${id}/status.json`, JSON.stringify(next, null, 2), `castcut: retry ${id} (${workflow})`);
+  if (["faces.yml","scene-analyze.yml","hybrid-analyze.yml"].includes(workflow)) inputs.content_type = req?.content_type;
   await dispatchWorkflow(pat, workflow, inputs);
   return j({ ok: true, workflow });
 }
