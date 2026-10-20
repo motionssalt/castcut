@@ -1,0 +1,20 @@
+{
+  "job_id": "job-1792496818035-wi9a",
+  "title": "Sam & Cat (2013) Season 1 S01 (1080p AMZN WEB-DL x265 HEVC 10bit EAC3 2.0 RZeroX)",
+  "torrent_name": "Sam & Cat (2013) Season 1 S01 (1080p AMZN WEB-DL x265 HEVC 10bit EAC3 2.0 RZeroX)",
+  "content_type": "irl",
+  "created_at_epoch": 1792496818,
+  "created_at": "2026-10-20T11:46:58Z",
+  "updated_at": "2026-10-20T11:46:58Z",
+  "updated_at_epoch": 1792496818,
+  "expires_at_epoch": 1792583218,
+  "state": "queued_for_ingest",
+  "message": "Downloading 1 selected file(s)…",
+  "selected_files": [
+    {
+      "index": 16,
+      "path": "Sam & Cat (2013) - S01E16 - #PeezyB (1080p AMZN WEB-DL x265 RZeroX).mkv",
+      "length": 634427539
+    }
+  ]
+}
