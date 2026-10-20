@@ -1045,7 +1045,7 @@
   },
   "export_copy_clipforge": {
     "status": "in_progress",
-    "last_updated": "2026-10-20T22:59:53.535613+00:00",
+    "last_updated": "2026-10-20T23:00:42.078871+00:00",
     "clipforge_reference": {
       "repository": "motionssalt/clipforge",
       "commit": "a05846de7c76a66ad42ba6fd37126514bc452167",
@@ -1530,7 +1530,8 @@
       "Downloaded latest isolated faces through deployed site; SHA256/length matched runner receipt and release; independently performed full decode, every-packet continuity, all rolling10s bitrate windows and no-upscale/original-fps checks.",
       "All 168 Python tests, all Node suites, workflow shell lint and pipeline.selftest pass. GitHub CI run39507196591 succeeded on new parity-guard commit. ClipForge working tree remains clean; no ClipForge commit or push.",
       "Engineering work complete. No redesign. Audio picker remains; UI/API/workflows have one fixed export path and no quality/resolution/encoder/preset switches.",
-      "Confirmed frontend buffers the full video twice (chunks then contiguous bytes) and saves a Blob; implementing encrypted asset-scoped download cookie so native download manager receives an HTTP MP4 stream. Real current H264 outputs decode; physical gallery cause not established."
+      "Confirmed frontend buffers the full video twice (chunks then contiguous bytes) and saves a Blob; implementing encrypted asset-scoped download cookie so native download manager receives an HTTP MP4 stream. Real current H264 outputs decode; physical gallery cause not established.",
+      "Native streaming backend now supports authenticated POST handoff, HttpOnly encrypted cookie, GET/HEAD, resumable byte ranges, explicit video/mp4 MIME, short filename, length validation and unbuffered response.body; production/preview download encryption secret configured."
     ],
     "pending": [
       "Inspect actual reference and delivered outputs",

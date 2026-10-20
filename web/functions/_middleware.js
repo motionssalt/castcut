@@ -1,5 +1,6 @@
-// Owner-only gate: every /api/* request must carry an x-castcut-pat that
-// GitHub confirms belongs to the owner login.
+// Owner-only gate. Native media GET/HEAD may use an encrypted, scoped cookie;
+// every other API call still requires the PAT header. GitHub verifies both.
+import { readTicket } from './_lib/download-ticket.js';
 const OWNER = "motionssalt";
 
 async function verifyPat(pat) {
@@ -21,7 +22,11 @@ export async function onRequest(context) {
   const { request, next } = context;
   const url = new URL(request.url);
   if (!url.pathname.startsWith("/api/")) return next();
-  const pat = request.headers.get("x-castcut-pat") || "";
+  let pat = request.headers.get("x-castcut-pat") || "";
+  const media = url.pathname.match(/^\/api\/release-assets\/(\d+)$/);
+  if (!pat && media && ['GET', 'HEAD'].includes(request.method) && url.searchParams.get('download') === '1') {
+    pat = await readTicket(context.env, request, media[1]) || '';
+  }
   const user = await verifyPat(pat);
   if (!user) {
     return new Response(JSON.stringify({ error: "unauthorized" }), {
