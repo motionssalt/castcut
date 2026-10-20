@@ -1,174 +1,45 @@
 name: Hybrid Analysis (Faces + Scene)
-
-run-name: "hybrid ${{ inputs.job_id }}"
-
+run-name: "all analysis — ${{ inputs.job_id }}"
 on:
   workflow_dispatch:
     inputs:
-      job_id:
-        description: "Project ID"
-        required: true
-      sample_fps:
-        description: "Frames per second to sample for faces"
-        required: false
-        default: "1.0"
-      content_type:
-        description: "Content type (anime or irl)"
-        required: false
-        default: "anime"
-
+      job_id: { required: true, type: string }
+      content_type: { required: false, type: string, default: "" }
+      sample_fps: { required: false, type: string, default: "2.0" }
 permissions:
   contents: write
-
 concurrency:
-  group: castcut-hybrid-${{ inputs.job_id }}
+  group: castcut-analysis-${{ inputs.job_id }}
   cancel-in-progress: false
-
 jobs:
   analyze:
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 90
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
       - uses: actions/setup-python@v5
-        with:
-          python-version: "3.11"
-
-      - name: Install system tools
+        with: { python-version: "3.11" }
+      - name: Install CPU analysis tools
         run: |
           sudo apt-get update -qq
-          sudo apt-get install -y -qq ffmpeg aria2 zip
-
-      - name: Install analysis packages
+          sudo apt-get install -y -qq ffmpeg aria2
+          python -m pip install -q requests opencv-python-headless pillow numpy onnxruntime faster-whisper
+      - name: Install anime detector and embedder only for anime projects
         run: |
-          python -m pip install -q --upgrade pip
-          python -m pip install -q requests opencv-python-headless pillow numpy onnxruntime
-          python -m pip install -q --index-url https://download.pytorch.org/whl/cpu "torch==2.3.1" || true
-          python -m pip install -q "openmim" || true
-          mim install -q "mmengine" "mmcv>=2.0.0,<2.2" "mmdet>=3,<4" "mmpose>=1,<2" || true
-          python -m pip install -q anime-face-detector || true
-          python -m pip install -q "imgutils[metrics]" || python -m pip install -q dghs-imgutils || true
-          python -m pip install -q faster-whisper || true
-
-      - name: Status — initializing
-        run: |
-          python -m pipeline.status "${{ inputs.job_id }}" --state hybrid_running \
-            --step "Preparing source" --percent 5.0 \
-            --message "Preparing video source..." \
-            --release-tag "castcut-${{ inputs.job_id }}" \
-            --workflow-run-url "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git pull --rebase --autostash || true
-          git add "jobs/${{ inputs.job_id }}/"
-          git commit -m "castcut: hybrid running ${{ inputs.job_id }}" || true
-          for attempt in 1 2 3; do git push && break; echo "Push attempt $attempt failed; retrying"; git pull --rebase --autostash; sleep 2; done
-
-      - name: Prepare source video
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          CASTCUT_RELEASE_LIMIT_BYTES: ${{ vars.CASTCUT_RELEASE_LIMIT_BYTES }}
-        run: |
-          mkdir -p work
-          df -h .
-          if [ -f "jobs/${{ inputs.job_id }}/ingest.json" ]; then
-            echo "ingest.json exists — fetching or re-downloading source"
-            python -m pipeline.refetch "${{ inputs.job_id }}" --release-tag "castcut-${{ inputs.job_id }}"
-          else
-            echo "Running ingest"
-            python -m pipeline.ingest "${{ inputs.job_id }}"
-            tag="castcut-${{ inputs.job_id }}"
-            gh release create "$tag" --repo "$GITHUB_REPOSITORY" \
-              --title "castcut $tag" \
-              --notes "Project assets for ${{ inputs.job_id }}." || true
-            vir=$(python -c "import json;print(str(json.load(open('jobs/${{ inputs.job_id }}/ingest.json')).get('video_in_release', True)).lower())")
-            if [ "$vir" = "true" ]; then
-              if gh release upload "$tag" work/source.* --clobber; then
-                echo "source video uploaded to release"
-              else
-                echo "::warning::source upload failed — falling back to exclusion"
-                python -m pipeline.mark_excluded "${{ inputs.job_id }}" || true
-              fi
-            fi
-          fi
-
-      - name: Status — face analysis
-        run: |
-          python -m pipeline.status "${{ inputs.job_id }}" --state hybrid_running \
-            --step "Face analysis" --percent 25.0 \
-            --message "Sampling frames and detecting characters..."
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git pull --rebase --autostash || true
-          git add "jobs/${{ inputs.job_id }}/"
-          git commit -m "castcut: face analysis ${{ inputs.job_id }}" || true
-          for attempt in 1 2 3; do git push && break; echo "Push attempt $attempt failed; retrying"; git pull --rebase --autostash; sleep 2; done
-
-      - name: Run face analysis
-        run: python -m pipeline.faces "${{ inputs.job_id }}" --fps ${{ inputs.sample_fps }} --content-type "${{ inputs.content_type }}"
-
-      - name: Status — scene analysis
-        run: |
-          python -m pipeline.status "${{ inputs.job_id }}" --state hybrid_running \
-            --step "Scene analysis" --percent 65.0 \
-            --message "Transcribing audio and detecting scene boundaries..."
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git pull --rebase --autostash || true
-          git add "jobs/${{ inputs.job_id }}/"
-          git commit -m "castcut: scene analysis ${{ inputs.job_id }}" || true
-          for attempt in 1 2 3; do git push && break; echo "Push attempt $attempt failed; retrying"; git pull --rebase --autostash; sleep 2; done
-
-      - name: Run scene analysis
-        run: |
-          python -m pipeline.scene_analyze "${{ inputs.job_id }}"
-          python -m pipeline.scene_prompt "${{ inputs.job_id }}"
-
-      - name: Upload scene artifacts to release
-        env: { GH_TOKEN: "${{ secrets.GITHUB_TOKEN }}" }
-        run: |
-          if [ -d work/shots ]; then (cd work && zip -q -r screenshots.zip shots) ; fi
-          files=(jobs/${{ inputs.job_id }}/scene/transcript.json
-                 jobs/${{ inputs.job_id }}/scene/scene_index.json
-                 jobs/${{ inputs.job_id }}/scene/agent_prompt.txt)
-          [ -f work/screenshots.zip ] && files+=(work/screenshots.zip)
-          gh release upload "castcut-${{ inputs.job_id }}" "${files[@]}" --clobber || true
-
-      - name: Status — hybrid ready
-        if: success()
-        run: |
-          python -m pipeline.status "${{ inputs.job_id }}" --state hybrid_ready \
-            --step "Complete" --percent 100.0 \
-            --message "Analysis complete! Ready for Clips selection and AI scene requests."
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git pull --rebase --autostash || true
-          git add "jobs/${{ inputs.job_id }}/"
-          git commit -m "castcut: hybrid ready ${{ inputs.job_id }}" || true
-          for attempt in 1 2 3; do git push && break; echo "Push attempt $attempt failed; retrying"; git pull --rebase --autostash; sleep 2; done
-
-      - name: Status — failed
-        if: failure()
-        run: |
-          python -m pipeline.status "${{ inputs.job_id }}" --state failed \
-            --message "Hybrid analysis failed; see workflow log: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" \
-            --workflow-run-url "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git pull --rebase --autostash || true
-          git add "jobs/${{ inputs.job_id }}/"
-          git commit -m "castcut: hybrid failed ${{ inputs.job_id }}" || true
-          for attempt in 1 2 3; do git push && break; echo "Push attempt $attempt failed; retrying"; git pull --rebase --autostash; sleep 2; done
-
-      - name: Status — cancelled
-        if: cancelled()
-        run: |
-          prev=$(python -c "import json;print(json.load(open('jobs/${{ inputs.job_id }}/status.json')).get('state',''))" 2>/dev/null || true)
-          python -m pipeline.status "${{ inputs.job_id }}" --state cancelled \
-            --message "Run cancelled." --set-json "{\"cancelled_from\":\"$prev\"}" || true
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git pull --rebase --autostash || true
-          git add "jobs/${{ inputs.job_id }}/"
-          git commit -m "castcut: cancelled ${{ inputs.job_id }}" || true
-          for attempt in 1 2 3; do git push && break; echo "Push attempt $attempt failed; retrying"; git pull --rebase --autostash; sleep 2; done
+          kind=$(python -c "import json;print(json.load(open('jobs/${{ inputs.job_id }}/ingest-request.json'))['content_type'])")
+          if [ "$kind" = "anime" ]; then python -m pip install -q dghs-imgutils; fi
+      - name: Analyze and verify required release assets
+        run: python -m pipeline.analyze "${{ inputs.job_id }}" --content-type "${{ inputs.content_type }}" --fps "${{ inputs.sample_fps }}" --repair all
+      - name: Preserve funnel logs and sampling diagnostics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: analysis-diagnostics-${{ inputs.job_id }}
+          path: |
+            work/face_sampling.log
+            jobs/${{ inputs.job_id }}/analysis/
+            jobs/${{ inputs.job_id }}/clips/manifest.json
+            work/sheets.json
