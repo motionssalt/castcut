@@ -11,6 +11,10 @@ import sys
 import time
 from pathlib import Path
 
+REPO_ROOT = str(Path(__file__).resolve().parent.parent)
+if REPO_ROOT not in sys.path:
+    sys.path.insert(0, REPO_ROOT)
+
 SAMPLE_VIDEO_URL = "https://raw.githubusercontent.com/intel-iot-devkit/sample-videos/master/person-bicycle-car-detection.mp4"
 
 def test_direct_url(jobs_root: str = "jobs", work_dir: str = "work") -> bool:
@@ -99,11 +103,18 @@ def test_torrent_metadata(jobs_root: str = "jobs", work_dir: str = "work") -> bo
     if fixture_torrents:
         shutil.copyfile(str(fixture_torrents[0]), str(torrent_path))
     else:
-        # Build synthetic valid torrent file via torrents module
         from pipeline import torrents
-        # If no fixtures, verify parser directly
-        print("[Smoke] No fixture .torrent file found; tested via test_torrent_fixtures.test.mjs")
-        return True
+        info = {
+            b"piece length": 16384,
+            b"pieces": b"a" * 20,
+            b"name": b"sample_smoke_torrent",
+            b"files": [
+                {b"length": 1048576, b"path": [b"episode1.mp4"]},
+                {b"length": 1024, b"path": [b"readme.txt"]}
+            ]
+        }
+        root = {b"info": info}
+        torrent_path.write_bytes(torrents._encode_bencode(root))
 
     req = {
         "version": 1,
