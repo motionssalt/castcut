@@ -1079,7 +1079,7 @@ function renderOverview(r) {
 if ($("btnStartAnalysis")) {
   $("btnStartAnalysis").onclick = async () => {
     await withButtonLoading($("btnStartAnalysis"), async () => {
-      await api(`/jobs/${state.job}/analyze`, { method: "POST", body: { sample_fps: 1.0 } });
+      await api(`/jobs/${state.job}/analyze`, { method: "POST", body: { sample_fps: 2.0 } });
       toast("Face and scene analysis dispatched ⚡");
       await tickJob(); schedulePoll();
     }, "Dispatching…").catch(e => { $("jobErr").textContent = e.message; });
@@ -1213,7 +1213,7 @@ function updateLivePrompt() {
   const tag = `castcut-${state.job}`;
   const releaseUrl = status.tasks?.scene?.url || status.release_url || `https://github.com/motionssalt/castcut/releases/tag/${tag}`;
   const title = status.title || status.torrent_name || state.job;
-  const ct = status.content_type || "anime";
+  const ct = status.content_type || "unknown";
   const req = ($("sceneReq")?.value || "").trim();
   const reqBlock = req
     ? `THE USER'S SCENE REQUEST:\n"""\n${req}\n"""`
@@ -1231,6 +1231,7 @@ function updateLivePrompt() {
     "",
     "Rules:",
     "- Read 00_READ_THIS_FIRST.txt in the release before selecting any cuts.",
+    "- screenshots.zip: sheet_START-END.jpg covers 6 source seconds with six labeled frames in 3x2 order, up to 640px each. Labels are exact source timestamps. The short final window has six evenly spaced frames. Use these times for JSON start/end, cross-check scene_index and transcript.",
     "- Produce exactly one production.json containing the selected segments.",
     "- Segments must be in chronological playback order with start and end timestamps within the source video.",
     `- Deliver the production JSON either as a downloadable .json file (recommended filename: castcut-scene-${state.job}.json) if you can create files, or inside a single \`\`\`json code block (one block, valid JSON, nothing else inside it). If you include a short explanation, place it outside the file or code block.`
