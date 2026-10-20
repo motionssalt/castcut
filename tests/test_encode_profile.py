@@ -35,7 +35,7 @@ class TestEncodeProfileAndValidation(unittest.TestCase):
         self.assertEqual(EXPORT_PROFILE, "high")
         self.assertEqual(EXPORT_LEVEL, "4.0")
         self.assertEqual(EXPORT_CRF, "23")
-        self.assertEqual(EXPORT_MAXRATE, "1872k")
+        self.assertEqual(EXPORT_MAXRATE, "1800k")  # one-second VBV leaves <=2000k rolling-window headroom
 
     def test_sample_encode_and_validation(self):
         """Generate a synthetic 1080p test video and verify encode_final_export produces
