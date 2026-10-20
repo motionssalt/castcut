@@ -994,5 +994,25 @@
       }
     ],
     "notes": "Resolved both IRL face clustering explosion and missing thumbnail display. Faces across scenes are now clustered per character matching anime behavior (~16-25 characters), and base64 WebP thumbnails render cleanly in the web gallery."
+  },
+  "export_size_playback": {
+    "status": "in_progress",
+    "last_updated": "2026-10-20T19:57:35.067676+00:00",
+    "findings": "Investigating export size and playback failures across flows. Starting ClipForge inspection and export comparison.",
+    "encode_profile": {},
+    "done": [
+      "Initialized export_size_playback tracking in BUILD_STATE.json",
+      "Cloned castcut and clipforge repositories"
+    ],
+    "pending": [
+      "Inspect clipforge render/delivery pipeline and export settings",
+      "Investigate why castcut exports are unplayable and too big (deep ffprobe, MP4 box structure, timestamps)",
+      "Check export options in UI/backend and remove the 3 options while keeping audio track picker",
+      "Port clipforge pipeline + owner compression (<=2000 kbps, 1080p max, <=30fps CFR, AAC 128k stereo)",
+      "Add pre-publish automatic validation and CI regression tests",
+      "Verify with real runs and update BUILD_STATE"
+    ],
+    "verified_runs": [],
+    "notes": ""
   }
 }
