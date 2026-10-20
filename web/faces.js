@@ -203,14 +203,11 @@ function setupExportHandlers() {
 
   btnExport.onclick = async () => {
     if (selectedCharIds.size === 0) return;
-    const quality = document.getElementById("selectQuality").value;
-
     const payload = {
       order: Array.from(selectedCharIds),
       ignored: characters.filter(c => !selectedCharIds.has(c.id)).map(c => c.id),
       merge_groups: [],
       audio_track: chosenAudioTrack,
-      quality: quality,
       gap_threshold: 2.0,
       padding: 0.4,
     };

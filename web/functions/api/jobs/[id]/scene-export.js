@@ -7,7 +7,6 @@ export async function onRequest({ params, data, request }) {
   if (!Array.isArray(prod.segments) || prod.segments.length === 0) return j({ error: 'production.segments must be a non-empty array' }, 400);
   const exportId = body.export_id || `exp-${params.id}-scene-${Date.now().toString(36)}`;
   const audioTrack = (body.audio_track !== undefined && body.audio_track !== null) ? String(body.audio_track) : (prod.audio_track !== undefined && prod.audio_track !== null ? String(prod.audio_track) : "");
-  const quality = body.quality || "normal";
   if (body.audio_track !== undefined && body.audio_track !== null) {
     prod.audio_track = Number(body.audio_track);
   }
@@ -19,7 +18,6 @@ export async function onRequest({ params, data, request }) {
     job_id: params.id,
     export_id: exportId,
     audio_track: audioTrack,
-    quality: quality,
   });
   return j({ ok: true, export_id: exportId });
 }

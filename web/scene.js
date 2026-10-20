@@ -131,8 +131,6 @@ function setupJsonIntake() {
   const exportBtn = document.getElementById("btnExportScene");
   exportBtn.onclick = async () => {
     if (!validatedCut || !validatedCut.ok) return;
-    const quality = document.getElementById("selectQuality").value;
-
     const payload = {
       production: {
         title: validatedCut.title,
@@ -140,7 +138,6 @@ function setupJsonIntake() {
         audio_track: chosenAudioTrack,
       },
       audio_track: chosenAudioTrack,
-      quality: quality,
     };
 
     await withButtonFeedback(exportBtn, async () => {
