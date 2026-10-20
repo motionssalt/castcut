@@ -1,57 +1,11 @@
 {
-  "version": 1,
-  "title": "ClipForge port verification \u2014 ten real-source hard cuts / 10 minutes",
-  "audio_track": 0,
+  "title": "Sam Confronts Peezy B & Gets Hired (Swaggy Spunk)",
   "segments": [
     {
-      "start": 0.0,
-      "end": 60.0,
-      "note": "Real-source validation cut"
-    },
-    {
-      "start": 120.0,
-      "end": 180.0,
-      "note": "Real-source validation cut"
-    },
-    {
-      "start": 240.0,
-      "end": 300.0,
-      "note": "Real-source validation cut"
-    },
-    {
-      "start": 360.0,
-      "end": 420.0,
-      "note": "Real-source validation cut"
-    },
-    {
-      "start": 480.0,
-      "end": 540.0,
-      "note": "Real-source validation cut"
-    },
-    {
-      "start": 600.0,
-      "end": 660.0,
-      "note": "Real-source validation cut"
-    },
-    {
-      "start": 720.0,
-      "end": 780.0,
-      "note": "Real-source validation cut"
-    },
-    {
-      "start": 840.0,
-      "end": 900.0,
-      "note": "Real-source validation cut"
-    },
-    {
-      "start": 960.0,
-      "end": 1020.0,
-      "note": "Real-source validation cut"
-    },
-    {
-      "start": 1080.0,
-      "end": 1140.0,
-      "note": "Real-source validation cut"
+      "start": 405.4,
+      "end": 519.44,
+      "note": "Sam confronts Peezy B at the studio for mistreating Cat, wrecks the studio and drops his Pear Phone in the fish tank; impressed by her 'swaggy spunk', Peezy hires her as his assistant for $1,200 a week"
     }
-  ]
+  ],
+  "audio_track": 0
 }
