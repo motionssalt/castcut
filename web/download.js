@@ -4,12 +4,26 @@
  */
 import { loadPat } from './core.js';
 export async function downloadReleaseAsset(credentials, asset, onProgress) {
-  const response = await fetch(String(asset.url || asset.browserUrl), {
-    headers: {
-      'Accept': 'application/octet-stream',
-      'Authorization': `Bearer ${credentials.githubPat}`
-    }
-  });
+  const endpoint = String(asset.url || asset.browserUrl);
+  if (!/^https:\/\/api\.github\.com\/repos\/motionssalt\/castcut\/releases\/assets\/\d+$/.test(endpoint)) {
+    throw new Error('Untrusted asset URL');
+  }
+  let response;
+  try {
+    response = await fetch(endpoint, {
+      headers: {
+        'Accept': 'application/octet-stream',
+        'Authorization': `Bearer ${credentials.githubPat}`
+      }
+    });
+  } catch (error) {
+    // GitHub's signed release CDN can omit CORS headers. Same bytes, streamed
+    // server-side through the PAT-gated site; no remux/conversion or token URL.
+    if (!(error instanceof TypeError)) throw error;
+    response = await fetch(`/api/release-assets/${Number(asset.id)}`, {
+      headers: { 'x-castcut-pat': credentials.githubPat }
+    });
+  }
   if (!response.ok) throw new Error(`Release download failed (${response.status}); no file saved.`);
   const total = Number(response.headers.get('content-length') || asset.size || 0);
   if (!response.body) {
