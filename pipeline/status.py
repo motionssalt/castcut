@@ -92,6 +92,7 @@ def write_status(
     current_state = rec.get("state")
     if (
         not force
+        and not task_name
         and state in FAILURE_STATES
         and current_state in {"clips_ready", "scene_ready", "ready", "done", "hybrid_ready"}
     ):
@@ -126,15 +127,6 @@ def write_status(
         if task_pct is not None: t_data["percent"] = task_pct
         if task_url is not None: t_data["url"] = task_url
         t_data["updated_at"] = _iso(now)
-        # Update composite state if appropriate
-        faces_st = tasks.get("faces", {}).get("state")
-        scene_st = tasks.get("scene", {}).get("state")
-        if faces_st == "ready" and scene_st == "ready":
-            if rec["state"] in ("analyzing", "faces_ready", "scene_ready", "faces_running", "scene_analyzing", "hybrid_ready", "hybrid_analyzing", "ingested"):
-                rec["state"] = "ready"
-                if not message: rec["message"] = "Analysis complete. Ready for Clips selection and AI scene requests."
-
-
     # Automatically preserve or populate title and torrent_name from ingest-request.json or files.json
     if not rec.get("title"):
         try:
@@ -180,6 +172,28 @@ def write_status(
                     file=sys.stderr,
                     flush=True,
                 )
+
+    # The creation record is authoritative, even after legacy status corruption.
+    req_file = os.path.join(jobs_root,job_id,'ingest-request.json')
+    if os.path.isfile(req_file):
+        req = json.load(open(req_file,encoding='utf-8'))
+        kind = req.get('content_type')
+        if kind not in ('anime','irl'):
+            raise ValueError(f'Project {job_id}: creation record missing content_type; never default to anime.')
+        if extra.get('content_type') not in (None,kind):
+            raise ValueError(f'Project {job_id}: content_type mismatch: pipeline {extra["content_type"]!r}, immutable project {kind!r}')
+        rec['content_type'] = kind
+    if task_name or rec.get('state') in ('ready','hybrid_ready','analyzing','incomplete'):
+        tasks = rec.get('tasks',{})
+        states = [tasks.get(k,{}).get('state') for k in ('faces','scene')]
+        if any(s in ('failed','cancelled','incomplete') for s in states):
+            rec['state']='incomplete'
+            rec['message']='Analysis incomplete: '+ '; '.join(f"{k}: {v.get('message','')}" for k,v in tasks.items() if v.get('state') in ('failed','cancelled','incomplete'))
+        elif any(s in ('running','queued') for s in states):
+            rec['state']='analyzing'
+        elif all(s=='ready' for s in states):
+            rec['state']='ready' if rec.get('release_verified') else 'incomplete'
+            rec['message']='Project ready — required release assets verified.' if rec.get('release_verified') else 'Analysis incomplete: required release assets not yet verified.'
 
     os.makedirs(os.path.join(jobs_root, job_id), exist_ok=True)
     tmp = status_path(jobs_root, job_id) + ".tmp"
