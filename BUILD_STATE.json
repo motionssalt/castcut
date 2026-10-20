@@ -1045,7 +1045,7 @@
   },
   "export_copy_clipforge": {
     "status": "in_progress",
-    "last_updated": "2026-10-20T23:04:29.520167+00:00",
+    "last_updated": "2026-10-20T23:04:52.538483+00:00",
     "clipforge_reference": {
       "repository": "motionssalt/clipforge",
       "commit": "a05846de7c76a66ad42ba6fd37126514bc452167",
@@ -1534,7 +1534,8 @@
       "Native streaming backend now supports authenticated POST handoff, HttpOnly encrypted cookie, GET/HEAD, resumable byte ranges, explicit video/mp4 MIME, short filename, length validation and unbuffered response.body; production/preview download encryption secret configured.",
       "Removed JS media fetching/chunk assembly/hash/Blob-save path from export UI; the button now authorizes a short same-origin handoff then navigates to HTTP attachment. Exact filename matching prevents picking stale prefix-matching assets. UI truthfully says download started, not saved.",
       "All 10 native-download regression tests pass: no JS media buffer, scoped encrypted cookie, expiry/tampering/wrong-asset rejection, PAT gate, native navigation, full/range/HEAD byte semantics, MIME/filename, redirect and truncation rejection.",
-      "Found concrete stale-output bug: original project still offers old 497293076-byte faces and 69636349-byte scene assets as done, alongside newer separately named replacements. UI formerly accepted any uploaded MP4 regardless of verification. Downloads now require matching full-decode and release-readback receipts, asset ID, SHA256, size and exact filename; 10 regression tests pass. Rebuilding original export IDs next."
+      "Found concrete stale-output bug: original project still offers old 497293076-byte faces and 69636349-byte scene assets as done, alongside newer separately named replacements. UI formerly accepted any uploaded MP4 regardless of verification. Downloads now require matching full-decode and release-readback receipts, asset ID, SHA256, size and exact filename; 10 regression tests pass. Rebuilding original export IDs next.",
+      "Dispatched real faces and scene exports under the ORIGINAL owner-facing export IDs, not separately named test replacements. Original selection/production JSON and chosen audio track 0 retained."
     ],
     "pending": [
       "Inspect actual reference and delivered outputs",
@@ -8761,6 +8762,16 @@
           "instructions": "Use the site verified Download button, then open the saved .mp4 directly from Android Files or Gallery, without conversion. Start with the 1:54 clip. If it fails, compare identical file through direct release vs site and the same phone/player against a ClipForge final. Capture exact player/error, Android/device details, downloaded size and ideally hash to separate delivery from decoder behavior."
         },
         "credentials_missing": []
+      }
+    ],
+    "rebuild_exports": [
+      {
+        "workflow": "clips-export.yml",
+        "export_id": "exp-job-1792507438516-dehl-clips-mvgvn5a4"
+      },
+      {
+        "workflow": "scene-export.yml",
+        "export_id": "exp-job-1792507438516-dehl-scene-mvgxsz3y"
       }
     ]
   },
