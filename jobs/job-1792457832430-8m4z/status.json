@@ -5,11 +5,11 @@
   "content_type": "irl",
   "created_at_epoch": 1792457832,
   "created_at": "2026-10-20T00:57:12Z",
-  "updated_at": "2026-10-20T01:05:50Z",
-  "updated_at_epoch": 1792458350,
+  "updated_at": "2026-10-20T01:23:43Z",
+  "updated_at_epoch": 1792459423,
   "expires_at_epoch": 1792544232,
   "state": "analyzing",
-  "message": "Source ready. Analyzing faces and AI scene...",
+  "message": "",
   "selected_files": [
     {
       "index": 16,
@@ -24,9 +24,16 @@
       "message": "Source downloaded successfully",
       "percent": 100.0,
       "updated_at": "2026-10-20T01:05:50Z"
+    },
+    "scene": {
+      "name": "Scene",
+      "state": "running",
+      "message": "Transcribing and detecting scene boundaries",
+      "percent": 20.0,
+      "updated_at": "2026-10-20T01:23:43Z"
     }
   },
   "release_tag": "castcut-job-1792457832430-8m4z",
-  "workflow_run_url": "https://github.com/motionssalt/castcut/actions/runs/39350679806",
+  "workflow_run_url": "https://github.com/motionssalt/castcut/actions/runs/39353135055",
   "video_in_release": true
 }
