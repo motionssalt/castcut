@@ -5,11 +5,11 @@
   "content_type": "irl",
   "created_at_epoch": 1792496818,
   "created_at": "2026-10-20T11:46:58Z",
-  "updated_at": "2026-10-20T13:14:28Z",
-  "updated_at_epoch": 1792502068,
+  "updated_at": "2026-10-20T13:15:18Z",
+  "updated_at_epoch": 1792502118,
   "expires_at_epoch": 1792583218,
   "state": "incomplete",
-  "message": "Analysis incomplete: faces: Command '['/opt/hostedtoolcache/Python/3.11.17/x64/bin/python', '-m', 'pipeline.refetch', 'job-1792496818035-wi9a', '--release-tag', 'castcut-job-1792496818035-wi9a']' returned non-zero exit status 1.",
+  "message": "",
   "selected_files": [
     {
       "index": 16,
@@ -30,6 +30,12 @@
       "state": "failed",
       "message": "Command '['/opt/hostedtoolcache/Python/3.11.17/x64/bin/python', '-m', 'pipeline.refetch', 'job-1792496818035-wi9a', '--release-tag', 'castcut-job-1792496818035-wi9a']' returned non-zero exit status 1.",
       "updated_at": "2026-10-20T13:14:28Z"
+    },
+    "scene": {
+      "name": "Scene",
+      "state": "queued",
+      "message": "Queued for analysis",
+      "updated_at": "2026-10-20T13:15:18Z"
     }
   },
   "release_tag": "castcut-job-1792496818035-wi9a",
