@@ -2,11 +2,22 @@
   "job_id": "job-1792504893909-direct",
   "title": "Verification Direct Link Video",
   "content_type": "irl",
-  "state": "queued",
-  "message": "Queued for ingest",
+  "state": "ingest_running",
+  "message": "Downloading source",
   "created_at_epoch": 1792504893,
   "created_at": "2026-10-20T14:01:33Z",
-  "updated_at": "2026-10-20T14:01:33Z",
-  "updated_at_epoch": 1792504893,
-  "expires_at_epoch": 1792591293
+  "updated_at": "2026-10-20T14:02:12Z",
+  "updated_at_epoch": 1792504932,
+  "expires_at_epoch": 1792591293,
+  "tasks": {
+    "ingest": {
+      "name": "Ingest",
+      "state": "running",
+      "message": "Downloading source",
+      "percent": 10.0,
+      "updated_at": "2026-10-20T14:02:12Z"
+    }
+  },
+  "release_tag": "castcut-job-1792504893909-direct",
+  "workflow_run_url": "https://github.com/motionssalt/castcut/actions/runs/39435547666"
 }
