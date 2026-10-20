@@ -152,22 +152,14 @@ def main() -> None:
     )
     s_before = os.path.getsize(joined)
 
-    # Pass 2: shared anime HandBrake-style compression (CRF 23 medium animation, AAC 128k stereo)
-    crf, preset = resolve_quality_settings(args.quality)
-    if args.crf and args.crf != 23:
-        crf = args.crf
-
+    # Pass 2: shared fixed mobile-safe encode (H.264 High@L4.0, 1080p max, <=30fps CFR, AAC 128k, <=2000 kbps)
     export_id = args.export_id or f"exp-{args.job_id}-scene"
     asset_name = f"castcut-export-{export_id}.mp4" if args.export_id else f"castcut-scene-{args.job_id}.mp4"
     final = os.path.join(args.work_dir, asset_name)
-
     verif = encode_final_export(
         input_path=joined,
         output_path=final,
         has_audio=has_audio,
-        crf=crf,
-        preset=preset,
-        tune="animation",
         audio_bitrate="128k",
     )
     s_after = verif["size_bytes"]
@@ -196,12 +188,13 @@ def main() -> None:
         "size_after_human": human_size(s_after),
         "size_human": human_size(s_after),
         "bitrate_kbps": verif["bitrate_kbps"],
+        "video_bitrate_kbps": verif["video_bitrate_kbps"],
         "bitrate_bps": verif["bitrate_bps"],
         "effective_bitrate": f"{verif['bitrate_kbps']} kbps",
         "audio_track": chosen_audio_track,
         "audio_track_label": chosen_track_info.get("label") if chosen_track_info else ("No audio" if not has_audio else None),
         "asset_name": os.path.basename(final),
-        "quality": f"anime HandBrake (x264 CRF {crf}, {preset}, tune animation, AAC 128k)",
+        "quality": "Fixed mobile-safe profile: H.264 High@L4.0, 1080p, 0 B-frames, mp42, faststart, AAC 128k stereo, <=2000 kbps",
         "status": "done",
     }
 

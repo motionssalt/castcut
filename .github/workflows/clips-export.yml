@@ -52,6 +52,9 @@ jobs:
           if [ -n "${{ inputs.audio_track }}" ]; then cmd+=(--audio-track "${{ inputs.audio_track }}"); fi
           "${cmd[@]}" 
 
+      - name: Verify export playback compatibility and bitrate
+        run: python -m pipeline.verify_export work/castcut-*.mp4
+
       - name: Check final output fits the release limit
         env:
           CASTCUT_RELEASE_LIMIT_BYTES: ${{ vars.CASTCUT_RELEASE_LIMIT_BYTES }}
