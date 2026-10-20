@@ -2,70 +2,70 @@
   "job_id": "job-clipforge-verify-20261020",
   "created_at_epoch": 1792532899,
   "created_at": "2026-10-20T21:48:19Z",
-  "state": "scene_ready",
-  "message": "Scene file ready. Download from the release.",
-  "updated_at_epoch": 1792535849,
-  "updated_at": "2026-10-20T22:37:29Z",
-  "title": "Sam Confronts Peezy B & Gets Hired (Swaggy Spunk)",
+  "state": "clips_ready",
+  "message": "Final clips file ready. Download from the release.",
+  "updated_at_epoch": 1792536064,
+  "updated_at": "2026-10-20T22:41:04Z",
+  "title": "ClipForge export verification (real source)",
   "torrent_name": "Sam & Cat (2013) Season 1 S01 (1080p AMZN WEB-DL x265 HEVC 10bit EAC3 2.0 RZeroX)",
-  "workflow_run_url": "https://github.com/motionssalt/castcut/actions/runs/39508873801",
+  "workflow_run_url": "https://github.com/motionssalt/castcut/actions/runs/39508312678",
   "content_type": "irl",
   "tasks": {},
   "release_tag": "castcut-job-clipforge-verify-20261020",
   "version": 1,
-  "export_id": "exp-job-clipforge-verify-20261020-scene-mvh9duq1",
+  "export_id": "exp-job-clipforge-verify-20261020-clips-mvh9823y",
   "project_id": "job-clipforge-verify-20261020",
-  "type": "ai",
-  "label": "Sam Confronts Peezy B & Gets Hired (Swaggy Spunk)",
+  "type": "clips",
+  "label": "char6",
   "ok": true,
-  "segments": 1,
-  "total_duration": 114.0,
-  "size_before_bytes": 171589102,
-  "size_after_bytes": 27696131,
-  "size_bytes": 27696131,
-  "size_before_human": "163.6 MB",
-  "size_after_human": "26.4 MB",
-  "size_human": "26.4 MB",
-  "bitrate_kbps": 1941.647,
-  "video_bitrate_kbps": 1806.133,
-  "bitrate_bps": 1941647,
-  "effective_bitrate": "1941.647 kbps",
+  "segments": 10,
+  "total_duration": 294.2,
+  "size_before_bytes": 466314672,
+  "size_after_bytes": 72681171,
+  "size_bytes": 72681171,
+  "size_before_human": "444.7 MB",
+  "size_after_human": "69.3 MB",
+  "size_human": "69.3 MB",
+  "bitrate_kbps": 1938.382,
+  "video_bitrate_kbps": 1801.878,
+  "bitrate_bps": 1938382,
+  "effective_bitrate": "1938.382 kbps",
   "audio_track": 0,
   "audio_track_label": "Track 1 \u00b7 ENG \u00b7 stereo \u00b7 eac3",
-  "asset_name": "castcut-export-exp-job-clipforge-verify-20261020-scene-mvh9duq1.mp4",
+  "asset_name": "castcut-export-exp-job-clipforge-verify-20261020-clips-mvh9823y.mp4",
   "encode_path": "ClipForge vendored render/compress: H.264 High@L4.0, 1080p, 0 B-frames, mp42, faststart, AAC 128k stereo, <=2000 kbps",
   "status": "done",
-  "sha256": "129117d4d24e12f35621124fd85e6307b038069e63be16c11f4f59b9adad5359",
-  "video_peak_10s_kbps": 1882.608,
-  "video_average_kbps": 1806.132776103419,
-  "mb_per_minute": 14.562349086764527,
+  "sha256": "23ee14d15629f67d38212f867501c1740738b22e23f9c259fede94c03dbb49cd",
+  "video_peak_10s_kbps": 1911.536,
+  "video_average_kbps": 1801.8780847148448,
+  "mb_per_minute": 14.53786530002711,
   "reference_commit": "a05846de7c76a66ad42ba6fd37126514bc452167",
   "delivery": {
-    "asset_id": 660682196,
-    "asset_name": "castcut-export-exp-job-clipforge-verify-20261020-scene-mvh9duq1.mp4",
-    "sha256": "129117d4d24e12f35621124fd85e6307b038069e63be16c11f4f59b9adad5359",
-    "size_bytes": 27696131,
+    "asset_id": 660689034,
+    "asset_name": "castcut-export-exp-job-clipforge-verify-20261020-clips-mvh9823y.mp4",
+    "sha256": "23ee14d15629f67d38212f867501c1740738b22e23f9c259fede94c03dbb49cd",
+    "size_bytes": 72681171,
     "runner_release_download_identical": true,
-    "browser_download_url": "https://github.com/motionssalt/castcut/releases/download/castcut-job-clipforge-verify-20261020/castcut-export-exp-job-clipforge-verify-20261020-scene-mvh9duq1.mp4"
+    "browser_download_url": "https://github.com/motionssalt/castcut/releases/download/castcut-job-clipforge-verify-20261020/castcut-export-exp-job-clipforge-verify-20261020-clips-mvh9823y.mp4"
   },
   "checks": {
     "ok": true,
-    "sha256": "129117d4d24e12f35621124fd85e6307b038069e63be16c11f4f59b9adad5359",
-    "duration": 114.113997,
-    "size_bytes": 27696131,
-    "size_human": "26.41 MiB",
-    "mb_per_minute": 14.562349086764527,
-    "bitrate_bps": 1941647,
-    "bitrate_kbps": 1941.647,
-    "video_bitrate_kbps": 1806.133,
-    "video_average_kbps": 1806.132776103419,
-    "video_peak_10s_kbps": 1882.608,
-    "video_packets": 2736,
-    "audio_packets": 5347,
+    "sha256": "23ee14d15629f67d38212f867501c1740738b22e23f9c259fede94c03dbb49cd",
+    "duration": 299.966341,
+    "size_bytes": 72681171,
+    "size_human": "69.31 MiB",
+    "mb_per_minute": 14.53786530002711,
+    "bitrate_bps": 1938382,
+    "bitrate_kbps": 1938.382,
+    "video_bitrate_kbps": 1801.878,
+    "video_average_kbps": 1801.8780847148448,
+    "video_peak_10s_kbps": 1911.536,
+    "video_packets": 7192,
+    "audio_packets": 14058,
     "all_packet_timestamps_contiguous": true,
     "video_pts_equal_dts": true,
     "fixed_gop": 60,
-    "duration_video": 114.113998,
+    "duration_video": 299.966341,
     "vcodec": "h264",
     "profile": "High",
     "level": 40,
@@ -89,7 +89,7 @@
       {
         "type": "moov",
         "offset": 32,
-        "size": 74396,
+        "size": 195672,
         "children": [
           {
             "type": "mvhd",
@@ -99,7 +99,7 @@
           {
             "type": "trak",
             "offset": 148,
-            "size": 38385,
+            "size": 100001,
             "children": [
               {
                 "type": "tkhd",
@@ -109,7 +109,7 @@
               {
                 "type": "mdia",
                 "offset": 248,
-                "size": 38285,
+                "size": 99901,
                 "children": [
                   {
                     "type": "mdhd",
@@ -124,7 +124,7 @@
                   {
                     "type": "minf",
                     "offset": 333,
-                    "size": 38200,
+                    "size": 99816,
                     "children": [
                       {
                         "type": "vmhd",
@@ -146,7 +146,7 @@
                       {
                         "type": "stbl",
                         "offset": 397,
-                        "size": 38136,
+                        "size": 99752,
                         "children": [
                           {
                             "type": "stsd",
@@ -156,27 +156,27 @@
                           {
                             "type": "stts",
                             "offset": 597,
-                            "size": 15784
+                            "size": 41448
                           },
                           {
                             "type": "stss",
-                            "offset": 16381,
-                            "size": 200
+                            "offset": 42045,
+                            "size": 496
                           },
                           {
                             "type": "stsc",
-                            "offset": 16581,
-                            "size": 28
+                            "offset": 42541,
+                            "size": 40
                           },
                           {
                             "type": "stsz",
-                            "offset": 16609,
-                            "size": 10964
+                            "offset": 42581,
+                            "size": 28788
                           },
                           {
                             "type": "stco",
-                            "offset": 27573,
-                            "size": 10960
+                            "offset": 71369,
+                            "size": 28780
                           }
                         ]
                       }
@@ -188,89 +188,89 @@
           },
           {
             "type": "trak",
-            "offset": 38533,
-            "size": 35797,
+            "offset": 100149,
+            "size": 95457,
             "children": [
               {
                 "type": "tkhd",
-                "offset": 38541,
+                "offset": 100157,
                 "size": 92
               },
               {
                 "type": "mdia",
-                "offset": 38633,
-                "size": 35697,
+                "offset": 100249,
+                "size": 95357,
                 "children": [
                   {
                     "type": "mdhd",
-                    "offset": 38641,
+                    "offset": 100257,
                     "size": 32
                   },
                   {
                     "type": "hdlr",
-                    "offset": 38673,
+                    "offset": 100289,
                     "size": 45
                   },
                   {
                     "type": "minf",
-                    "offset": 38718,
-                    "size": 35612,
+                    "offset": 100334,
+                    "size": 95272,
                     "children": [
                       {
                         "type": "smhd",
-                        "offset": 38726,
+                        "offset": 100342,
                         "size": 16
                       },
                       {
                         "type": "dinf",
-                        "offset": 38742,
+                        "offset": 100358,
                         "size": 36,
                         "children": [
                           {
                             "type": "dref",
-                            "offset": 38750,
+                            "offset": 100366,
                             "size": 28
                           }
                         ]
                       },
                       {
                         "type": "stbl",
-                        "offset": 38778,
-                        "size": 35552,
+                        "offset": 100394,
+                        "size": 95212,
                         "children": [
                           {
                             "type": "stsd",
-                            "offset": 38786,
+                            "offset": 100402,
                             "size": 126
                           },
                           {
                             "type": "stts",
-                            "offset": 38912,
-                            "size": 32
+                            "offset": 100528,
+                            "size": 2240
                           },
                           {
                             "type": "stsc",
-                            "offset": 38944,
-                            "size": 2968
+                            "offset": 102768,
+                            "size": 7756
                           },
                           {
                             "type": "stsz",
-                            "offset": 41912,
-                            "size": 21408
+                            "offset": 110524,
+                            "size": 56252
                           },
                           {
                             "type": "stco",
-                            "offset": 63320,
-                            "size": 10956
+                            "offset": 166776,
+                            "size": 28776
                           },
                           {
                             "type": "sgpd",
-                            "offset": 74276,
+                            "offset": 195552,
                             "size": 26
                           },
                           {
                             "type": "sbgp",
-                            "offset": 74302,
+                            "offset": 195578,
                             "size": 28
                           }
                         ]
@@ -283,20 +283,20 @@
           },
           {
             "type": "udta",
-            "offset": 74330,
+            "offset": 195606,
             "size": 98
           }
         ]
       },
       {
         "type": "free",
-        "offset": 74428,
+        "offset": 195704,
         "size": 8
       },
       {
         "type": "mdat",
-        "offset": 74436,
-        "size": 27621695
+        "offset": 195712,
+        "size": 72485459
       }
     ],
     "streams": [
@@ -326,15 +326,15 @@
         "nal_length_size": "4",
         "id": "0x1",
         "r_frame_rate": "24000/1001",
-        "avg_frame_rate": "42024960/1752791",
+        "avg_frame_rate": "110469120/4607483",
         "time_base": "1/15360",
         "start_pts": 0,
         "start_time": "0.000000",
-        "duration_ts": 1752791,
-        "duration": "114.113997",
-        "bit_rate": "1806132",
+        "duration_ts": 4607483,
+        "duration": "299.966341",
+        "bit_rate": "1801878",
         "bits_per_raw_sample": "8",
-        "nb_frames": "2736",
+        "nb_frames": "7192",
         "extradata_size": 46,
         "disposition": {
           "default": 1,
@@ -383,10 +383,10 @@
         "time_base": "1/48000",
         "start_pts": 0,
         "start_time": "0.000000",
-        "duration_ts": 5474944,
-        "duration": "114.061333",
-        "bit_rate": "130354",
-        "nb_frames": "5347",
+        "duration_ts": 14394495,
+        "duration": "299.885312",
+        "bit_rate": "131319",
+        "nb_frames": "14058",
         "extradata_size": 5,
         "disposition": {
           "default": 1,
@@ -424,27 +424,417 @@
     "source_height": 1080,
     "segments": [
       [
-        405.4,
-        519.44
+        111.78999999999999,
+        113.09
+      ],
+      [
+        150.32999999999998,
+        160.27
+      ],
+      [
+        163.64,
+        164.94
+      ],
+      [
+        167.51999999999998,
+        177.83
+      ],
+      [
+        186.29,
+        187.59
+      ],
+      [
+        194.54,
+        195.93
+      ],
+      [
+        198.72,
+        200.02
+      ],
+      [
+        204.14,
+        207.23000000000002
+      ],
+      [
+        215.01999999999998,
+        223.66
+      ],
+      [
+        227.82999999999998,
+        229.13
+      ],
+      [
+        238.84,
+        240.14000000000001
+      ],
+      [
+        242.63,
+        246.52
+      ],
+      [
+        250.85,
+        270.5
+      ],
+      [
+        281.22,
+        285.59999999999997
+      ],
+      [
+        292.52000000000004,
+        296.32
+      ],
+      [
+        299.61,
+        305.87
+      ],
+      [
+        308.12,
+        313.25
+      ],
+      [
+        364.13,
+        365.42999999999995
+      ],
+      [
+        383.11,
+        384.40999999999997
+      ],
+      [
+        391.28000000000003,
+        393.25
+      ],
+      [
+        399.46000000000004,
+        405.34999999999997
+      ],
+      [
+        414.14000000000004,
+        418.65
+      ],
+      [
+        421.69,
+        427.7
+      ],
+      [
+        432.49,
+        433.78999999999996
+      ],
+      [
+        445.21000000000004,
+        446.59
+      ],
+      [
+        454.47,
+        459.47999999999996
+      ],
+      [
+        465.31,
+        468.78
+      ],
+      [
+        472.74,
+        492.92999999999995
+      ],
+      [
+        495.68,
+        498.34999999999997
+      ],
+      [
+        510.15000000000003,
+        511.45
+      ],
+      [
+        514.41,
+        519.88
+      ],
+      [
+        526.4200000000001,
+        527.72
+      ],
+      [
+        569.25,
+        584.0699999999999
+      ],
+      [
+        586.5600000000001,
+        587.86
+      ],
+      [
+        618.09,
+        619.39
+      ],
+      [
+        652.4200000000001,
+        655.72
+      ],
+      [
+        664.76,
+        667.23
+      ],
+      [
+        675.52,
+        677.78
+      ],
+      [
+        695.96,
+        697.76
+      ],
+      [
+        700.1800000000001,
+        701.52
+      ],
+      [
+        717.4,
+        719.24
+      ],
+      [
+        756.65,
+        757.9499999999999
+      ],
+      [
+        765.86,
+        768.17
+      ],
+      [
+        787.22,
+        790.02
+      ],
+      [
+        798.57,
+        801.4499999999999
+      ],
+      [
+        809.58,
+        813.79
+      ],
+      [
+        816.0,
+        820.26
+      ],
+      [
+        824.59,
+        826.39
+      ],
+      [
+        830.39,
+        831.6899999999999
+      ],
+      [
+        839.73,
+        845.5799999999999
+      ],
+      [
+        852.28,
+        853.5799999999999
+      ],
+      [
+        872.51,
+        876.52
+      ],
+      [
+        881.5600000000001,
+        883.87
+      ],
+      [
+        894.41,
+        899.05
+      ],
+      [
+        915.4300000000001,
+        916.73
+      ],
+      [
+        1012.95,
+        1014.25
+      ],
+      [
+        1036.26,
+        1039.8500000000001
+      ],
+      [
+        1046.8999999999999,
+        1048.3200000000002
+      ],
+      [
+        1052.11,
+        1053.41
+      ],
+      [
+        1098.78,
+        1110.0900000000001
+      ],
+      [
+        1115.8799999999999,
+        1117.27
+      ],
+      [
+        1122.1799999999998,
+        1123.52
+      ],
+      [
+        1126.1399999999999,
+        1127.94
+      ],
+      [
+        1134.8999999999999,
+        1143.0800000000002
+      ],
+      [
+        1146.1599999999999,
+        1147.46
+      ],
+      [
+        1153.5,
+        1154.8000000000002
+      ],
+      [
+        1198.1299999999999,
+        1199.43
+      ],
+      [
+        1205.1399999999999,
+        1206.44
+      ],
+      [
+        1222.82,
+        1226.1200000000001
+      ],
+      [
+        1232.6699999999998,
+        1233.97
+      ],
+      [
+        1243.6799999999998,
+        1251.65
+      ],
+      [
+        1254.1899999999998,
+        1258.3200000000002
+      ],
+      [
+        1267.4499999999998,
+        1268.75
+      ],
+      [
+        1278.54,
+        1280.3400000000001
+      ],
+      [
+        1288.3,
+        1292.1100000000001
+      ],
+      [
+        1311.49,
+        1318.0900000000001
+      ],
+      [
+        1321.9199999999998,
+        1323.64
+      ],
+      [
+        1326.8,
+        1329.1000000000001
+      ],
+      [
+        1336.31,
+        1338.6100000000001
+      ],
+      [
+        1341.73,
+        1344.5300000000002
       ]
     ],
-    "join_times": [],
+    "join_times": [
+      1.3000000000000114,
+      11.240000000000038,
+      12.540000000000049,
+      22.85000000000008,
+      24.15000000000009,
+      25.540000000000106,
+      26.840000000000117,
+      29.93000000000015,
+      38.570000000000164,
+      39.870000000000175,
+      41.170000000000186,
+      45.0600000000002,
+      64.7100000000002,
+      69.09000000000015,
+      72.8900000000001,
+      79.15000000000009,
+      84.28000000000009,
+      85.58000000000004,
+      86.88,
+      88.84999999999997,
+      94.7399999999999,
+      99.24999999999983,
+      105.25999999999982,
+      106.55999999999977,
+      107.93999999999971,
+      112.94999999999965,
+      116.41999999999962,
+      136.60999999999956,
+      139.27999999999952,
+      140.57999999999947,
+      146.0499999999995,
+      147.34999999999945,
+      162.1699999999994,
+      163.46999999999935,
+      164.7699999999993,
+      168.06999999999925,
+      170.53999999999928,
+      172.79999999999927,
+      174.59999999999923,
+      175.93999999999915,
+      177.77999999999918,
+      179.07999999999913,
+      181.38999999999908,
+      184.18999999999903,
+      187.0699999999989,
+      191.27999999999884,
+      195.53999999999883,
+      197.33999999999878,
+      198.63999999999874,
+      204.48999999999864,
+      205.7899999999986,
+      209.7999999999986,
+      212.10999999999854,
+      216.74999999999852,
+      218.04999999999848,
+      219.34999999999843,
+      222.93999999999858,
+      224.35999999999888,
+      225.65999999999906,
+      236.96999999999923,
+      238.35999999999933,
+      239.69999999999948,
+      241.49999999999966,
+      249.67999999999995,
+      250.98000000000013,
+      252.2800000000003,
+      253.5800000000005,
+      254.88000000000068,
+      258.18000000000086,
+      259.48000000000104,
+      267.4500000000013,
+      271.58000000000163,
+      272.8800000000018,
+      274.680000000002,
+      278.49000000000217,
+      285.0900000000023,
+      286.81000000000256,
+      289.11000000000274,
+      291.4100000000029
+    ],
     "reference_commit": "a05846de7c76a66ad42ba6fd37126514bc452167",
     "path": "clipforge_vendor.render.produce_merged_video -> clipforge_vendor.compress.compress",
-    "size_before_bytes": 171589102,
+    "size_before_bytes": 466314672,
     "compressed": true
   },
   "order": [
-    "char1",
-    "char30",
-    "char35",
     "char6"
   ],
   "per_char_segments": {
-    "char1": 71,
-    "char30": 1,
-    "char35": 2,
-    "char6": 51
+    "char6": 80
   },
-  "total_segments": 125
+  "total_segments": 80
 }
