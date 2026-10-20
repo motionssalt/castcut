@@ -20,15 +20,15 @@
     {
       "name": "faces-manifest.json",
       "release_tag": "castcut-job-1792496818035-wi9a",
-      "size": 11515366,
-      "sha256": "a2b00117107a5242b2a75fc0c8ece34198eb4ff42f2c2af273e0f7a2022d8e6b",
+      "size": 10375815,
+      "sha256": "3e245789144408449b3d285601eeeefffc09e2f94e33599e037ea3d07aba3491",
       "purpose": "face_manifest"
     },
     {
       "name": "face_thumbnails.zip",
       "release_tag": "castcut-job-1792496818035-wi9a",
-      "size": 8666039,
-      "sha256": "ce2f274048aa17ebdb71017df212755fc2f2f04fa69f72c9de814cd6beb5947a",
+      "size": 7806939,
+      "sha256": "984819da2a7d6ce3781035488db3c4e784b8e83127700d362abe6b663b541af7",
       "purpose": "face_thumbnails"
     },
     {
@@ -70,7 +70,7 @@
       "name": "screenshots.zip",
       "release_tag": "castcut-job-1792496818035-wi9a",
       "size": 53257335,
-      "sha256": "ec549fd1d328f033edca6f1c58432ae0bada29d438350ec5d749421e50be4393",
+      "sha256": "e9c85907a9d29c8a7506c0283d2d414fa8d87f79e4bc976c485e09fd61f814e7",
       "purpose": "screenshot_sheets"
     },
     {
