@@ -55,7 +55,20 @@ def ensure_source(job_id: str, jobs_root: str = "jobs", work_dir: str = "work",
     the release or must be re-downloaded — processing works identically.
     """
     job_dir = os.path.join(jobs_root, job_id)
-    ing = _load_json(os.path.join(job_dir, "ingest.json"))
+    ing_path = os.path.join(job_dir, "ingest.json")
+    if not os.path.exists(ing_path):
+        import time
+        for _ in range(4):
+            time.sleep(2)
+            try:
+                subprocess.run(["git", "pull", "--rebase", "origin", "main"], capture_output=True, timeout=30)
+            except Exception:
+                pass
+            if os.path.exists(ing_path):
+                break
+    if not os.path.exists(ing_path):
+        raise _fail(f"missing {ing_path} — ingest metadata was not found.")
+    ing = _load_json(ing_path)
     names = list(ing.get("sources") or [ing.get("asset_name")])
     if not names or not names[0]:
         raise _fail("ingest.json has no sources/asset_name.")
