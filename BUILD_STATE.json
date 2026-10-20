@@ -1045,7 +1045,7 @@
   },
   "export_copy_clipforge": {
     "status": "in_progress",
-    "last_updated": "2026-10-20T21:43:27.954628+00:00",
+    "last_updated": "2026-10-20T21:47:48.225143+00:00",
     "clipforge_reference": {
       "repository": "motionssalt/clipforge",
       "commit": "a05846de7c76a66ad42ba6fd37126514bc452167",
@@ -1524,13 +1524,14 @@
       "Recorded full ffprobe and recursive MP4 atom inspection; latest fixed output already matches reference headline compatibility fields",
       "Vendored unmodified upstream render/compress snapshots plus exact shared helpers; adapted render only fps/scale/AAC rate, compression only VBV rate and cap-safe original-retained fallback",
       "Both faces and AI entry points call export_segments on ORIGINAL source; removed TS concat and standalone final FFmpeg path, --quality/--crf export switches, and silent invalid-track fallback",
-      "Found important delivery divergence: ClipForge uses authenticated API octet-stream + saveBytes; CastCut had only unauthenticated private browser links. Ported reference downloader, adding MP4 signature, expected-length and SHA256 gate before saving. No site redesign."
+      "Found important delivery divergence: ClipForge uses authenticated API octet-stream + saveBytes; CastCut had only unauthenticated private browser links. Ported reference downloader, adding MP4 signature, expected-length and SHA256 gate before saving. No site redesign.",
+      "All four executable upstream-comparison tests pass, including exact argument-order equivalence and selected second-track 880Hz vs first-track 440Hz",
+      "Dispatched original owner clips and 1:54 scene runs; dispatched additional isolated real-source project with unchanged real face selection and 10x60s scene JSON, preserving original project selections"
     ],
     "pending": [
-      "Inspect reference code and delivered media",
-      "Compare historical CastCut path",
-      "Vendor shared export",
-      "Validate local and real Actions exports"
+      "Wait for real export runs and CI",
+      "Browser authenticated save/playback checks",
+      "Complete verified comparisons and final status"
     ],
     "verified_runs": [],
     "notes": "",
