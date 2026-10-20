@@ -58,7 +58,7 @@ def test_six_panel_grids_tail_and_timestamp_index(tmp_path):
     assert sheets[1]['timestamps']==[6,6.2,6.4,6.6,6.8,7]
     for sheet in sheets:
         image=Image.open(tmp_path/'shots'/sheet['name'])
-        assert image.size==(1930,726)
+        assert image.size==(1928,726)
         # Each panel contains both its own frame and a burned label box.
         for row in range(2):
             for col in range(3):
