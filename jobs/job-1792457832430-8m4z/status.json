@@ -9,9 +9,10 @@
   "message": "",
   "tasks": {
     "faces": {
-      "state": "queued",
-      "message": "Queued for analysis",
-      "updated_at": "2026-10-20T07:33:03Z"
+      "state": "running",
+      "message": "IRL faces analysis running",
+      "updated_at": "2026-10-20T07:39:06Z",
+      "percent": 10
     },
     "scene": {
       "state": "ready",
@@ -21,6 +22,6 @@
     }
   },
   "release_verified": false,
-  "updated_at": "2026-10-20T07:38:59Z",
-  "updated_at_epoch": 1792481939
+  "updated_at": "2026-10-20T07:39:06Z",
+  "updated_at_epoch": 1792481946
 }
