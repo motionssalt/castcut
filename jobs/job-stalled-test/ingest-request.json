@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "job_id": "job-stalled-test",
+  "title": "Deliberately Stalled Test Job",
+  "content_type": "irl",
+  "source": {
+    "kind": "direct_url",
+    "url": "https://example.com/stalled.mp4"
+  },
+  "created_at_epoch": 1792504390
+}
