@@ -5,11 +5,11 @@
   "content_type": "irl",
   "created_at_epoch": 1792507438,
   "created_at": "2026-10-20T14:43:58Z",
-  "updated_at": "2026-10-20T15:49:05Z",
-  "updated_at_epoch": 1792511345,
+  "updated_at": "2026-10-20T15:54:53Z",
+  "updated_at_epoch": 1792511693,
   "expires_at_epoch": 1792593838,
-  "state": "analyzing",
-  "message": "",
+  "state": "ready",
+  "message": "Project ready \u2014 required release assets verified.",
   "selected_files": [
     {
       "index": 16,
@@ -27,10 +27,10 @@
     },
     "faces": {
       "name": "Faces",
-      "state": "running",
-      "message": "IRL faces analysis running",
-      "updated_at": "2026-10-20T15:49:05Z",
-      "percent": 10
+      "state": "ready",
+      "message": "faces complete; release verified",
+      "updated_at": "2026-10-20T15:54:53Z",
+      "percent": 100
     },
     "scene": {
       "name": "Scene",
@@ -43,7 +43,7 @@
   "release_tag": "castcut-job-1792507438516-dehl",
   "workflow_run_url": "https://github.com/motionssalt/castcut/actions/runs/39441942587",
   "video_in_release": true,
-  "release_verified": false,
+  "release_verified": true,
   "missing_assets": [],
   "release_url": "https://github.com/motionssalt/castcut/releases/tag/castcut-job-1792507438516-dehl"
 }
