@@ -997,12 +997,36 @@
   },
   "export_size_playback": {
     "status": "in_progress",
-    "last_updated": "2026-10-20T19:57:35.067676+00:00",
-    "findings": "Investigating export size and playback failures across flows. Starting ClipForge inspection and export comparison.",
-    "encode_profile": {},
+    "last_updated": "2026-10-20T20:18:34.084776+00:00",
+    "findings": "Deep diagnosis comparing playable ClipForge output (final.mp4) vs unplayable CastCut export (castcut-export-exp-job-1792507438516-dehl-scene-mvgxsz3y.mp4):\n1. Playback failure root causes on Android:\n   - Profile & Level: CastCut exported at High@L5.0 (level 50) because -tune animation doubled reference frames to ref=6 without level clamping. Android hardware decoders (MediaCodec) reject Level 5.0 for 1080p.\n   - Edit Lists (elst atom): CastCut MP4 container contained an elst box (has elst: True) due to B-frames (bframes=5, b_pyramid=2) and initial presentation delay. Android Stagefright / MediaPlayer fails on MP4 edit lists.\n   - Container brand & timescale: CastCut used isom major brand and unstandardized timescale; ClipForge enforces mp42 major brand, -video_track_timescale 15360, and -use_editlist 0.\n   - B-frames: CastCut used 5 B-frames with pyramid reordering; ClipForge disables B-frames (-bf 0) ensuring PTS==DTS, start_pts==0, and immediate decode without buffer delay.\n2. File size explosion root causes (600 MB / 4.7-6.0 Mbps):\n   - Previous export used unconstrained CRF 23 with NO bitrate ceiling (-maxrate / -bufsize omitted). Live-action and detailed anime scenes exploded to 4640-4883 kbps video bitrate.\n   - Resolution and frame rate were unconstrained (sources with >1080p or 60fps remained unscaled).\n3. Export options to remove:\n   - The 3 options in UI were selectQuality: Normal (CRF 23 medium), Compact (CRF 26 medium), High (CRF 20 medium). Must be completely removed in favor of ONE fixed profile while preserving the audio track picker.",
+    "encode_profile": {
+      "container": "mp4",
+      "movflags": "+faststart",
+      "use_editlist": 0,
+      "brand": "mp42",
+      "vcodec": "libx264",
+      "profile": "high",
+      "level": "4.0",
+      "pix_fmt": "yuv420p",
+      "bit_depth": 8,
+      "bframes": 0,
+      "crf": 23,
+      "maxrate": "1872k",
+      "bufsize": "3744k",
+      "max_resolution": "1080p (scale down if larger, keep if <=1080p, even dimensions)",
+      "max_fps": "30 fps CFR (keep if <=30, cap to 30 if >30)",
+      "video_track_timescale": 15360,
+      "audio_codec": "aac",
+      "audio_profile": "aac_low",
+      "audio_bitrate": "128k",
+      "audio_channels": 2,
+      "audio_sample_rate": 48000,
+      "strip_streams": "subtitles, data, attachments, chapters (-sn -dn -map_chapters -1 -map_metadata -1)"
+    },
     "done": [
       "Initialized export_size_playback tracking in BUILD_STATE.json",
-      "Cloned castcut and clipforge repositories"
+      "Cloned castcut and clipforge repositories",
+      "Completed deep inspection and root cause diagnosis comparing ClipForge and CastCut"
     ],
     "pending": [
       "Inspect clipforge render/delivery pipeline and export settings",
