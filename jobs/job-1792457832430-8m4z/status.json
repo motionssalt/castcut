@@ -14,12 +14,13 @@
       "updated_at": "2026-10-20T07:33:03Z"
     },
     "scene": {
-      "state": "queued",
-      "message": "Queued for analysis",
-      "updated_at": "2026-10-20T07:33:03Z"
+      "state": "running",
+      "message": "IRL scene analysis running",
+      "updated_at": "2026-10-20T07:33:22Z",
+      "percent": 10
     }
   },
   "release_verified": false,
-  "updated_at": "2026-10-20T07:33:03Z",
-  "updated_at_epoch": 1792481583
+  "updated_at": "2026-10-20T07:33:22Z",
+  "updated_at_epoch": 1792481602
 }
