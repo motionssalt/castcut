@@ -5,17 +5,27 @@
   "content_type": "irl",
   "created_at_epoch": 1792455597,
   "created_at": "2026-10-20T00:19:57Z",
-  "updated_at": "2026-10-20T00:20:54Z",
-  "updated_at_epoch": 1792455656,
+  "updated_at": "2026-10-20T00:21:52Z",
+  "updated_at_epoch": 1792455712,
   "expires_at_epoch": 1792541997,
-  "state": "queued_for_ingest",
-  "message": "Downloading 1 selected file(s)…",
-  "workflow_run_url": "https://github.com/motionssalt/castcut/actions/runs/39347006853",
+  "state": "ingest_running",
+  "message": "Downloading source",
+  "workflow_run_url": "https://github.com/motionssalt/castcut/actions/runs/39347107911",
   "selected_files": [
     {
       "index": 40,
       "path": "Season 1/iCarly - S01E20 - iStakeout (1080p x265 EDGE2020).mkv",
       "length": 976860153
     }
-  ]
+  ],
+  "tasks": {
+    "ingest": {
+      "name": "Ingest",
+      "state": "running",
+      "message": "Downloading source",
+      "percent": 10.0,
+      "updated_at": "2026-10-20T00:21:52Z"
+    }
+  },
+  "release_tag": "castcut-job-1792455597017-qjkc"
 }
