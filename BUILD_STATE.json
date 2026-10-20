@@ -1045,7 +1045,7 @@
   },
   "export_copy_clipforge": {
     "status": "in_progress",
-    "last_updated": "2026-10-20T21:41:44.600908+00:00",
+    "last_updated": "2026-10-20T21:43:27.954628+00:00",
     "clipforge_reference": {
       "repository": "motionssalt/clipforge",
       "commit": "a05846de7c76a66ad42ba6fd37126514bc452167",
@@ -1427,7 +1427,8 @@
             "size": 10439648
           }
         ]
-      }
+      },
+      "browser_download_exact": "export async function downloadReleaseAsset(credentials, asset, onProgress) {\n  const response = await fetch(String(asset.url || asset.browserUrl), {\n    headers: {\n      'Accept': 'application/octet-stream',\n      'Authorization': `Bearer ${credentials.githubPat}`\n    }\n  });\n  if (!response.ok) throw new Error(`Release download failed (${response.status}); no file saved.`);\n  const total = Number(response.headers.get('content-length') || asset.size || 0);\n  if (!response.body) {\n    const buf = new Uint8Array(await response.arrayBuffer());\n    if (onProgress) onProgress(buf.length, total || buf.length);\n    return buf;\n  }\n  const reader = response.body.getReader();\n  const chunks = [];\n  let received = 0;\n  for (;;) {\n    const { done, value } = await reader.read();\n    if (done) break;\n    chunks.push(value);\n    received += value.length;\n    if (onProgress) onProgress(received, total);\n  }\n  const out = new Uint8Array(received);\n  let offset = 0;\n  for (const chunk of chunks) { out.set(chunk, offset); offset += chunk.length; }\n  return out;\n}\n\n"
     },
     "diff_table": [
       {
@@ -1507,6 +1508,12 @@
         "clipforge": "basic validate_mp4 and compression invariant checks",
         "castcut_before": "avg bitrate only; no packet-window checks",
         "decision": "add strict packet, boxes, SPS/GOP, source and hashes checks"
+      },
+      {
+        "aspect": "actual browser save",
+        "clipforge": "site/js/github.js downloadReleaseAsset authenticated octet-stream + site/js/media.js saveBytes",
+        "castcut_before": "exports.js bare private browser_download_url opens tab; no PAT header or length/hash checks",
+        "decision": "copy reference authenticated bytes + browser save; reject HTML/incomplete/wrong hash before saving"
       }
     ],
     "root_cause": "Earlier a5f68a7 reimplemented a profile in utils.py instead of importing/vendoring ClipForge: retained the pre-existing TS concat-demuxer architecture and added its own final filter/encode. Real old CastCut is High@5.0 with B-frame reordering, isom/editlists and 4.748 Mbps vs reference High@4.0 bf0 mp42. HOWEVER latest scene-fixed output already matches those headline compatibility fields and has exact release digest. These flags alone do NOT establish why the phone rejects the latest file; no physical phone evidence. Remaining proven divergences are the cut/join graph, audio multiple-generation encoding, rate/GOP handling, and private-link delivery. Replace all divergent construction steps, then test delivery, without claiming isolated physical root cause.",
@@ -1516,7 +1523,8 @@
       "Downloaded real reference, old and previously fixed outputs; all SHA256 match GitHub asset digests",
       "Recorded full ffprobe and recursive MP4 atom inspection; latest fixed output already matches reference headline compatibility fields",
       "Vendored unmodified upstream render/compress snapshots plus exact shared helpers; adapted render only fps/scale/AAC rate, compression only VBV rate and cap-safe original-retained fallback",
-      "Both faces and AI entry points call export_segments on ORIGINAL source; removed TS concat and standalone final FFmpeg path, --quality/--crf export switches, and silent invalid-track fallback"
+      "Both faces and AI entry points call export_segments on ORIGINAL source; removed TS concat and standalone final FFmpeg path, --quality/--crf export switches, and silent invalid-track fallback",
+      "Found important delivery divergence: ClipForge uses authenticated API octet-stream + saveBytes; CastCut had only unauthenticated private browser links. Ported reference downloader, adding MP4 signature, expected-length and SHA256 gate before saving. No site redesign."
     ],
     "pending": [
       "Inspect reference code and delivered media",
