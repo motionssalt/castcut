@@ -1045,7 +1045,7 @@
   },
   "export_copy_clipforge": {
     "status": "in_progress",
-    "last_updated": "2026-10-20T21:38:10.115515+00:00",
+    "last_updated": "2026-10-20T21:39:09.389176+00:00",
     "clipforge_reference": {
       "repository": "motionssalt/clipforge",
       "commit": "a05846de7c76a66ad42ba6fd37126514bc452167",
@@ -1514,7 +1514,8 @@
       "Cloned both private repositories; ClipForge read-only.",
       "Inspected exact source/render/compositor/compression/delivery code and previous a5f68a7 git diff",
       "Downloaded real reference, old and previously fixed outputs; all SHA256 match GitHub asset digests",
-      "Recorded full ffprobe and recursive MP4 atom inspection; latest fixed output already matches reference headline compatibility fields"
+      "Recorded full ffprobe and recursive MP4 atom inspection; latest fixed output already matches reference headline compatibility fields",
+      "Vendored unmodified upstream render/compress snapshots plus exact shared helpers; adapted render only fps/scale/AAC rate, compression only VBV rate and cap-safe original-retained fallback"
     ],
     "pending": [
       "Inspect reference code and delivered media",
@@ -2289,6 +2290,20 @@
           }
         ]
       }
+    },
+    "vendor_provenance": {
+      "commit": "a05846de7c76a66ad42ba6fd37126514bc452167",
+      "original_sha256": {
+        "render": "22ecbaf665c7bde294d3aaffbd1a24ea593900327bde69b2dd1afc244a60eb2c",
+        "compress": "548eebbd16fa10ca95e8f51665d95d0874546380da9ffee572744105a5036d7a"
+      },
+      "allowed_changes": [
+        "fps source rational capped 30",
+        "downscale <=1920x1080 no upscale even dimensions",
+        "128k AAC selected source PCM replaces narration",
+        "terminal constrained CRF23 maxrate1800k bufsize1800k; original fallback only when itself rate-compliant"
+      ],
+      "unmodified": "encode argument order, filter ordering apart from scale caps, g60/keyint60/sc0, x264 force-cfr, timescales, codec/profile/level/pixfmt, container flags, audio copy in terminal pass"
     }
   }
 }
