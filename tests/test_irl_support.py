@@ -63,3 +63,45 @@ def test_scene_prompt_customizes_for_irl():
         content = open(prompt_file).read()
         assert "LIVE-ACTION / REAL-WORLD" in content
         assert "not anime" in content
+
+
+def test_merge_clusters_combines_same_actor_across_scenes():
+    import numpy as np
+    from pipeline.faces import _merge_clusters
+    vec_a = np.array([1.0, 0.0, 0.0], dtype='float32')
+    vec_b = np.array([0.92, 0.08, 0.0], dtype='float32')
+    vec_b /= np.linalg.norm(vec_b)
+
+    clusters = [
+        {'centroid': vec_a, 'count': 6, 'times': [1.0, 2.0, 3.0], 'best_score': 0.8, 'best_blur': 50.0, 'best_frame': 'f1.jpg', 'best_box': [0, 0, 10, 10]},
+        {'centroid': vec_b, 'count': 4, 'times': [15.0, 16.0], 'best_score': 0.88, 'best_blur': 65.0, 'best_frame': 'f2.jpg', 'best_box': [0, 0, 10, 10]},
+    ]
+    merged = _merge_clusters(clusters, cos_threshold=0.60)
+    assert len(merged) == 1
+    assert merged[0]['count'] == 10
+    assert merged[0]['times'] == [1.0, 2.0, 3.0, 15.0, 16.0]
+    assert merged[0]['best_frame'] == 'f2.jpg'
+
+
+def test_merge_clusters_never_merges_simultaneously_visible_actors():
+    import numpy as np
+    from pipeline.faces import _merge_clusters
+    vec_a = np.array([1.0, 0.0, 0.0], dtype='float32')
+    vec_b = np.array([0.95, 0.05, 0.0], dtype='float32')
+    vec_b /= np.linalg.norm(vec_b)
+
+    clusters = [
+        {'centroid': vec_a, 'count': 3, 'times': [2.0, 4.0], 'best_score': 0.8, 'best_blur': 50.0, 'best_frame': 'f1.jpg', 'best_box': [0, 0, 10, 10]},
+        {'centroid': vec_b, 'count': 3, 'times': [2.0, 5.0], 'best_score': 0.85, 'best_blur': 60.0, 'best_frame': 'f2.jpg', 'best_box': [0, 0, 10, 10]},
+    ]
+    merged = _merge_clusters(clusters, cos_threshold=0.60)
+    assert len(merged) == 2
+
+
+def test_face_thumb_generates_data_uri():
+    import numpy as np
+    from pipeline.faces import _thumb
+    img = np.zeros((100, 100, 3), dtype=np.uint8)
+    box = (10, 10, 50, 50)
+    thumb_uri = _thumb(img, box)
+    assert thumb_uri.startswith('data:image/')

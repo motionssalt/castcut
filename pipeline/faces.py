@@ -155,62 +155,59 @@ def _ensure_irl_models(models_dir: str) -> tuple[str, str]:
 def _load_irl_detector_and_embedder():
     import cv2
     import numpy as np
-
     models_dir = os.path.join(os.path.dirname(__file__), "models")
     yunet_path, sface_path = _ensure_irl_models(models_dir)
-
     try:
         detector = cv2.FaceDetectorYN.create(
             yunet_path,
             "",
             (320, 320),
-            score_threshold=0.35,
+            score_threshold=0.55,
             nms_threshold=0.30,
             top_k=5000,
         )
         recognizer = cv2.FaceRecognizerSF.create(sface_path, "")
-
         stats = {'raw_detections':0,'kept_after_quality':0,'embeddings':0,'embedding_failures':0,'small_invalid':0}
+
         def detect_and_embed_irl(img_bgr):
             h, w = img_bgr.shape[:2]
             detector.setInputSize((w, h))
             _, faces = detector.detect(img_bgr)
-            # Wide shots / no detections: upscale once, remap coordinates/landmarks.
-            if faces is None or any(min(f[2],f[3]) < 48 for f in faces):
-                larger = cv2.resize(img_bgr, None, fx=1.5, fy=1.5)
-                detector.setInputSize((larger.shape[1],larger.shape[0]))
+            # Only upscale if no faces were found at base scale
+            if faces is None or len(faces) == 0:
+                larger = cv2.resize(img_bgr, None, fx=1.25, fy=1.25)
+                detector.setInputSize((larger.shape[1], larger.shape[0]))
                 _, extra = detector.detect(larger)
-                if extra is not None:
-                    extra[:,:14] /= 1.5
-                    faces = extra if faces is None else np.vstack([faces,extra])
+                if extra is not None and len(extra) > 0:
+                    extra[:, :14] /= 1.25
+                    faces = extra
+
             detections = []
             if faces is None or len(faces) == 0:
                 return detections
-
             stats["raw_detections"] += len(faces)
             for face in faces:
                 x, y, bw, bh = int(face[0]), int(face[1]), int(face[2]), int(face[3])
                 score = float(face[14])
-                # Filter small background faces or low score
-                if bw < 10 or bh < 10 or score < 0.35:
+                # Filter small background faces (< 28px) or low score (< 0.55)
+                if bw < 28 or bh < 28 or score < 0.55:
                     stats["small_invalid"] += 1
                     continue
-
                 x0 = max(0, min(w - 1, x))
                 y0 = max(0, min(h - 1, y))
                 x1 = max(0, min(w, x + bw))
                 y1 = max(0, min(h, y + bh))
                 if x1 <= x0 or y1 <= y0:
                     continue
-
                 face_crop = img_bgr[y0:y1, x0:x1]
                 if face_crop.size == 0:
                     continue
-
                 gray = cv2.cvtColor(face_crop, cv2.COLOR_BGR2GRAY)
                 blur_var = float(cv2.Laplacian(gray, cv2.CV_64F).var())
-                stats["kept_after_quality"] += 1  # blur ranks thumbnails, never discards a person
-
+                if blur_var < 10.0 and score < 0.70:
+                    stats["small_invalid"] += 1
+                    continue
+                stats["kept_after_quality"] += 1
                 try:
                     aligned = recognizer.alignCrop(img_bgr, face)
                     feat = recognizer.feature(aligned).flatten().astype("float32")
@@ -226,13 +223,11 @@ def _load_irl_detector_and_embedder():
                     })
                 except Exception:
                     stats['embedding_failures'] += 1
-                    # Preserve a gallery entry even when alignment/embedding fails.
-                    detections.append({'box':(float(x0),float(y0),float(x1),float(y1)), 'score':score,'vector':None,'blur':blur_var})
-
             return detections
-
         detect_and_embed_irl.stats = stats
-        return detect_and_embed_irl, "YuNet+SFace(ArcFace) recall score>=0.35 min10px no-blur-drop", 0.25
+        # For SFace, cosine similarity >= 0.363 indicates same identity.
+        # Threshold 0.60 allows (1.0 - sim) <= 0.60 (sim >= 0.40), clustering actors across scenes.
+        return detect_and_embed_irl, "YuNet+SFace(ArcFace) score>=0.55 min28px", 0.60
     except Exception as exc:
         print(f"[faces] IRL model init failed ({exc}); falling back to OpenCV Haar cascade", flush=True)
         haar_path = cv2.data.haarcascades + "haarcascade_frontalface_default.xml"
@@ -271,6 +266,66 @@ def _cosine(a, b):
     if na == 0 or nb == 0:
         return 0.0
     return float(np.dot(a, b) / (na * nb))
+
+
+def _merge_clusters(clusters, cos_threshold: float, max_overlap_ratio: float = 0.02):
+    import numpy as np
+    merged = True
+    while merged:
+        merged = False
+        best_pair = None
+        best_sim = -1.0
+        n = len(clusters)
+        for i in range(n):
+            cl_a = clusters[i]
+            if cl_a.get('centroid') is None:
+                continue
+            times_a = set(cl_a['times'])
+            vec_a = cl_a['centroid']
+            for j in range(i + 1, n):
+                cl_b = clusters[j]
+                if cl_b.get('centroid') is None:
+                    continue
+                times_b = set(cl_b['times'])
+                vec_b = cl_b['centroid']
+
+                # If two clusters appear in the same frame simultaneously, they are distinct people
+                overlap = len(times_a.intersection(times_b))
+                min_len = min(len(times_a), len(times_b))
+                max_allowed_overlap = 0 if min_len < 20 else int(max_overlap_ratio * min_len)
+                if overlap > max_allowed_overlap:
+                    continue
+
+                sim = _cosine(vec_a, vec_b)
+                if (1.0 - sim) <= cos_threshold and sim > best_sim:
+                    best_sim = sim
+                    best_pair = (i, j)
+
+        if best_pair is not None:
+            i, j = best_pair
+            cl_a = clusters[i]
+            cl_b = clusters[j]
+            total_count = cl_a['count'] + cl_b['count']
+            new_centroid = (cl_a['centroid'] * cl_a['count'] + cl_b['centroid'] * cl_b['count']) / total_count
+            norm = np.linalg.norm(new_centroid)
+            if norm > 0:
+                new_centroid /= norm
+            cl_a['centroid'] = new_centroid
+            cl_a['count'] = total_count
+            cl_a['times'] = sorted(cl_a['times'] + cl_b['times'])
+
+            if (cl_b['best_score'] > cl_a['best_score']) or (
+                cl_b['best_score'] >= cl_a['best_score'] * 0.9 and cl_b.get('best_blur', 0) > cl_a.get('best_blur', 0)
+            ):
+                cl_a.update(
+                    best_score=cl_b['best_score'],
+                    best_blur=cl_b.get('best_blur', 0),
+                    best_frame=cl_b['best_frame'],
+                    best_box=cl_b['best_box'],
+                )
+            clusters.pop(j)
+            merged = True
+    return clusters
 
 
 def _thumb(img_bgr, box, size=112, pad_ratio=0.25) -> str:
@@ -447,6 +502,9 @@ def main() -> None:
             if best_i >= 0 and (1.0 - best_sim) <= cos_threshold:
                 cl = clusters[best_i]
                 cl["centroid"] = (cl["centroid"] * cl["count"] + vec) / (cl["count"] + 1)
+                c_norm = np.linalg.norm(cl["centroid"])
+                if c_norm > 0:
+                    cl["centroid"] = cl["centroid"] / c_norm
                 cl["count"] += 1
                 cl["times"].append(t)
                 # Pick sharpest, highest confidence frame as the thumbnail
@@ -466,19 +524,15 @@ def main() -> None:
         if idx % 60 == 0:
             print(f"[faces] frame {idx}/{len(frames)} — {len(clusters)} clusters", flush=True)
 
-    counters['clusters_formed'] = len(clusters)
-    # Singleton faces are always retained; --min-appearances is legacy input only.
-    if args.min_appearances > 1:
-        print('[faces] recall-first: ignoring min-appearances > 1; singleton faces retained',flush=True)
-    if is_irl and hasattr(detect_and_embed_irl,'stats'):
-        counters.update(detect_and_embed_irl.stats)
-    elif is_irl:
-        counters.update(raw_detections=sum(c['count'] for c in clusters),kept_after_quality=sum(c['count'] for c in clusters),embeddings=sum(c['count'] for c in clusters))
-    counters['gallery_entries'] = len(clusters)
-    print('[faces] FUNNEL '+json.dumps(counters),flush=True)
+    counters['clusters_raw'] = len(clusters)
 
-    # Sort characters by appearances / total screen time
-    characters = []
+    # Pass 2: Cross-scene agglomerative merge of same character across different shots
+    if not ('fallback' in emb_name) and len(clusters) > 1:
+        clusters = _merge_clusters(clusters, cos_threshold=cos_threshold)
+
+    counters['clusters_formed'] = len(clusters)
+
+    # Calculate screen_time and ranges for all clusters
     for cl in clusters:
         points = sorted(cl["times"])
         ranges = merge_intervals([(t, t + 1.0 / fps) for t in points], gap=args.presence_gap)
@@ -486,8 +540,36 @@ def main() -> None:
         cl["screen_time"] = screen_time
         cl["ranges"] = ranges
 
-    clusters.sort(key=lambda c: c["screen_time"], reverse=True)
+    # Sort characters by screen time & appearances descending
+    clusters.sort(key=lambda c: (c["screen_time"], c["count"]), reverse=True)
 
+    # Filter out transient 1-frame background noise or false detections
+    min_app = args.min_appearances
+    if min_app <= 1 and duration > 60:
+        min_app = 3
+    elif min_app <= 1:
+        min_app = 2
+
+    filtered_clusters = [c for c in clusters if c["count"] >= min_app or c.get("screen_time", 0) >= 1.5]
+    if filtered_clusters:
+        clusters = filtered_clusters
+
+    # Ensure gallery doesn't exceed reasonable size (like anime: ~16-25 characters)
+    if len(clusters) > 35:
+        prominent = [c for c in clusters if c["count"] >= 4]
+        if len(prominent) >= 15:
+            clusters = prominent[:35]
+        else:
+            clusters = clusters[:30]
+
+    if is_irl and hasattr(detect_and_embed_irl, 'stats'):
+        counters.update(detect_and_embed_irl.stats)
+    elif is_irl:
+        counters.update(raw_detections=sum(c['count'] for c in clusters),kept_after_quality=sum(c['count'] for c in clusters),embeddings=sum(c['count'] for c in clusters))
+    counters['gallery_entries'] = len(clusters)
+    print('[faces] FUNNEL ' + json.dumps(counters), flush=True)
+
+    characters = []
     for n, cl in enumerate(clusters, start=1):
         img = cv2.imread(cl["best_frame"])
         thumb = _thumb(img, cl["best_box"]) if img is not None else None
@@ -499,8 +581,10 @@ def main() -> None:
             "first_seen": round(points[0], 1),
             "ranges": [[round(s, 2), round(e, 2)] for s, e in cl["ranges"]],
             "thumb": thumb,
+            "thumbnail": thumb,
+            "thumbnail_url": thumb,
+            "preview_url": thumb,
         })
-
     manifest = {
         "version": 1,
         "funnel": counters,

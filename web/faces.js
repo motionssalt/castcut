@@ -135,8 +135,8 @@ function renderFacesGrid() {
       ${characters.map(c => {
         const isSelected = selectedCharIds.has(c.id);
         const appearances = (c.clusters || []).length || c.appearances || 0;
-        const totalSec = c.total_duration ? formatSeconds(c.total_duration) : "";
-        const thumbUrl = c.thumbnail_url || c.preview_url || "";
+        const totalSec = (c.total_duration || c.screen_time) ? formatSeconds(c.total_duration || c.screen_time) : "";
+        const thumbUrl = c.thumb || c.thumbnail_url || c.thumbnail || c.preview_url || "";
 
         return `
           <div class="face-card ${isSelected ? 'selected' : ''}" data-id="${escapeHtml(c.id)}" role="checkbox" aria-checked="${isSelected}">
