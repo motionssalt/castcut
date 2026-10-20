@@ -667,17 +667,89 @@
   "ui_rebuild": "pending, separate session",
   "website_rebuild": {
     "status": "in_progress",
-    "last_updated": "2026-10-20T12:27:35.265392+00:00",
-    "feature_inventory": [],
-    "api_contract": {},
-    "pages": [],
-    "done": [],
-    "pending": [
+    "last_updated": "2026-10-20T12:28:27.694722+00:00",
+    "feature_inventory": [
+      "Owner PAT access gate with remember-me in localStorage, instant load without flash, and clear sign out",
+      "Projects list with title, content type tag (Anime/IRL), status pill, last updated, quick action links, client search filter, and active-only polling",
+      "Project intake with exactly 2 inputs: torrent file upload (with instant client bdecode and auto-disable of link input) and single link field (auto-detects magnet, direct URL, Google Drive)",
+      "Content type toggle (Anime vs IRL, default Anime)",
+      "Torrent file selection list handling 50+ files smoothly with full filename wrapping, size formatting, and video badges",
+      "Unified pipeline tracking: Ingest -> Analysis (Faces + AI Scene in parallel) -> Ready",
+      "Project overview page with source video specs (resolution, duration, fps, size, audio track list), pipeline stepper, and failed run repair/retry/cancel/delete",
+      "Faces flow: character face thumbnails gallery, multi-select, merge groups, audio track picker, quality preset selector, clips export dispatch with progress",
+      "AI Scene flow: scene request prompt, instant release-linked agent prompt generator with copy feedback, dual JSON intake (file upload + paste), tolerant JSON parsing, segment validation & preview, audio track picker, scene cut export dispatch",
+      "Finished exports list with direct GitHub release asset downloads, file sizes, audio track info, and export deletion",
+      "Task & workflow runs detail page with real-time status of GitHub Actions runs, step-level failure diagnostics, and run cancellation",
+      "Audio track persistence per project across exports"
+    ],
+    "api_contract": {
+      "auth": "Header x-castcut-pat: <github_pat>, verified against GitHub user motionssalt",
+      "endpoints": {
+        "GET /api/whoami": "Returns { login }",
+        "GET /api/jobs": "Returns { jobs: [...] } with reconciled action statuses",
+        "POST /api/jobs": "Creates new job, accepts { title, content_type, source: { kind, url?, magnet?, torrent_b64? }, torrent_name?, files?, selected_indices? }",
+        "GET /api/jobs/:id": "Returns complete project state, status, ingest info, clipsManifest, files, selection, sceneAgent, audioChoice, exports, releases, runs",
+        "DELETE /api/jobs/:id": "Cancels active runs, deletes project releases and tags, deletes committed files in jobs/:id/",
+        "POST /api/jobs/:id/cancel": "Cancels active GitHub Action workflow runs for the job",
+        "POST /api/jobs/:id/retry": "Intelligently identifies and retriggers the last failed/cancelled workflow",
+        "POST /api/jobs/:id/repair": "Triggers face, scene, or hybrid analysis workflow re-run",
+        "PUT /api/jobs/:id/selection": "Confirms torrent file indices and dispatches ingest.yml",
+        "DELETE /api/jobs/:id/selection": "Clears selection and resets job to awaiting_selection",
+        "POST /api/jobs/:id/hybrid-analyze": "Dispatches hybrid-analyze.yml",
+        "POST /api/jobs/:id/faces": "Dispatches faces.yml",
+        "POST /api/jobs/:id/scene-analyze": "Dispatches scene-analyze.yml with scene request",
+        "POST /api/jobs/:id/audio-choice": "Saves selected audio track index to jobs/:id/audio_choice.json",
+        "POST /api/jobs/:id/clips-export": "Saves selection.json and dispatches clips-export.yml",
+        "POST /api/jobs/:id/scene-export": "Saves production.json and dispatches scene-export.yml",
+        "DELETE /api/jobs/:id/exports/:exportId": "Deletes finished export json and release asset record"
+      },
+      "storage": "GitHub repository committed files at jobs/<id>/ and GitHub releases at castcut-<id>"
+    },
+    "pages": [
+      {
+        "path": "/",
+        "name": "Projects",
+        "description": "Fast responsive list of all projects with status, search filter, and quick actions"
+      },
+      {
+        "path": "/new/",
+        "name": "New Project",
+        "description": "Streamlined mobile-first project intake with torrent upload, auto-parsing link field, and content type selection"
+      },
+      {
+        "path": "/project/",
+        "name": "Project Overview",
+        "description": "Pipeline stepper, source video specs, audio tracks, and flow launcher"
+      },
+      {
+        "path": "/faces/",
+        "name": "Faces Selector",
+        "description": "Mobile touch gallery of detected faces with multi-select, character merging, and clips export"
+      },
+      {
+        "path": "/scene/",
+        "name": "AI Scene Cuts",
+        "description": "Copy agent prompt, dual JSON upload/paste with tolerant parser & preview, and scene export"
+      },
+      {
+        "path": "/exports/",
+        "name": "Exports & Downloads",
+        "description": "Direct downloads of all rendered video cuts with size, bitrate, and audio track"
+      },
+      {
+        "path": "/task/",
+        "name": "Task & Pipeline Diagnostics",
+        "description": "Live GitHub Actions workflow runs, step-level logs, and retry/cancel controls"
+      }
+    ],
+    "done": [
       "feature_inventory",
       "api_contract",
+      "new_website_architecture"
+    ],
+    "pending": [
       "torrent_download_fix",
       "network_resilience_fix",
-      "new_website_architecture",
       "light_and_dark_tokens",
       "pages_implementation",
       "perf_measurement",
@@ -686,6 +758,6 @@
       "cleanup_old_frontend"
     ],
     "perf": {},
-    "notes": "Session initialized. Starting inventory and torrent/network resilience fixes."
+    "notes": "Completed feature inventory and API contract. Proceeding to fix torrent download issues and network task dispatch resilience."
   }
 }
