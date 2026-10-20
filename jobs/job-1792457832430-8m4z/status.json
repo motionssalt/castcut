@@ -5,13 +5,13 @@
   "torrent_name": "Sam & Cat (2013) Season 1 S01 (1080p AMZN WEB-DL x265 HEVC 10bit EAC3 2.0 RZeroX)",
   "created_at_epoch": 1792457832,
   "created_at": "2026-10-20T00:57:12+00:00",
-  "state": "analyzing",
-  "message": "",
+  "state": "incomplete",
+  "message": "Analysis incomplete: faces: Upload/verification failed for faces-manifest.json on castcut-job-1792457832430-8m4z: None",
   "tasks": {
     "faces": {
-      "state": "running",
-      "message": "IRL faces analysis running",
-      "updated_at": "2026-10-20T07:39:06Z",
+      "state": "failed",
+      "message": "Upload/verification failed for faces-manifest.json on castcut-job-1792457832430-8m4z: None",
+      "updated_at": "2026-10-20T07:49:51Z",
       "percent": 10
     },
     "scene": {
@@ -22,6 +22,6 @@
     }
   },
   "release_verified": false,
-  "updated_at": "2026-10-20T07:39:06Z",
-  "updated_at_epoch": 1792481946
+  "updated_at": "2026-10-20T07:49:51Z",
+  "updated_at_epoch": 1792482591
 }
