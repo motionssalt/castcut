@@ -5,11 +5,11 @@
   "content_type": "irl",
   "created_at_epoch": 1792496818,
   "created_at": "2026-10-20T11:46:58Z",
-  "updated_at": "2026-10-20T12:47:36Z",
-  "updated_at_epoch": 1792500456,
+  "updated_at": "2026-10-20T13:01:15Z",
+  "updated_at_epoch": 1792501275,
   "expires_at_epoch": 1792583218,
-  "state": "ingest_failed",
-  "message": "Ingest failed \u2014 https://github.com/motionssalt/castcut/actions/runs/39417430670",
+  "state": "queued",
+  "message": "Retrying — ingest dispatched.",
   "selected_files": [
     {
       "index": 16,
@@ -21,8 +21,8 @@
     "ingest": {
       "name": "Ingest",
       "state": "failed",
-      "message": "Ingest failed \u2014 https://github.com/motionssalt/castcut/actions/runs/39417430670",
-      "percent": 10.0,
+      "message": "Ingest failed — https://github.com/motionssalt/castcut/actions/runs/39417430670",
+      "percent": 10,
       "updated_at": "2026-10-20T12:47:36Z"
     }
   },
