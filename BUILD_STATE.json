@@ -997,7 +997,7 @@
   },
   "export_size_playback": {
     "status": "in_progress",
-    "last_updated": "2026-10-20T20:18:34.084776+00:00",
+    "last_updated": "2026-10-20T20:19:52.644951+00:00",
     "findings": "Deep diagnosis comparing playable ClipForge output (final.mp4) vs unplayable CastCut export (castcut-export-exp-job-1792507438516-dehl-scene-mvgxsz3y.mp4):\n1. Playback failure root causes on Android:\n   - Profile & Level: CastCut exported at High@L5.0 (level 50) because -tune animation doubled reference frames to ref=6 without level clamping. Android hardware decoders (MediaCodec) reject Level 5.0 for 1080p.\n   - Edit Lists (elst atom): CastCut MP4 container contained an elst box (has elst: True) due to B-frames (bframes=5, b_pyramid=2) and initial presentation delay. Android Stagefright / MediaPlayer fails on MP4 edit lists.\n   - Container brand & timescale: CastCut used isom major brand and unstandardized timescale; ClipForge enforces mp42 major brand, -video_track_timescale 15360, and -use_editlist 0.\n   - B-frames: CastCut used 5 B-frames with pyramid reordering; ClipForge disables B-frames (-bf 0) ensuring PTS==DTS, start_pts==0, and immediate decode without buffer delay.\n2. File size explosion root causes (600 MB / 4.7-6.0 Mbps):\n   - Previous export used unconstrained CRF 23 with NO bitrate ceiling (-maxrate / -bufsize omitted). Live-action and detailed anime scenes exploded to 4640-4883 kbps video bitrate.\n   - Resolution and frame rate were unconstrained (sources with >1080p or 60fps remained unscaled).\n3. Export options to remove:\n   - The 3 options in UI were selectQuality: Normal (CRF 23 medium), Compact (CRF 26 medium), High (CRF 20 medium). Must be completely removed in favor of ONE fixed profile while preserving the audio track picker.",
     "encode_profile": {
       "container": "mp4",
@@ -1026,7 +1026,8 @@
     "done": [
       "Initialized export_size_playback tracking in BUILD_STATE.json",
       "Cloned castcut and clipforge repositories",
-      "Completed deep inspection and root cause diagnosis comparing ClipForge and CastCut"
+      "Completed deep inspection and root cause diagnosis comparing ClipForge and CastCut",
+      "Removed 3 export options (Normal, Compact, High) from web/faces, web/scene, and API/workflows while keeping audio track picker"
     ],
     "pending": [
       "Inspect clipforge render/delivery pipeline and export settings",
