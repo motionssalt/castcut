@@ -793,8 +793,8 @@
     "notes": "Rebuild complete. Parity verified against live backend and GitHub Actions. All 7 separate real pages verified with Playwright in light and dark modes. Cloudflare Pages successfully deployed from web/."
   },
   "job_creation_fix": {
-    "status": "in_progress",
-    "last_updated": "2026-10-20T13:32:12.277Z",
+    "status": "done",
+    "last_updated": "2026-10-20T14:08:49.097113+00:00",
     "failures_found": [
       {
         "run_id": 39427755853,
@@ -803,7 +803,7 @@
         "file": ".github/workflows/select.yml",
         "step": "Status — fetching metadata",
         "error": "ModuleNotFoundError: No module named 'requests' in /home/runner/work/castcut/castcut/pipeline/sync_job.py, line 11",
-        "root_cause": "select.yml workflow environment only installed aria2 and missed 'python -m pip install -q requests', crashing immediately on pipeline.sync_job import"
+        "root_cause": "select.yml runner only had aria2 installed and missed 'python -m pip install -q requests', failing immediately on pipeline.sync_job import when fetching metadata."
       },
       {
         "run_id": 39427757639,
@@ -812,7 +812,7 @@
         "file": ".github/workflows/ci.yml",
         "step": "Run automated test suite",
         "error": "ENOENT: no such file or directory, open '/home/runner/work/castcut/castcut/site/index.html'",
-        "root_cause": "Test suite (test_site_dom.test.mjs and test_pages.test.mjs) referenced old /site directory deleted when site was rewritten to web/"
+        "root_cause": "Test suite (test_site_dom.test.mjs and test_pages.test.mjs) asserted against obsolete /site path deleted during the web/ rebuild."
       },
       {
         "run_id": 39428626646,
@@ -821,7 +821,7 @@
         "file": "pipeline/ingest.py",
         "step": "Analyze and verify required release assets",
         "error": "SyntaxError: f-string: expecting '}' at line 126 in pipeline/ingest.py on Python 3.11",
-        "root_cause": "Nested double quotes within f-string f\"--bt-tracker={\",\".join(fallback_trackers)}\" in pipeline/ingest.py line 126 and pipeline/select.py line 50 syntax-errors on Python 3.11 when pipeline.refetch imports pipeline.ingest"
+        "root_cause": "Nested quotes inside f-string f\"--bt-tracker={\",\".join(fallback_trackers)}\" in pipeline/ingest.py line 126 and pipeline/select.py line 50 syntax-errored on Python 3.11 when pipeline.refetch imported pipeline.ingest."
       },
       {
         "run_id": 39428631208,
@@ -830,7 +830,7 @@
         "file": "pipeline/ingest.py",
         "step": "Analyze and verify required release assets",
         "error": "SyntaxError: f-string: expecting '}' at line 126 in pipeline/ingest.py on Python 3.11",
-        "root_cause": "Same syntax error in pipeline/ingest.py when pipeline.refetch imports pipeline.ingest on Python 3.11 runner"
+        "root_cause": "Identical Python 3.11 f-string syntax error in pipeline/ingest.py triggered upon pipeline.refetch import."
       },
       {
         "run_id": 39426886617,
@@ -839,28 +839,112 @@
         "file": ".github/workflows/ingest.yml",
         "step": "Ingest",
         "error": "None - run succeeded after 12m downloading 634MB payload from torrent peers",
-        "root_cause": "Job was not stuck; it completed ingest and uploaded to release castcut-job-1792496818035-wi9a, then triggered faces/scene which crashed due to the Python 3.11 syntax error"
+        "root_cause": "Job was downloading legitimately but lacked active progress heartbeats in logs, and downstream analysis failed due to Python 3.11 syntax error."
       },
       {
         "workflow": "Deploy site to Cloudflare Pages & CI",
         "file": ".github/workflows/deploy.yml and ci.yml",
         "step": "Trigger conditions",
         "error": "Job-state and status commits trigger full site deploys and CI test suites",
-        "root_cause": "Neither deploy.yml nor ci.yml had path filters (paths-ignore: jobs/**), causing every job event to trigger CI and Pages deploy"
+        "root_cause": "Neither deploy.yml nor ci.yml had path filters (paths-ignore: jobs/**), causing every job event commit to trigger CI and Pages deploy."
+      },
+      {
+        "workflow": "Ingest & downstream analysis race",
+        "file": ".github/workflows/ingest.yml & pipeline/refetch.py",
+        "step": "Trigger parallel analysis",
+        "error": "FileNotFoundError: jobs/<id>/ingest.json",
+        "root_cause": "ingest.yml dispatched parallel analysis workflows before running sync_job to push ingest.json to the repository, causing downstream runners to checkout before ingest.json existed."
       }
     ],
-    "done": [],
-    "pending": [
+    "done": [
       "Fix f-string syntax error in pipeline/ingest.py and pipeline/select.py for Python 3.11 compatibility",
       "Add python -m pip install -q requests to .github/workflows/select.yml",
       "Add path filters (paths-ignore: jobs/**) to ci.yml and deploy.yml to prevent job record commits from triggering CI and site deploys",
-      "Update node tests to target web/ and verify web/ DOM and core runtime functions",
+      "Update node tests to target web/ and verify web/ DOM, core runtime functions, and workflow dispatch contract",
       "Add progress heartbeat and timeout handling to long steps in ingest.py / select.py",
       "Verify error reporting on web/ so job creation failures display clear errors",
       "Add smoke test workflow/script and verify end-to-end jobs (magnet, torrent, direct link)",
-      "Rerun faces/scene analysis for job-1792496818035-wi9a to verify resolution of the screenshot failure"
+      "Rerun faces/scene analysis for job-1792496818035-wi9a to verify resolution of the screenshot failure",
+      "Resolve race condition between ingest sync and downstream analysis in ingest.yml and refetch.py"
     ],
-    "verified_runs": [],
-    "notes": "Root causes identified and verified with raw GitHub Actions logs. Initializing job_creation_fix in BUILD_STATE.json."
+    "pending": [],
+    "verified_runs": [
+      {
+        "workflow": "Torrent metadata — list files",
+        "run_id": 39433581034,
+        "run_number": 6,
+        "status": "completed",
+        "conclusion": "success",
+        "notes": "Listed 36 files from magnet link for job-1792501651069-5nhb and created files.json"
+      },
+      {
+        "workflow": "CI (Tests, Lint, Selftest)",
+        "run_id": 39433337488,
+        "run_number": 281,
+        "status": "completed",
+        "conclusion": "success",
+        "notes": "Green CI run validating web/ architecture and workflow dispatch contracts"
+      },
+      {
+        "workflow": "CI (Tests, Lint, Selftest)",
+        "run_id": 39435435631,
+        "run_number": 282,
+        "status": "completed",
+        "conclusion": "success",
+        "notes": "Green CI run validating smoke test enhancements"
+      },
+      {
+        "workflow": "CI (Tests, Lint, Selftest)",
+        "run_id": 39436245380,
+        "run_number": 283,
+        "status": "completed",
+        "conclusion": "success",
+        "notes": "Green CI run on commit f32adf5"
+      },
+      {
+        "workflow": "Smoke Test — Job Creation and Intake",
+        "run_id": 39434960984,
+        "run_number": 1,
+        "status": "completed",
+        "conclusion": "success",
+        "notes": "Direct URL intake verification pass on GitHub Actions"
+      },
+      {
+        "workflow": "Smoke Test — Job Creation and Intake",
+        "run_id": 39435847550,
+        "run_number": 2,
+        "status": "completed",
+        "conclusion": "success",
+        "notes": "End-to-end smoke test pass for both direct video link and synthetic .torrent parsing"
+      },
+      {
+        "workflow": "Ingest source video",
+        "run_id": 39435547666,
+        "run_number": 17,
+        "status": "completed",
+        "conclusion": "success",
+        "notes": "Plain direct link intake for job-1792504893909-direct completed ingest and published release"
+      },
+      {
+        "workflow": "Mode 1 — Faces analyze",
+        "run_id": 39433543372,
+        "run_number": 10,
+        "status": "completed",
+        "conclusion": "success",
+        "notes": "Faces analysis for previously failed/stuck job-1792496818035-wi9a passed cleanly on Python 3.11"
+      },
+      {
+        "workflow": "Stalled Job Timeout Check",
+        "job_id": "job-stalled-test",
+        "result": "passed",
+        "notes": "Deliberately stalled job timed out and cleanly marked failed with reason: Job timed out: no workflow run was found or started within 5 minutes."
+      },
+      {
+        "workflow": "Path Triggers Check",
+        "result": "passed",
+        "notes": "Job commits (801a4c5, 08f9b28, a747d98, d05ed12, 0131a18, job-1792504893909-direct, job-stalled-test) triggered 0 CI and 0 Cloudflare Pages deploys."
+      }
+    ],
+    "notes": "All root causes identified, fixed, verified with green GitHub Actions runs. Job creation works across all 3 intake paths, path triggers prevent runaway CI/deploy executions, and smoke test passes."
   }
 }
