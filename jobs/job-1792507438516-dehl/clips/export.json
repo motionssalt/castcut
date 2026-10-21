@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "export_id": "exp-job-1792507438516-dehl-clips-frames-v1",
+  "export_id": "exp-job-1792507438516-dehl-clips-playback-v2",
   "project_id": "job-1792507438516-dehl",
   "job_id": "job-1792507438516-dehl",
   "type": "clips",
@@ -19,55 +19,56 @@
   },
   "total_segments": 125,
   "total_duration": 850.9,
-  "size_before_bytes": 1235565436,
-  "size_after_bytes": 207651939,
-  "size_bytes": 207651939,
+  "size_before_bytes": 1235429746,
+  "size_after_bytes": 205605265,
+  "size_bytes": 205605265,
   "size_before_human": "1.2 GB",
-  "size_after_human": "198.0 MB",
-  "size_human": "198.0 MB",
-  "bitrate_kbps": 1934.308,
-  "video_bitrate_kbps": 1799.555,
-  "bitrate_bps": 1934308,
-  "effective_bitrate": "1934.308 kbps",
+  "size_after_human": "196.1 MB",
+  "size_human": "196.1 MB",
+  "bitrate_kbps": 1933.931,
+  "video_bitrate_kbps": 1799.705,
+  "bitrate_bps": 1933931,
+  "effective_bitrate": "1933.931 kbps",
   "audio_track": 0,
   "audio_track_label": "Track 1 \u00b7 ENG \u00b7 stereo \u00b7 eac3",
-  "asset_name": "castcut-export-exp-job-1792507438516-dehl-clips-frames-v1.mp4",
+  "asset_name": "castcut-export-exp-job-1792507438516-dehl-clips-playback-v2.mp4",
   "encode_path": "ClipForge vendored render/compress: H.264 High@L4.0, 1080p, 0 B-frames, mp42, faststart, AAC 128k stereo, <=2000 kbps",
   "status": "done",
   "ok": true,
-  "sha256": "a5c35fecabc1d5e02ed25eba055ba6694ff7d1627251f8ceccbfab2661b6540b",
-  "video_peak_10s_kbps": 1931.9263999999998,
-  "video_average_kbps": 1799.5553463482217,
-  "mb_per_minute": 14.507312513815236,
+  "sha256": "8bab817258787540fd369b7e452339bce3c5d3484f1d36101c7e317515841eee",
+  "video_peak_10s_kbps": 1903.9624,
+  "video_average_kbps": 1799.704961103904,
+  "mb_per_minute": 14.504484643355084,
   "reference_commit": "a05846de7c76a66ad42ba6fd37126514bc452167",
   "delivery": {
-    "asset_id": 661475220,
-    "asset_name": "castcut-export-exp-job-1792507438516-dehl-clips-frames-v1.mp4",
-    "sha256": "a5c35fecabc1d5e02ed25eba055ba6694ff7d1627251f8ceccbfab2661b6540b",
-    "size_bytes": 207651939,
+    "asset_id": 661646057,
+    "asset_name": "castcut-export-exp-job-1792507438516-dehl-clips-playback-v2.mp4",
+    "sha256": "8bab817258787540fd369b7e452339bce3c5d3484f1d36101c7e317515841eee",
+    "size_bytes": 205605265,
     "runner_release_download_identical": true,
-    "browser_download_url": "https://github.com/motionssalt/castcut/releases/download/castcut-job-1792507438516-dehl/castcut-export-exp-job-1792507438516-dehl-clips-frames-v1.mp4"
+    "browser_download_url": "https://github.com/motionssalt/castcut/releases/download/castcut-job-1792507438516-dehl/castcut-export-exp-job-1792507438516-dehl-clips-playback-v2.mp4"
   },
   "checks": {
     "ok": true,
-    "sha256": "a5c35fecabc1d5e02ed25eba055ba6694ff7d1627251f8ceccbfab2661b6540b",
-    "duration": 858.816292,
-    "size_bytes": 207651939,
-    "size_human": "198.03 MiB",
-    "mb_per_minute": 14.507312513815236,
-    "bitrate_bps": 1934308,
-    "bitrate_kbps": 1934.308,
-    "video_bitrate_kbps": 1799.555,
-    "video_average_kbps": 1799.5553463482217,
-    "video_peak_10s_kbps": 1931.9263999999998,
-    "video_packets": 20591,
-    "audio_packets": 40255,
+    "sha256": "8bab817258787540fd369b7e452339bce3c5d3484f1d36101c7e317515841eee",
+    "duration": 850.517354,
+    "size_bytes": 205605265,
+    "size_human": "196.08 MiB",
+    "mb_per_minute": 14.504484643355084,
+    "bitrate_bps": 1933931,
+    "bitrate_kbps": 1933.931,
+    "video_bitrate_kbps": 1799.705,
+    "max_av_interleave_bytes": 188549,
+    "video_average_kbps": 1799.704961103904,
+    "video_peak_10s_kbps": 1903.9624,
+    "video_packets": 20392,
+    "audio_packets": 39869,
     "all_packet_timestamps_contiguous": true,
     "video_pts_equal_dts": true,
     "fixed_gop": 60,
-    "duration_video": 858.816291,
+    "duration_video": 850.5163329999999,
     "video_sample_duration_ticks": [
-      16016
+      1001
     ],
     "exact_frame_cadence": true,
     "vcodec": "h264",
@@ -93,7 +94,7 @@
       {
         "type": "moov",
         "offset": 32,
-        "size": 433200,
+        "size": 429082,
         "children": [
           {
             "type": "mvhd",
@@ -103,7 +104,7 @@
           {
             "type": "trak",
             "offset": 148,
-            "size": 166657,
+            "size": 165071,
             "children": [
               {
                 "type": "tkhd",
@@ -113,7 +114,7 @@
               {
                 "type": "mdia",
                 "offset": 248,
-                "size": 166557,
+                "size": 164971,
                 "children": [
                   {
                     "type": "mdhd",
@@ -128,7 +129,7 @@
                   {
                     "type": "minf",
                     "offset": 333,
-                    "size": 166472,
+                    "size": 164886,
                     "children": [
                       {
                         "type": "vmhd",
@@ -150,37 +151,37 @@
                       {
                         "type": "stbl",
                         "offset": 397,
-                        "size": 166408,
+                        "size": 164822,
                         "children": [
                           {
                             "type": "stsd",
                             "offset": 405,
-                            "size": 192
+                            "size": 214
                           },
                           {
                             "type": "stts",
-                            "offset": 597,
+                            "offset": 619,
                             "size": 24
                           },
                           {
                             "type": "stss",
-                            "offset": 621,
-                            "size": 1392
+                            "offset": 643,
+                            "size": 1376
                           },
                           {
                             "type": "stsc",
-                            "offset": 2013,
+                            "offset": 2019,
                             "size": 28
                           },
                           {
                             "type": "stsz",
-                            "offset": 2041,
-                            "size": 82384
+                            "offset": 2047,
+                            "size": 81588
                           },
                           {
                             "type": "stco",
-                            "offset": 84425,
-                            "size": 82380
+                            "offset": 83635,
+                            "size": 81584
                           }
                         ]
                       }
@@ -192,89 +193,89 @@
           },
           {
             "type": "trak",
-            "offset": 166805,
-            "size": 266329,
+            "offset": 165219,
+            "size": 263797,
             "children": [
               {
                 "type": "tkhd",
-                "offset": 166813,
+                "offset": 165227,
                 "size": 92
               },
               {
                 "type": "mdia",
-                "offset": 166905,
-                "size": 266229,
+                "offset": 165319,
+                "size": 263697,
                 "children": [
                   {
                     "type": "mdhd",
-                    "offset": 166913,
+                    "offset": 165327,
                     "size": 32
                   },
                   {
                     "type": "hdlr",
-                    "offset": 166945,
+                    "offset": 165359,
                     "size": 45
                   },
                   {
                     "type": "minf",
-                    "offset": 166990,
-                    "size": 266144,
+                    "offset": 165404,
+                    "size": 263612,
                     "children": [
                       {
                         "type": "smhd",
-                        "offset": 166998,
+                        "offset": 165412,
                         "size": 16
                       },
                       {
                         "type": "dinf",
-                        "offset": 167014,
+                        "offset": 165428,
                         "size": 36,
                         "children": [
                           {
                             "type": "dref",
-                            "offset": 167022,
+                            "offset": 165436,
                             "size": 28
                           }
                         ]
                       },
                       {
                         "type": "stbl",
-                        "offset": 167050,
-                        "size": 266084,
+                        "offset": 165464,
+                        "size": 263552,
                         "children": [
                           {
                             "type": "stsd",
-                            "offset": 167058,
+                            "offset": 165472,
                             "size": 126
                           },
                           {
                             "type": "stts",
-                            "offset": 167184,
-                            "size": 264
+                            "offset": 165598,
+                            "size": 272
                           },
                           {
                             "type": "stsc",
-                            "offset": 167448,
-                            "size": 22216
+                            "offset": 165870,
+                            "size": 22012
                           },
                           {
                             "type": "stsz",
-                            "offset": 189664,
-                            "size": 161040
+                            "offset": 187882,
+                            "size": 159496
                           },
                           {
                             "type": "stco",
-                            "offset": 350704,
-                            "size": 82376
+                            "offset": 347378,
+                            "size": 81584
                           },
                           {
                             "type": "sgpd",
-                            "offset": 433080,
+                            "offset": 428962,
                             "size": 26
                           },
                           {
                             "type": "sbgp",
-                            "offset": 433106,
+                            "offset": 428988,
                             "size": 28
                           }
                         ]
@@ -287,20 +288,20 @@
           },
           {
             "type": "udta",
-            "offset": 433134,
+            "offset": 429016,
             "size": 98
           }
         ]
       },
       {
         "type": "free",
-        "offset": 433232,
+        "offset": 429114,
         "size": 8
       },
       {
         "type": "mdat",
-        "offset": 433240,
-        "size": 207218699
+        "offset": 429122,
+        "size": 205176143
       }
     ],
     "streams": [
@@ -323,6 +324,10 @@
         "display_aspect_ratio": "16:9",
         "pix_fmt": "yuv420p",
         "level": 40,
+        "color_range": "tv",
+        "color_space": "bt709",
+        "color_transfer": "bt709",
+        "color_primaries": "bt709",
         "chroma_location": "left",
         "field_order": "progressive",
         "refs": 1,
@@ -331,15 +336,15 @@
         "id": "0x1",
         "r_frame_rate": "24000/1001",
         "avg_frame_rate": "24000/1001",
-        "time_base": "1/384000",
+        "time_base": "1/24000",
         "start_pts": 0,
         "start_time": "0.000000",
-        "duration_ts": 329785456,
-        "duration": "858.816292",
-        "bit_rate": "1799555",
+        "duration_ts": 20412392,
+        "duration": "850.516333",
+        "bit_rate": "1799704",
         "bits_per_raw_sample": "8",
-        "nb_frames": "20591",
-        "extradata_size": 46,
+        "nb_frames": "20392",
+        "extradata_size": 49,
         "disposition": {
           "default": 1,
           "dub": 0,
@@ -387,10 +392,10 @@
         "time_base": "1/48000",
         "start_pts": 0,
         "start_time": "0.000000",
-        "duration_ts": 41221120,
-        "duration": "858.773333",
-        "bit_rate": "130723",
-        "nb_frames": "40255",
+        "duration_ts": 40824833,
+        "duration": "850.517354",
+        "bit_rate": "130192",
+        "nb_frames": "39869",
         "extradata_size": 5,
         "disposition": {
           "default": 1,
@@ -419,9 +424,9 @@
         }
       }
     ],
-    "rebuild_version": "decoded-frames-pcm-v1",
-    "video_input_boundary": "uncompressed yuv420p frames, timestamps regenerated from original fps",
-    "audio_input_boundary": "decoded pcm_s16le stereo 48000 Hz, freshly encoded AAC 128k",
+    "rebuild_version": "clipforge-terminal-phone-diagnosis-v2",
+    "video_input_boundary": "direct joined MP4 -> ClipForge terminal re-encode; no raw-frame workaround",
+    "audio_input_boundary": "chosen track joined as PCM, freshly encoded AAC-LC stereo 48000Hz 128k",
     "source_audio_index": 0,
     "source_audio_stream_index": 1,
     "audio_target_kbps": 128,
@@ -1059,7 +1064,101 @@
     ],
     "reference_commit": "a05846de7c76a66ad42ba6fd37126514bc452167",
     "path": "clipforge_vendor.render.produce_merged_video -> clipforge_vendor.compress.compress",
-    "size_before_bytes": 1235565436,
+    "terminal_command": [
+      "ffmpeg",
+      "-y",
+      "-i",
+      "/home/runner/work/castcut/castcut/work/clipforge-export-o7_bd7lh/reference-merged.mp4",
+      "-map",
+      "0:v:0",
+      "-map",
+      "0:a:0",
+      "-c:v",
+      "libx264",
+      "-profile:v",
+      "high",
+      "-level:v",
+      "4.0",
+      "-preset",
+      "medium",
+      "-crf",
+      "23",
+      "-maxrate",
+      "1800k",
+      "-bufsize",
+      "1800k",
+      "-pix_fmt",
+      "yuv420p",
+      "-bf",
+      "0",
+      "-g",
+      "60",
+      "-keyint_min",
+      "60",
+      "-sc_threshold",
+      "0",
+      "-x264-params",
+      "force-cfr=1",
+      "-video_track_timescale",
+      "24000",
+      "-c:a",
+      "aac",
+      "-profile:a",
+      "aac_low",
+      "-b:a",
+      "128k",
+      "-ar",
+      "48000",
+      "-ac",
+      "2",
+      "-movflags",
+      "+faststart",
+      "-use_editlist",
+      "0",
+      "-brand",
+      "mp42",
+      "-map_metadata",
+      "-1",
+      "-map_chapters",
+      "-1",
+      "-sn",
+      "-dn",
+      "-ignore_unknown",
+      "-fflags",
+      "+genpts",
+      "-max_muxing_queue_size",
+      "9999",
+      "-vf",
+      "setpts=PTS-STARTPTS,fps=24000/1001,scale=w='min(1920,iw)':h='min(1080,ih)':force_original_aspect_ratio=decrease,scale=trunc(iw/2)*2:trunc(ih/2)*2,colorspace=all=bt709:range=tv:format=yuv420p,setsar=1",
+      "-r",
+      "24000/1001",
+      "-fps_mode",
+      "cfr",
+      "-af",
+      "aresample=48000:async=1:first_pts=0,apad,atrim=duration=850.496029000,asetpts=N/SR/TB+1024/SR/TB",
+      "-avoid_negative_ts",
+      "make_zero",
+      "-color_range",
+      "tv",
+      "-colorspace",
+      "bt709",
+      "-color_primaries",
+      "bt709",
+      "-color_trc",
+      "bt709",
+      "-max_interleave_delta",
+      "0",
+      "-f",
+      "mp4",
+      "/home/runner/work/castcut/castcut/work/castcut-export-exp-job-1792507438516-dehl-clips-playback-v2.mp4.compressing.mp4"
+    ],
+    "policy_exceptions": [
+      "1800k VBV to enforce <=2000k video",
+      "original source fps/size caps and exact source-rate clock",
+      "AAC-LC stereo 128k re-encode",
+      "no original fallback"
+    ],
+    "size_before_bytes": 1235429746,
     "compressed": true
   }
 }
