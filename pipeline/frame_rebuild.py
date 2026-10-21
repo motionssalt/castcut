@@ -65,9 +65,10 @@ def encode_decoded_frames(source, candidate, command):
             value = v.get(field)
             if value and value not in ('unknown', 'unspecified'):
                 cmd[-1:-1] = [flag, value]
+        from .delivery_pass import fps_mode_flag
         decode = ['ffmpeg', '-v', 'error', '-xerror', '-i', str(source),
-                  '-map', '0:v:0', '-an', '-sn', '-dn', '-pix_fmt', 'yuv420p',
-                  '-fps_mode', 'passthrough', '-f', 'rawvideo', 'pipe:1']
+                  '-map', '0:v:0', '-an', '-sn', '-dn', '-pix_fmt', 'yuv420p'] + fps_mode_flag('passthrough') + [
+                  '-f', 'rawvideo', 'pipe:1']
         print('Frame rebuild decoder: ' + ' '.join(decode), flush=True)
         print('ClipForge terminal encoder: ' + ' '.join(cmd), flush=True)
         with tempfile.TemporaryFile() as errors:

@@ -120,13 +120,15 @@ def produce_merged_video(src: str | Path, plan: list[dict], vo_wavs: list[str],
 
     filter_complex = ";".join(parts)
 
+    from pipeline.delivery_pass import fps_mode_flag
     cmd += [
         "-filter_complex", filter_complex,
         "-map", "[vcat]",
         "-map", audio_map,
 
-        # Video: H.264 High@L4.0, CRF 18, yuv420p — universally decodable.
-        "-r", SOURCE_FPS, "-fps_mode", "cfr",
+        # Video: H.264 Main@L4.1, CRF 18, yuv420p — universally decodable.
+        "-r", SOURCE_FPS,
+    ] + fps_mode_flag('cfr') + [
         "-color_range", "tv", "-colorspace", "bt709",
         "-color_primaries", "bt709", "-color_trc", "bt709",
         "-c:v", "libx264",

@@ -30,10 +30,10 @@ def fetch_asset(repo,asset_id,path,token=None):
 def base_command(source,dest,profile='main',timescale=True,faststart=True,fragment=False,height=1080,audio=True,rate=48000,channels=2,codec='libx264'):
     v=next(s for s in probe(source)['streams'] if s['codec_type']=='video')
     fps=min(Fraction(v['r_frame_rate']),Fraction(30));frames=round(10*fps);duration=float(frames/fps)
-    from .delivery_pass import color_filter
+    from .delivery_pass import color_filter, fps_mode_flag
     vf=f"setpts=PTS-STARTPTS,fps={fps},scale=w='min({1920 if height==1080 else 1280},iw)':h='min({height},ih)':force_original_aspect_ratio=decrease,scale=trunc(iw/2)*2:trunc(ih/2)*2,"+color_filter(v)+',setsar=1'
     cmd=['ffmpeg','-y','-v','error','-threads','2','-i',str(source),'-t',f'{duration:.9f}',
-         '-map','0:v:0','-vf',vf,'-r',str(fps),'-fps_mode','cfr','-c:v',codec]
+         '-map','0:v:0','-vf',vf,'-r',str(fps)]+fps_mode_flag('cfr')+['-c:v',codec]
     if codec=='libx264':
         cmd+=['-profile:v',profile,'-level:v','4.1','-preset','medium','-bf','0','-g','60','-keyint_min','60','-sc_threshold','0']
     cmd+=['-pix_fmt','yuv420p','-b:v','1800k','-maxrate','1800k','-bufsize','1800k']

@@ -12,6 +12,23 @@ from .export_checks import probe
 
 VERSION='variant-i-720p-interim-default-v1'
 
+_CFR_FLAGS: dict[str, list[str]] = {}
+
+
+def fps_mode_flag(mode='cfr') -> list[str]:
+    if mode not in _CFR_FLAGS:
+        try:
+            res = subprocess.run(['ffmpeg', '-fps_mode', mode, '-f', 'lavfi', '-i', 'nullsrc', '-t', '0.01', '-f', 'null', '-'],
+                                 stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+            if res.returncode == 0:
+                _CFR_FLAGS[mode] = ['-fps_mode', mode]
+            else:
+                _CFR_FLAGS[mode] = ['-vsync', mode]
+        except Exception:
+            _CFR_FLAGS[mode] = ['-fps_mode', mode]
+    return list(_CFR_FLAGS[mode])
+
+
 
 def timescale(fps):
     rate=Fraction(fps)
@@ -69,7 +86,7 @@ def command(source,destination,*,safe=True):
         # Explicit priming compensation prevents the no-edit-list muxer from
         # stretching video frame zero to compensate AAC encoder delay.
         duration=float(v.get('duration') or info['format']['duration'])
-        cmd[-3:-3]=['-vf',vf,'-r',str(fps),'-fps_mode','cfr',
+        cmd[-3:-3]=['-vf',vf,'-r',str(fps)]+fps_mode_flag('cfr')+[
             '-af',f'aresample=48000:async=1:first_pts=0,apad,atrim=duration={duration:.9f},asetpts=N/SR/TB+1024/SR/TB',
             '-avoid_negative_ts','make_zero','-color_range','tv','-colorspace','bt709',
             '-color_primaries','bt709','-color_trc','bt709','-max_interleave_delta','0']
