@@ -13974,7 +13974,7 @@
   ],
   "playback_diagnosis": {
     "status": "in_progress",
-    "last_updated": "2026-10-21T06:38:05.568053+00:00",
+    "last_updated": "2026-10-21T06:44:06.907624+00:00",
     "clipforge_last_pass": {
       "reference_commit": "a05846de7c76a66ad42ba6fd37126514bc452167",
       "source_file": "pipeline/stage_b/compress.py",
@@ -17358,12 +17358,12 @@
       "Replaced raw-frame path with audited direct pass; added color timing interleaving gates and checksum display",
       "Real-file trial caught excessive mux separation; disabled premature flushing before publication",
       "Published and read-back verified 15-file compatibility pack including K2 mono and N actual production default. B and M intentionally untouched/longer controls.",
-      "Production scene flow passed all checks; actual Cloudflare download hash/length and Range206 matched release."
+      "Production scene flow passed all checks; actual Cloudflare download hash/length and Range206 matched release.",
+      "179 Python tests + all Node suites + selftest + workflow lint passed; executed tagged HDR->BT709 and25fps25000clock tests passed; scene .sha256 and integrity sidecars published."
     ],
     "pending": [
-      "Full production faces export completing",
-      "Final regression CI",
-      "Physical phone and editing-app playback results"
+      "Full production faces export finishing (39555912076)",
+      "Physical phone and editing-app test results"
     ],
     "verified_runs": [
       {
@@ -17383,7 +17383,7 @@
         "live_site_download_verified": true
       }
     ],
-    "notes": "Physical phone playback cannot be verified in this environment.",
+    "notes": "ClipForge repository is unchanged. No credentials missing; existing Cloudflare deployment secrets worked. Reference read credential stored only as GitHub Actions secret CLIPFORGE_READ_TOKEN. Source-fps25 uses25000clock, fractional24000/1001 uses24000clock; High4.0 remains explicit reference priority. Root cause not claimed. F auto clock equals C clock for this current input. B/M deliberately retain full control files.",
     "comparison_after": "diagnostics/playback/comparison.md",
     "reference_policy": {
       "literal_command_template": "pipeline.delivery_pass.reference_command (tested against actual vendored upstream source)",
@@ -17391,6 +17391,18 @@
       "default_clock": "15360 when source fps is exactly representable; otherwise source fps numerator (original-rate policy exception)",
       "not_byte_identical": "Owner bitrate/fps/resolution/audio changes plus unspecified color/PTS/interleaving safeguards; no source fallback",
       "raw_frame_workaround_removed": true
+    },
+    "regression_verification": {
+      "python_tests": "179 passed in24.22s",
+      "native_download_tests": "10 passed",
+      "other_node_suites": "torrent fixtures, site DOM, Pages routes passed",
+      "workflow_lint": "13 workflows,57 run blocks; no heredocs; bash syntax passes",
+      "pipeline_selftest": "ALL PIPELINE STAGES PASSED CLEANLY",
+      "successful_ci_run_id": 39556934125,
+      "successful_ci_url": "https://github.com/motionssalt/castcut/actions/runs/39556934125",
+      "deploy_run_id": 39555500224,
+      "color_rate_checks": "diagnostics/playback/color-rate-tests.json",
+      "phone_playback_tested": false
     }
   }
 }
