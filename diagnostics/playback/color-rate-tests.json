@@ -1,0 +1,22 @@
+[
+  {
+    "test": "25fps-sdr",
+    "ok": true,
+    "fps": 25.0,
+    "time_base": "1/25000",
+    "color_space": "bt709",
+    "full_decode_passed": true,
+    "max_av_interleave_bytes": 4453,
+    "video_peak_10s_kbps": 33.1536
+  },
+  {
+    "test": "hdr-pq",
+    "ok": true,
+    "fps": 24.0,
+    "time_base": "1/15360",
+    "color_space": "bt709",
+    "full_decode_passed": true,
+    "max_av_interleave_bytes": 4453,
+    "video_peak_10s_kbps": 37.190400000000004
+  }
+]
