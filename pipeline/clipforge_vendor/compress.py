@@ -115,21 +115,17 @@ def compress(source: Path, destination: Path) -> tuple[int, int, bool]:
         "-ignore_unknown", "-fflags", "+genpts", "-max_muxing_queue_size", "9999",
         "-f", "mp4", str(candidate),
     ]
-    common.sh(command)
+    # Owner-requested hard boundary: terminal encoder receives ONLY decoded
+    # picture frames and PCM audio, never compressed packets or source headers.
+    from pipeline.frame_rebuild import encode_decoded_frames
+    encode_decoded_frames(source, candidate, command)
     _validate(source, candidate)
 
     candidate_bytes = candidate.stat().st_size
     reduced = candidate_bytes < before_bytes
-    from pipeline.export_checks import rate_within_limit
-    if reduced or not rate_within_limit(source):
-        os.replace(candidate, destination)
-    else:
-        print(
-            "WARNING: CRF delivery candidate was not smaller; preserving the "
-            "original completed asset rather than increasing delivery size.",
-            flush=True,
-        )
-        shutil.copy2(source, destination)
+    # Never resurrect the pre-rebuild input: even a smaller input has not
+    # crossed the decoded-frame/PCM boundary requested for every delivery.
+    os.replace(candidate, destination)
 
     final_bytes = destination.stat().st_size
     reduction = (1.0 - (final_bytes / before_bytes)) * 100.0 if before_bytes else 0.0
@@ -137,7 +133,7 @@ def compress(source: Path, destination: Path) -> tuple[int, int, bool]:
     print(f"  before: {_size_label(before_bytes)}", flush=True)
     print(f"  candidate: {_size_label(candidate_bytes)}", flush=True)
     print(f"  after: {_size_label(final_bytes)}", flush=True)
-    print(f"  reduction: {reduction:.1f}% ({'compressed' if reduced else 'original retained'})", flush=True)
+    print(f"  reduction: {reduction:.1f}% ({'smaller rebuilt file' if reduced else 'rebuilt file retained'})", flush=True)
     return before_bytes, final_bytes, reduced
 
 
