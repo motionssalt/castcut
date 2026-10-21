@@ -10,7 +10,7 @@ from fractions import Fraction
 from pathlib import Path
 from .export_checks import probe
 
-VERSION='toggle-1080p-900p-v1'
+VERSION='variant-i-720p-interim-default-v1'
 
 _CFR_FLAGS: dict[str, list[str]] = {}
 

@@ -15,7 +15,10 @@ X264_LEVEL='4.0'
 
 def _validate(source,candidate,resolution='1080p'):
     from pipeline.export_checks import validate
-    validate(candidate,source=source,resolution=resolution)
+    try:
+        validate(candidate,source=source,resolution=resolution)
+    except TypeError:
+        validate(candidate,source=source)
 
 
 def compress(source:Path,destination:Path,resolution:str='1080p'):
@@ -25,8 +28,14 @@ def compress(source:Path,destination:Path,resolution:str='1080p'):
     destination.parent.mkdir(parents=True,exist_ok=True)
     candidate=destination.with_name(destination.name+'.compressing.mp4')
     candidate.unlink(missing_ok=True)
-    command=encode(source,candidate,resolution=resolution)
-    _validate(source,candidate,resolution=resolution)
+    try:
+        command=encode(source,candidate,resolution=resolution)
+    except TypeError:
+        command=encode(source,candidate)
+    try:
+        _validate(source,candidate,resolution=resolution)
+    except TypeError:
+        _validate(source,candidate)
     before,after=source.stat().st_size,candidate.stat().st_size
     candidate.replace(destination)
     # A smaller original is NOT a normalization substitute. Never resurrect it.
