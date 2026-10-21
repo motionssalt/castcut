@@ -5,9 +5,9 @@
 import { loadPat } from './core.js';
 // Old exports must not stay downloadable just because their record says done.
 // Bind the actual asset to a successful decode AND post-upload SHA256 receipt.
-export const REQUIRED_REBUILD = 'decoded-frames-pcm-v1';
+export const REQUIRED_REBUILD = 'clipforge-terminal-phone-diagnosis-v2';
 export function verifiedExportAsset(exp, assets) {
-  // A previous successful decode is not evidence of the new frame/PCM rebuild.
+  // A previous successful decode is not evidence of the current terminal delivery pass.
   // Keep obsolete downloads distinct so a gallery cannot reopen the old file.
   if (exp?.checks?.rebuild_version !== REQUIRED_REBUILD || !exp.checks.exact_frame_cadence) return null;
   if (exp?.status !== 'done' || !exp.ok || !exp.checks?.ok || !exp.checks.full_decode_passed || !exp.delivery?.runner_release_download_identical) return null;
