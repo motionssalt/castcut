@@ -1045,7 +1045,7 @@
   },
   "export_copy_clipforge": {
     "status": "in_progress",
-    "last_updated": "2026-10-21T05:21:08.813869+00:00",
+    "last_updated": "2026-10-21T05:25:19.051013+00:00",
     "clipforge_reference": {
       "reference.mp4": {
         "probe": {
@@ -1828,12 +1828,26 @@
       "168 existing tests and 5 new fractional-clock tests passed"
     ],
     "pending": [
-      "Await real owner faces + scene and 12-minute scene workflow completion",
-      "Verify actual site download of newly rebuilt file and release checksum",
-      "Physical phone confirmation cannot be performed here"
+      "Await original faces export and 12-minute scene verification",
+      "Final CI/commit/status audit",
+      "Physical phone playback unavailable"
     ],
-    "verified_runs": [],
-    "notes": "New terminal rebuild is requested by latest owner instruction. Explicit departures from upstream: raw frame/PCM input, fresh AAC rather than copy, AAC priming compensation, exact multiple of reference timescale for non-integer ticks. Codec/profile/GOP/join/mux brand/no-edit-list choices remain ClipForge. No established phone root cause.",
+    "verified_runs": [
+      {
+        "workflow_run_id": 39548512730,
+        "export_id": "exp-job-1792507438516-dehl-scene-frames-v1",
+        "asset_id": 661445503,
+        "size_bytes": 27664645,
+        "duration": 114.090667,
+        "video_average_kbps": 1806.0784980640042,
+        "video_peak_10s_kbps": 1881.0768,
+        "sha256": "880115852ea0e327185a6ac0627e153b1ba2cb370d8ea0d2760ce9bfa95d63c6",
+        "mb_per_minute": 14.548768480773278,
+        "exact_frame_cadence": true,
+        "full_decode_passed": true
+      }
+    ],
+    "notes": "Owner scene run succeeded. New scene file downloaded through LIVE site, exactly 27664645 bytes and SHA256 identical to runner/release. Full Chromium playback ended at114.090667s:2735 frames,zero drops,no error. Actual Android Gallery remains untested. Only fresh reconstruction receipts qualify for UI Download; obsolete exports blocked. ClipForge repository remains clean/unmodified.",
     "same_source_rebuild_comparison": {
       "segments": [
         [
@@ -2699,7 +2713,40 @@
       "github_js_exact": "export async function downloadReleaseAsset(credentials, asset, onProgress) {\n  const response = await fetch(String(asset.url || asset.browserUrl), {\n    headers: {\n      'Accept': 'application/octet-stream',\n      'Authorization': `Bearer ${credentials.githubPat}`\n    }\n  });\n  if (!response.ok) throw new GitHubError(response.status, 'Could not download the release asset.');\n  const total = Number(response.headers.get('content-length') || asset.size || 0);\n  if (!response.body) {\n    const buf = new Uint8Array(await response.arrayBuffer());\n    if (onProgress) onProgress(buf.length, total || buf.length);\n    return buf;\n  }\n  const reader = response.body.getReader();\n  const chunks = [];\n  let received = 0;\n  for (;;) {\n    const { done, value } = await reader.read();\n    if (done) break;\n    chunks.push(value);\n    received += value.length;\n    if (onProgress) onProgress(received, total);\n  }\n  const out = new Uint8Array(received);\n  let offset = 0;\n  for (const chunk of chunks) { out.set(chunk, offset); offset += chunk.length; }\n  return out;\n}\n\n",
       "save_bytes_exact": "/**\n * task-09 \u2014 shared media helpers: cached audio tap-to-play and real\n * browser downloads with progress + size, File System Access API first.\n *\n * The bot delivered audio/video straight into the Telegram chat\n * (deliverVideoToChat, music preview as an audio message). The Dashboard\n * equivalent is a real browser-side experience:\n *  - audio: tap-to-play via a cached object URL (bytes fetched once per\n *    path, replayed instantly from memory/localStorage-agnostic cache)\n *  - video/file download: a streaming download with a real progress bar and\n *    byte count, saved via the File System Access API (showSaveFilePicker)\n *    where the browser supports it, falling back to an <a download> blob\n */\n\nimport { getRepositoryFileBytes, downloadReleaseAsset } from './github.js';\nimport { formatBytes } from './state.js';\n\n// In-memory audio byte cache \u2014 keyed by repo path so a second tap on the\n// same track (or the same track in another section) plays instantly without\n// a second network fetch. Not persisted to localStorage (binary + quota).\nconst audioCache = new Map();\n\n/**\n * Fetch (once) and cache audio bytes for a repo path, returning a Blob.\n * tap-to-play callers keep a single <audio> element and swap .src.\n */\nexport async function cachedAudioBlob(credentials, repo, path, maxBytes) {\n  if (audioCache.has(path)) return audioCache.get(path);\n  const bytes = await getRepositoryFileBytes(credentials, repo, path, maxBytes);\n  const blob = new Blob([bytes]);\n  audioCache.set(path, blob);\n  return blob;\n}\n\n/**\n * Wire a single <audio> element + a set of [data-play] buttons for\n * tap-to-play with caching. Used by the Narrator voice previews and the\n * Music library. `resolve(btn)` must return { path, maxBytes }.\n */\nexport function wireAudioTapToPlay({ host, player, note, buttons, credentials, repo, resolve }) {\n  buttons.forEach((btn) => {\n    btn.addEventListener('click', async () => {\n      const { path, maxBytes } = resolve(btn);\n      btn.disabled = true;\n      if (note) note.textContent = audioCache.has(path) ? 'Playing from cache\u2026' : 'Fetching\u2026';\n      try {\n        const blob = await cachedAudioBlob(credentials, repo, path, maxBytes);\n        if (player.dataset.blobUrl) URL.revokeObjectURL(player.dataset.blobUrl);\n        const url = URL.createObjectURL(blob);\n        player.dataset.blobUrl = url;\n        player.src = url;\n        player.classList.remove('hidden');\n        if (note) note.textContent = path.replace(/^.*\\//, '');\n        player.play().catch(() => { if (note) note.textContent = 'Preview ready \u2014 press play.'; });\n      } catch (error) {\n        if (note) note.textContent = `Preview failed: ${error.message}`;\n      } finally {\n        btn.disabled = false;\n      }\n    });\n  });\n}\n\n/** True when the File System Access API save picker is available. */\nexport function canUseFileSystemAccess() {\n  return typeof window.showSaveFilePicker === 'function';\n}\n\n/**\n * Save bytes to disk, preferring the File System Access API (a real\n * user-picked destination, the closest browser equivalent of Android's\n * permission-scoped save) and falling back to an <a download> blob.\n * Returns 'picked' | 'download' | 'cancelled'.\n */\nexport async function saveBytes(bytes, suggestedName) {\n  if (canUseFileSystemAccess()) {\n    let handle;\n    try {\n      handle = await window.showSaveFilePicker({ suggestedName });\n    } catch (error) {\n      if (error && error.name === 'AbortError') return 'cancelled';\n      // Fall through to the blob download on any other picker failure.\n    }\n    if (handle) {\n      const writable = await handle.createWritable();\n      await writable.write(bytes);\n      await writable.close();\n      return 'picked';\n    }\n  }\n  const blob = new Blob([bytes]);\n  const url = URL.createObjectURL(blob);\n  const a = document.createElement('a');\n  a.href = url;\n  a.download = suggestedName;\n  document.body.appendChild(a);\n  a.click();\n  a.remove();\n  setTimeout(() => URL.revokeObjectURL(url), 4000);\n  return 'download';\n}\n\n/**\n * Render a download card row for a single release asset into `container`,\n * wiring a real progress bar + size readout and the File System Access\n * save. `onDone(method)` is called after a successful save (used to mark\n * the asset downloaded). Returns nothing; the row is fully self-contained.\n */\nexport function buildDownloadRow({ credentials, asset, container, onDone }) {\n  const row = document.createElement('div');\n  row.className = 'dl-row';\n  row.innerHTML = `\n    <div class=\"grow\">\n      <span class=\"mono\">${asset.name}</span>\n      <span class=\"muted small\"> \u00b7 ${formatBytes(asset.size)}</span>\n      <div class=\"progress-track hidden\" data-x=\"track\"><div class=\"progress-fill\" data-x=\"fill\" style=\"width:0%\"></div></div>\n      <div class=\"muted small\" data-x=\"status\"></div>\n    </div>\n    <button type=\"button\" class=\"primary small\" data-x=\"go\">Download</button>`;\n  container.appendChild(row);\n\n  const track = row.querySelector('[data-x=\"track\"]');\n  const fill = row.querySelector('[data-x=\"fill\"]');\n  const statusEl = row.querySelector('[data-x=\"status\"]');\n  const go = row.querySelector('[data-x=\"go\"]');\n\n  go.addEventListener('click', async () => {\n    go.disabled = true;\n    track.classList.remove('hidden');\n    try {\n      const bytes = await downloadReleaseAsset(credentials, asset, (received, total) => {\n        const t = total || asset.size || 0;\n        const pct = t ? Math.min(100, Math.round((received / t) * 100)) : 0;\n        fill.style.width = pct + '%';\n        statusEl.textContent = t\n          ? `${formatBytes(received)} / ${formatBytes(t)} (${pct}%)`\n          : `${formatBytes(received)}\u2026`;\n      });\n      statusEl.textContent = `Saving ${formatBytes(bytes.length)}\u2026`;\n      const method = await saveBytes(bytes, asset.name);\n      if (method === 'cancelled') {\n        statusEl.textContent = 'Save cancelled.';\n        go.disabled = false;\n        return;\n      }\n      statusEl.textContent = method === 'picked'\n        ? `Saved (${formatBytes(bytes.length)}) to your chosen folder.`\n        : `Downloaded (${formatBytes(bytes.length)}) \u2014 check your browser downloads.`;\n      if (onDone) onDone(method);\n    } catch (error) {\n      statusEl.textContent = `Download failed: ${error.message}`;\n      go.disabled = false;\n    }\n  });\n}\n",
       "finding": "ClipForge browser reads authenticated release bytes into Uint8Array then file picker/blob save; CastCut currently native authenticated response. Both existing delivery hashes match reference media bytes; no evidence this transport caused Android failure. Keep secure native delivery and add revision gating so obsolete files cannot be mistaken for new rebuilds."
-    }
+    },
+    "native_download_verification": {
+      "asset_id": 661445503,
+      "suggested_filename": "CastCut-661445503.mp4",
+      "size_bytes": 27664645,
+      "sha256": "880115852ea0e327185a6ac0627e153b1ba2cb370d8ea0d2760ce9bfa95d63c6",
+      "site_download_identical_to_runner": true,
+      "errors": [],
+      "head": {
+        "status": 200,
+        "content_type": "video/mp4",
+        "length": "27664645"
+      },
+      "range": {
+        "status": 206,
+        "content_range": "bytes 0-31/27664645",
+        "bytes": 32
+      },
+      "environment": "Chromium mobile viewport, NOT a physical Android device"
+    },
+    "browser_owner_playback": [
+      {
+        "name": "native-phone-rebuild.mp4",
+        "canPlayType": "probably",
+        "passed": true,
+        "ended": true,
+        "duration": 114.090667,
+        "width": 1920,
+        "height": 1080,
+        "currentTime": 114.090667,
+        "totalFrames": 2735,
+        "droppedFrames": 0
+      }
+    ]
   },
   "export_copy_clipforge_history": [
     {
