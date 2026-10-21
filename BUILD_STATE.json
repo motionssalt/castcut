@@ -13974,7 +13974,7 @@
   ],
   "playback_diagnosis": {
     "status": "in_progress",
-    "last_updated": "2026-10-21T06:25:29.516609+00:00",
+    "last_updated": "2026-10-21T06:27:19.986529+00:00",
     "clipforge_last_pass": {
       "reference_commit": "a05846de7c76a66ad42ba6fd37126514bc452167",
       "source_file": "pipeline/stage_b/compress.py",
@@ -14011,7 +14011,8 @@
     "findings": "No hardware root cause proven. Actual files both High@4.0, yuv420p, no B frames, mp42, faststart, no edit lists, two streams. Real ClipForge: 30fps timebase1/15360, explicit tv/bt709 transfer/primaries; reported-bad CastCut: 24000/1001 timebase1/384000, missing color tags. Previous final pass is NOT literal: rawvideo pipe + WAV boundary, timing/audio timestamp rewrite, extended LCM timescale. Source content/aspect, bitrate and AAC bitrate differ. Both release files are intact; phone download still requires owner checksum confirmation.",
     "done": [
       "Read BUILD_STATE.json and cloned both repositories; ClipForge remains read-only.",
-      "Traced exact current ClipForge last pass and recorded real delivered-file deep inspections/diff."
+      "Traced exact current ClipForge last pass and recorded real delivered-file deep inspections/diff.",
+      "Replaced raw-frame path with audited direct pass; added color timing interleaving gates and checksum display"
     ],
     "pending": [
       "Trace actual final pass",
