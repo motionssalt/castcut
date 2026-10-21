@@ -109,6 +109,7 @@ function renderExportsUI(data) {
 
         <div class="metadata-line" style="margin-bottom: 12px; font-size: 0.8125rem;">
           ${fileSize ? `<span>${escapeHtml(fileSize)}</span>` : ""}
+          ${canDownload ? `<span>${Number(exp.checks.size_bytes).toLocaleString()} bytes</span><span class="mono" style="overflow-wrap:anywhere;">SHA256: ${escapeHtml(exp.sha256)}</span>` : ""}
           ${audioTrack ? `<span class="metadata-sep" aria-hidden="true">·</span><span>${escapeHtml(audioTrack)}</span>` : ""}
         </div>
 
