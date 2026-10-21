@@ -1,18 +1,15 @@
-"""Stage B — final delivery compression for an already-rendered MP4.
+"""ClipForge terminal compression with the owner's explicit frame/PCM rebuild.
 
-This is deliberately a separate terminal pass: it changes neither captions,
-crops, timing, nor audio. It applies CRF-based x264 compression to the fully
-composited video, stream-copies the audio, verifies the output preserves core
-media properties, and never ships a candidate larger than the source (the
-original is retained in that pathological case).
-
-Ported from ``_legacy/scripts/compress_final_video.py``.
+Keep the vendored x264 profile, level, preset, GOP, brand and mux argument order.
+The final encoder receives raw pictures and PCM only; AAC is freshly encoded,
+original capped fps gets exact integer-tick timing, and a constrained candidate
+is ALWAYS delivered. No fallback may restore pre-rebuild compressed input.
+The untouched ClipForge implementation remains in upstream_compress.py.
 """
 from __future__ import annotations
 
 import argparse
 import os
-import shutil
 from pathlib import Path
 
 from . import common
@@ -75,16 +72,17 @@ def _validate(source: Path, candidate: Path) -> None:
     for index, (original, copied) in enumerate(zip(source_audio, candidate_audio), 1):
         if original.get("codec_name") != copied.get("codec_name"):
             raise common.StageBError(
-                f"Final compression re-encoded audio stream {index}: "
+                f"Final rebuild changed audio codec in stream {index}: "
                 f"{original.get('codec_name')} -> {copied.get('codec_name')}"
             )
 
 
 def compress(source: Path, destination: Path) -> tuple[int, int, bool]:
-    """Write a quality-compressed delivery MP4 and return size metrics
-    ``(before_bytes, final_bytes, reduced)``. If a pathological source does not
-    shrink under constant-quality encoding, the source is copied to the
-    destination rather than making the delivered asset larger."""
+    """Always write the freshly rebuilt MP4; return before/final size metrics.
+
+    The original ClipForge smaller-file fallback is intentionally forbidden by
+    the owner's newer request to recompile frames and freshly encode all audio.
+    """
     if not source.is_file():
         raise common.StageBError(f"Final video not found: {source}")
     if source.resolve() == destination.resolve():
@@ -108,7 +106,7 @@ def compress(source: Path, destination: Path) -> tuple[int, int, bool]:
         # Preserve the mobile-safe no-B-frame final-video contract.
         "-bf", "0", "-g", "60", "-keyint_min", "60", "-sc_threshold", "0",
         "-x264-params", "force-cfr=1", "-video_track_timescale", "15360",
-        # Audio is copied exactly; no additional generation loss or size churn.
+        # Upstream template; frame_rebuild replaces this with PCM -> AAC 128k.
         "-c:a", "copy",
         "-movflags", "+faststart", "-use_editlist", "0", "-brand", "mp42",
         "-map_metadata", "-1", "-map_chapters", "-1", "-sn", "-dn",
