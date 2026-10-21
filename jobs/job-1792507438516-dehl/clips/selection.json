@@ -1,11 +1,11 @@
 {
   "version": 1,
-  "export_id": "exp-job-1792507438516-dehl-clips-mvgvn5a4",
+  "export_id": "exp-job-1792507438516-dehl-clips-mvhxuk79",
   "order": [
-    "char1",
     "char30",
     "char35",
-    "char6"
+    "char6",
+    "char1"
   ],
   "ignored": [
     "char2",
@@ -44,5 +44,5 @@
   "gap_threshold": 2,
   "padding": 0.4,
   "audio_track": 0,
-  "quality": "normal"
+  "resolution": "900p"
 }
