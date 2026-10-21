@@ -1,7 +1,7 @@
 {
   "project": "castcut",
   "repo": "motionssalt/castcut",
-  "updated_at": "2026-10-20T22:26:04.774229+00:00",
+  "updated_at": "2026-10-21T07:02:22.800500+00:00",
   "phases": [
     {
       "id": 1,
@@ -70,7 +70,7 @@
     "fix_round_5: Project cards display user-typed project name as primary title with raw job ID secondary; fallback to torrent name then job ID for legacy projects."
   ],
   "known_issues": [],
-  "next_action": "Export engineering verification complete. Owner should open the verified 1:54 MP4 directly in Android Files/Gallery without conversion; physical-phone result remains unverified.",
+  "next_action": "Owner phone/editor compatibility results for playback-test-pack. Engineering work complete; do not claim hardware playback until owner reports.",
   "fix_round_1": {
     "started_at": "2026-10-03T00:37:08Z",
     "status": "done",
@@ -13973,8 +13973,8 @@
     }
   ],
   "playback_diagnosis": {
-    "status": "in_progress",
-    "last_updated": "2026-10-21T06:44:06.907624+00:00",
+    "status": "awaiting-owner-test-results",
+    "last_updated": "2026-10-21T07:02:22.800500+00:00",
     "clipforge_last_pass": {
       "reference_commit": "a05846de7c76a66ad42ba6fd37126514bc452167",
       "source_file": "pipeline/stage_b/compress.py",
@@ -17349,7 +17349,24 @@
       "controls": {
         "B_asset_id": 654439970,
         "M_asset_id": 661445503
-      }
+      },
+      "try_order": [
+        "B",
+        "C",
+        "A",
+        "M",
+        "N",
+        "D",
+        "E",
+        "I",
+        "J",
+        "K",
+        "K2",
+        "F",
+        "G",
+        "H",
+        "L"
+      ]
     },
     "findings": "No hardware root cause proven. Actual files both High@4.0, yuv420p, no B frames, mp42, faststart, no edit lists, two streams. Real ClipForge: 30fps timebase1/15360, explicit tv/bt709 transfer/primaries; reported-bad CastCut: 24000/1001 timebase1/384000, missing color tags. Previous final pass is NOT literal: rawvideo pipe + WAV boundary, timing/audio timestamp rewrite, extended LCM timescale. Source content/aspect, bitrate and AAC bitrate differ. Both release files are intact; phone download still requires owner checksum confirmation.",
     "done": [
@@ -17359,11 +17376,14 @@
       "Real-file trial caught excessive mux separation; disabled premature flushing before publication",
       "Published and read-back verified 15-file compatibility pack including K2 mono and N actual production default. B and M intentionally untouched/longer controls.",
       "Production scene flow passed all checks; actual Cloudflare download hash/length and Range206 matched release.",
-      "179 Python tests + all Node suites + selftest + workflow lint passed; executed tagged HDR->BT709 and25fps25000clock tests passed; scene .sha256 and integrity sidecars published."
+      "179 Python tests + all Node suites + selftest + workflow lint passed; executed tagged HDR->BT709 and25fps25000clock tests passed; scene .sha256 and integrity sidecars published.",
+      "Full 125-segment production faces export completed successfully; all decode/packet/color/size/fps/audio/rolling10s checks passed.",
+      "Both complete production exports downloaded through actual Cloudflare route with byte-exact hash/size; integrity sidecars published for both.",
+      "ClipForge remained unmodified; no site redesign or export options added; audio picker retained.",
+      "Only unresolved item is physical phone/editor playback."
     ],
     "pending": [
-      "Full production faces export finishing (39555912076)",
-      "Physical phone and editing-app test results"
+      "Owner tests fully downloaded B,C,A,M first, then N,D,E,I,J,K,K2,F,G,H,L in normal phone player and editing app; report device/app versions, yes/no/error, and downloaded size/hash."
     ],
     "verified_runs": [
       {
@@ -17381,9 +17401,27 @@
         "selected_audio_index": 0,
         "all_verification_checks_passed": true,
         "live_site_download_verified": true
+      },
+      {
+        "flow": "faces",
+        "run_id": 39555912076,
+        "run_url": "https://github.com/motionssalt/castcut/actions/runs/39555912076",
+        "result": "success",
+        "asset_id": 661646057,
+        "size_bytes": 205605265,
+        "duration": 850.517354,
+        "video_average_kbps": 1799.704961103904,
+        "video_peak_10s_kbps": 1903.9624,
+        "mb_per_minute": 14.504484643355084,
+        "sha256": "8bab817258787540fd369b7e452339bce3c5d3484f1d36101c7e317515841eee",
+        "selected_audio_index": 0,
+        "hard_cut_segments": 125,
+        "all_verification_checks_passed": true,
+        "live_site_download_verified": true,
+        "max_av_interleave_bytes": 188549
       }
     ],
-    "notes": "ClipForge repository is unchanged. No credentials missing; existing Cloudflare deployment secrets worked. Reference read credential stored only as GitHub Actions secret CLIPFORGE_READ_TOKEN. Source-fps25 uses25000clock, fractional24000/1001 uses24000clock; High4.0 remains explicit reference priority. Root cause not claimed. F auto clock equals C clock for this current input. B/M deliberately retain full control files.",
+    "notes": "ClipForge repository is unchanged. No credentials missing; existing Cloudflare deployment secrets worked. Reference read credential stored only as GitHub Actions secret CLIPFORGE_READ_TOKEN. Source-fps25 uses25000clock, fractional24000/1001 uses24000clock; High4.0 remains explicit reference priority. Root cause not claimed. F auto clock equals C clock for this current input. B/M deliberately retain full control files. Final normal exports preserve selected audio index0. Synthetic two-track880Hz-vs440Hz regression verifies non-first audio selection. Owner bitrate requirement is a ceiling, not a size floor: 1800k VBV yields measured14.50-14.55MB/min while leaving rolling10s headroom. The watch command timed out once while the export kept running; final run completed successfully.",
     "comparison_after": "diagnostics/playback/comparison.md",
     "reference_policy": {
       "literal_command_template": "pipeline.delivery_pass.reference_command (tested against actual vendored upstream source)",
@@ -17402,7 +17440,10 @@
       "successful_ci_url": "https://github.com/motionssalt/castcut/actions/runs/39556934125",
       "deploy_run_id": 39555500224,
       "color_rate_checks": "diagnostics/playback/color-rate-tests.json",
-      "phone_playback_tested": false
+      "phone_playback_tested": false,
+      "latest_successful_ci_run_id": 39558627570,
+      "latest_successful_ci_url": "https://github.com/motionssalt/castcut/actions/runs/39558627570",
+      "real_flow_smoke": "diagnostics/playback/real-flow-smoke.json"
     }
   }
 }
