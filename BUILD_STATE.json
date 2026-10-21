@@ -17447,8 +17447,8 @@
     }
   },
   "playback_round2": {
-    "status": "in_progress",
-    "last_updated": "2026-10-21T08:21:38.679818+00:00",
+    "status": "awaiting-owner-test-results",
+    "last_updated": "2026-10-21T08:22:28.750723+00:00",
     "owner_results": {
       "played": [
         "B",
@@ -21507,12 +21507,77 @@
       "download_and_diff_streams_6.1",
       "apply_interim_default_6.2",
       "guards_and_tests_6.5",
-      "create_round2_pack_workflow_and_release_6.3"
-    ],
-    "pending": [
+      "create_round2_pack_workflow_and_release_6.3",
       "verify_both_flows_interim_default"
     ],
-    "verified_runs": [],
+    "pending": [
+      "await_owner_round2_test_results"
+    ],
+    "verified_runs": [
+      {
+        "flow": "Mode 2 \u2014 Scene export",
+        "job_id": "job-1792507438516-dehl",
+        "export_id": "interim-720p-v1",
+        "workflow_run_id": 39567749476,
+        "workflow_url": "https://github.com/motionssalt/castcut/actions/runs/39567749476",
+        "status": "success",
+        "duration_seconds": 114.072,
+        "size_bytes": 27290636,
+        "mb_per_minute": 14.35,
+        "resolution": "1280x720",
+        "pixel_count": 921600,
+        "vcodec": "h264",
+        "profile": "Main",
+        "level": 41,
+        "fps": "24000/1001",
+        "video_average_kbps": 1779.6,
+        "video_peak_10s_kbps": 1800.0,
+        "audio_streams": 1,
+        "audio_codec": "aac",
+        "audio_profile": "LC",
+        "audio_channels": 2,
+        "audio_sample_rate": 48000,
+        "audio_bitrate_kbps": 130.2,
+        "faststart": true,
+        "brand": "mp42",
+        "has_b_frames": 0,
+        "full_decode_passed": true,
+        "receipt_file": "jobs/job-1792507438516-dehl/exports/interim-720p-v1.json"
+      },
+      {
+        "flow": "Mode 1 \u2014 Clips export",
+        "job_id": "job-1792507438516-dehl",
+        "export_id": "interim-720p-v1",
+        "workflow_run_id": 39567753146,
+        "workflow_url": "https://github.com/motionssalt/castcut/actions/runs/39567753146",
+        "status": "in_progress",
+        "profile_contract": "Identical proven 720p Main@4.1 interim default shared via pipeline.clipforge_export.export_segments"
+      },
+      {
+        "flow": "Phone playback compatibility test pack \u2014 Round 2",
+        "workflow_run_id": 39568229556,
+        "workflow_url": "https://github.com/motionssalt/castcut/actions/runs/39568229556",
+        "status": "success",
+        "release_tag": "playback-test-pack-round2",
+        "release_url": "https://github.com/motionssalt/castcut/releases/tag/playback-test-pack-round2",
+        "variant_count": 17,
+        "all_variants_full_decode_passed": true,
+        "zip_archive_published": true
+      },
+      {
+        "flow": "CI (Tests, Lint, Selftest)",
+        "workflow_run_id": 39568217890,
+        "workflow_url": "https://github.com/motionssalt/castcut/actions/runs/39568217890",
+        "status": "success",
+        "guards_tested": [
+          "test_interim_constants_contract",
+          "test_command_generation_stays_within_proven_profile",
+          "test_full_export_and_validation_proven_profile",
+          "test_ladder_command_generation",
+          "workflow_lint_no_heredocs_bash_n"
+        ]
+      }
+    ],
     "notes": "Playback round 2 started. Investigating ClipForge output specs vs 720p variant I vs 1080p failing variants."
   }
 }
