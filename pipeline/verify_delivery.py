@@ -44,6 +44,14 @@ def verify(path, tag, repository=None):
     result = {'asset_id':asset['id'],'asset_name':asset['name'],'sha256':expected,'size_bytes':size,
               'runner_release_download_identical':True, 'browser_download_url':asset['browser_download_url']}
     path.with_suffix('.delivery.json').write_text(json.dumps(result,indent=2)+'\n')
+    # Publish human-checkable integrity alongside every normal export, not just
+    # in the job's private JSON. Keep this AFTER successful asset readback.
+    import subprocess
+    checksum=path.with_name(path.name+'.sha256')
+    checksum.write_text(f'{expected}  {path.name}\n')
+    receipt=path.with_name(path.name+'.integrity.json')
+    receipt.write_text(json.dumps(result,indent=2)+'\n')
+    subprocess.run(['gh','release','upload',tag,str(checksum),str(receipt),'--repo',repo,'--clobber'],check=True)
     print(json.dumps(result),flush=True)
     return result
 
