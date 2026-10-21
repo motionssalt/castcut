@@ -13974,15 +13974,44 @@
   ],
   "playback_diagnosis": {
     "status": "in_progress",
-    "last_updated": "2026-10-21T06:22:57.996207+00:00",
-    "clipforge_last_pass": {},
+    "last_updated": "2026-10-21T06:25:29.516609+00:00",
+    "clipforge_last_pass": {
+      "reference_commit": "a05846de7c76a66ad42ba6fd37126514bc452167",
+      "source_file": "pipeline/stage_b/compress.py",
+      "exact_command_source": "    command = [\n        \"ffmpeg\", \"-y\", \"-i\", str(source),\n        \"-map\", \"0:v:0\", \"-map\", \"0:a?\",\n        \"-c:v\", \"libx264\", \"-profile:v\", X264_PROFILE,\n        \"-level:v\", X264_LEVEL, \"-preset\", DELIVERY_PRESET,\n        \"-crf\", DELIVERY_CRF, \"-pix_fmt\", \"yuv420p\",\n        # Preserve the mobile-safe no-B-frame final-video contract.\n        \"-bf\", \"0\", \"-g\", \"60\", \"-keyint_min\", \"60\", \"-sc_threshold\", \"0\",\n        \"-x264-params\", \"force-cfr=1\", \"-video_track_timescale\", \"15360\",\n        # Audio is copied exactly; no additional generation loss or size churn.\n        \"-c:a\", \"copy\",\n        \"-movflags\", \"+faststart\", \"-use_editlist\", \"0\", \"-brand\", \"mp42\",\n        \"-map_metadata\", \"-1\", \"-map_chapters\", \"-1\", \"-sn\", \"-dn\",\n        \"-ignore_unknown\", \"-fflags\", \"+genpts\", \"-max_muxing_queue_size\", \"9999\",\n        \"-f\", \"mp4\", str(candidate),\n    ]\n",
+      "constants": {
+        "X264_PROFILE": "high",
+        "X264_LEVEL": "4.0",
+        "DELIVERY_PRESET": "medium",
+        "DELIVERY_CRF": "23"
+      },
+      "position": "pipeline/stage_b/run.py step 6, after render -> optional enhance -> captions -> optional watermark; before validate_mp4 -> ZIP packaging -> release upload",
+      "input": "Completed, composited final.mp4; one selected/merged AAC track",
+      "fallback": "If candidate is not smaller, copies pre-pass source instead. This can mean the terminal encode is NOT actually delivered. CastCut must not resurrect unnormalized or over-ceiling input.",
+      "delivery": "ClipForge uploads both unchanged final.mp4 and ZIP containing identical final.mp4 to same GitHub release; browser-download links. No post-compression encoding. CastCut likewise releases MP4; authenticated redirect download route already exists.",
+      "real_clipforge_asset": {
+        "id": 654439970,
+        "release": "clipforge-hxh6-p9",
+        "size_bytes": 10467848,
+        "sha256": "7ec0c386d79bcfbf257ee9455b690be7f08bb579df4f4ea07670887c685c0039"
+      },
+      "real_castcut_asset": {
+        "id": 661445503,
+        "release": "castcut-job-1792507438516-dehl",
+        "size_bytes": 27664645,
+        "sha256": "880115852ea0e327185a6ac0627e153b1ba2cb370d8ea0d2760ce9bfa95d63c6"
+      },
+      "diff_table": "diagnostics/playback/differences-before.md",
+      "full_diff": "diagnostics/playback/differences-before.json"
+    },
     "test_pack": {
       "release": "",
       "variants": []
     },
-    "findings": "",
+    "findings": "No hardware root cause proven. Actual files both High@4.0, yuv420p, no B frames, mp42, faststart, no edit lists, two streams. Real ClipForge: 30fps timebase1/15360, explicit tv/bt709 transfer/primaries; reported-bad CastCut: 24000/1001 timebase1/384000, missing color tags. Previous final pass is NOT literal: rawvideo pipe + WAV boundary, timing/audio timestamp rewrite, extended LCM timescale. Source content/aspect, bitrate and AAC bitrate differ. Both release files are intact; phone download still requires owner checksum confirmation.",
     "done": [
-      "Read BUILD_STATE.json and cloned both repositories; ClipForge remains read-only."
+      "Read BUILD_STATE.json and cloned both repositories; ClipForge remains read-only.",
+      "Traced exact current ClipForge last pass and recorded real delivered-file deep inspections/diff."
     ],
     "pending": [
       "Trace actual final pass",
