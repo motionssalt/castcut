@@ -13971,5 +13971,26 @@
         }
       ]
     }
-  ]
+  ],
+  "playback_diagnosis": {
+    "status": "in_progress",
+    "last_updated": "2026-10-21T06:22:57.996207+00:00",
+    "clipforge_last_pass": {},
+    "test_pack": {
+      "release": "",
+      "variants": []
+    },
+    "findings": "",
+    "done": [
+      "Read BUILD_STATE.json and cloned both repositories; ClipForge remains read-only."
+    ],
+    "pending": [
+      "Trace actual final pass",
+      "Inspect real assets",
+      "Implement and verify both flows",
+      "Publish phone test pack"
+    ],
+    "verified_runs": [],
+    "notes": "Physical phone playback cannot be verified in this environment."
+  }
 }
