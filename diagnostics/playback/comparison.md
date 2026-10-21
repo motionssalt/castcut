@@ -28,3 +28,17 @@ Not a hardware playback result. Full SPS/PPS/VUI, sample tables, atom trees, pac
 The new export keeps the actual ClipForge High@4.0/bf0/GOP60/mp42/faststart/no-edit-list contract. It is NOT bit-identical to the reference: source aspect/fps/size differ, owner bitrate and AAC128 differ, complete BT709 color declarations are added. A 24000-Hz track clock is the documented original-fps exception, replacing previous unnecessarily large 384000-Hz LCM clock; integer 24/25/30 use upstream15360 when exact. No raw-picture/PCM terminal pipe remains. The upstream command template is regression-tested verbatim; default normalization additions are explicitly recorded.
 Root cause still unproven: profile, frame rate/timebase, metadata/color, SPS/VUI, resolution and audio compatibility remain hypotheses until the owner reports phone/editor tests. Both original delivered files are intact. The new file also traversed the actual live site route byte-for-byte with correct MIME, length, hash, and HTTP Range support.
 Unknown-color assumption: untagged HD treated as BT709; untagged SD as BT601, then converted. Untagged content cannot be identified perfectly from absent metadata. Tagged SDR is converted; tagged PQ/HLG is tone-mapped.
+
+
+## Full production faces export
+
+Run39555912076 succeeded with125 actual face-selected hard-cut ranges. The
+850.517354-second result is205605265bytes (14.504MB/min), High@4.0,
+yuv420p, zero B frames,23.976023976fps with1001 ticks per frame at24000Hz,
+mp42, faststart, no edit lists, and exactly one chosen-track AAC-LC48kHz stereo
+stream. Average video1799.705kbps; maximum rolling10s video1903.9624kbps.
+Maximum nearest A/V byte separation188549. Full decode and all packet gates
+passed. Live Cloudflare download exactly matched release/job SHA256 and size.
+The two flows therefore share the validated final-file contract; neither is
+claimed to have passed physical-phone/editor testing. Detailed inspection and
+full reference diff: faces-after.json, differences-faces-after.json.
