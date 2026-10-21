@@ -53,7 +53,11 @@ def encode_decoded_frames(source, candidate, command):
             '-vf', 'setsar=1',
         ]
         index = cmd.index('-c:a')
-        cmd[index:index+2] = ['-c:a', 'aac', '-profile:a', 'aac_low', '-b:a', '128k', '-ar', '48000', '-ac', '2']
+        # Native AAC has a 1024-sample encoder delay. Compensate at its PCM
+        # input, not by shifting the video clock or adding forbidden edit lists.
+        # Otherwise the MP4 muxer stretches the first video sample by ~21ms.
+        cmd[index:index+2] = ['-af', 'asetpts=N/SR/TB+1024/SR/TB',
+                              '-c:a', 'aac', '-profile:a', 'aac_low', '-b:a', '128k', '-ar', '48000', '-ac', '2']
         cmd[cmd.index('-video_track_timescale')+1] = str(frame_timescale(fps))
         # Preserve any explicit reference color declarations; never invent them.
         for field, flag in [('color_range','-color_range'), ('color_space','-colorspace'),
