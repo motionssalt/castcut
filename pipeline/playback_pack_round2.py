@@ -290,8 +290,8 @@ def build(castcut_src: Path, clipforge_src: Path, out_dir: Path) -> list[dict]:
     # Add 02_control_720p-known-good by copying the 1280x720 ladder output
     p_02 = out_dir / "02_control_720p-known-good.mp4"
     shutil.copyfile(out_dir / "03_ladder_1280x720.mp4", p_02)
-    entry_02 = process_job((p_02, ["copy", "03_ladder_1280x720.mp4", p_02.name], "Known-good 720p baseline control (Variant I exact matching settings)."))
-    entry_02["command"] = ["byte-copy-from-variant-I"]
+    entry_02 = process_job((p_02, ["true"], "Known-good 720p baseline control (Variant I exact matching settings)."))
+    entry_02["command"] = ["byte-copy-from-variant-I", "03_ladder_1280x720.mp4", p_02.name]
     variants.append(entry_02)
 
     # Add 01_control_clipforge-known-good (untouched ClipForge output)
