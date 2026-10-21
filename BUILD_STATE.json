@@ -13974,7 +13974,7 @@
   ],
   "playback_diagnosis": {
     "status": "in_progress",
-    "last_updated": "2026-10-21T06:36:25.498682+00:00",
+    "last_updated": "2026-10-21T06:38:05.568053+00:00",
     "clipforge_last_pass": {
       "reference_commit": "a05846de7c76a66ad42ba6fd37126514bc452167",
       "source_file": "pipeline/stage_b/compress.py",
@@ -17356,15 +17356,41 @@
       "Read BUILD_STATE.json and cloned both repositories; ClipForge remains read-only.",
       "Traced exact current ClipForge last pass and recorded real delivered-file deep inspections/diff.",
       "Replaced raw-frame path with audited direct pass; added color timing interleaving gates and checksum display",
-      "Real-file trial caught excessive mux separation; disabled premature flushing before publication"
+      "Real-file trial caught excessive mux separation; disabled premature flushing before publication",
+      "Published and read-back verified 15-file compatibility pack including K2 mono and N actual production default. B and M intentionally untouched/longer controls.",
+      "Production scene flow passed all checks; actual Cloudflare download hash/length and Range206 matched release."
     ],
     "pending": [
-      "Trace actual final pass",
-      "Inspect real assets",
-      "Implement and verify both flows",
-      "Publish phone test pack"
+      "Full production faces export completing",
+      "Final regression CI",
+      "Physical phone and editing-app playback results"
     ],
-    "verified_runs": [],
-    "notes": "Physical phone playback cannot be verified in this environment."
+    "verified_runs": [
+      {
+        "flow": "scene",
+        "run_id": 39555915496,
+        "run_url": "https://github.com/motionssalt/castcut/actions/runs/39555915496",
+        "result": "success",
+        "asset_id": 661595081,
+        "size_bytes": 27666719,
+        "duration": 114.073292,
+        "video_average_kbps": 1805.9817173304605,
+        "video_peak_10s_kbps": 1881.2312,
+        "mb_per_minute": 14.552075344682786,
+        "sha256": "321539633e96013185971a428c7433762571271011041e179cfdbc95790222df",
+        "selected_audio_index": 0,
+        "all_verification_checks_passed": true,
+        "live_site_download_verified": true
+      }
+    ],
+    "notes": "Physical phone playback cannot be verified in this environment.",
+    "comparison_after": "diagnostics/playback/comparison.md",
+    "reference_policy": {
+      "literal_command_template": "pipeline.delivery_pass.reference_command (tested against actual vendored upstream source)",
+      "default_profile": "High@4.0 because explicit ClipForge settings win under section6.3",
+      "default_clock": "15360 when source fps is exactly representable; otherwise source fps numerator (original-rate policy exception)",
+      "not_byte_identical": "Owner bitrate/fps/resolution/audio changes plus unspecified color/PTS/interleaving safeguards; no source fallback",
+      "raw_frame_workaround_removed": true
+    }
   }
 }
