@@ -53,7 +53,7 @@ def flatten_boxes(items):
 
 def packet_report(path, fps, exact_cadence=False):
     result = subprocess.run(['ffprobe', '-v', 'error', '-show_packets', '-show_entries',
-                             'packet=stream_index,pts,dts,duration,pts_time,dts_time,duration_time,size,flags',
+                             'packet=stream_index,pts,dts,duration,pts_time,dts_time,duration_time,size,pos,flags',
                              '-of', 'json', str(path)], capture_output=True, text=True, check=True)
     packets = json.loads(result.stdout)['packets']
     by_stream = {}
@@ -100,15 +100,28 @@ def packet_report(path, fps, exact_cadence=False):
     durations = sorted({int(p['duration']) for p in v})
     if exact_cadence:
         rational = Fraction(str(fps)).limit_denominator(1000000)
-        ticks = Fraction(math.lcm(15360, rational.numerator), 1) / rational
+        from .delivery_pass import timescale
+        ticks = Fraction(timescale(rational), 1) / rational
         if ticks.denominator != 1 or durations != [int(ticks)]:
             raise RuntimeError(f'Frame reconstruction requires one exact sample duration, got {durations}')
         if any(int(p['pts']) != i * int(ticks) or int(p['dts']) != i * int(ticks) for i, p in enumerate(v)):
             raise RuntimeError('Frame reconstruction timestamp clock drift')
+    import bisect
+    a = by_stream.get(1, [])
+    at = [float(p['pts_time']) for p in a]
+    distances = []
+    for p in v:
+        if not at: break
+        time = float(p['pts_time']); k = bisect.bisect_left(at, time)
+        nearest = min((i for i in (k-1,k) if 0<=i<len(a)), key=lambda i:abs(at[i]-time))
+        if abs(at[nearest]-time)<0.1:
+            distances.append(abs(int(p['pos'])-int(a[nearest]['pos'])))
+    interleave = max(distances, default=0)
+    if interleave>500000: raise RuntimeError(f'A/V samples exceed 500 KB separation: {interleave}')
     keyframes = [i for i, p in enumerate(v) if 'K' in p.get('flags', '')]
     if not keyframes or keyframes[0] != 0 or any(b-a != 60 for a,b in zip(keyframes,keyframes[1:])):
         raise RuntimeError('Reference fixed GOP 60 violated')
-    return {'video_average_kbps': average, 'video_peak_10s_kbps': peak,
+    return {'max_av_interleave_bytes':interleave, 'video_average_kbps': average, 'video_peak_10s_kbps': peak,
             'video_packets': len(v), 'audio_packets': len(by_stream.get(1, [])),
             'all_packet_timestamps_contiguous': True, 'video_pts_equal_dts': True,
             'fixed_gop': 60, 'duration_video': duration,
@@ -141,7 +154,8 @@ def validate(path, expect_audio=True, source=None):
         raise RuntimeError('Resolution must be even and <=1920x1080')
     rational_fps = Fraction(v['r_frame_rate'])
     fps = float(rational_fps)
-    expected_timebase = Fraction(1, math.lcm(15360, rational_fps.numerator))
+    from .delivery_pass import timescale
+    expected_timebase = Fraction(1, timescale(rational_fps))
     if Fraction(v['time_base']) != expected_timebase or Fraction(v['avg_frame_rate']) != rational_fps:
         raise RuntimeError('Fractional source frame rate must have exact integer-tick MP4 timing')
     if not 0 < fps <= 30:
@@ -167,6 +181,10 @@ def validate(path, expect_audio=True, source=None):
         raise RuntimeError('Reference MP4 top-level boxes/brand/faststart differ')
     if any(b['type'] in ('elst','edts','ctts') for b in flatten_boxes(boxes)):
         raise RuntimeError('Reference no-edit-list/no-B-frame MP4 structure violated')
+    for k, value in {'color_range':'tv','color_space':'bt709','color_primaries':'bt709','color_transfer':'bt709'}.items():
+        if v.get(k) != value: raise RuntimeError(f'Color normalization missing {k}: {v.get(k)}')
+    if expect_audio and abs(float(v['duration'])-float(audio['duration'])) > 1/fps:
+        raise RuntimeError('Audio/video duration mismatch exceeds one frame')
     r = packet_report(path, fps, exact_cadence=True)
     if r['video_average_kbps'] > 2000 or r['video_peak_10s_kbps'] > 2000:
         raise RuntimeError(f'Video exceeds 2000 kbps: avg={r["video_average_kbps"]:.3f}, rolling10s={r["video_peak_10s_kbps"]:.3f}')
