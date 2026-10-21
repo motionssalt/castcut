@@ -17445,5 +17445,51 @@
       "latest_successful_ci_url": "https://github.com/motionssalt/castcut/actions/runs/39558627570",
       "real_flow_smoke": "diagnostics/playback/real-flow-smoke.json"
     }
+  },
+  "playback_round2": {
+    "status": "in_progress",
+    "last_updated": "2026-10-21T07:22:57.487345+00:00",
+    "owner_results": {
+      "played": [
+        "B",
+        "I"
+      ],
+      "failed": [
+        "A",
+        "C",
+        "D",
+        "E",
+        "F",
+        "G",
+        "H",
+        "J",
+        "K",
+        "K2",
+        "L",
+        "M",
+        "N"
+      ],
+      "error_message": "unsupported H264 - AAC",
+      "notes": "Owner tested all 14 variants on physical Android phone. Only B (ClipForge control) and I (H.264 Main 1280x720) played."
+    },
+    "clipforge_vs_castcut_stream_diff": {},
+    "interim_default": {},
+    "round2_pack": {
+      "release": "",
+      "variants": []
+    },
+    "findings": "",
+    "done": [
+      "resume_protocol_initialized"
+    ],
+    "pending": [
+      "download_and_diff_streams_6.1",
+      "apply_interim_default_6.2",
+      "create_round2_pack_workflow_and_release_6.3",
+      "guards_and_tests_6.5",
+      "verify_both_flows_interim_default"
+    ],
+    "verified_runs": [],
+    "notes": "Playback round 2 started. Investigating ClipForge output specs vs 720p variant I vs 1080p failing variants."
   }
 }
