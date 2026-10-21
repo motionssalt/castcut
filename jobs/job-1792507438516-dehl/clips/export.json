@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "export_id": "exp-job-1792507438516-dehl-clips-playback-v2",
+  "export_id": "interim-720p-v1",
   "project_id": "job-1792507438516-dehl",
   "job_id": "job-1792507438516-dehl",
   "type": "clips",
@@ -19,48 +19,48 @@
   },
   "total_segments": 125,
   "total_duration": 850.9,
-  "size_before_bytes": 1235429746,
-  "size_after_bytes": 205605265,
-  "size_bytes": 205605265,
-  "size_before_human": "1.2 GB",
-  "size_after_human": "196.1 MB",
-  "size_human": "196.1 MB",
-  "bitrate_kbps": 1933.931,
-  "video_bitrate_kbps": 1799.705,
-  "bitrate_bps": 1933931,
-  "effective_bitrate": "1933.931 kbps",
+  "size_before_bytes": 657349606,
+  "size_after_bytes": 203167317,
+  "size_bytes": 203167317,
+  "size_before_human": "626.9 MB",
+  "size_after_human": "193.8 MB",
+  "size_human": "193.8 MB",
+  "bitrate_kbps": 1911.0,
+  "video_bitrate_kbps": 1776.774,
+  "bitrate_bps": 1911000,
+  "effective_bitrate": "1911.0 kbps",
   "audio_track": 0,
   "audio_track_label": "Track 1 \u00b7 ENG \u00b7 stereo \u00b7 eac3",
-  "asset_name": "castcut-export-exp-job-1792507438516-dehl-clips-playback-v2.mp4",
-  "encode_path": "ClipForge vendored render/compress: H.264 High@L4.0, 1080p, 0 B-frames, mp42, faststart, AAC 128k stereo, <=2000 kbps",
+  "asset_name": "castcut-export-interim-720p-v1.mp4",
+  "encode_path": "Proven-playable mobile profile (variant I): H.264 Main@L4.1, 720p (<=921.6k px), 0 B-frames, mp42, faststart, AAC 128k stereo, <=2000 kbps",
   "status": "done",
   "ok": true,
-  "sha256": "8bab817258787540fd369b7e452339bce3c5d3484f1d36101c7e317515841eee",
-  "video_peak_10s_kbps": 1903.9624,
-  "video_average_kbps": 1799.704961103904,
-  "mb_per_minute": 14.504484643355084,
+  "sha256": "fb3dcf7f374f0d298f968c8f7de44b08496b88629336c3d78645401827906850",
+  "video_peak_10s_kbps": 1911.9936,
+  "video_average_kbps": 1776.7735731419518,
+  "mb_per_minute": 14.332498875737226,
   "reference_commit": "a05846de7c76a66ad42ba6fd37126514bc452167",
   "delivery": {
-    "asset_id": 661646057,
-    "asset_name": "castcut-export-exp-job-1792507438516-dehl-clips-playback-v2.mp4",
-    "sha256": "8bab817258787540fd369b7e452339bce3c5d3484f1d36101c7e317515841eee",
-    "size_bytes": 205605265,
+    "asset_id": 661846085,
+    "asset_name": "castcut-export-interim-720p-v1.mp4",
+    "sha256": "fb3dcf7f374f0d298f968c8f7de44b08496b88629336c3d78645401827906850",
+    "size_bytes": 203167317,
     "runner_release_download_identical": true,
-    "browser_download_url": "https://github.com/motionssalt/castcut/releases/download/castcut-job-1792507438516-dehl/castcut-export-exp-job-1792507438516-dehl-clips-playback-v2.mp4"
+    "browser_download_url": "https://github.com/motionssalt/castcut/releases/download/castcut-job-1792507438516-dehl-out-2/castcut-export-interim-720p-v1.mp4"
   },
   "checks": {
     "ok": true,
-    "sha256": "8bab817258787540fd369b7e452339bce3c5d3484f1d36101c7e317515841eee",
+    "sha256": "fb3dcf7f374f0d298f968c8f7de44b08496b88629336c3d78645401827906850",
     "duration": 850.517354,
-    "size_bytes": 205605265,
-    "size_human": "196.08 MiB",
-    "mb_per_minute": 14.504484643355084,
-    "bitrate_bps": 1933931,
-    "bitrate_kbps": 1933.931,
-    "video_bitrate_kbps": 1799.705,
-    "max_av_interleave_bytes": 188549,
-    "video_average_kbps": 1799.704961103904,
-    "video_peak_10s_kbps": 1903.9624,
+    "size_bytes": 203167317,
+    "size_human": "193.76 MiB",
+    "mb_per_minute": 14.332498875737226,
+    "bitrate_bps": 1911000,
+    "bitrate_kbps": 1911.0,
+    "video_bitrate_kbps": 1776.774,
+    "max_av_interleave_bytes": 190760,
+    "video_average_kbps": 1776.7735731419518,
+    "video_peak_10s_kbps": 1911.9936,
     "video_packets": 20392,
     "audio_packets": 39869,
     "all_packet_timestamps_contiguous": true,
@@ -72,10 +72,10 @@
     ],
     "exact_frame_cadence": true,
     "vcodec": "h264",
-    "profile": "High",
-    "level": 40,
-    "width": 1920,
-    "height": 1080,
+    "profile": "Main",
+    "level": 41,
+    "width": 1280,
+    "height": 720,
     "fps": 23.976023976023978,
     "audio_streams": 1,
     "audio_codec": "aac",
@@ -94,7 +94,7 @@
       {
         "type": "moov",
         "offset": 32,
-        "size": 429082,
+        "size": 429074,
         "children": [
           {
             "type": "mvhd",
@@ -104,7 +104,7 @@
           {
             "type": "trak",
             "offset": 148,
-            "size": 165071,
+            "size": 165063,
             "children": [
               {
                 "type": "tkhd",
@@ -114,7 +114,7 @@
               {
                 "type": "mdia",
                 "offset": 248,
-                "size": 164971,
+                "size": 164963,
                 "children": [
                   {
                     "type": "mdhd",
@@ -129,7 +129,7 @@
                   {
                     "type": "minf",
                     "offset": 333,
-                    "size": 164886,
+                    "size": 164878,
                     "children": [
                       {
                         "type": "vmhd",
@@ -151,36 +151,36 @@
                       {
                         "type": "stbl",
                         "offset": 397,
-                        "size": 164822,
+                        "size": 164814,
                         "children": [
                           {
                             "type": "stsd",
                             "offset": 405,
-                            "size": 214
+                            "size": 206
                           },
                           {
                             "type": "stts",
-                            "offset": 619,
+                            "offset": 611,
                             "size": 24
                           },
                           {
                             "type": "stss",
-                            "offset": 643,
+                            "offset": 635,
                             "size": 1376
                           },
                           {
                             "type": "stsc",
-                            "offset": 2019,
+                            "offset": 2011,
                             "size": 28
                           },
                           {
                             "type": "stsz",
-                            "offset": 2047,
+                            "offset": 2039,
                             "size": 81588
                           },
                           {
                             "type": "stco",
-                            "offset": 83635,
+                            "offset": 83627,
                             "size": 81584
                           }
                         ]
@@ -193,89 +193,89 @@
           },
           {
             "type": "trak",
-            "offset": 165219,
+            "offset": 165211,
             "size": 263797,
             "children": [
               {
                 "type": "tkhd",
-                "offset": 165227,
+                "offset": 165219,
                 "size": 92
               },
               {
                 "type": "mdia",
-                "offset": 165319,
+                "offset": 165311,
                 "size": 263697,
                 "children": [
                   {
                     "type": "mdhd",
-                    "offset": 165327,
+                    "offset": 165319,
                     "size": 32
                   },
                   {
                     "type": "hdlr",
-                    "offset": 165359,
+                    "offset": 165351,
                     "size": 45
                   },
                   {
                     "type": "minf",
-                    "offset": 165404,
+                    "offset": 165396,
                     "size": 263612,
                     "children": [
                       {
                         "type": "smhd",
-                        "offset": 165412,
+                        "offset": 165404,
                         "size": 16
                       },
                       {
                         "type": "dinf",
-                        "offset": 165428,
+                        "offset": 165420,
                         "size": 36,
                         "children": [
                           {
                             "type": "dref",
-                            "offset": 165436,
+                            "offset": 165428,
                             "size": 28
                           }
                         ]
                       },
                       {
                         "type": "stbl",
-                        "offset": 165464,
+                        "offset": 165456,
                         "size": 263552,
                         "children": [
                           {
                             "type": "stsd",
-                            "offset": 165472,
+                            "offset": 165464,
                             "size": 126
                           },
                           {
                             "type": "stts",
-                            "offset": 165598,
+                            "offset": 165590,
                             "size": 272
                           },
                           {
                             "type": "stsc",
-                            "offset": 165870,
+                            "offset": 165862,
                             "size": 22012
                           },
                           {
                             "type": "stsz",
-                            "offset": 187882,
+                            "offset": 187874,
                             "size": 159496
                           },
                           {
                             "type": "stco",
-                            "offset": 347378,
+                            "offset": 347370,
                             "size": 81584
                           },
                           {
                             "type": "sgpd",
-                            "offset": 428962,
+                            "offset": 428954,
                             "size": 26
                           },
                           {
                             "type": "sbgp",
-                            "offset": 428988,
+                            "offset": 428980,
                             "size": 28
                           }
                         ]
@@ -288,20 +288,20 @@
           },
           {
             "type": "udta",
-            "offset": 429016,
+            "offset": 429008,
             "size": 98
           }
         ]
       },
       {
         "type": "free",
-        "offset": 429114,
+        "offset": 429106,
         "size": 8
       },
       {
         "type": "mdat",
-        "offset": 429122,
-        "size": 205176143
+        "offset": 429114,
+        "size": 202738203
       }
     ],
     "streams": [
@@ -309,21 +309,21 @@
         "index": 0,
         "codec_name": "h264",
         "codec_long_name": "H.264 / AVC / MPEG-4 AVC / MPEG-4 part 10",
-        "profile": "High",
+        "profile": "Main",
         "codec_type": "video",
         "codec_tag_string": "avc1",
         "codec_tag": "0x31637661",
-        "width": 1920,
-        "height": 1080,
-        "coded_width": 1920,
-        "coded_height": 1080,
+        "width": 1280,
+        "height": 720,
+        "coded_width": 1280,
+        "coded_height": 720,
         "closed_captions": 0,
         "film_grain": 0,
         "has_b_frames": 0,
         "sample_aspect_ratio": "1:1",
         "display_aspect_ratio": "16:9",
         "pix_fmt": "yuv420p",
-        "level": 40,
+        "level": 41,
         "color_range": "tv",
         "color_space": "bt709",
         "color_transfer": "bt709",
@@ -341,10 +341,10 @@
         "start_time": "0.000000",
         "duration_ts": 20412392,
         "duration": "850.516333",
-        "bit_rate": "1799704",
+        "bit_rate": "1776773",
         "bits_per_raw_sample": "8",
         "nb_frames": "20392",
-        "extradata_size": 49,
+        "extradata_size": 41,
         "disposition": {
           "default": 1,
           "dub": 0,
@@ -424,7 +424,7 @@
         }
       }
     ],
-    "rebuild_version": "clipforge-terminal-phone-diagnosis-v2",
+    "rebuild_version": "variant-i-720p-interim-default-v1",
     "video_input_boundary": "direct joined MP4 -> ClipForge terminal re-encode; no raw-frame workaround",
     "audio_input_boundary": "chosen track joined as PCM, freshly encoded AAC-LC stereo 48000Hz 128k",
     "source_audio_index": 0,
@@ -1068,7 +1068,7 @@
       "ffmpeg",
       "-y",
       "-i",
-      "/home/runner/work/castcut/castcut/work/clipforge-export-o7_bd7lh/reference-merged.mp4",
+      "/home/runner/work/castcut/castcut/work/clipforge-export-60ujev4t/reference-merged.mp4",
       "-map",
       "0:v:0",
       "-map",
@@ -1076,13 +1076,13 @@
       "-c:v",
       "libx264",
       "-profile:v",
-      "high",
+      "main",
       "-level:v",
-      "4.0",
+      "4.1",
       "-preset",
       "medium",
-      "-crf",
-      "23",
+      "-b:v",
+      "1800k",
       "-maxrate",
       "1800k",
       "-bufsize",
@@ -1129,10 +1129,10 @@
       "-max_muxing_queue_size",
       "9999",
       "-vf",
-      "setpts=PTS-STARTPTS,fps=24000/1001,scale=w='min(1920,iw)':h='min(1080,ih)':force_original_aspect_ratio=decrease,scale=trunc(iw/2)*2:trunc(ih/2)*2,colorspace=all=bt709:range=tv:format=yuv420p,setsar=1",
+      "setpts=PTS-STARTPTS,fps=24000/1001,scale=w='min(1280,iw)':h='min(720,ih)':force_original_aspect_ratio=decrease,scale=trunc(iw/2)*2:trunc(ih/2)*2,colorspace=all=bt709:range=tv:format=yuv420p,setsar=1",
       "-r",
       "24000/1001",
-      "-fps_mode",
+      "-vsync",
       "cfr",
       "-af",
       "aresample=48000:async=1:first_pts=0,apad,atrim=duration=850.496029000,asetpts=N/SR/TB+1024/SR/TB",
@@ -1150,7 +1150,7 @@
       "0",
       "-f",
       "mp4",
-      "/home/runner/work/castcut/castcut/work/castcut-export-exp-job-1792507438516-dehl-clips-playback-v2.mp4.compressing.mp4"
+      "/home/runner/work/castcut/castcut/work/castcut-export-interim-720p-v1.mp4.compressing.mp4"
     ],
     "policy_exceptions": [
       "1800k VBV to enforce <=2000k video",
@@ -1158,7 +1158,7 @@
       "AAC-LC stereo 128k re-encode",
       "no original fallback"
     ],
-    "size_before_bytes": 1235429746,
+    "size_before_bytes": 657349606,
     "compressed": true
   }
 }
