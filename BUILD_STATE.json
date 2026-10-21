@@ -13974,7 +13974,7 @@
   ],
   "playback_diagnosis": {
     "status": "in_progress",
-    "last_updated": "2026-10-21T06:27:19.986529+00:00",
+    "last_updated": "2026-10-21T06:30:14.026532+00:00",
     "clipforge_last_pass": {
       "reference_commit": "a05846de7c76a66ad42ba6fd37126514bc452167",
       "source_file": "pipeline/stage_b/compress.py",
@@ -14012,7 +14012,8 @@
     "done": [
       "Read BUILD_STATE.json and cloned both repositories; ClipForge remains read-only.",
       "Traced exact current ClipForge last pass and recorded real delivered-file deep inspections/diff.",
-      "Replaced raw-frame path with audited direct pass; added color timing interleaving gates and checksum display"
+      "Replaced raw-frame path with audited direct pass; added color timing interleaving gates and checksum display",
+      "Real-file trial caught excessive mux separation; disabled premature flushing before publication"
     ],
     "pending": [
       "Trace actual final pass",
