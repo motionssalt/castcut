@@ -1045,7 +1045,7 @@
   },
   "export_copy_clipforge": {
     "status": "in_progress",
-    "last_updated": "2026-10-21T05:15:22.258855+00:00",
+    "last_updated": "2026-10-21T05:21:08.813869+00:00",
     "clipforge_reference": {
       "reference.mp4": {
         "probe": {
@@ -1828,12 +1828,878 @@
       "168 existing tests and 5 new fractional-clock tests passed"
     ],
     "pending": [
-      "Real dispatched faces and scene exports in progress",
-      "Verify release byte delivery, CI, browser playback",
-      "Physical phone confirmation unavailable"
+      "Await real owner faces + scene and 12-minute scene workflow completion",
+      "Verify actual site download of newly rebuilt file and release checksum",
+      "Physical phone confirmation cannot be performed here"
     ],
     "verified_runs": [],
-    "notes": "New terminal rebuild is requested by latest owner instruction. Explicit departures from upstream: raw frame/PCM input, fresh AAC rather than copy, AAC priming compensation, exact multiple of reference timescale for non-integer ticks. Codec/profile/GOP/join/mux brand/no-edit-list choices remain ClipForge. No established phone root cause."
+    "notes": "New terminal rebuild is requested by latest owner instruction. Explicit departures from upstream: raw frame/PCM input, fresh AAC rather than copy, AAC priming compensation, exact multiple of reference timescale for non-integer ticks. Codec/profile/GOP/join/mux brand/no-edit-list choices remain ClipForge. No established phone root cause.",
+    "same_source_rebuild_comparison": {
+      "segments": [
+        [
+          405.4,
+          408.4
+        ],
+        [
+          510.125,
+          513.125
+        ],
+        [
+          1020.0,
+          1023.0
+        ]
+      ],
+      "stream_comparison": [
+        {
+          "stream": 0,
+          "field": "codec_type",
+          "reference": "video",
+          "rebuilt": "video",
+          "match": true
+        },
+        {
+          "stream": 0,
+          "field": "codec_name",
+          "reference": "h264",
+          "rebuilt": "h264",
+          "match": true
+        },
+        {
+          "stream": 0,
+          "field": "codec_tag_string",
+          "reference": "avc1",
+          "rebuilt": "avc1",
+          "match": true
+        },
+        {
+          "stream": 0,
+          "field": "profile",
+          "reference": "High",
+          "rebuilt": "High",
+          "match": true
+        },
+        {
+          "stream": 0,
+          "field": "level",
+          "reference": 40,
+          "rebuilt": 40,
+          "match": true
+        },
+        {
+          "stream": 0,
+          "field": "pix_fmt",
+          "reference": "yuv420p",
+          "rebuilt": "yuv420p",
+          "match": true
+        },
+        {
+          "stream": 0,
+          "field": "has_b_frames",
+          "reference": 0,
+          "rebuilt": 0,
+          "match": true
+        },
+        {
+          "stream": 0,
+          "field": "refs",
+          "reference": 1,
+          "rebuilt": 1,
+          "match": true
+        },
+        {
+          "stream": 0,
+          "field": "sample_aspect_ratio",
+          "reference": "1:1",
+          "rebuilt": "1:1",
+          "match": true
+        },
+        {
+          "stream": 0,
+          "field": "width",
+          "reference": 1920,
+          "rebuilt": 1920,
+          "match": true
+        },
+        {
+          "stream": 0,
+          "field": "height",
+          "reference": 1080,
+          "rebuilt": 1080,
+          "match": true
+        },
+        {
+          "stream": 0,
+          "field": "start_time",
+          "reference": "0.000000",
+          "rebuilt": "0.000000",
+          "match": true
+        },
+        {
+          "stream": 0,
+          "field": "sample_rate",
+          "reference": null,
+          "rebuilt": null,
+          "match": true
+        },
+        {
+          "stream": 0,
+          "field": "channels",
+          "reference": null,
+          "rebuilt": null,
+          "match": true
+        },
+        {
+          "stream": 0,
+          "field": "color_range",
+          "reference": null,
+          "rebuilt": null,
+          "match": true
+        },
+        {
+          "stream": 0,
+          "field": "color_space",
+          "reference": null,
+          "rebuilt": null,
+          "match": true
+        },
+        {
+          "stream": 0,
+          "field": "color_transfer",
+          "reference": null,
+          "rebuilt": null,
+          "match": true
+        },
+        {
+          "stream": 0,
+          "field": "color_primaries",
+          "reference": null,
+          "rebuilt": null,
+          "match": true
+        },
+        {
+          "stream": 1,
+          "field": "codec_type",
+          "reference": "audio",
+          "rebuilt": "audio",
+          "match": true
+        },
+        {
+          "stream": 1,
+          "field": "codec_name",
+          "reference": "aac",
+          "rebuilt": "aac",
+          "match": true
+        },
+        {
+          "stream": 1,
+          "field": "codec_tag_string",
+          "reference": "mp4a",
+          "rebuilt": "mp4a",
+          "match": true
+        },
+        {
+          "stream": 1,
+          "field": "profile",
+          "reference": "LC",
+          "rebuilt": "LC",
+          "match": true
+        },
+        {
+          "stream": 1,
+          "field": "level",
+          "reference": null,
+          "rebuilt": null,
+          "match": true
+        },
+        {
+          "stream": 1,
+          "field": "pix_fmt",
+          "reference": null,
+          "rebuilt": null,
+          "match": true
+        },
+        {
+          "stream": 1,
+          "field": "has_b_frames",
+          "reference": null,
+          "rebuilt": null,
+          "match": true
+        },
+        {
+          "stream": 1,
+          "field": "refs",
+          "reference": null,
+          "rebuilt": null,
+          "match": true
+        },
+        {
+          "stream": 1,
+          "field": "sample_aspect_ratio",
+          "reference": null,
+          "rebuilt": null,
+          "match": true
+        },
+        {
+          "stream": 1,
+          "field": "width",
+          "reference": null,
+          "rebuilt": null,
+          "match": true
+        },
+        {
+          "stream": 1,
+          "field": "height",
+          "reference": null,
+          "rebuilt": null,
+          "match": true
+        },
+        {
+          "stream": 1,
+          "field": "start_time",
+          "reference": "0.000000",
+          "rebuilt": "0.000000",
+          "match": true
+        },
+        {
+          "stream": 1,
+          "field": "sample_rate",
+          "reference": "48000",
+          "rebuilt": "48000",
+          "match": true
+        },
+        {
+          "stream": 1,
+          "field": "channels",
+          "reference": 2,
+          "rebuilt": 2,
+          "match": true
+        },
+        {
+          "stream": 1,
+          "field": "color_range",
+          "reference": null,
+          "rebuilt": null,
+          "match": true
+        },
+        {
+          "stream": 1,
+          "field": "color_space",
+          "reference": null,
+          "rebuilt": null,
+          "match": true
+        },
+        {
+          "stream": 1,
+          "field": "color_transfer",
+          "reference": null,
+          "rebuilt": null,
+          "match": true
+        },
+        {
+          "stream": 1,
+          "field": "color_primaries",
+          "reference": null,
+          "rebuilt": null,
+          "match": true
+        }
+      ],
+      "identical_recursive_box_types": true,
+      "reference": {
+        "streams": [
+          {
+            "index": 0,
+            "codec_name": "h264",
+            "codec_long_name": "H.264 / AVC / MPEG-4 AVC / MPEG-4 part 10",
+            "profile": "High",
+            "codec_type": "video",
+            "codec_tag_string": "avc1",
+            "codec_tag": "0x31637661",
+            "width": 1920,
+            "height": 1080,
+            "coded_width": 1920,
+            "coded_height": 1080,
+            "closed_captions": 0,
+            "film_grain": 0,
+            "has_b_frames": 0,
+            "sample_aspect_ratio": "1:1",
+            "display_aspect_ratio": "16:9",
+            "pix_fmt": "yuv420p",
+            "level": 40,
+            "chroma_location": "left",
+            "field_order": "progressive",
+            "refs": 1,
+            "is_avc": "true",
+            "nal_length_size": "4",
+            "id": "0x1",
+            "r_frame_rate": "30/1",
+            "avg_frame_rate": "30/1",
+            "time_base": "1/15360",
+            "start_pts": 0,
+            "start_time": "0.000000",
+            "duration_ts": 139264,
+            "duration": "9.066667",
+            "bit_rate": "5458677",
+            "bits_per_raw_sample": "8",
+            "nb_frames": "272",
+            "extradata_size": 48,
+            "disposition": {
+              "default": 1,
+              "dub": 0,
+              "original": 0,
+              "comment": 0,
+              "lyrics": 0,
+              "karaoke": 0,
+              "forced": 0,
+              "hearing_impaired": 0,
+              "visual_impaired": 0,
+              "clean_effects": 0,
+              "attached_pic": 0,
+              "timed_thumbnails": 0,
+              "non_diegetic": 0,
+              "captions": 0,
+              "descriptions": 0,
+              "metadata": 0,
+              "dependent": 0,
+              "still_image": 0
+            },
+            "tags": {
+              "language": "und",
+              "handler_name": "VideoHandler",
+              "vendor_id": "[0][0][0][0]",
+              "encoder": "Lavc60.31.102 libx264"
+            }
+          },
+          {
+            "index": 1,
+            "codec_name": "aac",
+            "codec_long_name": "AAC (Advanced Audio Coding)",
+            "profile": "LC",
+            "codec_type": "audio",
+            "codec_tag_string": "mp4a",
+            "codec_tag": "0x6134706d",
+            "sample_fmt": "fltp",
+            "sample_rate": "48000",
+            "channels": 2,
+            "channel_layout": "stereo",
+            "bits_per_sample": 0,
+            "initial_padding": 0,
+            "id": "0x2",
+            "r_frame_rate": "0/0",
+            "avg_frame_rate": "0/0",
+            "time_base": "1/48000",
+            "start_pts": 0,
+            "start_time": "0.000000",
+            "duration_ts": 433024,
+            "duration": "9.021333",
+            "bit_rate": "193550",
+            "nb_frames": "423",
+            "extradata_size": 5,
+            "disposition": {
+              "default": 1,
+              "dub": 0,
+              "original": 0,
+              "comment": 0,
+              "lyrics": 0,
+              "karaoke": 0,
+              "forced": 0,
+              "hearing_impaired": 0,
+              "visual_impaired": 0,
+              "clean_effects": 0,
+              "attached_pic": 0,
+              "timed_thumbnails": 0,
+              "non_diegetic": 0,
+              "captions": 0,
+              "descriptions": 0,
+              "metadata": 0,
+              "dependent": 0,
+              "still_image": 0
+            },
+            "tags": {
+              "language": "und",
+              "handler_name": "SoundHandler",
+              "vendor_id": "[0][0][0][0]"
+            }
+          }
+        ],
+        "format": {
+          "filename": "/home/user/castcut-repair/same-source/reference.mp4",
+          "nb_streams": 2,
+          "nb_programs": 0,
+          "format_name": "mov,mp4,m4a,3gp,3g2,mj2",
+          "format_long_name": "QuickTime / MOV",
+          "start_time": "0.000000",
+          "duration": "9.066667",
+          "size": "6413899",
+          "bit_rate": "5659322",
+          "probe_score": 100,
+          "tags": {
+            "major_brand": "mp42",
+            "minor_version": "512",
+            "compatible_brands": "mp42iso2avc1mp41",
+            "encoder": "Lavf60.16.100"
+          }
+        }
+      },
+      "rebuilt": {
+        "ok": true,
+        "sha256": "af6d484a1177e4bbe44ef6ffd53834a7ea5aac1e12cd23fb2bdd1b72b8c735b7",
+        "duration": 9.066667,
+        "size_bytes": 2271941,
+        "size_human": "2.17 MiB",
+        "mb_per_minute": 15.034903123716795,
+        "bitrate_bps": 2004654,
+        "bitrate_kbps": 2004.654,
+        "video_bitrate_kbps": 1882.921,
+        "video_average_kbps": 1882.9206349206347,
+        "video_peak_10s_kbps": 1696.3232,
+        "video_packets": 216,
+        "audio_packets": 425,
+        "all_packet_timestamps_contiguous": true,
+        "video_pts_equal_dts": true,
+        "fixed_gop": 60,
+        "duration_video": 9.009,
+        "video_sample_duration_ticks": [
+          16016
+        ],
+        "exact_frame_cadence": true,
+        "vcodec": "h264",
+        "profile": "High",
+        "level": 40,
+        "width": 1920,
+        "height": 1080,
+        "fps": 23.976023976023978,
+        "audio_streams": 1,
+        "audio_codec": "aac",
+        "audio_channels": 2,
+        "audio_lang": "und",
+        "faststart": true,
+        "has_elst": false,
+        "full_decode_passed": true,
+        "mp4_boxes": [
+          {
+            "type": "ftyp",
+            "offset": 0,
+            "size": 32,
+            "major_brand": "mp42"
+          },
+          {
+            "type": "moov",
+            "offset": 32,
+            "size": 5824,
+            "children": [
+              {
+                "type": "mvhd",
+                "offset": 40,
+                "size": 108
+              },
+              {
+                "type": "trak",
+                "offset": 148,
+                "size": 2297,
+                "children": [
+                  {
+                    "type": "tkhd",
+                    "offset": 156,
+                    "size": 92
+                  },
+                  {
+                    "type": "mdia",
+                    "offset": 248,
+                    "size": 2197,
+                    "children": [
+                      {
+                        "type": "mdhd",
+                        "offset": 256,
+                        "size": 32
+                      },
+                      {
+                        "type": "hdlr",
+                        "offset": 288,
+                        "size": 45
+                      },
+                      {
+                        "type": "minf",
+                        "offset": 333,
+                        "size": 2112,
+                        "children": [
+                          {
+                            "type": "vmhd",
+                            "offset": 341,
+                            "size": 20
+                          },
+                          {
+                            "type": "dinf",
+                            "offset": 361,
+                            "size": 36,
+                            "children": [
+                              {
+                                "type": "dref",
+                                "offset": 369,
+                                "size": 28
+                              }
+                            ]
+                          },
+                          {
+                            "type": "stbl",
+                            "offset": 397,
+                            "size": 2048,
+                            "children": [
+                              {
+                                "type": "stsd",
+                                "offset": 405,
+                                "size": 192
+                              },
+                              {
+                                "type": "stts",
+                                "offset": 597,
+                                "size": 24
+                              },
+                              {
+                                "type": "stss",
+                                "offset": 621,
+                                "size": 32
+                              },
+                              {
+                                "type": "stsc",
+                                "offset": 653,
+                                "size": 28
+                              },
+                              {
+                                "type": "stsz",
+                                "offset": 681,
+                                "size": 884
+                              },
+                              {
+                                "type": "stco",
+                                "offset": 1565,
+                                "size": 880
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "trak",
+                "offset": 2445,
+                "size": 3313,
+                "children": [
+                  {
+                    "type": "tkhd",
+                    "offset": 2453,
+                    "size": 92
+                  },
+                  {
+                    "type": "mdia",
+                    "offset": 2545,
+                    "size": 3213,
+                    "children": [
+                      {
+                        "type": "mdhd",
+                        "offset": 2553,
+                        "size": 32
+                      },
+                      {
+                        "type": "hdlr",
+                        "offset": 2585,
+                        "size": 45
+                      },
+                      {
+                        "type": "minf",
+                        "offset": 2630,
+                        "size": 3128,
+                        "children": [
+                          {
+                            "type": "smhd",
+                            "offset": 2638,
+                            "size": 16
+                          },
+                          {
+                            "type": "dinf",
+                            "offset": 2654,
+                            "size": 36,
+                            "children": [
+                              {
+                                "type": "dref",
+                                "offset": 2662,
+                                "size": 28
+                              }
+                            ]
+                          },
+                          {
+                            "type": "stbl",
+                            "offset": 2690,
+                            "size": 3068,
+                            "children": [
+                              {
+                                "type": "stsd",
+                                "offset": 2698,
+                                "size": 126
+                              },
+                              {
+                                "type": "stts",
+                                "offset": 2824,
+                                "size": 24
+                              },
+                              {
+                                "type": "stsc",
+                                "offset": 2848,
+                                "size": 256
+                              },
+                              {
+                                "type": "stsz",
+                                "offset": 3104,
+                                "size": 1720
+                              },
+                              {
+                                "type": "stco",
+                                "offset": 4824,
+                                "size": 880
+                              },
+                              {
+                                "type": "sgpd",
+                                "offset": 5704,
+                                "size": 26
+                              },
+                              {
+                                "type": "sbgp",
+                                "offset": 5730,
+                                "size": 28
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "udta",
+                "offset": 5758,
+                "size": 98
+              }
+            ]
+          },
+          {
+            "type": "free",
+            "offset": 5856,
+            "size": 8
+          },
+          {
+            "type": "mdat",
+            "offset": 5864,
+            "size": 2266077
+          }
+        ],
+        "streams": [
+          {
+            "index": 0,
+            "codec_name": "h264",
+            "codec_long_name": "H.264 / AVC / MPEG-4 AVC / MPEG-4 part 10",
+            "profile": "High",
+            "codec_type": "video",
+            "codec_tag_string": "avc1",
+            "codec_tag": "0x31637661",
+            "width": 1920,
+            "height": 1080,
+            "coded_width": 1920,
+            "coded_height": 1080,
+            "closed_captions": 0,
+            "film_grain": 0,
+            "has_b_frames": 0,
+            "sample_aspect_ratio": "1:1",
+            "display_aspect_ratio": "16:9",
+            "pix_fmt": "yuv420p",
+            "level": 40,
+            "chroma_location": "left",
+            "field_order": "progressive",
+            "refs": 1,
+            "is_avc": "true",
+            "nal_length_size": "4",
+            "id": "0x1",
+            "r_frame_rate": "24000/1001",
+            "avg_frame_rate": "24000/1001",
+            "time_base": "1/384000",
+            "start_pts": 0,
+            "start_time": "0.000000",
+            "duration_ts": 3459456,
+            "duration": "9.009000",
+            "bit_rate": "1882920",
+            "bits_per_raw_sample": "8",
+            "nb_frames": "216",
+            "extradata_size": 46,
+            "disposition": {
+              "default": 1,
+              "dub": 0,
+              "original": 0,
+              "comment": 0,
+              "lyrics": 0,
+              "karaoke": 0,
+              "forced": 0,
+              "hearing_impaired": 0,
+              "visual_impaired": 0,
+              "clean_effects": 0,
+              "attached_pic": 0,
+              "timed_thumbnails": 0,
+              "non_diegetic": 0,
+              "captions": 0,
+              "descriptions": 0,
+              "metadata": 0,
+              "dependent": 0,
+              "still_image": 0
+            },
+            "tags": {
+              "language": "und",
+              "handler_name": "VideoHandler",
+              "vendor_id": "[0][0][0][0]",
+              "encoder": "Lavc60.31.102 libx264"
+            }
+          },
+          {
+            "index": 1,
+            "codec_name": "aac",
+            "codec_long_name": "AAC (Advanced Audio Coding)",
+            "profile": "LC",
+            "codec_type": "audio",
+            "codec_tag_string": "mp4a",
+            "codec_tag": "0x6134706d",
+            "sample_fmt": "fltp",
+            "sample_rate": "48000",
+            "channels": 2,
+            "channel_layout": "stereo",
+            "bits_per_sample": 0,
+            "initial_padding": 0,
+            "id": "0x2",
+            "r_frame_rate": "0/0",
+            "avg_frame_rate": "0/0",
+            "time_base": "1/48000",
+            "start_pts": 0,
+            "start_time": "0.000000",
+            "duration_ts": 435200,
+            "duration": "9.066667",
+            "bit_rate": "128527",
+            "nb_frames": "425",
+            "extradata_size": 5,
+            "disposition": {
+              "default": 1,
+              "dub": 0,
+              "original": 0,
+              "comment": 0,
+              "lyrics": 0,
+              "karaoke": 0,
+              "forced": 0,
+              "hearing_impaired": 0,
+              "visual_impaired": 0,
+              "clean_effects": 0,
+              "attached_pic": 0,
+              "timed_thumbnails": 0,
+              "non_diegetic": 0,
+              "captions": 0,
+              "descriptions": 0,
+              "metadata": 0,
+              "dependent": 0,
+              "still_image": 0
+            },
+            "tags": {
+              "language": "und",
+              "handler_name": "SoundHandler",
+              "vendor_id": "[0][0][0][0]"
+            }
+          }
+        ],
+        "rebuild_version": "decoded-frames-pcm-v1",
+        "video_input_boundary": "uncompressed yuv420p frames, timestamps regenerated from original fps",
+        "audio_input_boundary": "decoded pcm_s16le stereo 48000 Hz, freshly encoded AAC 128k",
+        "source_audio_index": 0,
+        "source_audio_stream_index": 1,
+        "audio_target_kbps": 128,
+        "source_fps": "24000/1001",
+        "target_fps": "24000/1001",
+        "source_width": 1920,
+        "source_height": 1080,
+        "segments": [
+          [
+            405.4,
+            408.4
+          ],
+          [
+            510.125,
+            513.125
+          ],
+          [
+            1020.0,
+            1023.0
+          ]
+        ],
+        "join_times": [
+          3.0,
+          6.0
+        ],
+        "reference_commit": "a05846de7c76a66ad42ba6fd37126514bc452167",
+        "path": "clipforge_vendor.render.produce_merged_video -> clipforge_vendor.compress.compress",
+        "size_before_bytes": 12273458,
+        "compressed": true
+      },
+      "allowed_and_requested_differences": [
+        "source fps 24000/1001 vs upstream fixed30",
+        "video VBV1800k",
+        "AAC128k newly encoded from PCM vs reference192k",
+        "exact source-rate ticks1/384000 vs fixedreference1/15360",
+        "terminal input raw frames/PCM; AAC priming compensation"
+      ],
+      "phone_playback": "not tested"
+    },
+    "browser_playback": [
+      {
+        "name": "reference.mp4",
+        "canPlayType": "probably",
+        "passed": true,
+        "ended": true,
+        "duration": 31.162667,
+        "width": 1080,
+        "height": 1200,
+        "currentTime": 31.162667,
+        "quality": {}
+      },
+      {
+        "name": "same-source/reference.mp4",
+        "canPlayType": "probably",
+        "passed": true,
+        "ended": true,
+        "duration": 9.066667,
+        "width": 1920,
+        "height": 1080,
+        "currentTime": 9.066667,
+        "quality": {}
+      },
+      {
+        "name": "same-source/rebuilt.mp4",
+        "canPlayType": "probably",
+        "passed": true,
+        "ended": true,
+        "duration": 9.066667,
+        "width": 1920,
+        "height": 1080,
+        "currentTime": 9.066667,
+        "quality": {}
+      }
+    ],
+    "regression_checks": {
+      "python": "173 passed",
+      "node_download": "10 passed",
+      "workflow_lint": "12 files / 55 run blocks passed",
+      "ci_core_run_id": 39548473407,
+      "physical_phone": "not available"
+    },
+    "clipforge_delivery_reference": {
+      "github_js_exact": "export async function downloadReleaseAsset(credentials, asset, onProgress) {\n  const response = await fetch(String(asset.url || asset.browserUrl), {\n    headers: {\n      'Accept': 'application/octet-stream',\n      'Authorization': `Bearer ${credentials.githubPat}`\n    }\n  });\n  if (!response.ok) throw new GitHubError(response.status, 'Could not download the release asset.');\n  const total = Number(response.headers.get('content-length') || asset.size || 0);\n  if (!response.body) {\n    const buf = new Uint8Array(await response.arrayBuffer());\n    if (onProgress) onProgress(buf.length, total || buf.length);\n    return buf;\n  }\n  const reader = response.body.getReader();\n  const chunks = [];\n  let received = 0;\n  for (;;) {\n    const { done, value } = await reader.read();\n    if (done) break;\n    chunks.push(value);\n    received += value.length;\n    if (onProgress) onProgress(received, total);\n  }\n  const out = new Uint8Array(received);\n  let offset = 0;\n  for (const chunk of chunks) { out.set(chunk, offset); offset += chunk.length; }\n  return out;\n}\n\n",
+      "save_bytes_exact": "/**\n * task-09 \u2014 shared media helpers: cached audio tap-to-play and real\n * browser downloads with progress + size, File System Access API first.\n *\n * The bot delivered audio/video straight into the Telegram chat\n * (deliverVideoToChat, music preview as an audio message). The Dashboard\n * equivalent is a real browser-side experience:\n *  - audio: tap-to-play via a cached object URL (bytes fetched once per\n *    path, replayed instantly from memory/localStorage-agnostic cache)\n *  - video/file download: a streaming download with a real progress bar and\n *    byte count, saved via the File System Access API (showSaveFilePicker)\n *    where the browser supports it, falling back to an <a download> blob\n */\n\nimport { getRepositoryFileBytes, downloadReleaseAsset } from './github.js';\nimport { formatBytes } from './state.js';\n\n// In-memory audio byte cache \u2014 keyed by repo path so a second tap on the\n// same track (or the same track in another section) plays instantly without\n// a second network fetch. Not persisted to localStorage (binary + quota).\nconst audioCache = new Map();\n\n/**\n * Fetch (once) and cache audio bytes for a repo path, returning a Blob.\n * tap-to-play callers keep a single <audio> element and swap .src.\n */\nexport async function cachedAudioBlob(credentials, repo, path, maxBytes) {\n  if (audioCache.has(path)) return audioCache.get(path);\n  const bytes = await getRepositoryFileBytes(credentials, repo, path, maxBytes);\n  const blob = new Blob([bytes]);\n  audioCache.set(path, blob);\n  return blob;\n}\n\n/**\n * Wire a single <audio> element + a set of [data-play] buttons for\n * tap-to-play with caching. Used by the Narrator voice previews and the\n * Music library. `resolve(btn)` must return { path, maxBytes }.\n */\nexport function wireAudioTapToPlay({ host, player, note, buttons, credentials, repo, resolve }) {\n  buttons.forEach((btn) => {\n    btn.addEventListener('click', async () => {\n      const { path, maxBytes } = resolve(btn);\n      btn.disabled = true;\n      if (note) note.textContent = audioCache.has(path) ? 'Playing from cache\u2026' : 'Fetching\u2026';\n      try {\n        const blob = await cachedAudioBlob(credentials, repo, path, maxBytes);\n        if (player.dataset.blobUrl) URL.revokeObjectURL(player.dataset.blobUrl);\n        const url = URL.createObjectURL(blob);\n        player.dataset.blobUrl = url;\n        player.src = url;\n        player.classList.remove('hidden');\n        if (note) note.textContent = path.replace(/^.*\\//, '');\n        player.play().catch(() => { if (note) note.textContent = 'Preview ready \u2014 press play.'; });\n      } catch (error) {\n        if (note) note.textContent = `Preview failed: ${error.message}`;\n      } finally {\n        btn.disabled = false;\n      }\n    });\n  });\n}\n\n/** True when the File System Access API save picker is available. */\nexport function canUseFileSystemAccess() {\n  return typeof window.showSaveFilePicker === 'function';\n}\n\n/**\n * Save bytes to disk, preferring the File System Access API (a real\n * user-picked destination, the closest browser equivalent of Android's\n * permission-scoped save) and falling back to an <a download> blob.\n * Returns 'picked' | 'download' | 'cancelled'.\n */\nexport async function saveBytes(bytes, suggestedName) {\n  if (canUseFileSystemAccess()) {\n    let handle;\n    try {\n      handle = await window.showSaveFilePicker({ suggestedName });\n    } catch (error) {\n      if (error && error.name === 'AbortError') return 'cancelled';\n      // Fall through to the blob download on any other picker failure.\n    }\n    if (handle) {\n      const writable = await handle.createWritable();\n      await writable.write(bytes);\n      await writable.close();\n      return 'picked';\n    }\n  }\n  const blob = new Blob([bytes]);\n  const url = URL.createObjectURL(blob);\n  const a = document.createElement('a');\n  a.href = url;\n  a.download = suggestedName;\n  document.body.appendChild(a);\n  a.click();\n  a.remove();\n  setTimeout(() => URL.revokeObjectURL(url), 4000);\n  return 'download';\n}\n\n/**\n * Render a download card row for a single release asset into `container`,\n * wiring a real progress bar + size readout and the File System Access\n * save. `onDone(method)` is called after a successful save (used to mark\n * the asset downloaded). Returns nothing; the row is fully self-contained.\n */\nexport function buildDownloadRow({ credentials, asset, container, onDone }) {\n  const row = document.createElement('div');\n  row.className = 'dl-row';\n  row.innerHTML = `\n    <div class=\"grow\">\n      <span class=\"mono\">${asset.name}</span>\n      <span class=\"muted small\"> \u00b7 ${formatBytes(asset.size)}</span>\n      <div class=\"progress-track hidden\" data-x=\"track\"><div class=\"progress-fill\" data-x=\"fill\" style=\"width:0%\"></div></div>\n      <div class=\"muted small\" data-x=\"status\"></div>\n    </div>\n    <button type=\"button\" class=\"primary small\" data-x=\"go\">Download</button>`;\n  container.appendChild(row);\n\n  const track = row.querySelector('[data-x=\"track\"]');\n  const fill = row.querySelector('[data-x=\"fill\"]');\n  const statusEl = row.querySelector('[data-x=\"status\"]');\n  const go = row.querySelector('[data-x=\"go\"]');\n\n  go.addEventListener('click', async () => {\n    go.disabled = true;\n    track.classList.remove('hidden');\n    try {\n      const bytes = await downloadReleaseAsset(credentials, asset, (received, total) => {\n        const t = total || asset.size || 0;\n        const pct = t ? Math.min(100, Math.round((received / t) * 100)) : 0;\n        fill.style.width = pct + '%';\n        statusEl.textContent = t\n          ? `${formatBytes(received)} / ${formatBytes(t)} (${pct}%)`\n          : `${formatBytes(received)}\u2026`;\n      });\n      statusEl.textContent = `Saving ${formatBytes(bytes.length)}\u2026`;\n      const method = await saveBytes(bytes, asset.name);\n      if (method === 'cancelled') {\n        statusEl.textContent = 'Save cancelled.';\n        go.disabled = false;\n        return;\n      }\n      statusEl.textContent = method === 'picked'\n        ? `Saved (${formatBytes(bytes.length)}) to your chosen folder.`\n        : `Downloaded (${formatBytes(bytes.length)}) \u2014 check your browser downloads.`;\n      if (onDone) onDone(method);\n    } catch (error) {\n      statusEl.textContent = `Download failed: ${error.message}`;\n      go.disabled = false;\n    }\n  });\n}\n",
+      "finding": "ClipForge browser reads authenticated release bytes into Uint8Array then file picker/blob save; CastCut currently native authenticated response. Both existing delivery hashes match reference media bytes; no evidence this transport caused Android failure. Keep secure native delivery and add revision gating so obsolete files cannot be mistaken for new rebuilds."
+    }
   },
   "export_copy_clipforge_history": [
     {
