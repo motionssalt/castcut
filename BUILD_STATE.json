@@ -1045,17 +1045,794 @@
   },
   "export_copy_clipforge": {
     "status": "in_progress",
-    "last_updated": "2026-10-21T05:07:56.773661+00:00",
-    "clipforge_reference": {},
-    "diff_table": [],
-    "root_cause": "",
-    "done": [],
+    "last_updated": "2026-10-21T05:10:06.931165+00:00",
+    "clipforge_reference": {
+      "reference.mp4": {
+        "probe": {
+          "streams": [
+            {
+              "index": 0,
+              "codec_name": "h264",
+              "codec_long_name": "H.264 / AVC / MPEG-4 AVC / MPEG-4 part 10",
+              "profile": "High",
+              "codec_type": "video",
+              "codec_tag_string": "avc1",
+              "codec_tag": "0x31637661",
+              "width": 1080,
+              "height": 1200,
+              "coded_width": 1080,
+              "coded_height": 1200,
+              "closed_captions": 0,
+              "film_grain": 0,
+              "has_b_frames": 0,
+              "sample_aspect_ratio": "1:1",
+              "display_aspect_ratio": "9:10",
+              "pix_fmt": "yuv420p",
+              "level": 40,
+              "color_range": "tv",
+              "color_transfer": "bt709",
+              "color_primaries": "bt709",
+              "chroma_location": "left",
+              "field_order": "progressive",
+              "refs": 1,
+              "is_avc": "true",
+              "nal_length_size": "4",
+              "id": "0x1",
+              "r_frame_rate": "30/1",
+              "avg_frame_rate": "30/1",
+              "time_base": "1/15360",
+              "start_pts": 0,
+              "start_time": "0.000000",
+              "duration_ts": 477184,
+              "duration": "31.066667",
+              "bit_rate": "2490528",
+              "bits_per_raw_sample": "8",
+              "nb_frames": "932",
+              "extradata_size": 50,
+              "disposition": {
+                "default": 1,
+                "dub": 0,
+                "original": 0,
+                "comment": 0,
+                "lyrics": 0,
+                "karaoke": 0,
+                "forced": 0,
+                "hearing_impaired": 0,
+                "visual_impaired": 0,
+                "clean_effects": 0,
+                "attached_pic": 0,
+                "timed_thumbnails": 0,
+                "non_diegetic": 0,
+                "captions": 0,
+                "descriptions": 0,
+                "metadata": 0,
+                "dependent": 0,
+                "still_image": 0
+              },
+              "tags": {
+                "language": "und",
+                "handler_name": "VideoHandler",
+                "vendor_id": "[0][0][0][0]",
+                "encoder": "Lavc60.31.102 libx264"
+              }
+            },
+            {
+              "index": 1,
+              "codec_name": "aac",
+              "codec_long_name": "AAC (Advanced Audio Coding)",
+              "profile": "LC",
+              "codec_type": "audio",
+              "codec_tag_string": "mp4a",
+              "codec_tag": "0x6134706d",
+              "sample_fmt": "fltp",
+              "sample_rate": "48000",
+              "channels": 2,
+              "channel_layout": "stereo",
+              "bits_per_sample": 0,
+              "initial_padding": 0,
+              "id": "0x2",
+              "r_frame_rate": "0/0",
+              "avg_frame_rate": "0/0",
+              "time_base": "1/48000",
+              "start_pts": 0,
+              "start_time": "0.000000",
+              "duration_ts": 1495808,
+              "duration": "31.162667",
+              "bit_rate": "197181",
+              "nb_frames": "1461",
+              "extradata_size": 5,
+              "disposition": {
+                "default": 1,
+                "dub": 0,
+                "original": 0,
+                "comment": 0,
+                "lyrics": 0,
+                "karaoke": 0,
+                "forced": 0,
+                "hearing_impaired": 0,
+                "visual_impaired": 0,
+                "clean_effects": 0,
+                "attached_pic": 0,
+                "timed_thumbnails": 0,
+                "non_diegetic": 0,
+                "captions": 0,
+                "descriptions": 0,
+                "metadata": 0,
+                "dependent": 0,
+                "still_image": 0
+              },
+              "tags": {
+                "language": "und",
+                "handler_name": "SoundHandler",
+                "vendor_id": "[0][0][0][0]"
+              }
+            }
+          ],
+          "format": {
+            "filename": "/home/user/castcut-repair/reference.mp4",
+            "nb_streams": 2,
+            "nb_programs": 0,
+            "format_name": "mov,mp4,m4a,3gp,3g2,mj2",
+            "format_long_name": "QuickTime / MOV",
+            "start_time": "0.000000",
+            "duration": "31.162667",
+            "size": "10467848",
+            "bit_rate": "2687279",
+            "probe_score": 100,
+            "tags": {
+              "major_brand": "mp42",
+              "minor_version": "512",
+              "compatible_brands": "mp42iso2avc1mp41",
+              "encoder": "Lavf60.16.100"
+            }
+          }
+        },
+        "boxes": [
+          {
+            "type": "ftyp",
+            "offset": 0,
+            "size": 32,
+            "major_brand": "mp42"
+          },
+          {
+            "type": "moov",
+            "offset": 32,
+            "size": 28160,
+            "children": [
+              {
+                "type": "mvhd",
+                "offset": 40,
+                "size": 108
+              },
+              {
+                "type": "trak",
+                "offset": 148,
+                "size": 8077,
+                "children": [
+                  {
+                    "type": "tkhd",
+                    "offset": 156,
+                    "size": 92
+                  },
+                  {
+                    "type": "mdia",
+                    "offset": 248,
+                    "size": 7977,
+                    "children": [
+                      {
+                        "type": "mdhd",
+                        "offset": 256,
+                        "size": 32
+                      },
+                      {
+                        "type": "hdlr",
+                        "offset": 288,
+                        "size": 45
+                      },
+                      {
+                        "type": "minf",
+                        "offset": 333,
+                        "size": 7892,
+                        "children": [
+                          {
+                            "type": "vmhd",
+                            "offset": 341,
+                            "size": 20
+                          },
+                          {
+                            "type": "dinf",
+                            "offset": 361,
+                            "size": 36,
+                            "children": [
+                              {
+                                "type": "dref",
+                                "offset": 369,
+                                "size": 28
+                              }
+                            ]
+                          },
+                          {
+                            "type": "stbl",
+                            "offset": 397,
+                            "size": 7828,
+                            "children": [
+                              {
+                                "type": "stsd",
+                                "offset": 405,
+                                "size": 196
+                              },
+                              {
+                                "type": "stts",
+                                "offset": 601,
+                                "size": 24
+                              },
+                              {
+                                "type": "stss",
+                                "offset": 625,
+                                "size": 80
+                              },
+                              {
+                                "type": "stsc",
+                                "offset": 705,
+                                "size": 28
+                              },
+                              {
+                                "type": "stsz",
+                                "offset": 733,
+                                "size": 3748
+                              },
+                              {
+                                "type": "stco",
+                                "offset": 4481,
+                                "size": 3744
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "trak",
+                "offset": 8225,
+                "size": 19869,
+                "children": [
+                  {
+                    "type": "tkhd",
+                    "offset": 8233,
+                    "size": 92
+                  },
+                  {
+                    "type": "mdia",
+                    "offset": 8325,
+                    "size": 19769,
+                    "children": [
+                      {
+                        "type": "mdhd",
+                        "offset": 8333,
+                        "size": 32
+                      },
+                      {
+                        "type": "hdlr",
+                        "offset": 8365,
+                        "size": 45
+                      },
+                      {
+                        "type": "minf",
+                        "offset": 8410,
+                        "size": 19684,
+                        "children": [
+                          {
+                            "type": "smhd",
+                            "offset": 8418,
+                            "size": 16
+                          },
+                          {
+                            "type": "dinf",
+                            "offset": 8434,
+                            "size": 36,
+                            "children": [
+                              {
+                                "type": "dref",
+                                "offset": 8442,
+                                "size": 28
+                              }
+                            ]
+                          },
+                          {
+                            "type": "stbl",
+                            "offset": 8470,
+                            "size": 19624,
+                            "children": [
+                              {
+                                "type": "stsd",
+                                "offset": 8478,
+                                "size": 126
+                              },
+                              {
+                                "type": "stts",
+                                "offset": 8604,
+                                "size": 32
+                              },
+                              {
+                                "type": "stsc",
+                                "offset": 8636,
+                                "size": 9796
+                              },
+                              {
+                                "type": "stsz",
+                                "offset": 18432,
+                                "size": 5864
+                              },
+                              {
+                                "type": "stco",
+                                "offset": 24296,
+                                "size": 3744
+                              },
+                              {
+                                "type": "sgpd",
+                                "offset": 28040,
+                                "size": 26
+                              },
+                              {
+                                "type": "sbgp",
+                                "offset": 28066,
+                                "size": 28
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "udta",
+                "offset": 28094,
+                "size": 98
+              }
+            ]
+          },
+          {
+            "type": "free",
+            "offset": 28192,
+            "size": 8
+          },
+          {
+            "type": "mdat",
+            "offset": 28200,
+            "size": 10439648
+          }
+        ],
+        "sha256": "7ec0c386d79bcfbf257ee9455b690be7f08bb579df4f4ea07670887c685c0039"
+      },
+      "existing.mp4": {
+        "probe": {
+          "streams": [
+            {
+              "index": 0,
+              "codec_name": "h264",
+              "codec_long_name": "H.264 / AVC / MPEG-4 AVC / MPEG-4 part 10",
+              "profile": "High",
+              "codec_type": "video",
+              "codec_tag_string": "avc1",
+              "codec_tag": "0x31637661",
+              "width": 1920,
+              "height": 1080,
+              "coded_width": 1920,
+              "coded_height": 1080,
+              "closed_captions": 0,
+              "film_grain": 0,
+              "has_b_frames": 0,
+              "sample_aspect_ratio": "1:1",
+              "display_aspect_ratio": "16:9",
+              "pix_fmt": "yuv420p",
+              "level": 40,
+              "chroma_location": "left",
+              "field_order": "progressive",
+              "refs": 1,
+              "is_avc": "true",
+              "nal_length_size": "4",
+              "id": "0x1",
+              "r_frame_rate": "24000/1001",
+              "avg_frame_rate": "42024960/1752791",
+              "time_base": "1/15360",
+              "start_pts": 0,
+              "start_time": "0.000000",
+              "duration_ts": 1752791,
+              "duration": "114.113997",
+              "bit_rate": "1806327",
+              "bits_per_raw_sample": "8",
+              "nb_frames": "2736",
+              "extradata_size": 46,
+              "disposition": {
+                "default": 1,
+                "dub": 0,
+                "original": 0,
+                "comment": 0,
+                "lyrics": 0,
+                "karaoke": 0,
+                "forced": 0,
+                "hearing_impaired": 0,
+                "visual_impaired": 0,
+                "clean_effects": 0,
+                "attached_pic": 0,
+                "timed_thumbnails": 0,
+                "non_diegetic": 0,
+                "captions": 0,
+                "descriptions": 0,
+                "metadata": 0,
+                "dependent": 0,
+                "still_image": 0
+              },
+              "tags": {
+                "language": "und",
+                "handler_name": "VideoHandler",
+                "vendor_id": "[0][0][0][0]",
+                "encoder": "Lavc60.31.102 libx264"
+              }
+            },
+            {
+              "index": 1,
+              "codec_name": "aac",
+              "codec_long_name": "AAC (Advanced Audio Coding)",
+              "profile": "LC",
+              "codec_type": "audio",
+              "codec_tag_string": "mp4a",
+              "codec_tag": "0x6134706d",
+              "sample_fmt": "fltp",
+              "sample_rate": "48000",
+              "channels": 2,
+              "channel_layout": "stereo",
+              "bits_per_sample": 0,
+              "initial_padding": 0,
+              "id": "0x2",
+              "r_frame_rate": "0/0",
+              "avg_frame_rate": "0/0",
+              "time_base": "1/48000",
+              "start_pts": 0,
+              "start_time": "0.000000",
+              "duration_ts": 5474944,
+              "duration": "114.061333",
+              "bit_rate": "130354",
+              "nb_frames": "5347",
+              "extradata_size": 5,
+              "disposition": {
+                "default": 1,
+                "dub": 0,
+                "original": 0,
+                "comment": 0,
+                "lyrics": 0,
+                "karaoke": 0,
+                "forced": 0,
+                "hearing_impaired": 0,
+                "visual_impaired": 0,
+                "clean_effects": 0,
+                "attached_pic": 0,
+                "timed_thumbnails": 0,
+                "non_diegetic": 0,
+                "captions": 0,
+                "descriptions": 0,
+                "metadata": 0,
+                "dependent": 0,
+                "still_image": 0
+              },
+              "tags": {
+                "language": "und",
+                "handler_name": "SoundHandler",
+                "vendor_id": "[0][0][0][0]"
+              }
+            }
+          ],
+          "format": {
+            "filename": "/home/user/castcut-repair/existing.mp4",
+            "nb_streams": 2,
+            "nb_programs": 0,
+            "format_name": "mov,mp4,m4a,3gp,3g2,mj2",
+            "format_long_name": "QuickTime / MOV",
+            "start_time": "0.000000",
+            "duration": "114.113997",
+            "size": "27698908",
+            "bit_rate": "1941841",
+            "probe_score": 100,
+            "tags": {
+              "major_brand": "mp42",
+              "minor_version": "512",
+              "compatible_brands": "mp42iso2avc1mp41",
+              "encoder": "Lavf60.16.100"
+            }
+          }
+        },
+        "boxes": [
+          {
+            "type": "ftyp",
+            "offset": 0,
+            "size": 32,
+            "major_brand": "mp42"
+          },
+          {
+            "type": "moov",
+            "offset": 32,
+            "size": 74396,
+            "children": [
+              {
+                "type": "mvhd",
+                "offset": 40,
+                "size": 108
+              },
+              {
+                "type": "trak",
+                "offset": 148,
+                "size": 38385,
+                "children": [
+                  {
+                    "type": "tkhd",
+                    "offset": 156,
+                    "size": 92
+                  },
+                  {
+                    "type": "mdia",
+                    "offset": 248,
+                    "size": 38285,
+                    "children": [
+                      {
+                        "type": "mdhd",
+                        "offset": 256,
+                        "size": 32
+                      },
+                      {
+                        "type": "hdlr",
+                        "offset": 288,
+                        "size": 45
+                      },
+                      {
+                        "type": "minf",
+                        "offset": 333,
+                        "size": 38200,
+                        "children": [
+                          {
+                            "type": "vmhd",
+                            "offset": 341,
+                            "size": 20
+                          },
+                          {
+                            "type": "dinf",
+                            "offset": 361,
+                            "size": 36,
+                            "children": [
+                              {
+                                "type": "dref",
+                                "offset": 369,
+                                "size": 28
+                              }
+                            ]
+                          },
+                          {
+                            "type": "stbl",
+                            "offset": 397,
+                            "size": 38136,
+                            "children": [
+                              {
+                                "type": "stsd",
+                                "offset": 405,
+                                "size": 192
+                              },
+                              {
+                                "type": "stts",
+                                "offset": 597,
+                                "size": 15784
+                              },
+                              {
+                                "type": "stss",
+                                "offset": 16381,
+                                "size": 200
+                              },
+                              {
+                                "type": "stsc",
+                                "offset": 16581,
+                                "size": 28
+                              },
+                              {
+                                "type": "stsz",
+                                "offset": 16609,
+                                "size": 10964
+                              },
+                              {
+                                "type": "stco",
+                                "offset": 27573,
+                                "size": 10960
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "trak",
+                "offset": 38533,
+                "size": 35797,
+                "children": [
+                  {
+                    "type": "tkhd",
+                    "offset": 38541,
+                    "size": 92
+                  },
+                  {
+                    "type": "mdia",
+                    "offset": 38633,
+                    "size": 35697,
+                    "children": [
+                      {
+                        "type": "mdhd",
+                        "offset": 38641,
+                        "size": 32
+                      },
+                      {
+                        "type": "hdlr",
+                        "offset": 38673,
+                        "size": 45
+                      },
+                      {
+                        "type": "minf",
+                        "offset": 38718,
+                        "size": 35612,
+                        "children": [
+                          {
+                            "type": "smhd",
+                            "offset": 38726,
+                            "size": 16
+                          },
+                          {
+                            "type": "dinf",
+                            "offset": 38742,
+                            "size": 36,
+                            "children": [
+                              {
+                                "type": "dref",
+                                "offset": 38750,
+                                "size": 28
+                              }
+                            ]
+                          },
+                          {
+                            "type": "stbl",
+                            "offset": 38778,
+                            "size": 35552,
+                            "children": [
+                              {
+                                "type": "stsd",
+                                "offset": 38786,
+                                "size": 126
+                              },
+                              {
+                                "type": "stts",
+                                "offset": 38912,
+                                "size": 32
+                              },
+                              {
+                                "type": "stsc",
+                                "offset": 38944,
+                                "size": 2968
+                              },
+                              {
+                                "type": "stsz",
+                                "offset": 41912,
+                                "size": 21408
+                              },
+                              {
+                                "type": "stco",
+                                "offset": 63320,
+                                "size": 10956
+                              },
+                              {
+                                "type": "sgpd",
+                                "offset": 74276,
+                                "size": 26
+                              },
+                              {
+                                "type": "sbgp",
+                                "offset": 74302,
+                                "size": 28
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "udta",
+                "offset": 74330,
+                "size": 98
+              }
+            ]
+          },
+          {
+            "type": "free",
+            "offset": 74428,
+            "size": 8
+          },
+          {
+            "type": "mdat",
+            "offset": 74436,
+            "size": 27624472
+          }
+        ],
+        "sha256": "8775bf4d297859d827523fa6b8e8e2ba67daabcf7a46e23afda7e00665b668f6"
+      },
+      "upstream_commit": "a05846de7c76a66ad42ba6fd37126514bc452167",
+      "exact_render_source": "\"\"\"Stage B step 2 \u2014 reconcile per-cut timing against its voiceover, cut the\nORIGINAL full-quality video at the reconciled ranges, mute the source audio,\nmix in the synthesized voiceover (plus optional background music), and\nconcatenate everything into ONE merged, mobile-safe final MP4.\n\n---------------------------------------------------------------------------\nMobile-compatibility policy (ARCHITECTURE.md \u00a714 \u2014 intentionally unchanged)\n---------------------------------------------------------------------------\nOne ffmpeg pass that:\n\n* Uses the concat FILTER (not the concat demuxer) so cuts are joined inside\n  the filter graph with fresh, contiguous, zero-based timestamps \u2014 no edit\n  lists, no per-segment container quirks.\n* Re-encodes video to H.264 High@L4.0, yuv420p 8-bit, fixed 30 fps CFR, SAR=1.\n* Re-encodes audio to AAC-LC, 48 kHz, stereo, 192 kbps.\n* Writes MP4 with ``+faststart`` and mp42 brand; no B-frames, no subtitle/data\n  tracks, stripped global metadata/chapters.\n\n---------------------------------------------------------------------------\nTiming reconciliation (no drift)\n---------------------------------------------------------------------------\nThe final video's total length MUST equal the total voiceover length, and each\ncut's video stays in lockstep with its own voiceover. Every cut is reconciled\nagainst its measured voiceover duration by retiming the cut's own footage ONLY\n(``setpts`` multiplier). Cut boundaries never move, no footage is borrowed from\nan adjacent cut, and there is no stretch-factor ceiling.\n\n---------------------------------------------------------------------------\nAudio\n---------------------------------------------------------------------------\nThe source video's audio is ALWAYS muted. Each cut's audio track is its\nloudness-normalized voiceover at unity (no arbitrary gain), padded with silence\nto the cut's reconciled video length so concat sees equal-length A/V per\nsegment. Optional background music is trimmed/looped to the merged duration,\ngain-staged so its MEASURED loudness sits at MUSIC_TO_VOICE_LOUDNESS_RATIO of\nthe measured vocal loudness (bug-34 \u2014 no more blind fixed percentage),\nside-chain ducked under the narration, and a\nwide-ceiling limiter catches only true digital-clip peaks.\n\nA standalone merged voiceover-only WAV is written for the caption step, which\ntranscribes it for word-level timestamps.\n\nPorted from ``_legacy/scripts/cut_and_produce.py``.\n\"\"\"\nfrom __future__ import annotations\n\nimport argparse\nimport json\nimport math\nimport os\nimport re\nimport wave\nfrom pathlib import Path\nfrom typing import Any\n\nfrom pipeline.stage_b import common\n\n# ---------- Mobile-safe encoding parameters ----------\nTARGET_FPS = 30             # phones/WhatsApp are happiest with CFR 30\nTARGET_PIX_FMT = \"yuv420p\"  # 8-bit 4:2:0 is the ONLY universally-decoded pixfmt\nX264_PROFILE = \"high\"\nX264_LEVEL = \"4.0\"          # covers up to 1080p30, accepted everywhere\nX264_PRESET = \"veryfast\"    # good speed/quality tradeoff on GH runners\nX264_CRF = \"18\"             # visually lossless for practical purposes\nAAC_BITRATE = \"192k\"\nAAC_SAMPLE_RATE = \"48000\"\nAAC_CHANNELS = \"2\"\n\n# ---------- Timing reconciliation ----------\n# Post-reconciliation assertion tolerance: |total_video - total_voiceover|.\nDURATION_TOLERANCE_S = 0.25\n# Declared-vs-actual source-duration agreement (scene-accuracy fix). The plan's\n# ``video_duration_seconds`` is the planner's whole reference for choosing every\n# cut's start/end seconds. If it disagrees with the source file's REAL probed\n# duration, the plan was written against a different cut of the footage (stale\n# plan, wrong/older re-fetched source, or a hallucinated duration) and every\n# cut would silently land on the WRONG scene while still passing per-cut range\n# validation. ffprobe container duration is accurate to well under 1s and the\n# declared value is a rounded integer, so a 2s tolerance absorbs only rounding.\nSOURCE_DURATION_MISMATCH_TOLERANCE_S = 2.0\n\n# ---------- Audio level policy ----------\n# Each TTS WAV is loudness-normalized by voiceover.py to a dialogue target\n# before this step sees it, so the voice path stays at unity. The music bed is\n# gain-staged by MEASUREMENT (bug-34): both the merged voiceover and the music\n# file are measured with ffmpeg loudnorm (EBU R128 integrated loudness), and\n# the music gain is computed so its perceived level lands at\n# MUSIC_TO_VOICE_LOUDNESS_RATIO of the vocals \u2014 regardless of how loud the\n# uploaded music file already is. This is a CONSTANT gain applied for the\n# whole clip (bug-59): no per-moment ducking/compression is layered on top,\n# so the background level does not fluctuate as narration starts and stops.\nVOICEOVER_VOLUME = 1.00\n# Fallback only: used when a loudness measurement cannot be obtained (e.g. a\n# silent/corrupt music file). Mirrors the legacy fixed one-third amplitude.\nMUSIC_VOLUME = 0.33\n# Target perceived background:vocals ratio (0.15:1). Halved from 0.30\n# (remove-paste-feature-and-double-voice-ratio initiative): the operator\n# asked for the vocals to count double relative to the bed (\"0.3 to 1 ->\n# more like 0.3 to 2\"), i.e. the SAME music loudness logic with the voice\n# weighted 2x, which is mathematically 0.30 / 2 = 0.15. The music target\n# offset moves from 10*log10(0.30) ~= -5.23 dB to 10*log10(0.15) ~= -8.24 dB\n# -- the bed sits exactly 3.01 dB further below the voiceover at every\n# measurement pair. (The literal reading \"ratio = 2.0\" would put music\n# +3.01 dB ABOVE the vocals, the opposite of the request, and was rejected.)\nMUSIC_TO_VOICE_LOUDNESS_RATIO = 0.15\n# Sanity clamps for the computed music gain (dB). The two bounds are NOT\n# symmetric, because cutting an over-loud bed and boosting an over-quiet one\n# are different failure modes with different risk profiles.\n#\n# Cut side (floor): voiceovers arrive normalized to -16 LUFS (voiceover.py\n# VOICE_CLARITY_TARGET_I_LUFS) and the 0.15:1 ratio offset is\n# 10*log10(0.15) ~= -8.24 dB, so the required cut is\n#     voice_lufs - 8.24 - music_lufs.\n# Loud commercial masters measure about -6 to -14 LUFS integrated (worst\n# realistic case: -23 LUFS vocals vs -6 LUFS music needs -25.2 dB), and NO\n# real signal can measure far above +3 LUFS -- a full-scale square wave is\n# the physical ceiling for an integrated reading. The worst physically\n# possible cut is therefore\n#     -23 LUFS vocals - 8.24 dB - (+3 LUFS music) ~= -34.2 dB.\n# A -60 dB floor gives ~26 dB of headroom beyond even that impossible edge,\n# so no real upload -- however loud -- is ever clamped away from the exact\n# ratio (re-verified for the 0.15 target: the smaller ratio demands MORE\n# attenuation than 0.30 did, and -60 still clears the new worst case with\n# room to spare). A genuinely absurd demand (e.g. a corrupt file misparsed\n# as tens of dB above digital full scale) is still clamped rather than\n# attenuating the bed by a physically meaningless amount.\n#\n# Boost side (ceiling): boosting a quiet file amplifies its noise floor and\n# mastering artifacts by the same amount, so this side stays deliberately\n# conservative. +24 dB covers music down to ~-48 LUFS under -16 LUFS vocals;\n# a bed arriving quieter than that is left slightly below the target ratio\n# rather than lifting 25+ dB of hiss along with it.\nMUSIC_GAIN_MIN_DB = -60.0\nMUSIC_GAIN_MAX_DB = 24.0\nMIX_LIMITER_CEILING = 0.99\n\n\ndef measure_integrated_loudness_lufs(path: str | Path) -> float:\n    \"\"\"Measure EBU R128 integrated loudness (LUFS) of an audio file with\n    ffmpeg's loudnorm analysis pass. Raises StageBError when ffmpeg cannot\n    produce a parseable measurement (e.g. silent or corrupt audio).\"\"\"\n    result = common.run(\n        [\n            \"ffmpeg\", \"-hide_banner\", \"-nostdin\",\n            \"-i\", str(path),\n            \"-af\", \"loudnorm=print_format=json\",\n            \"-f\", \"null\", \"-\",\n        ],\n        f\"loudness measurement for {path}\",\n    )\n    matches = re.findall(r\"\\{\\s*\\\"input_i\\\".*?\\n\\}\", result.stderr, flags=re.DOTALL)\n    if not matches:\n        raise common.StageBError(\n            f\"ffmpeg loudnorm returned no parseable measurement for {path}.\"\n        )\n    try:\n        measured = json.loads(matches[-1])\n        return float(measured[\"input_i\"])\n    except (KeyError, TypeError, ValueError, json.JSONDecodeError) as exc:\n        raise common.StageBError(\n            f\"ffmpeg loudnorm returned incomplete measurement data for {path}.\"\n        ) from exc\n\n\ndef music_gain_db_for_ratio(voice_lufs: float, music_lufs: float) -> float:\n    \"\"\"Gain (dB) that brings ``music_lufs`` to\n    MUSIC_TO_VOICE_LOUDNESS_RATIO \u00d7 the perceived level of ``voice_lufs``.\n\n    A loudness ratio r maps to a level offset of 10\u00b7log10(r) dB, so the\n    0.15:1 background:vocals target is voice_lufs + 10\u00b7log10(0.15) \u2248 vocals\n    minus 8.24 dB. (Note this function's formula is 10\u00b7log10 \u2014 the level\n    ratio convention used for LUFS targets \u2014 not 20\u00b7log10; 20\u00b7log10(0.15)\n    would be \u2248 -16.48 dB and is NOT what this code targets.) The result is\n    clamped to [MUSIC_GAIN_MIN_DB, MUSIC_GAIN_MAX_DB] so a pathological\n    measurement can neither blast nor fully mute the bed.\n    \"\"\"\n    target_db = 10.0 * math.log10(MUSIC_TO_VOICE_LOUDNESS_RATIO)  # \u2248 -8.24 dB\n    gain_db = (voice_lufs + target_db) - music_lufs\n    return min(max(gain_db, MUSIC_GAIN_MIN_DB), MUSIC_GAIN_MAX_DB)\n\n\ndef resolve_music_volume(voiceover_wav: str | Path, music: str | Path) -> tuple[float, float | None]:\n    \"\"\"Return (music_volume_linear, measured_gain_db_or_None) for the bed.\n\n    bug-34: measure both tracks and compute the gain so the music sits at\n    MUSIC_TO_VOICE_LOUDNESS_RATIO of the vocals' perceived loudness. Falls\n    back to the legacy fixed MUSIC_VOLUME only when measurement is impossible\n    (e.g. a silent music file), keeping the render alive.\n    \"\"\"\n    try:\n        voice_lufs = measure_integrated_loudness_lufs(voiceover_wav)\n        music_lufs = measure_integrated_loudness_lufs(music)\n    except common.StageBError as exc:\n        print(\n            f\"WARNING: loudness measurement failed ({exc}); \"\n            f\"falling back to fixed music volume {MUSIC_VOLUME}.\",\n            flush=True,\n        )\n        return MUSIC_VOLUME, None\n    gain_db = music_gain_db_for_ratio(voice_lufs, music_lufs)\n    linear = 10.0 ** (gain_db / 20.0)\n    print(\n        f\"Music loudness staging: voiceover {voice_lufs:.2f} LUFS, \"\n        f\"music {music_lufs:.2f} LUFS \u2192 target {voice_lufs + 10.0 * math.log10(MUSIC_TO_VOICE_LOUDNESS_RATIO):.2f} LUFS, \"\n        f\"applied gain {gain_db:+.2f} dB (linear {linear:.4f}).\",\n        flush=True,\n    )\n    return linear, gain_db\n\n\ndef final_wav_timing(path: str | Path) -> tuple[float, int]:\n    \"\"\"Return final-WAV duration plus its exact 48 kHz trim-frame target.\n\n    The final WAV is the authoritative post-processing artifact, so both the\n    video retiming duration and the atrim endpoint derive from its container\n    frame count (never a manifest duration rounded to milliseconds, which can\n    round DOWN and truncate final phoneme samples).\n    \"\"\"\n    try:\n        with wave.open(str(path), \"rb\") as wav:\n            input_frames = wav.getnframes()\n            input_rate = wav.getframerate()\n    except (wave.Error, EOFError) as exc:\n        raise common.StageBError(f\"Voiceover WAV is unreadable: {path}\") from exc\n    if input_frames <= 0 or input_rate <= 0:\n        raise common.StageBError(f\"Voiceover WAV has invalid timing: {path}\")\n    output_rate = int(AAC_SAMPLE_RATE)\n    output_frames = round(input_frames * output_rate / input_rate)\n    if output_frames <= 0:\n        raise common.StageBError(f\"Voiceover WAV has no renderable samples: {path}\")\n    return output_frames / output_rate, output_frames\n\n\n# --------------------------------------------------------------------------- #\n# Declared-vs-actual source-duration sanity check (scene-accuracy fix)          #\n# --------------------------------------------------------------------------- #\n\ndef assert_declared_duration_matches_source(plan: dict[str, Any], actual_seconds: float) -> None:\n    \"\"\"Fail closed when the plan's declared source duration disagrees with the\n    probed real duration of the video about to be rendered.\n\n    Every cut's ``start_seconds``/``end_seconds`` was chosen against the\n    timeline of the source the PLANNER saw, whose length is recorded in the\n    plan as ``video_duration_seconds``. Stage A scenes/transcript and Stage B\n    extraction all share the original source's zero-based timeline, so if the\n    declared duration does not match the probed duration of the file actually\n    present at render time, the plan was written against a DIFFERENT cut of\n    the footage \u2014 a stale plan, a wrong/older re-fetched source (bug-69), or a\n    hallucinated duration \u2014 and each cut would silently extract the WRONG\n    scene while still passing per-cut range validation against both the\n    declared and the actual length. Refuse loudly instead of producing a\n    video whose footage does not match its narration.\n    \"\"\"\n    declared = plan.get(\"video_duration_seconds\")\n    try:\n        declared_seconds = float(declared)\n    except (TypeError, ValueError):\n        declared_seconds = 0.0\n    if declared_seconds <= 0:\n        raise common.StageBError(\n            \"production.json has no usable video_duration_seconds to reconcile \"\n            \"against the probed source duration; cannot confirm the plan's cut \"\n            \"timestamps reference this source file.\"\n        )\n    delta = abs(declared_seconds - actual_seconds)\n    if delta > SOURCE_DURATION_MISMATCH_TOLERANCE_S:\n        raise common.StageBError(\n            f\"production.json declares video_duration_seconds={declared_seconds:.0f}s \"\n            f\"but the actual source video probes at {actual_seconds:.2f}s \"\n            f\"(difference {delta:.2f}s exceeds the {SOURCE_DURATION_MISMATCH_TOLERANCE_S:.0f}s \"\n            \"tolerance). The plan's cut timestamps were written against a source \"\n            \"of a different length than the one about to be rendered, so every \"\n            \"cut would land on the wrong scene. Re-run Stage A against this exact \"\n            \"source and regenerate the plan, or confirm the correct source file is \"\n            \"being used.\"\n        )\n\n\n# --------------------------------------------------------------------------- #\n# Timing reconciliation                                                        #\n# --------------------------------------------------------------------------- #\n\nNARRATION_SYNC_TOLERANCE_S = 0.30\n\ndef validate_narration_anchors(reconciled: list[dict], vo_durations: list[float],\n                               tolerance_seconds: float = NARRATION_SYNC_TOLERANCE_S) -> list[str]:\n    \"\"\"Validate that every narration line starts at or slightly before its visual anchor.\n    Offsets beyond tolerance_seconds fail fast with clear, actionable errors.\n    \"\"\"\n    errors: list[str] = []\n    cumulative_time = 0.0\n    for i, item in enumerate(reconciled):\n        vo_len = vo_durations[i]\n        start_s = float(item[\"start_seconds\"])\n        anchor_s = float(item.get(\"visual_anchor_seconds\", start_s))\n        stretch = float(item.get(\"stretch\", 1.0))\n\n        t_spoken_start = cumulative_time\n        t_vis_anchor = cumulative_time + (anchor_s - start_s) * stretch\n\n        lead_in = t_vis_anchor - t_spoken_start\n        offset = t_spoken_start - t_vis_anchor\n\n        # Narration must begin at or slightly before the visual moment, never after it.\n        if lead_in < -tolerance_seconds:\n            errors.append(\n                f\"Cut #{i+1}: narration starts {abs(lead_in):.2f}s AFTER visual anchor {anchor_s:.2f}s \"\n                f\"(tolerance: {tolerance_seconds:.2f}s). Narration must begin at or slightly before the visual moment.\"\n            )\n        elif lead_in > 1.5:\n            errors.append(\n                f\"Cut #{i+1}: visual anchor {anchor_s:.2f}s appears {lead_in:.2f}s after speech begins \"\n                f\"(cut start: {start_s:.2f}s). Narration will play over unrelated opening footage before the anchor.\"\n            )\n        else:\n            print(\n                f\"  [sync check] cut #{i+1}: anchor {anchor_s:.2f}s -> visual moment at {t_vis_anchor:.2f}s, \"\n                f\"spoken start at {t_spoken_start:.2f}s (offset {offset:+.2f}s, within {tolerance_seconds:.2f}s tolerance).\",\n                flush=True,\n            )\n        cumulative_time += vo_len\n    return errors\n\n\ndef reconcile_cuts(cuts: list[dict], vo_durations: list[float],\n                   src_duration: float) -> list[dict]:\n    \"\"\"Adjust every cut so its planned video duration matches its voiceover\n    duration EXACTLY, anchored to the visual moment described by the voiceover.\n    Retimes footage using stretch within safe limits [0.40, 1.40].\n    \"\"\"\n    plan = []\n    for i, c in enumerate(cuts):\n        s = float(c[\"start_seconds\"])\n        e = float(c[\"end_seconds\"])\n        anchor_raw = (\n            c.get(\"visual_anchor_seconds\")\n            if c.get(\"visual_anchor_seconds\") is not None\n            else c.get(\"anchor_seconds\")\n            if c.get(\"anchor_seconds\") is not None\n            else c.get(\"anchor_source_timestamp\")\n            if c.get(\"anchor_source_timestamp\") is not None\n            else c.get(\"visual_anchor\")\n        )\n        if anchor_raw is not None:\n            anchor = float(anchor_raw)\n        else:\n            anchor = s\n            print(\n                f\"  [reconcile] cut #{i}: no visual_anchor_seconds supplied; \"\n                f\"defaulting anchor to start_seconds ({s:.2f}s) per backward compatibility.\",\n                flush=True,\n            )\n\n        if anchor < s - 0.5:\n            print(\n                f\"  [reconcile] cut #{i}: anchor {anchor:.2f}s precedes start {s:.2f}s \u2014 auto-correcting start to {anchor:.2f}s\",\n                flush=True,\n            )\n            s = max(0.0, anchor - 0.1)\n        if anchor > e + 0.5:\n            print(\n                f\"  [reconcile] cut #{i}: anchor {anchor:.2f}s exceeds end {e:.2f}s \u2014 auto-correcting end to {anchor:.2f}s\",\n                flush=True,\n            )\n            e = min(src_duration, anchor + 0.1)\n\n        plan.append({\n            \"start_seconds\": s,\n            \"end_seconds\": e,\n            \"visual_anchor_seconds\": anchor,\n            \"stretch\": 1.0,\n        })\n\n    for i in range(len(plan)):\n        vo = vo_durations[i]\n        anchor = plan[i][\"visual_anchor_seconds\"]\n        s = plan[i][\"start_seconds\"]\n        e = plan[i][\"end_seconds\"]\n        video_len = e - s\n\n        initial_stretch = vo / video_len if video_len > 0 else 1.0\n\n        # Anchor alignment: Narration must begin at or slightly before visual moment\n        anchor_delay = (anchor - s) * initial_stretch\n        if anchor_delay > 0.30:\n            calibrated_s = max(s, anchor - (0.15 / initial_stretch))\n            if i > 0 and calibrated_s < plan[i-1][\"end_seconds\"]:\n                calibrated_s = max(s, plan[i-1][\"end_seconds\"])\n            if calibrated_s > s and calibrated_s < e:\n                print(\n                    f\"  [reconcile] cut #{i}: visual anchor {anchor:.2f}s had {anchor_delay:.2f}s delay \u2014 \"\n                    f\"tightened cut start from {s:.2f}s to {calibrated_s:.2f}s for precise synchronization.\",\n                    flush=True,\n                )\n                s = calibrated_s\n                plan[i][\"start_seconds\"] = s\n                video_len = e - s\n\n        if video_len < vo:\n            needed_e = min(src_duration, s + vo)\n            if i + 1 < len(plan):\n                next_s = plan[i+1][\"start_seconds\"]\n                if next_s > s:\n                    needed_e = min(needed_e, next_s)\n            if needed_e > e:\n                print(\n                    f\"  [reconcile] cut #{i}: extended footage window from {e:.2f}s to {needed_e:.2f}s to accommodate voiceover duration {vo:.2f}s.\",\n                    flush=True,\n                )\n                e = needed_e\n                plan[i][\"end_seconds\"] = e\n                video_len = e - s\n\n        plan[i][\"video_seconds\"] = vo\n        if video_len <= 0 or abs(vo - video_len) < 0.01:\n            plan[i][\"stretch\"] = 1.0\n            continue\n\n        stretch = vo / video_len\n        stretch = max(0.40, min(1.40, stretch))\n        plan[i][\"stretch\"] = stretch\n        direction = \"slowing down\" if stretch > 1.0 else \"speeding up\"\n        print(\n            f\"  [reconcile] cut #{i}: footage {video_len:.2f}s vs voiceover \"\n            f\"{vo:.2f}s (anchor {anchor:.2f}s) \u2014 {direction} the clip by {stretch:.3f}x to match \"\n            f\"exactly.\",\n            flush=True,\n        )\n\n    return plan\n\n\n# --------------------------------------------------------------------------- #\n# The single ffmpeg pass                                                       #\n# --------------------------------------------------------------------------- #\n\ndef produce_merged_video(src: str | Path, plan: list[dict], vo_wavs: list[str],\n                         dst: str | Path, music: str | Path | None,\n                         music_volume: float = MUSIC_VOLUME) -> None:\n    \"\"\"Cut every reconciled range from ``src``, retime per-cut video by its\n    stretch factor, mute source audio, lay in the voiceover WAVs (padded to the\n    cut length), concat everything, optionally mix ducked music under the\n    voiceover, and write ONE mobile-safe MP4.\"\"\"\n    if not plan:\n        raise common.StageBError(\"produce_merged_video called with no cuts\")\n\n    n = len(plan)\n    cmd: list[str] = [\"ffmpeg\", \"-y\"]\n\n    # One `-ss <start> -to <end> -i <src>` block per cut. Input-side seek is\n    # fast, and because the concat filter downstream re-encodes with fresh PTS\n    # we inherit none of the edit-list / non-zero-start problems a stream-copy\n    # pipeline would have.\n    for p in plan:\n        cmd += [\"-ss\", f\"{p['start_seconds']:.3f}\", \"-to\", f\"{p['end_seconds']:.3f}\", \"-i\", str(src)]\n\n    for w in vo_wavs:\n        cmd += [\"-i\", str(w)]\n\n    music_idx = None\n    if music:\n        music_idx = 2 * n\n        # `-stream_loop -1` must precede the input it applies to; loop short\n        # music so the atrim below always has enough material to cut from.\n        cmd += [\"-stream_loop\", \"-1\", \"-i\", str(music)]\n\n    parts: list[str] = []\n    concat_inputs: list[str] = []\n    for i, p in enumerate(plan):\n        stretch = p[\"stretch\"]\n        parts.append(\n            f\"[{i}:v:0]\"\n            f\"setpts={stretch:.6f}*PTS,\"\n            f\"fps={TARGET_FPS},\"\n            f\"format={TARGET_PIX_FMT},\"\n            f\"setsar=1\"\n            f\"[v{i}]\"\n        )\n        # Audio: normalized voiceover only \u2014 source audio is never mapped.\n        # Pad to the exact post-resample sample count so concat sees equal A/V\n        # segment lengths. end_sample avoids millisecond rounding truncating a\n        # final consonant or vowel.\n        parts.append(\n            f\"[{n + i}:a:0]\"\n            f\"aformat=sample_fmts=fltp:sample_rates={AAC_SAMPLE_RATE}:channel_layouts=stereo,\"\n            f\"aresample=async=1:first_pts=0,\"\n            f\"apad,atrim=end_sample={p['audio_samples']},\"\n            f\"volume={VOICEOVER_VOLUME}\"\n            f\"[a{i}]\"\n        )\n        concat_inputs.append(f\"[v{i}][a{i}]\")\n\n    parts.append(\"\".join(concat_inputs) + f\"concat=n={n}:v=1:a=1[vcat][acat]\")\n\n    total_seconds = sum(p[\"video_seconds\"] for p in plan)\n\n    if music_idx is not None:\n        parts.append(\n            f\"[{music_idx}:a:0]\"\n            f\"aformat=sample_fmts=fltp:sample_rates={AAC_SAMPLE_RATE}:channel_layouts=stereo,\"\n            f\"aresample=async=1:first_pts=0,\"\n            f\"atrim=0:{total_seconds:.3f},\"\n            f\"volume={music_volume:.6f}\"\n            f\"[music_reduced]\"\n        )\n        # bug-59: the bed is already gain-staged to a CONSTANT loudness-matched\n        # level by resolve_music_volume() above (MUSIC_TO_VOICE_LOUDNESS_RATIO,\n        # measured via LUFS so a quiet upload is boosted and a loud one is cut\n        # down to the same target ratio). Previously this constant level was\n        # then fed through sidechaincompress, ducking it further any time the\n        # voiceover was present and letting it rise back in gaps \u2014 the\n        # operator wants a flat, non-fluctuating background level for the\n        # whole clip instead. music_reduced is mixed in directly at its\n        # already-correct constant gain; no per-moment compression is applied.\n        parts.append(\n            f\"[acat][music_reduced]amix=inputs=2:duration=first:normalize=0,\"\n            f\"alimiter=limit={MIX_LIMITER_CEILING}\"\n            f\"[aout]\"\n        )\n        audio_map = \"[aout]\"\n    else:\n        audio_map = \"[acat]\"\n\n    filter_complex = \";\".join(parts)\n\n    cmd += [\n        \"-filter_complex\", filter_complex,\n        \"-map\", \"[vcat]\",\n        \"-map\", audio_map,\n\n        # Video: H.264 High@L4.0, CRF 18, yuv420p \u2014 universally decodable.\n        \"-c:v\", \"libx264\",\n        \"-profile:v\", X264_PROFILE,\n        \"-level:v\", X264_LEVEL,\n        \"-preset\", X264_PRESET,\n        \"-crf\", X264_CRF,\n        \"-pix_fmt\", TARGET_PIX_FMT,\n        # No B-frames -> PTS==DTS, start_time==0.\n        \"-bf\", \"0\",\n        \"-g\", str(TARGET_FPS * 2),\n        \"-keyint_min\", str(TARGET_FPS * 2),\n        \"-sc_threshold\", \"0\",\n        \"-x264-params\", \"force-cfr=1\",\n        \"-video_track_timescale\", \"15360\",\n\n        # Audio: AAC-LC stereo 48 kHz 192 kbps.\n        \"-c:a\", \"aac\",\n        \"-profile:a\", \"aac_low\",\n        \"-b:a\", AAC_BITRATE,\n        \"-ar\", AAC_SAMPLE_RATE,\n        \"-ac\", AAC_CHANNELS,\n\n        # Container: MP4, faststart, mp42 brand, no edit lists; strip\n        # metadata/chapters; drop subtitle/data tracks.\n        \"-movflags\", \"+faststart\",\n        \"-use_editlist\", \"0\",\n        \"-brand\", \"mp42\",\n        \"-map_metadata\", \"-1\",\n        \"-map_chapters\", \"-1\",\n        \"-sn\", \"-dn\", \"-ignore_unknown\",\n        \"-fflags\", \"+genpts\",\n        \"-max_muxing_queue_size\", \"9999\",\n        \"-f\", \"mp4\",\n        str(dst),\n    ]\n\n    common.sh(cmd)\n\n\ndef write_merged_voiceover(vo_wavs: list[str], plan: list[dict], out_wav: str | Path) -> None:\n    \"\"\"Concatenate the per-cut voiceover WAVs (each padded to its cut's planned\n    video length, matching what's in the video) into one standalone WAV. The\n    caption step transcribes THIS file for word-level timestamps, so it must\n    line up with the video 1:1.\"\"\"\n    n = len(vo_wavs)\n    cmd: list[str] = [\"ffmpeg\", \"-y\"]\n    for w in vo_wavs:\n        cmd += [\"-i\", str(w)]\n    parts: list[str] = []\n    labels: list[str] = []\n    for i in range(n):\n        parts.append(\n            f\"[{i}:a:0]\"\n            f\"aformat=sample_fmts=fltp:sample_rates={AAC_SAMPLE_RATE}:channel_layouts=mono,\"\n            f\"aresample=async=1:first_pts=0,\"\n            f\"apad,atrim=end_sample={plan[i]['audio_samples']}\"\n            f\"[w{i}]\"\n        )\n        labels.append(f\"[w{i}]\")\n    parts.append(\"\".join(labels) + f\"concat=n={n}:v=0:a=1[wout]\")\n    cmd += [\n        \"-filter_complex\", \";\".join(parts),\n        \"-map\", \"[wout]\",\n        \"-c:a\", \"pcm_s16le\",\n        # Keep the already-reconciled 48 kHz sample timeline intact.\n        \"-ar\", AAC_SAMPLE_RATE,\n        \"-ac\", \"1\",\n        str(out_wav),\n    ]\n    common.sh(cmd)\n\n\ndef validate_merged_voiceover_timeline(path: str | Path, expected_seconds: float) -> float:\n    \"\"\"Fail closed if the caption timing source is not 1:1 with final video.\"\"\"\n    try:\n        with wave.open(str(path), \"rb\") as wav:\n            frames = wav.getnframes()\n            sample_rate = wav.getframerate()\n            channels = wav.getnchannels()\n    except (wave.Error, EOFError) as exc:\n        raise common.StageBError(f\"Merged voiceover WAV is unreadable: {path}\") from exc\n    if frames <= 0 or sample_rate <= 0 or channels != 1:\n        raise common.StageBError(\n            f\"Merged voiceover WAV has invalid audio metadata: \"\n            f\"frames={frames}, sample_rate={sample_rate}, channels={channels}\"\n        )\n    expected_rate = int(AAC_SAMPLE_RATE)\n    if sample_rate != expected_rate:\n        raise common.StageBError(\n            f\"Merged voiceover sample rate is {sample_rate} Hz, expected \"\n            f\"{expected_rate} Hz for the reconciled subtitle timeline.\"\n        )\n    actual_seconds = frames / sample_rate\n    tolerance_seconds = max(0.05, expected_seconds * 0.0005)\n    drift_seconds = abs(actual_seconds - expected_seconds)\n    if drift_seconds > tolerance_seconds:\n        raise common.StageBError(\n            f\"Merged voiceover duration ({actual_seconds:.3f}s) differs from \"\n            f\"the reconciled final-video plan ({expected_seconds:.3f}s) by \"\n            f\"{drift_seconds:.3f}s (tolerance {tolerance_seconds:.3f}s). \"\n            \"Refusing caption generation because captions would not share the \"\n            \"final video timeline.\"\n        )\n    print(\n        f\"Merged voiceover timeline validated: {actual_seconds:.3f}s at \"\n        f\"{sample_rate} Hz mono matches the reconciled final video \"\n        f\"({expected_seconds:.3f}s).\",\n        flush=True,\n    )\n    return actual_seconds\n\n\ndef validate_mp4(path: str | Path) -> None:\n    \"\"\"Verify the output is a genuine, valid, mobile-safe MP4 (codec profile,\n    pixel format, stream counts, zero start time). Fails loudly via\n    ``StageBError`` rather than shipping a file that won't play on a phone.\"\"\"\n    print(f\"\\nValidating output MP4: {path}\", flush=True)\n\n    if not os.path.isfile(path):\n        raise common.StageBError(f\"Output file does not exist: {path}\")\n\n    with open(path, \"rb\") as f:\n        head = f.read(32)\n    if len(head) < 12 or head[4:8] != b\"ftyp\":\n        raise common.StageBError(\n            f\"Output file is NOT a valid MP4 (missing ftyp box at offset 4, got: {head[4:8]!r})\"\n        )\n\n    major_brand = head[8:12].decode(\"ascii\", errors=\"replace\")\n    print(f\"  Major brand: {major_brand}\", flush=True)\n\n    probe_data = common.probe_json(path)\n    streams = probe_data.get(\"streams\", [])\n    fmt_info = probe_data.get(\"format\", {})\n\n    print(f\"  Format: {fmt_info.get('format_long_name', 'unknown')} ({fmt_info.get('format_name', 'unknown')})\", flush=True)\n    print(f\"  Duration: {fmt_info.get('duration', 'unknown')}s\", flush=True)\n    print(f\"  Bit rate: {fmt_info.get('bit_rate', 'unknown')} bps\", flush=True)\n    print(f\"  Start time: {fmt_info.get('start_time', 'unknown')}\", flush=True)\n\n    v_streams = [s for s in streams if s.get(\"codec_type\") == \"video\"]\n    a_streams = [s for s in streams if s.get(\"codec_type\") == \"audio\"]\n\n    if not v_streams:\n        raise common.StageBError(\"Output file has no video stream\")\n    if not a_streams:\n        raise common.StageBError(\"Output file has no audio stream\")\n    if len(a_streams) > 1:\n        raise common.StageBError(\n            f\"Output file has {len(a_streams)} audio streams, expected exactly 1 \"\n            \"(voiceover [+ music] mixed). A leaked source track would put \"\n            \"original audio back into the final video.\"\n        )\n\n    v = v_streams[0]\n    a = a_streams[0]\n    print(\n        f\"  Video: {v.get('codec_name')} profile={v.get('profile')} \"\n        f\"level={v.get('level')} pix_fmt={v.get('pix_fmt')} \"\n        f\"{v.get('width')}x{v.get('height')} fps={v.get('r_frame_rate')}\",\n        flush=True,\n    )\n    print(f\"  Audio: {a.get('codec_name')} sr={a.get('sample_rate')} ch={a.get('channels')}\", flush=True)\n\n    if v.get(\"codec_name\") != \"h264\":\n        raise common.StageBError(f\"video codec is {v.get('codec_name')!r}, expected h264\")\n    if v.get(\"pix_fmt\") != TARGET_PIX_FMT:\n        raise common.StageBError(\n            f\"video pix_fmt is {v.get('pix_fmt')!r}, expected {TARGET_PIX_FMT!r} \"\n            \"(non-yuv420p pixel formats are the #1 cause of 'won't play on phone' bugs)\"\n        )\n    if a.get(\"codec_name\") != \"aac\":\n        raise common.StageBError(f\"audio codec is {a.get('codec_name')!r}, expected aac\")\n\n    try:\n        st = float(fmt_info.get(\"start_time\", \"0\"))\n        if st > 0.05:\n            raise common.StageBError(\n                f\"output start_time is {st:.3f}s, expected ~0.0. Non-zero start \"\n                \"times break WhatsApp / iOS playback.\"\n            )\n    except (TypeError, ValueError):\n        pass\n\n    print(\"  Validation PASSED: output is a mobile-safe MP4.\\n\", flush=True)\n\n\n# --------------------------------------------------------------------------- #\n# Orchestration                                                                #\n# --------------------------------------------------------------------------- #\n\ndef render_merged(\n    original_video: str | Path,\n    plan: dict[str, Any],\n    voiceover_manifest_path: str | Path,\n    out_video_mp4: str | Path,\n    *,\n    voiceover_wav: str | Path | None = None,\n    music: str | Path | None = None,\n) -> dict[str, Any]:\n    \"\"\"Produce the merged mobile-safe MP4 + merged voiceover WAV + cut-timing\n    sidecar. ``plan`` is the normalized, re-validated plan from\n    :func:`pipeline.stage_b.common.load_production_plan`.\"\"\"\n    original_video = str(original_video)\n    out_video_mp4 = str(out_video_mp4)\n    for req in (original_video, str(voiceover_manifest_path)):\n        if not os.path.exists(req):\n            raise common.StageBError(f\"Missing required input: {req}\")\n    if music and not os.path.exists(str(music)):\n        raise common.StageBError(f\"Missing required input: {music}\")\n\n    cuts = plan.get(\"cuts\") or []\n    if not cuts:\n        raise common.StageBError(\"production plan contains no cuts\")\n\n    with open(voiceover_manifest_path, \"r\", encoding=\"utf-8\") as f:\n        manifest = json.load(f)\n    vo_entries = manifest.get(\"cuts\") or []\n    if len(vo_entries) != len(cuts):\n        raise common.StageBError(\n            f\"Voiceover manifest has {len(vo_entries)} entries but production.json \"\n            f\"has {len(cuts)} cuts \u2014 they must match 1:1. Re-run the voiceover \"\n            \"step against this production.json.\"\n        )\n    vo_entries = sorted(vo_entries, key=lambda e: int(e[\"index\"]))\n    vo_wavs = [e[\"wav\"] for e in vo_entries]\n    for w in vo_wavs:\n        if not os.path.exists(w):\n            raise common.StageBError(f\"Voiceover WAV from manifest does not exist: {w}\")\n    vo_timings = [final_wav_timing(w) for w in vo_wavs]\n    vo_durations = [duration for duration, _ in vo_timings]\n\n    src_duration = common.probe_duration_seconds(original_video)\n    print(f\"Source video duration: {src_duration:.2f}s\", flush=True)\n\n    # Scene-accuracy guard: refuse to render a plan whose declared source\n    # duration does not match this file's real duration \u2014 otherwise every cut\n    # would silently extract the wrong scene (see assert_declared_duration_matches_source).\n    assert_declared_duration_matches_source(plan, src_duration)\n\n    print(\"\\nReconciling per-cut timing against voiceover durations...\", flush=True)\n    reconciled = reconcile_cuts(cuts, vo_durations, src_duration)\n    print(\"\\nValidating narration-to-picture visual anchor sync...\", flush=True)\n    sync_errors = validate_narration_anchors(reconciled, vo_durations, tolerance_seconds=NARRATION_SYNC_TOLERANCE_S)\n    if sync_errors:\n        err_msg = \"Narration sync validation failed: \" + \"; \".join(sync_errors)\n        raise common.StageBError(err_msg)\n    for item, (_, audio_samples) in zip(reconciled, vo_timings):\n        item[\"audio_samples\"] = audio_samples\n    # Persist authoritative per-cut durations as a sidecar next to the merged\n    # voiceover WAV: the caption step uses these REAL cut boundaries instead of\n    # proportional word-count ratios.\n    sidecar_wav = str(voiceover_wav) if voiceover_wav else os.path.join(\n        os.path.dirname(os.path.abspath(out_video_mp4)) or \".\", \"voiceover.wav\",\n    )\n    cut_timing_path = os.path.join(os.path.dirname(os.path.abspath(sidecar_wav)) or \".\", \"cut_timing.json\")\n    with open(cut_timing_path, \"w\", encoding=\"utf-8\") as f:\n        json.dump(\n            {\n                \"version\": 1,\n                \"cuts\": [\n                    {\"index\": index, \"video_seconds\": float(item[\"video_seconds\"])}\n                    for index, item in enumerate(reconciled)\n                ],\n            },\n            f,\n            indent=2,\n        )\n        f.write(\"\\n\")\n    print(f\"Cut timing sidecar written: {cut_timing_path}\", flush=True)\n\n    total_video = sum(p[\"video_seconds\"] for p in reconciled)\n    total_vo = sum(vo_durations)\n    print(\n        f\"Reconciled plan: {len(reconciled)} cut(s), total video \"\n        f\"{total_video:.2f}s vs total voiceover {total_vo:.2f}s\",\n        flush=True,\n    )\n    if abs(total_video - total_vo) > DURATION_TOLERANCE_S:\n        raise common.StageBError(\n            f\"total planned video duration ({total_video:.3f}s) differs from total \"\n            f\"voiceover duration ({total_vo:.3f}s) by more than {DURATION_TOLERANCE_S}s. \"\n            \"The final video would drift out of sync with its narration \u2014 refusing \"\n            \"to produce it.\"\n        )\n\n    # Validate the reconciled ranges against the source.\n    prev_end = -1.0\n    for i, p in enumerate(reconciled):\n        s, e = p[\"start_seconds\"], p[\"end_seconds\"]\n        if e <= s:\n            raise common.StageBError(f\"Cut #{i}: end ({e}) <= start ({s}) after reconciliation\")\n        if s < 0 or e > src_duration + 0.5:\n            raise common.StageBError(\n                f\"Cut #{i}: range [{s}, {e}] outside source [0, {src_duration:.2f}] after reconciliation\"\n            )\n        if s < prev_end:\n            raise common.StageBError(\n                f\"Cut #{i}: overlaps previous cut ({s} < prev end {prev_end}) after \"\n                \"reconciliation \u2014 footage would be double-used\"\n            )\n        prev_end = e\n\n    # bug-34: write the merged voiceover BEFORE the render so its real\n    # integrated loudness can be measured against the music file. The gain\n    # applied to the bed is derived from that measurement (0.15:1 vs vocals),\n    # not a fixed percentage of whatever level the upload happens to be.\n    write_merged_voiceover(vo_wavs, reconciled, sidecar_wav)\n    expected_voiceover_seconds = sum(float(item[\"video_seconds\"]) for item in reconciled)\n    validate_merged_voiceover_timeline(sidecar_wav, expected_voiceover_seconds)\n    print(f\"Merged voiceover written: {sidecar_wav}\", flush=True)\n\n    music_volume = MUSIC_VOLUME\n    music_gain_db = None\n    if music:\n        music_volume, music_gain_db = resolve_music_volume(sidecar_wav, music)\n\n    music_note = \"\"\n    if music:\n        if music_gain_db is None:\n            music_note = (\n                f\", background music at fixed fallback {int(MUSIC_VOLUME * 100)}% \"\n                \"(loudness measurement unavailable) and ducked beneath speech\"\n            )\n        else:\n            music_note = (\n                f\", background music gain-staged {music_gain_db:+.1f} dB to \"\n                f\"{int(MUSIC_TO_VOICE_LOUDNESS_RATIO * 100)}% of measured vocal \"\n                \"loudness and ducked beneath speech\"\n            )\n    print(\n        f\"\\nProducing ONE merged video from {len(reconciled)} cut(s) with \"\n        f\"normalized voiceover at unity (source audio muted\"\n        f\"{music_note}) \"\n        f\"\u2014 mobile-safe encoding (H.264 High@L{X264_LEVEL} {TARGET_PIX_FMT} CRF{X264_CRF}, \"\n        f\"AAC-LC {AAC_SAMPLE_RATE}Hz stereo {AAC_BITRATE}, +faststart, no edit lists).\",\n        flush=True,\n    )\n\n    os.makedirs(os.path.dirname(os.path.abspath(out_video_mp4)) or \".\", exist_ok=True)\n    produce_merged_video(original_video, reconciled, vo_wavs, out_video_mp4, music, music_volume)\n    print(f\"Merged video written: {out_video_mp4}\", flush=True)\n\n    validate_mp4(out_video_mp4)\n\n    return {\n        \"merged_mp4\": out_video_mp4,\n        \"merged_voiceover_wav\": sidecar_wav,\n        \"cut_timing_json\": cut_timing_path,\n        \"total_seconds\": total_video,\n        \"cut_count\": len(reconciled),\n        \"music_applied\": bool(music),\n    }\n\n\ndef main(argv: list[str] | None = None) -> int:\n    ap = argparse.ArgumentParser(description=\"Stage B merged render (mobile-safe single pass).\")\n    ap.add_argument(\"original_video\")\n    ap.add_argument(\"production_json\")\n    ap.add_argument(\"voiceover_manifest_json\")\n    ap.add_argument(\"out_video_mp4\")\n    ap.add_argument(\"--voiceover-wav\", default=None,\n                    help=\"where to write the merged voiceover-only WAV \"\n                         \"(default: <out_video_dir>/voiceover.wav)\")\n    ap.add_argument(\"--music\", default=None,\n                    help=\"optional background music file; trimmed/looped to the \"\n                         \"merged duration and ducked under the voiceover\")\n    args = ap.parse_args(argv)\n\n    plan = common.load_production_plan(args.production_json)\n    render_merged(\n        args.original_video,\n        plan,\n        args.voiceover_manifest_json,\n        args.out_video_mp4,\n        voiceover_wav=args.voiceover_wav,\n        music=args.music,\n    )\n    return 0\n\n\nif __name__ == \"__main__\":\n    import sys\n\n    try:\n        raise SystemExit(main())\n    except common.StageBError as exc:\n        print(f\"ERROR: {exc}\", file=sys.stderr, flush=True)\n        raise SystemExit(3)\n",
+      "exact_terminal_compress_source": "\"\"\"Stage B \u2014 final delivery compression for an already-rendered MP4.\n\nThis is deliberately a separate terminal pass: it changes neither captions,\ncrops, timing, nor audio. It applies CRF-based x264 compression to the fully\ncomposited video, stream-copies the audio, verifies the output preserves core\nmedia properties, and never ships a candidate larger than the source (the\noriginal is retained in that pathological case).\n\nPorted from ``_legacy/scripts/compress_final_video.py``.\n\"\"\"\nfrom __future__ import annotations\n\nimport argparse\nimport os\nimport shutil\nfrom pathlib import Path\n\nfrom pipeline.stage_b import common\n\n# CRF 23 is the established delivery-quality setting: materially leaner than\n# the CRF 18 final compositor while remaining visually clean for mobile/social.\nDELIVERY_CRF = \"23\"\nDELIVERY_PRESET = \"medium\"\nX264_PROFILE = \"high\"\nX264_LEVEL = \"4.0\"\n\n\ndef _stream(probe: dict, stream_type: str) -> dict:\n    matches = [s for s in probe.get(\"streams\", []) if s.get(\"codec_type\") == stream_type]\n    if not matches:\n        raise common.StageBError(f\"{stream_type} stream missing\")\n    return matches[0]\n\n\ndef _size_label(size_bytes: int) -> str:\n    return f\"{size_bytes / (1024 * 1024):.2f} MiB ({size_bytes:,} bytes)\"\n\n\ndef _duration(probe: dict) -> float:\n    return float((probe.get(\"format\") or {}).get(\"duration\") or 0.0)\n\n\ndef _validate(source: Path, candidate: Path) -> None:\n    before = common.probe_json(source)\n    after = common.probe_json(candidate)\n    before_video = _stream(before, \"video\")\n    after_video = _stream(after, \"video\")\n\n    # r_frame_rate is the exact nominal playback rate. avg_frame_rate may be\n    # represented by a slightly different rational after remuxing even when the\n    # frame cadence is unchanged, so it is logged but not a byte-for-byte\n    # invariant.\n    invariant_fields = (\"width\", \"height\", \"r_frame_rate\", \"sample_aspect_ratio\")\n    mismatches = [\n        f\"{field}: {before_video.get(field)} -> {after_video.get(field)}\"\n        for field in invariant_fields\n        if before_video.get(field) != after_video.get(field)\n    ]\n    if mismatches:\n        raise common.StageBError(\"Final compression changed video invariants: \" + \"; \".join(mismatches))\n\n    before_duration = _duration(before)\n    after_duration = _duration(after)\n    if abs(before_duration - after_duration) > 0.10:\n        raise common.StageBError(\n            f\"Final compression changed duration: {before_duration:.3f}s -> {after_duration:.3f}s\"\n        )\n\n    source_audio = [s for s in before.get(\"streams\", []) if s.get(\"codec_type\") == \"audio\"]\n    candidate_audio = [s for s in after.get(\"streams\", []) if s.get(\"codec_type\") == \"audio\"]\n    if len(source_audio) != len(candidate_audio):\n        raise common.StageBError(\n            f\"Final compression changed audio stream count: {len(source_audio)} -> {len(candidate_audio)}\"\n        )\n    for index, (original, copied) in enumerate(zip(source_audio, candidate_audio), 1):\n        if original.get(\"codec_name\") != copied.get(\"codec_name\"):\n            raise common.StageBError(\n                f\"Final compression re-encoded audio stream {index}: \"\n                f\"{original.get('codec_name')} -> {copied.get('codec_name')}\"\n            )\n\n\ndef compress(source: Path, destination: Path) -> tuple[int, int, bool]:\n    \"\"\"Write a quality-compressed delivery MP4 and return size metrics\n    ``(before_bytes, final_bytes, reduced)``. If a pathological source does not\n    shrink under constant-quality encoding, the source is copied to the\n    destination rather than making the delivered asset larger.\"\"\"\n    if not source.is_file():\n        raise common.StageBError(f\"Final video not found: {source}\")\n    if source.resolve() == destination.resolve():\n        raise common.StageBError(\"Source and destination must be different paths\")\n\n    destination.parent.mkdir(parents=True, exist_ok=True)\n    candidate = destination.with_name(destination.name + \".compressing.mp4\")\n    candidate.unlink(missing_ok=True)\n    destination.unlink(missing_ok=True)\n    before_bytes = source.stat().st_size\n\n    command = [\n        \"ffmpeg\", \"-y\", \"-i\", str(source),\n        \"-map\", \"0:v:0\", \"-map\", \"0:a?\",\n        \"-c:v\", \"libx264\", \"-profile:v\", X264_PROFILE,\n        \"-level:v\", X264_LEVEL, \"-preset\", DELIVERY_PRESET,\n        \"-crf\", DELIVERY_CRF, \"-pix_fmt\", \"yuv420p\",\n        # Preserve the mobile-safe no-B-frame final-video contract.\n        \"-bf\", \"0\", \"-g\", \"60\", \"-keyint_min\", \"60\", \"-sc_threshold\", \"0\",\n        \"-x264-params\", \"force-cfr=1\", \"-video_track_timescale\", \"15360\",\n        # Audio is copied exactly; no additional generation loss or size churn.\n        \"-c:a\", \"copy\",\n        \"-movflags\", \"+faststart\", \"-use_editlist\", \"0\", \"-brand\", \"mp42\",\n        \"-map_metadata\", \"-1\", \"-map_chapters\", \"-1\", \"-sn\", \"-dn\",\n        \"-ignore_unknown\", \"-fflags\", \"+genpts\", \"-max_muxing_queue_size\", \"9999\",\n        \"-f\", \"mp4\", str(candidate),\n    ]\n    common.sh(command)\n    _validate(source, candidate)\n\n    candidate_bytes = candidate.stat().st_size\n    reduced = candidate_bytes < before_bytes\n    if reduced:\n        os.replace(candidate, destination)\n    else:\n        print(\n            \"WARNING: CRF delivery candidate was not smaller; preserving the \"\n            \"original completed asset rather than increasing delivery size.\",\n            flush=True,\n        )\n        shutil.copy2(source, destination)\n\n    final_bytes = destination.stat().st_size\n    reduction = (1.0 - (final_bytes / before_bytes)) * 100.0 if before_bytes else 0.0\n    print(\"Final delivery compression complete:\", flush=True)\n    print(f\"  before: {_size_label(before_bytes)}\", flush=True)\n    print(f\"  candidate: {_size_label(candidate_bytes)}\", flush=True)\n    print(f\"  after: {_size_label(final_bytes)}\", flush=True)\n    print(f\"  reduction: {reduction:.1f}% ({'compressed' if reduced else 'original retained'})\", flush=True)\n    return before_bytes, final_bytes, reduced\n\n\ndef main(argv: list[str] | None = None) -> int:\n    parser = argparse.ArgumentParser(description=\"Final delivery compression for a rendered MP4.\")\n    parser.add_argument(\"input_final_mp4\")\n    parser.add_argument(\"output_final_mp4\")\n    args = parser.parse_args(argv)\n    compress(Path(args.input_final_mp4).resolve(), Path(args.output_final_mp4).resolve())\n    return 0\n\n\nif __name__ == \"__main__\":\n    try:\n        raise SystemExit(main())\n    except common.StageBError as exc:\n        import sys\n\n        print(f\"ERROR: {exc}\", file=sys.stderr, flush=True)\n        raise SystemExit(3)\n"
+    },
+    "diff_table": [
+      {
+        "category": "source preparation",
+        "clipforge": "original source decoded by render; narration WAV inputs",
+        "castcut": "original source decoded by render; selected audio decoded to PCM WAV"
+      },
+      {
+        "category": "cutting",
+        "clipforge": "input -ss/-to per range; re-encode",
+        "castcut": "same vendored code"
+      },
+      {
+        "category": "joining",
+        "clipforge": "concat=n=N:v=1:a=1 filter",
+        "castcut": "same vendored code"
+      },
+      {
+        "category": "video",
+        "clipforge": "H264 High L4.0 yuv420p bf=0 GOP60",
+        "castcut": "identical"
+      },
+      {
+        "category": "timing",
+        "clipforge": "30fps, 1/15360: constant 512 ticks",
+        "castcut": "24000/1001 fps, 1/15360: alternating 640/641 ticks"
+      },
+      {
+        "category": "audio",
+        "clipforge": "AAC LC 48k stereo 192k",
+        "castcut": "AAC LC 48k stereo 128k"
+      },
+      {
+        "category": "container",
+        "clipforge": "mp42 ftyp/moov/free/mdat, no edit lists",
+        "castcut": "identical"
+      },
+      {
+        "category": "terminal pass",
+        "clipforge": "x264 CRF23 medium, AAC copy",
+        "castcut": "same plus VBV1800k"
+      },
+      {
+        "category": "delivery",
+        "clipforge": "release MP4 or ZIP",
+        "castcut": "native attachment MP4; release readback checksum matches"
+      }
+    ],
+    "root_cause": "NOT established for latest phone failure. Current delivered asset is real ISO-BMFF MP4, H264 High L4.0/AAC LC, not Matroska. Prior session already vendored ClipForge. Earlier independent profile implementation was replaced. Latest remaining measured differences include fractional-rate MP4 tick quantization and missing source color metadata; neither proves Android rejection. Do not repeat historical unsupported root-cause claims.",
+    "done": [
+      "Cloned both repositories; kept ClipForge read-only",
+      "Downloaded actual recent outputs and original HEVC Main10/EAC3 MKV",
+      "Verified SHA256 and MP4 signatures, full stream/container comparison",
+      "Read current vendored code and prior history"
+    ],
     "pending": [
-      "Inspect reference code and real delivered files",
-      "Port shared path and verify both flows"
+      "Implement explicit decoded-frame and PCM reconstruction terminal path requested by owner",
+      "Validate exact fractional cadence, both real flows, release delivery and CI",
+      "Phone confirmation unavailable"
     ],
     "verified_runs": [],
-    "notes": "Physical phone playback remains unverified. Preserve all prior history."
+    "notes": "No missing credentials. Existing source is HEVC10/EAC3 MKV but existing output already H2648/AAC MP4. New rebuild is a compatibility hardening experiment, not proof of phone root cause."
   },
   "export_copy_clipforge_history": [
     {
