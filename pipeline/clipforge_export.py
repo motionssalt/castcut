@@ -12,7 +12,7 @@ from fractions import Fraction
 from pathlib import Path
 from .clipforge_vendor import render, compress, common
 from .export_checks import probe, validate
-from .frame_rebuild import REBUILD_VERSION
+from .delivery_pass import VERSION as REBUILD_VERSION
 
 
 def export_segments(src, segments, output_path, audio_track=0, temp_dir=None):
@@ -55,15 +55,17 @@ def export_segments(src, segments, output_path, audio_track=0, temp_dir=None):
                 cmd += ['-c:a','pcm_s16le','-ar','48000','-ac','2',str(wav)]
                 common.sh(cmd)
                 wavs.append(str(wav))
+                frames=max(1,round((end-start)*fps))
+                seconds=float(frames/fps)
                 plan.append({'start_seconds':start,'end_seconds':end,'stretch':1.0,
-                             'audio_samples':round((end-start)*48000), 'video_seconds':end-start})
+                             'frames':frames, 'audio_samples':round(seconds*48000), 'video_seconds':seconds})
             merged = work/'reference-merged.mp4'
             render.produce_merged_video(source,plan,wavs,merged,music=None)
             before, after, reduced = compress.compress(merged,output)
             report = validate(output,expect_audio=True,source=source)
             report.update({'rebuild_version': REBUILD_VERSION,
-                           'video_input_boundary': 'uncompressed yuv420p frames, timestamps regenerated from original fps',
-                           'audio_input_boundary': 'decoded pcm_s16le stereo 48000 Hz, freshly encoded AAC 128k',
+                           'video_input_boundary': 'direct joined MP4 -> ClipForge terminal re-encode; no raw-frame workaround',
+                           'audio_input_boundary': 'chosen track joined as PCM, freshly encoded AAC-LC stereo 48000Hz 128k',
                            'source_audio_index':int(audio_track) if audio else None,
                            'source_audio_stream_index':audio[int(audio_track)]['index'] if audio else None,
                            'audio_target_kbps':128, 'source_fps':str(Fraction(video['r_frame_rate'])),
@@ -71,6 +73,8 @@ def export_segments(src, segments, output_path, audio_track=0, temp_dir=None):
                            'segments':cuts,'join_times':[sum(e-s for s,e in cuts[:i]) for i in range(1,len(cuts))],
                            'reference_commit':'a05846de7c76a66ad42ba6fd37126514bc452167',
                            'path':'clipforge_vendor.render.produce_merged_video -> clipforge_vendor.compress.compress',
+                           'terminal_command': json.loads(output.with_suffix('.command.json').read_text()),
+                           'policy_exceptions':['1800k VBV to enforce <=2000k video','original source fps/size caps and exact source-rate clock','AAC-LC stereo 128k re-encode','no original fallback'],
                            'size_before_bytes':before,'compressed':reduced})
             output.with_suffix('.verify.json').write_text(json.dumps(report,indent=2)+'\n')
             return report
