@@ -17,7 +17,9 @@ def timescale(fps):
     rate=Fraction(fps)
     # Keep the exact upstream clock whenever it represents the original fps.
     # Fractional source fps is the owner's permitted original-rate exception.
-    return 15360 if (Fraction(15360)/rate).denominator==1 else rate.numerator
+    if (Fraction(15360)/rate).denominator==1: return 15360
+    # e.g. 25fps -> 25000 ticks, not a needlessly coarse 25-Hz clock.
+    return rate.numerator if rate.denominator!=1 else rate.numerator*1000
 
 
 def color_filter(video):
