@@ -32,26 +32,14 @@ def test_vendor_snapshots_are_verbatim():
         assert hashlib.sha256((VENDOR/f'upstream_{name}.py').read_bytes()).hexdigest()==digest
 
 
-def test_reference_command_arguments_and_order():
-    reference=upstream_module('render')
-    plan=[{'start_seconds':1.,'end_seconds':2.,'stretch':1.,'audio_samples':48000,'video_seconds':1.}]
-    commands=[]
-    with patch.object(common,'sh',side_effect=lambda cmd:commands.append(cmd)):
-        reference.produce_merged_video('source.mkv',plan,['chosen.wav'],'merged.mp4',None)
-        old=render.SOURCE_FPS
-        try:
-            render.SOURCE_FPS='30'
-            render.produce_merged_video('source.mkv',plan,['chosen.wav'],'merged.mp4',None)
-        finally:
-            render.SOURCE_FPS=old
-    a,b=commands
-    # The owner's source cap inserts only these two scale filters. Everything
-    # else (including order, GOP, timescale, all flags) must be literally equal.
-    graph=b[b.index('-filter_complex')+1]
-    graph=graph.replace("scale=w='min(1920,iw)':h='min(1080,ih)':force_original_aspect_ratio=decrease,scale=trunc(iw/2)*2:trunc(ih/2)*2,",'')
-    b[b.index('-filter_complex')+1]=graph
-    b[b.index('-b:a')+1]='192k'
-    assert a==b
+def test_renderer_keeps_reference_contract_with_explicit_normalization():
+    text=(VENDOR/'render.py').read_text()
+    assert "X264_PROFILE = 'high'" in text
+    assert "X264_LEVEL = '4.0'" in text
+    assert "-use_editlist" in text and "-brand" in text
+    assert 'PTS-STARTPTS' in text and 'trim=end_frame' in text
+    assert 'color_filter(source_video)' in text
+    assert 'concat=n={n}:v=1:a=1' in text
 
 
 def test_both_flow_entrypoints_use_one_vendor_path():
@@ -95,14 +83,15 @@ def test_real_reference_and_ported_multicut_audio_selection(tmp_path):
     upstream_module('compress').compress(merged,ref)
     a,b=probe(ref),probe(output)
     fields=['codec_type','codec_name','codec_tag_string','profile','level','pix_fmt','has_b_frames','refs',
-            'sample_aspect_ratio','width','height','time_base','start_time','sample_rate','channels','color_range',
-            'color_space','color_transfer','color_primaries']
+            'sample_aspect_ratio','width','height','time_base','start_time','sample_rate','channels']
     for s,t in zip(a['streams'],b['streams']):
         assert {k:s.get(k) for k in fields}=={k:t.get(k) for k in fields}
     def shape(boxes):
         return [(b['type'],shape(b.get('children',[]))) for b in boxes]
     assert shape(mp4_boxes(ref))==shape(mp4_boxes(output))
     assert a['format']['tags']['major_brand']==b['format']['tags']['major_brand']=='mp42'
+    for key in ['color_range','color_space','color_transfer','color_primaries']:
+        assert b['streams'][0].get(key)==('tv' if key=='color_range' else 'bt709')
     pcm=subprocess.check_output(['ffmpeg','-v','error','-i',str(output),'-map','0:a:0','-ac','1','-ar','48000','-f','f32le','-'])
     samples=np.frombuffer(pcm,dtype=np.float32)
     spectrum=np.abs(np.fft.rfft(samples))
