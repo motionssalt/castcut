@@ -1,0 +1,24 @@
+{
+  "site": "https://castcut.pages.dev",
+  "post_status": 200,
+  "handoff": {
+    "url": "/api/release-assets/661595081?download=1",
+    "name": "CastCut-661595081.mp4",
+    "size": 27666719
+  },
+  "get_status": 200,
+  "headers": {
+    "Content-Type": "video/mp4",
+    "Content-Length": "27666719",
+    "Content-Disposition": "attachment; filename=\"CastCut-661595081.mp4\"",
+    "Accept-Ranges": "bytes",
+    "X-Asset-SHA256": "321539633e96013185971a428c7433762571271011041e179cfdbc95790222df"
+  },
+  "size_bytes": 27666719,
+  "sha256": "321539633e96013185971a428c7433762571271011041e179cfdbc95790222df",
+  "physical_phone_tested": false,
+  "matches_scene_receipt": true,
+  "range_status": 206,
+  "range_content_range": "bytes 0-31/27666719",
+  "range_length": 32
+}
