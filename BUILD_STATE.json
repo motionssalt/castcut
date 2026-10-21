@@ -1045,7 +1045,7 @@
   },
   "export_copy_clipforge": {
     "status": "in_progress",
-    "last_updated": "2026-10-21T05:10:06.931165+00:00",
+    "last_updated": "2026-10-21T05:15:22.258855+00:00",
     "clipforge_reference": {
       "reference.mp4": {
         "probe": {
@@ -1821,18 +1821,19 @@
     ],
     "root_cause": "NOT established for latest phone failure. Current delivered asset is real ISO-BMFF MP4, H264 High L4.0/AAC LC, not Matroska. Prior session already vendored ClipForge. Earlier independent profile implementation was replaced. Latest remaining measured differences include fractional-rate MP4 tick quantization and missing source color metadata; neither proves Android rejection. Do not repeat historical unsupported root-cause claims.",
     "done": [
-      "Cloned both repositories; kept ClipForge read-only",
-      "Downloaded actual recent outputs and original HEVC Main10/EAC3 MKV",
-      "Verified SHA256 and MP4 signatures, full stream/container comparison",
-      "Read current vendored code and prior history"
+      "Reference and real downloaded files compared",
+      "Explicit raw yuv420p frame and PCM boundary implemented in terminal encoder",
+      "Removed all fallback to pre-rebuild file",
+      "Exact fractional-frame MP4 clock and AAC priming compensation implemented",
+      "168 existing tests and 5 new fractional-clock tests passed"
     ],
     "pending": [
-      "Implement explicit decoded-frame and PCM reconstruction terminal path requested by owner",
-      "Validate exact fractional cadence, both real flows, release delivery and CI",
-      "Phone confirmation unavailable"
+      "Real dispatched faces and scene exports in progress",
+      "Verify release byte delivery, CI, browser playback",
+      "Physical phone confirmation unavailable"
     ],
     "verified_runs": [],
-    "notes": "No missing credentials. Existing source is HEVC10/EAC3 MKV but existing output already H2648/AAC MP4. New rebuild is a compatibility hardening experiment, not proof of phone root cause."
+    "notes": "New terminal rebuild is requested by latest owner instruction. Explicit departures from upstream: raw frame/PCM input, fresh AAC rather than copy, AAC priming compensation, exact multiple of reference timescale for non-integer ticks. Codec/profile/GOP/join/mux brand/no-edit-list choices remain ClipForge. No established phone root cause."
   },
   "export_copy_clipforge_history": [
     {
