@@ -113,8 +113,10 @@ test('Cookie only authorizes native GET/HEAD for the scoped asset; other APIs st
 test('Old done records and mismatched bytes cannot still offer the obsolete export',()=>{
   assert.equal(verifiedExportAsset({status:'done',asset_name:asset.name},[asset]),null);
   const digest=asset.digest.slice(7);
-  const exp={status:'done',ok:true,asset_name:asset.name,sha256:digest,checks:{ok:true,full_decode_passed:true,sha256:digest,size_bytes:asset.size},delivery:{runner_release_download_identical:true,sha256:digest,asset_id:asset.id}};
+  const exp={status:'done',ok:true,asset_name:asset.name,sha256:digest,checks:{ok:true,full_decode_passed:true,sha256:digest,size_bytes:asset.size,rebuild_version:'decoded-frames-pcm-v1',exact_frame_cadence:true},delivery:{runner_release_download_identical:true,sha256:digest,asset_id:asset.id}};
   assert.equal(verifiedExportAsset(exp,[asset]),asset);
+  assert.equal(verifiedExportAsset({...exp,checks:{...exp.checks,rebuild_version:undefined}},[asset]),null);
+  assert.equal(verifiedExportAsset({...exp,checks:{...exp.checks,exact_frame_cadence:false}},[asset]),null);
   assert.equal(verifiedExportAsset(exp,[{...asset,digest:'sha256:'+'0'.repeat(64)}]),null);
   assert.equal(verifiedExportAsset(exp,[{...asset,id:124}]),null);
   assert.equal(verifiedExportAsset(exp,[{...asset,size:asset.size-1}]),null);
