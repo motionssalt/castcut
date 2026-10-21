@@ -1,154 +1,35 @@
-"""ClipForge terminal compression with the owner's explicit frame/PCM rebuild.
+"""ClipForge terminal delivery pass; no raw-frame rebuild or source fallback.
 
-Keep the vendored x264 profile, level, preset, GOP, brand and mux argument order.
-The final encoder receives raw pictures and PCM only; AAC is freshly encoded,
-original capped fps gets exact integer-tick timing, and a constrained candidate
-is ALWAYS delivered. No fallback may restore pre-rebuild compressed input.
-The untouched ClipForge implementation remains in upstream_compress.py.
+Argument template is the untouched upstream_compress.py command. The owner
+allows bitrate, source fps/size caps and AAC128 changes. Additional safeguards
+fill unspecified color/PTS/interleaving policy. See delivery_pass.py.
 """
-from __future__ import annotations
-
-import argparse
-import os
 from pathlib import Path
-
 from . import common
-
-# CRF 23 is the established delivery-quality setting: materially leaner than
-# the CRF 18 final compositor while remaining visually clean for mobile/social.
-DELIVERY_CRF = "23"
-DELIVERY_PRESET = "medium"
-X264_PROFILE = "high"
-X264_LEVEL = "4.0"
+from pipeline.delivery_pass import encode
+DELIVERY_CRF='23'
+DELIVERY_PRESET='medium'
+X264_PROFILE='high'
+X264_LEVEL='4.0'
 
 
-def _stream(probe: dict, stream_type: str) -> dict:
-    matches = [s for s in probe.get("streams", []) if s.get("codec_type") == stream_type]
-    if not matches:
-        raise common.StageBError(f"{stream_type} stream missing")
-    return matches[0]
+def _validate(source,candidate):
+    from pipeline.export_checks import validate
+    validate(candidate,source=source)
 
 
-def _size_label(size_bytes: int) -> str:
-    return f"{size_bytes / (1024 * 1024):.2f} MiB ({size_bytes:,} bytes)"
-
-
-def _duration(probe: dict) -> float:
-    return float((probe.get("format") or {}).get("duration") or 0.0)
-
-
-def _validate(source: Path, candidate: Path) -> None:
-    before = common.probe_json(source)
-    after = common.probe_json(candidate)
-    before_video = _stream(before, "video")
-    after_video = _stream(after, "video")
-
-    # r_frame_rate is the exact nominal playback rate. avg_frame_rate may be
-    # represented by a slightly different rational after remuxing even when the
-    # frame cadence is unchanged, so it is logged but not a byte-for-byte
-    # invariant.
-    invariant_fields = ("width", "height", "r_frame_rate", "sample_aspect_ratio")
-    mismatches = [
-        f"{field}: {before_video.get(field)} -> {after_video.get(field)}"
-        for field in invariant_fields
-        if before_video.get(field) != after_video.get(field)
-    ]
-    if mismatches:
-        raise common.StageBError("Final compression changed video invariants: " + "; ".join(mismatches))
-
-    before_duration = _duration(before)
-    after_duration = _duration(after)
-    if abs(before_duration - after_duration) > 0.10:
-        raise common.StageBError(
-            f"Final compression changed duration: {before_duration:.3f}s -> {after_duration:.3f}s"
-        )
-
-    source_audio = [s for s in before.get("streams", []) if s.get("codec_type") == "audio"]
-    candidate_audio = [s for s in after.get("streams", []) if s.get("codec_type") == "audio"]
-    if len(source_audio) != len(candidate_audio):
-        raise common.StageBError(
-            f"Final compression changed audio stream count: {len(source_audio)} -> {len(candidate_audio)}"
-        )
-    for index, (original, copied) in enumerate(zip(source_audio, candidate_audio), 1):
-        if original.get("codec_name") != copied.get("codec_name"):
-            raise common.StageBError(
-                f"Final rebuild changed audio codec in stream {index}: "
-                f"{original.get('codec_name')} -> {copied.get('codec_name')}"
-            )
-
-
-def compress(source: Path, destination: Path) -> tuple[int, int, bool]:
-    """Always write the freshly rebuilt MP4; return before/final size metrics.
-
-    The original ClipForge smaller-file fallback is intentionally forbidden by
-    the owner's newer request to recompile frames and freshly encode all audio.
-    """
-    if not source.is_file():
-        raise common.StageBError(f"Final video not found: {source}")
-    if source.resolve() == destination.resolve():
-        raise common.StageBError("Source and destination must be different paths")
-
-    destination.parent.mkdir(parents=True, exist_ok=True)
-    candidate = destination.with_name(destination.name + ".compressing.mp4")
+def compress(source:Path,destination:Path):
+    source,destination=Path(source),Path(destination)
+    if not source.is_file() or source.resolve()==destination.resolve():
+        raise common.StageBError('Terminal input must exist and differ from destination')
+    destination.parent.mkdir(parents=True,exist_ok=True)
+    candidate=destination.with_name(destination.name+'.compressing.mp4')
     candidate.unlink(missing_ok=True)
-    destination.unlink(missing_ok=True)
-    before_bytes = source.stat().st_size
-
-    command = [
-        "ffmpeg", "-y", "-i", str(source),
-        "-map", "0:v:0", "-map", "0:a?",
-        "-c:v", "libx264", "-profile:v", X264_PROFILE,
-        "-level:v", X264_LEVEL, "-preset", DELIVERY_PRESET,
-        "-crf", DELIVERY_CRF,
-        # 1s VBV at 1800k leaves headroom below 2000k in every 10s window.
-        "-maxrate", "1800k", "-bufsize", "1800k",
-        "-pix_fmt", "yuv420p",
-        # Preserve the mobile-safe no-B-frame final-video contract.
-        "-bf", "0", "-g", "60", "-keyint_min", "60", "-sc_threshold", "0",
-        "-x264-params", "force-cfr=1", "-video_track_timescale", "15360",
-        # Upstream template; frame_rebuild replaces this with PCM -> AAC 128k.
-        "-c:a", "copy",
-        "-movflags", "+faststart", "-use_editlist", "0", "-brand", "mp42",
-        "-map_metadata", "-1", "-map_chapters", "-1", "-sn", "-dn",
-        "-ignore_unknown", "-fflags", "+genpts", "-max_muxing_queue_size", "9999",
-        "-f", "mp4", str(candidate),
-    ]
-    # Owner-requested hard boundary: terminal encoder receives ONLY decoded
-    # picture frames and PCM audio, never compressed packets or source headers.
-    from pipeline.frame_rebuild import encode_decoded_frames
-    encode_decoded_frames(source, candidate, command)
-    _validate(source, candidate)
-
-    candidate_bytes = candidate.stat().st_size
-    reduced = candidate_bytes < before_bytes
-    # Never resurrect the pre-rebuild input: even a smaller input has not
-    # crossed the decoded-frame/PCM boundary requested for every delivery.
-    os.replace(candidate, destination)
-
-    final_bytes = destination.stat().st_size
-    reduction = (1.0 - (final_bytes / before_bytes)) * 100.0 if before_bytes else 0.0
-    print("Final delivery compression complete:", flush=True)
-    print(f"  before: {_size_label(before_bytes)}", flush=True)
-    print(f"  candidate: {_size_label(candidate_bytes)}", flush=True)
-    print(f"  after: {_size_label(final_bytes)}", flush=True)
-    print(f"  reduction: {reduction:.1f}% ({'smaller rebuilt file' if reduced else 'rebuilt file retained'})", flush=True)
-    return before_bytes, final_bytes, reduced
-
-
-def main(argv: list[str] | None = None) -> int:
-    parser = argparse.ArgumentParser(description="Final delivery compression for a rendered MP4.")
-    parser.add_argument("input_final_mp4")
-    parser.add_argument("output_final_mp4")
-    args = parser.parse_args(argv)
-    compress(Path(args.input_final_mp4).resolve(), Path(args.output_final_mp4).resolve())
-    return 0
-
-
-if __name__ == "__main__":
-    try:
-        raise SystemExit(main())
-    except common.StageBError as exc:
-        import sys
-
-        print(f"ERROR: {exc}", file=sys.stderr, flush=True)
-        raise SystemExit(3)
+    command=encode(source,candidate)
+    _validate(source,candidate)
+    before,after=source.stat().st_size,candidate.stat().st_size
+    candidate.replace(destination)
+    # A smaller original is NOT a normalization substitute. Never resurrect it.
+    import json
+    destination.with_suffix('.command.json').write_text(json.dumps(command,indent=2)+'\n')
+    return before,after,after<before
