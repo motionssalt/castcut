@@ -32,8 +32,8 @@ class TestEncodeProfileAndValidation(unittest.TestCase):
     def test_constants_contract(self):
         """Verify profile constants adhere to the ClipForge mobile contract."""
         self.assertEqual(EXPORT_VCODEC, "libx264")
-        self.assertEqual(EXPORT_PROFILE, "high")
-        self.assertEqual(EXPORT_LEVEL, "4.0")
+        self.assertEqual(EXPORT_PROFILE, "main")
+        self.assertEqual(EXPORT_LEVEL, "4.1")
         self.assertEqual(EXPORT_CRF, "23")
         self.assertEqual(EXPORT_MAXRATE, "1800k")  # one-second VBV leaves <=2000k rolling-window headroom
 
@@ -61,10 +61,10 @@ class TestEncodeProfileAndValidation(unittest.TestCase):
         self.assertTrue(os.path.isfile(out_dst))
         self.assertTrue(verif["ok"])
         self.assertEqual(verif["vcodec"], "h264")
-        self.assertEqual(verif["profile"], "High")
+        self.assertEqual(verif["profile"], "Main")
         self.assertLessEqual(verif["level"], 41)
-        self.assertEqual(verif["width"], 1920)
-        self.assertEqual(verif["height"], 1080)
+        self.assertEqual(verif["width"], 1280)
+        self.assertEqual(verif["height"], 720)
         self.assertLessEqual(verif["fps"], 30.05)
         self.assertEqual(verif["audio_streams"], 1)
         self.assertEqual(verif["audio_codec"], "aac")
@@ -96,7 +96,7 @@ class TestEncodeProfileAndValidation(unittest.TestCase):
 
         with self.assertRaises(RuntimeError) as ctx:
             validate_export_playback_and_size(bad_file, expect_audio=False)
-        self.assertTrue("level" in str(ctx.exception).lower() or "b-frames" in str(ctx.exception).lower())
+        self.assertTrue(any(k in str(ctx.exception).lower() for k in ["level", "b-frames", "profile", "pixel"]))
 
 
 if __name__ == "__main__":

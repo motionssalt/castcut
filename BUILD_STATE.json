@@ -17448,7 +17448,7 @@
   },
   "playback_round2": {
     "status": "in_progress",
-    "last_updated": "2026-10-21T07:34:31.083629+00:00",
+    "last_updated": "2026-10-21T07:40:35.972527+00:00",
     "owner_results": {
       "played": [
         "B",
@@ -17726,7 +17726,42 @@
         "x264_sei_string": "x264 - core 164 r3108 31e19f9 - H.264/MPEG-4 AVC codec - Copyleft 2003-2023 - http://www.videolan.org/x264.html - options: cabac=1 ref=3 deblock=1:0:0 analyse=0x3:0x113 me=hex subme=7 psy=1 psy_rd=1.00:0.00 mixed_ref=1 me_range=16 chroma_me=1 trellis=1 8x8dct=1 cqm=0 deadzone=21,11 fast_pskip=1 chroma_qp_offset=-2 threads=3 lookahead_threads=1 sliced_threads=0 nr=0 decimate=1 interlaced=0 bluray_compat=0 constrained_intra=0 bframes=0 weightp=2 keyint=60 keyint_min=31 scenecut=0 intra_refresh=0 rc_lookahead=40 rc=crf mbtree=1 crf=23.0 qcomp=0.60 qpmin=0 qpmax=69 qpstep=4 vbv_maxrate=1800 vbv_bufsize=1800 crf_max=0.0 nal_hrd=none filler=0 ip_ratio=1.40 aq=1:1.00"
       }
     },
-    "interim_default": {},
+    "interim_default": {
+      "name": "Proven-playable 720p Mobile Profile (Variant I matching)",
+      "vcodec": "libx264",
+      "profile": "main",
+      "level": "4.1",
+      "preset": "medium",
+      "max_width": 1280,
+      "max_height": 720,
+      "max_pixel_budget": 921600,
+      "scaling_policy": "Aspect ratio preserved, bounded by 1280x720 in landscape or 720x1280 in portrait (pixel count <= 921,600), even dimensions, never upscaled",
+      "frame_rate": "Original source frame rate (capped at 30 fps), constant frame rate (-fps_mode cfr)",
+      "timescale": "Matching integer track timescale (e.g. 24000 ticks for 24fps / 23.976fps)",
+      "b_frames": 0,
+      "gop": 60,
+      "keyint_min": 60,
+      "sc_threshold": 0,
+      "bitrate_video": "1800k",
+      "maxrate": "1800k",
+      "bufsize": "1800k",
+      "peak_10s_ceiling_kbps": 2000,
+      "pix_fmt": "yuv420p",
+      "audio_streams": 1,
+      "audio_stream_selection": "Single chosen audio track (0:a:0 in terminal pass)",
+      "audio_codec": "aac",
+      "audio_profile": "aac_low",
+      "audio_bitrate": "128k",
+      "audio_sample_rate": 48000,
+      "audio_channels": 2,
+      "container": "mp4",
+      "brand": "mp42",
+      "movflags": "+faststart",
+      "use_editlist": 0,
+      "metadata": "stripped (-sn -dn -map_metadata -1 -map_chapters -1 -max_interleave_delta 0)",
+      "color": "tv range, BT.709 primaries, transfer and matrix",
+      "exact_command": "ffmpeg -y -v error -threads 2 -i <source> -map 0:v:0 -vf \"setpts=PTS-STARTPTS,fps=<fps>,scale=w='min({max_w},iw)':h='min({max_h},ih)':force_original_aspect_ratio=decrease,scale=trunc(iw/2)*2:trunc(ih/2)*2,<color_filter>,setsar=1\" -r <fps> -fps_mode cfr -c:v libx264 -profile:v main -level:v 4.1 -preset medium -bf 0 -g 60 -keyint_min 60 -sc_threshold 0 -pix_fmt yuv420p -b:v 1800k -maxrate 1800k -bufsize 1800k -video_track_timescale <timescale> -map 0:a:0 -c:a aac -profile:a aac_low -b:a 128k -ar 48000 -ac 2 -af \"aresample=48000:async=1:first_pts=0,apad,atrim=duration=<dur>,asetpts=N/SR/TB+1024/SR/TB\" -movflags +faststart -use_editlist 0 -brand mp42 -avoid_negative_ts make_zero -map_metadata -1 -map_chapters -1 -sn -dn -max_interleave_delta 0 -color_range tv -colorspace bt709 -color_primaries bt709 -color_trc bt709 -f mp4 <destination>"
+    },
     "round2_pack": {
       "release": "",
       "variants": []
@@ -17734,12 +17769,12 @@
     "findings": "STREAM ANALYSIS FINDINGS (WHY B & I PLAY, WHILE C, N, A, M FAIL):\n1. RESOLUTION AND MACROBLOCK LIMIT IS THE HARD DIVIDING LINE:\n   - Variant B (ClipForge control): 1080x1200 (aspect 9:10, SAR 1:1, DAR 9:10). Pixel count: 1,296,000. Macroblocks: 5,100 (68x75 MBs). PLAYS.\n   - Fresh ClipForge output (hxh6-p9-final.mp4): Byte-identical to B (1080x1200, 1,296,000 pixels). PLAYS.\n   - Variant I (CastCut 720p): 1280x720 (aspect 16:9, SAR 1:1, DAR 16:9). Pixel count: 921,600. Macroblocks: 3,600 (80x45 MBs). PLAYS.\n   - Failing variants (C, N, A, M): ALL are 1920x1080 (aspect 16:9, SAR 1:1, DAR 16:9). Pixel count: 2,073,600. Macroblocks: 8,160 (120x68 MBs). ALL FAIL.\n\n2. CLIPFORGE LAST-PASS FLAGS DO NOT FIX 1080P:\n   - Variant A (CastCut 1080p through exact ClipForge final pass) and Variant N (shipped default High@4.0 policy) FAIL on the phone with the same error: \"unsupported H264 - AAC\".\n   - Comparing x264 SEI settings strings: Variant N/A and Variant B share virtually identical encoder options:\n     cabac=1, ref=3, bframes=0, crf=23.0, deblock=1:0:0, me=hex, subme=7, psy=1, trellis=1, 8x8dct=1, keyint=60, vbv_maxrate=1800, vbv_bufsize=1800.\n   - Both B and N use High profile, level 4.0 (profile_idc 100, level_idc 40), max_dec_frame_buffering=3, max_num_reorder_frames=0, faststart, and AAC-LC stereo 48kHz audio.\n   - The ONLY decisive difference between Variant B (which plays) and Variant N/A (which fail) is the frame size: 1080x1200 (1.296M pixels) vs 1920x1080 (2.074M pixels).\n\n3. CLIPFORGE NATIVE RESOLUTION:\n   - In ClipForge repo (pipeline/stage_b/reframe.py and captions.py), ClipForge reframes source video into a 1080x1200 frame (CIN_FRAME_HEIGHT = 1200, width = 1080, aspect 9:10). It NEVER outputs 1920x1080 landscape video.\n   - 1080x1200 has 37.5% fewer pixels and 37.5% fewer macroblocks than 1920x1080.\n\n4. PHONE DECODER BOTTLENECK:\n   - The owner device hardware decoder (MediaCodec) rejects 1920x1080 landscape streams across all profiles (Baseline, Main, High) and container structures, while successfully decoding 1280x720 (921.6k px) and 1080x1200 (1.296M px).\n   - Interim default MUST lock to proven-playable 720p (variant I) with maximum 921,600 pixels, video bitrate <= 2000 kbps, AAC stereo 48kHz 128kbps, until Round 2 ladder identifies the exact ceiling.",
     "done": [
       "resume_protocol_initialized",
-      "download_and_diff_streams_6.1"
+      "download_and_diff_streams_6.1",
+      "apply_interim_default_6.2",
+      "guards_and_tests_6.5"
     ],
     "pending": [
-      "apply_interim_default_6.2",
       "create_round2_pack_workflow_and_release_6.3",
-      "guards_and_tests_6.5",
       "verify_both_flows_interim_default"
     ],
     "verified_runs": [],

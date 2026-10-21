@@ -9,8 +9,8 @@ from . import common
 TARGET_FPS = 30
 SOURCE_FPS = '30'
 TARGET_PIX_FMT = 'yuv420p'
-X264_PROFILE = 'high'
-X264_LEVEL = '4.0'
+X264_PROFILE = 'main'
+X264_LEVEL = '4.1'
 X264_PRESET = 'veryfast'
 X264_CRF = '18'
 AAC_BITRATE = '128k'
@@ -34,6 +34,10 @@ def produce_merged_video(src: str | Path, plan: list[dict], vo_wavs: list[str],
     from pipeline.export_checks import probe
     source_video=next(s for s in probe(src)['streams'] if s['codec_type']=='video')
     color=color_filter(source_video)
+    orig_w = int(source_video.get('width', 1280))
+    orig_h = int(source_video.get('height', 720))
+    max_w = 1280 if orig_w >= orig_h else 720
+    max_h = 720 if orig_w >= orig_h else 1280
     n = len(plan)
     cmd: list[str] = ["ffmpeg", "-y"]
 
@@ -62,7 +66,7 @@ def produce_merged_video(src: str | Path, plan: list[dict], vo_wavs: list[str],
             f"[{i}:v:0]"
             f"setpts={stretch:.6f}*(PTS-STARTPTS),"
             f"fps={SOURCE_FPS},"
-            f"scale=w='min(1920,iw)':h='min(1080,ih)':force_original_aspect_ratio=decrease,"
+            f"scale=w='min({max_w},iw)':h='min({max_h},ih)':force_original_aspect_ratio=decrease,"
             f"scale=trunc(iw/2)*2:trunc(ih/2)*2,"
             f"trim=end_frame={p.get('frames', round(p['video_seconds']*float(__import__('fractions').Fraction(SOURCE_FPS))))},"
             f"setpts=PTS-STARTPTS,{color},"

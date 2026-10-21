@@ -11,15 +11,16 @@ from typing import List, Tuple
 
 # ---------- Fixed mobile-safe encoding profile (ported from ClipForge + owner's compression) ----------
 EXPORT_VCODEC = "libx264"
-EXPORT_PROFILE = "high"
-EXPORT_LEVEL = "4.0"          # Universally decodable on all Android chipsets
+EXPORT_PROFILE = "main"
+EXPORT_LEVEL = "4.1"          # Universally decodable on all Android chipsets
 EXPORT_PRESET = "medium"
 EXPORT_CRF = "23"             # Established delivery quality
 EXPORT_MAXRATE = "1800k"      # Video-only VBV ceiling; rolling 10s headroom under 2000k
 EXPORT_BUFSIZE = "1800k"      # One-second VBV; no burst can escape rolling-window gate
 EXPORT_MAX_FPS = 30.0         # Capped to 30 fps; preserves <=30 fps (e.g. 23.976/24/25)
-EXPORT_MAX_WIDTH = 1920       # At most 1080p; never upscales
-EXPORT_MAX_HEIGHT = 1080
+EXPORT_MAX_WIDTH = 1280
+EXPORT_MAX_PIXELS = 921600       # At most 1080p; never upscales
+EXPORT_MAX_HEIGHT = 720
 EXPORT_TIMESCALE = "15360"     # Standardized video track timescale
 EXPORT_AUDIO_CODEC = "aac"
 EXPORT_AUDIO_PROFILE = "aac_low"

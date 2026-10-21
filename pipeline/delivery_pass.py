@@ -10,7 +10,7 @@ from fractions import Fraction
 from pathlib import Path
 from .export_checks import probe
 
-VERSION='clipforge-terminal-phone-diagnosis-v2'
+VERSION='variant-i-720p-interim-default-v1'
 
 
 def timescale(fps):
@@ -51,7 +51,11 @@ def reference_command(source,destination):
 
 def command(source,destination,*,safe=True):
     cmd=reference_command(source,destination)
-    i=cmd.index('-pix_fmt');cmd[i:i]=['-maxrate','1800k','-bufsize','1800k']
+    cmd[cmd.index('-profile:v')+1]='main'
+    cmd[cmd.index('-level:v')+1]='4.1'
+    i=cmd.index('-pix_fmt');cmd[i:i]=['-b:v','1800k','-maxrate','1800k','-bufsize','1800k']
+    if '-crf' in cmd:
+        ci=cmd.index('-crf');del cmd[ci:ci+2]
     # Never map arbitrary source tracks: the join already contains chosen track.
     cmd[cmd.index('0:a?')]='0:a:0'
     i=cmd.index('-c:a');cmd[i:i+2]=['-c:a','aac','-profile:a','aac_low','-b:a','128k','-ar','48000','-ac','2']
@@ -60,7 +64,8 @@ def command(source,destination,*,safe=True):
         fps=min(Fraction(v['r_frame_rate']),Fraction(30))
         if fps<=0:raise ValueError('Missing original frame rate')
         cmd[cmd.index('-video_track_timescale')+1]=str(timescale(fps))
-        vf=f"setpts=PTS-STARTPTS,fps={fps},scale=w='min(1920,iw)':h='min(1080,ih)':force_original_aspect_ratio=decrease,scale=trunc(iw/2)*2:trunc(ih/2)*2,"+color_filter(v)+',setsar=1'
+        iw=int(v.get('width',1280));ih=int(v.get('height',720));max_w=1280 if iw>=ih else 720;max_h=720 if iw>=ih else 1280
+        vf=f"setpts=PTS-STARTPTS,fps={fps},scale=w='min({max_w},iw)':h='min({max_h},ih)':force_original_aspect_ratio=decrease,scale=trunc(iw/2)*2:trunc(ih/2)*2,"+color_filter(v)+',setsar=1'
         # Explicit priming compensation prevents the no-edit-list muxer from
         # stretching video frame zero to compensate AAC encoder delay.
         duration=float(v.get('duration') or info['format']['duration'])

@@ -144,14 +144,18 @@ def validate(path, expect_audio=True, source=None):
     if [s['codec_type'] for s in streams] != (['video', 'audio'] if expect_audio else ['video']):
         raise RuntimeError('Expected exactly one video and one audio track, with no extra streams')
     v = streams[0]
-    expected = {'codec_name':'h264', 'codec_tag_string':'avc1', 'profile':'High', 'level':40,
+    expected = {'codec_name':'h264', 'codec_tag_string':'avc1', 'profile':'Main', 'level':41,
                 'pix_fmt':'yuv420p', 'has_b_frames':0, 'sample_aspect_ratio':'1:1'}
     for k, value in expected.items():
         if v.get(k) != value:
-            raise RuntimeError(f'ClipForge {k}: expected {value}, got {v.get(k)}')
+            raise RuntimeError(f'Interim proven profile {k}: expected {value}, got {v.get(k)}')
     w, h = v['width'], v['height']
-    if min(w,h) <= 0 or w > 1920 or h > 1080 or w%2 or h%2:
-        raise RuntimeError('Resolution must be even and <=1920x1080')
+    if min(w,h) <= 0 or w%2 or h%2:
+        raise RuntimeError('Resolution must be positive and even')
+    if w * h > 921600:
+        raise RuntimeError(f'Pixel count {w*h} exceeds proven-playable 720p limit (921,600 pixels): {w}x{h}')
+    if w > 1280 or h > 1280:
+        raise RuntimeError(f'Dimension exceeds 1280 maximum: {w}x{h}')
     rational_fps = Fraction(v['r_frame_rate'])
     fps = float(rational_fps)
     from .delivery_pass import timescale

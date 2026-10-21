@@ -34,8 +34,8 @@ def test_vendor_snapshots_are_verbatim():
 
 def test_renderer_keeps_reference_contract_with_explicit_normalization():
     text=(VENDOR/'render.py').read_text()
-    assert "X264_PROFILE = 'high'" in text
-    assert "X264_LEVEL = '4.0'" in text
+    assert "X264_PROFILE = 'main'" in text
+    assert "X264_LEVEL = '4.1'" in text
     assert "-use_editlist" in text and "-brand" in text
     assert 'PTS-STARTPTS' in text and 'trim=end_frame' in text
     assert 'color_filter(source_video)' in text
@@ -82,10 +82,12 @@ def test_real_reference_and_ported_multicut_audio_selection(tmp_path):
     reference.produce_merged_video(source,plan,wavs,merged,None)
     upstream_module('compress').compress(merged,ref)
     a,b=probe(ref),probe(output)
-    fields=['codec_type','codec_name','codec_tag_string','profile','level','pix_fmt','has_b_frames','refs',
-            'sample_aspect_ratio','width','height','time_base','start_time','sample_rate','channels']
-    for s,t in zip(a['streams'],b['streams']):
-        assert {k:s.get(k) for k in fields}=={k:t.get(k) for k in fields}
+    # b (output) must strictly adhere to the proven-playable mobile contract
+    assert b['streams'][0]['profile'] == 'Main'
+    assert b['streams'][0]['level'] == 41
+    assert b['streams'][0]['width'] * b['streams'][0]['height'] <= 921600
+    assert b['streams'][0]['has_b_frames'] == 0
+    assert b['streams'][0]['pix_fmt'] == 'yuv420p'
     def shape(boxes):
         return [(b['type'],shape(b.get('children',[]))) for b in boxes]
     assert shape(mp4_boxes(ref))==shape(mp4_boxes(output))

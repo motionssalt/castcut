@@ -20,12 +20,22 @@ def test_policy_changes_are_explicit_not_hidden_raw_frames(tmp_path):
     source=tmp_path/'joined.mp4';destination=tmp_path/'final.mp4'
     cmd=command(source,destination,safe=False)
     ref=reference_command(source,destination)
-    i=cmd.index('-maxrate');assert cmd[i:i+4]==['-maxrate','1800k','-bufsize','1800k'];del cmd[i:i+4]
-    i=cmd.index('-c:a');assert cmd[i:i+10]==['-c:a','aac','-profile:a','aac_low','-b:a','128k','-ar','48000','-ac','2'];cmd[i:i+10]=['-c:a','copy']
-    cmd[cmd.index('0:a:0')]='0:a?'
-    assert cmd==ref
+    assert cmd[cmd.index('-profile:v')+1] == 'main'
+    cmd[cmd.index('-profile:v')+1] = 'high'
+    assert cmd[cmd.index('-level:v')+1] == '4.1'
+    cmd[cmd.index('-level:v')+1] = '4.0'
+    i=cmd.index('-pix_fmt')
+    assert cmd[i-6:i] == ['-b:v','1800k','-maxrate','1800k','-bufsize','1800k']
+    del cmd[i-6:i]
+    cmd.insert(cmd.index('-pix_fmt'), '-crf')
+    cmd.insert(cmd.index('-crf')+1, '23')
+    i=cmd.index('-c:a')
+    assert cmd[i:i+10] == ['-c:a','aac','-profile:a','aac_low','-b:a','128k','-ar','48000','-ac','2']
+    cmd[i:i+10] = ['-c:a','copy']
+    cmd[cmd.index('0:a:0')] = '0:a?'
+    assert cmd == ref
     assert 'pipe:0' not in cmd
-    assert VERSION=='clipforge-terminal-phone-diagnosis-v2'
+    assert VERSION == 'variant-i-720p-interim-default-v1'
 
 
 def test_size_fallback_never_restores_an_original(tmp_path):
