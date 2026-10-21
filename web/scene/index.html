@@ -91,6 +91,18 @@
           <select id="selectAudioTrack" class="select mono"></select>
         </div>
 
+        <!-- Resolution Toggle (1080p vs 900p / 1600x900) -->
+        <div class="form-group">
+          <label class="form-label">Resolution</label>
+          <div class="segmented-control" id="resolutionToggle" role="radiogroup" aria-label="Export Resolution">
+            <button type="button" class="segmented-btn active" data-res="1080p" role="radio" aria-checked="true">1080p</button>
+            <button type="button" class="segmented-btn" data-res="900p" role="radio" aria-checked="false">900p (1600×900)</button>
+          </div>
+          <p class="form-hint">
+            Choose 1080p (standard) or 900p (1600×900 for mobile phone playback compatibility).
+          </p>
+        </div>
+
         <button id="btnExportScene" class="btn btn-primary btn-block" style="min-height: 48px;" disabled>
           Confirm & Export Scene Cut
         </button>

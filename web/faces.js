@@ -6,6 +6,7 @@ let clipsManifest = null;
 let characters = [];
 let selectedCharIds = new Set();
 let chosenAudioTrack = 0;
+let chosenResolution = localStorage.getItem("castcut_export_resolution") || "1080p";
 let pollTimer = null;
 
 function init() {
@@ -186,7 +187,27 @@ function updateExportButton() {
   btn.textContent = count > 0 ? `Export Joined Clips (${count} character${count === 1 ? "" : "s"})` : "Select at least 1 character to export";
 }
 
+function setupResolutionToggle() {
+  const container = document.getElementById("resolutionToggle");
+  if (!container) return;
+  const buttons = container.querySelectorAll(".segmented-btn");
+  function applySelection(val) {
+    chosenResolution = (val === "900p" || val === "900") ? "900p" : "1080p";
+    try { localStorage.setItem("castcut_export_resolution", chosenResolution); } catch (_) {}
+    buttons.forEach(btn => {
+      const match = btn.getAttribute("data-res") === chosenResolution;
+      btn.classList.toggle("active", match);
+      btn.setAttribute("aria-checked", match ? "true" : "false");
+    });
+  }
+  buttons.forEach(btn => {
+    btn.onclick = () => applySelection(btn.getAttribute("data-res"));
+  });
+  applySelection(chosenResolution);
+}
+
 function setupExportHandlers() {
+  setupResolutionToggle();
   const btnAll = document.getElementById("btnSelectAll");
   const btnNone = document.getElementById("btnDeselectAll");
   const btnExport = document.getElementById("btnExportClips");
@@ -208,6 +229,7 @@ function setupExportHandlers() {
       ignored: characters.filter(c => !selectedCharIds.has(c.id)).map(c => c.id),
       merge_groups: [],
       audio_track: chosenAudioTrack,
+      resolution: chosenResolution,
       gap_threshold: 2.0,
       padding: 0.4,
     };

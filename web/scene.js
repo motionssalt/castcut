@@ -4,6 +4,7 @@ let projectId = null;
 let projectData = null;
 let validatedCut = null;
 let chosenAudioTrack = 0;
+let chosenResolution = localStorage.getItem("castcut_export_resolution") || "1080p";
 
 function init() {
   const params = new URLSearchParams(window.location.search);
@@ -93,7 +94,27 @@ function setupPromptGenerators() {
   };
 }
 
+function setupResolutionToggle() {
+  const container = document.getElementById("resolutionToggle");
+  if (!container) return;
+  const buttons = container.querySelectorAll(".segmented-btn");
+  function applySelection(val) {
+    chosenResolution = (val === "900p" || val === "900") ? "900p" : "1080p";
+    try { localStorage.setItem("castcut_export_resolution", chosenResolution); } catch (_) {}
+    buttons.forEach(btn => {
+      const match = btn.getAttribute("data-res") === chosenResolution;
+      btn.classList.toggle("active", match);
+      btn.setAttribute("aria-checked", match ? "true" : "false");
+    });
+  }
+  buttons.forEach(btn => {
+    btn.onclick = () => applySelection(btn.getAttribute("data-res"));
+  });
+  applySelection(chosenResolution);
+}
+
 function setupJsonIntake() {
+  setupResolutionToggle();
   const pasteBox = document.getElementById("jsonPasteTextarea");
   const fileInput = document.getElementById("jsonFileInput");
   const uploadBtn = document.getElementById("btnUploadJson");
@@ -136,8 +157,10 @@ function setupJsonIntake() {
         title: validatedCut.title,
         segments: validatedCut.segments,
         audio_track: chosenAudioTrack,
+        resolution: chosenResolution,
       },
       audio_track: chosenAudioTrack,
+      resolution: chosenResolution,
     };
 
     await withButtonFeedback(exportBtn, async () => {

@@ -13,20 +13,20 @@ X264_PROFILE='high'
 X264_LEVEL='4.0'
 
 
-def _validate(source,candidate):
+def _validate(source,candidate,resolution='1080p'):
     from pipeline.export_checks import validate
-    validate(candidate,source=source)
+    validate(candidate,source=source,resolution=resolution)
 
 
-def compress(source:Path,destination:Path):
+def compress(source:Path,destination:Path,resolution:str='1080p'):
     source,destination=Path(source),Path(destination)
     if not source.is_file() or source.resolve()==destination.resolve():
         raise common.StageBError('Terminal input must exist and differ from destination')
     destination.parent.mkdir(parents=True,exist_ok=True)
     candidate=destination.with_name(destination.name+'.compressing.mp4')
     candidate.unlink(missing_ok=True)
-    command=encode(source,candidate)
-    _validate(source,candidate)
+    command=encode(source,candidate,resolution=resolution)
+    _validate(source,candidate,resolution=resolution)
     before,after=source.stat().st_size,candidate.stat().st_size
     candidate.replace(destination)
     # A smaller original is NOT a normalization substitute. Never resurrect it.

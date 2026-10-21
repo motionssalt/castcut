@@ -10,7 +10,7 @@ from fractions import Fraction
 from pathlib import Path
 from .export_checks import probe
 
-VERSION='variant-i-720p-interim-default-v1'
+VERSION='toggle-1080p-900p-v1'
 
 _CFR_FLAGS: dict[str, list[str]] = {}
 
@@ -66,7 +66,7 @@ def reference_command(source,destination):
         '-max_muxing_queue_size','9999','-f','mp4',str(destination)]
 
 
-def command(source,destination,*,safe=True):
+def command(source,destination,*,resolution='1080p',safe=True):
     cmd=reference_command(source,destination)
     cmd[cmd.index('-profile:v')+1]='main'
     cmd[cmd.index('-level:v')+1]='4.1'
@@ -81,7 +81,14 @@ def command(source,destination,*,safe=True):
         fps=min(Fraction(v['r_frame_rate']),Fraction(30))
         if fps<=0:raise ValueError('Missing original frame rate')
         cmd[cmd.index('-video_track_timescale')+1]=str(timescale(fps))
-        iw=int(v.get('width',1280));ih=int(v.get('height',720));max_w=1280 if iw>=ih else 720;max_h=720 if iw>=ih else 1280
+        iw=int(v.get('width',1920));ih=int(v.get('height',1080))
+        res_str=str(resolution or '1080p').lower()
+        if res_str in ('900p','900','1600x900'):
+            max_w,max_h=(1600,900) if iw>=ih else (900,1600)
+        elif res_str in ('720p','720','1280x720'):
+            max_w,max_h=(1280,720) if iw>=ih else (720,1280)
+        else:
+            max_w,max_h=(1920,1080) if iw>=ih else (1080,1920)
         vf=f"setpts=PTS-STARTPTS,fps={fps},scale=w='min({max_w},iw)':h='min({max_h},ih)':force_original_aspect_ratio=decrease,scale=trunc(iw/2)*2:trunc(ih/2)*2,"+color_filter(v)+',setsar=1'
         # Explicit priming compensation prevents the no-edit-list muxer from
         # stretching video frame zero to compensate AAC encoder delay.
@@ -93,8 +100,8 @@ def command(source,destination,*,safe=True):
     return cmd
 
 
-def encode(source,destination,*,safe=True):
-    cmd=command(source,destination,safe=safe)
+def encode(source,destination,*,resolution='1080p',safe=True):
+    cmd=command(source,destination,resolution=resolution,safe=safe)
     print('Terminal ClipForge-derived command: '+json.dumps(cmd),flush=True)
     subprocess.run(cmd,check=True)
     return cmd

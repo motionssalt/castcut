@@ -135,7 +135,7 @@ def rate_within_limit(path):
     return r['video_average_kbps'] <= 2000 and r['video_peak_10s_kbps'] <= 2000
 
 
-def validate(path, expect_audio=True, source=None):
+def validate(path, expect_audio=True, source=None, resolution=None):
     path = Path(path)
     if not path.is_file() or not path.stat().st_size:
         raise RuntimeError('Empty or absent export')
@@ -152,10 +152,20 @@ def validate(path, expect_audio=True, source=None):
     w, h = v['width'], v['height']
     if min(w,h) <= 0 or w%2 or h%2:
         raise RuntimeError('Resolution must be positive and even')
-    if w * h > 921600:
-        raise RuntimeError(f'Pixel count {w*h} exceeds proven-playable 720p limit (921,600 pixels): {w}x{h}')
-    if w > 1280 or h > 1280:
-        raise RuntimeError(f'Dimension exceeds 1280 maximum: {w}x{h}')
+    res_str = str(resolution or '').lower()
+    if res_str in ('900p', '900', '1600x900'):
+        max_pixels = 1440000
+        max_dim = 1600
+    elif res_str in ('720p', '720', '1280x720'):
+        max_pixels = 921600
+        max_dim = 1280
+    else:
+        max_pixels = 2073600
+        max_dim = 1920
+    if w * h > max_pixels:
+        raise RuntimeError(f'Pixel count {w*h} exceeds limit ({max_pixels:,} pixels): {w}x{h}')
+    if w > max_dim or h > max_dim:
+        raise RuntimeError(f'Dimension exceeds {max_dim} maximum: {w}x{h}')
     rational_fps = Fraction(v['r_frame_rate'])
     fps = float(rational_fps)
     from .delivery_pass import timescale
@@ -197,7 +207,14 @@ def validate(path, expect_audio=True, source=None):
         raise RuntimeError('Full decode failed: '+decode.stderr[-1000:])
     dur = float(info['format']['duration'])
     size = path.stat().st_size
-    with path.open('rb') as f: digest = hashlib.file_digest(f,'sha256').hexdigest()
+    with path.open('rb') as f:
+        if hasattr(hashlib, 'file_digest'):
+            digest = hashlib.file_digest(f, 'sha256').hexdigest()
+        else:
+            h_obj = hashlib.sha256()
+            while chunk := f.read(65536):
+                h_obj.update(chunk)
+            digest = h_obj.hexdigest()
     return {'ok':True, 'sha256':digest, 'duration':round(dur,6), 'size_bytes':size,
             'size_human':f'{size/1024/1024:.2f} MiB', 'mb_per_minute':size/dur*60/1e6,
             'bitrate_bps':round(size*8/dur),'bitrate_kbps':round(size*8/dur/1000,3),

@@ -7,6 +7,7 @@ on:
       job_id: { required: true, type: string }
       export_id: { required: false, type: string, default: "" }
       audio_track: { required: false, type: string, default: "" }
+      resolution: { required: false, type: string, default: "1080p" }
 
 permissions:
   contents: write
@@ -50,6 +51,7 @@ jobs:
           cmd=(python -m pipeline.scene_export "${{ inputs.job_id }}")
           if [ -n "${{ inputs.export_id }}" ]; then cmd+=(--export-id "${{ inputs.export_id }}"); fi
           if [ -n "${{ inputs.audio_track }}" ]; then cmd+=(--audio-track "${{ inputs.audio_track }}"); fi
+          if [ -n "${{ inputs.resolution }}" ]; then cmd+=(--resolution "${{ inputs.resolution }}"); fi
           "${cmd[@]}" 
 
       - name: Verify export playback compatibility and bitrate

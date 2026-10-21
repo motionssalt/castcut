@@ -17447,8 +17447,8 @@
     }
   },
   "playback_round2": {
-    "status": "awaiting-owner-test-results",
-    "last_updated": "2026-10-21T08:22:28.750723+00:00",
+    "status": "done",
+    "last_updated": "2026-10-21T09:43:00Z",
     "owner_results": {
       "played": [
         "B",
@@ -21508,11 +21508,16 @@
       "apply_interim_default_6.2",
       "guards_and_tests_6.5",
       "create_round2_pack_workflow_and_release_6.3",
-      "verify_both_flows_interim_default"
+      "verify_both_flows_interim_default",
+      "delete_test_pack_releases_and_tags",
+      "add_ui_resolution_toggle_faces_flow",
+      "add_ui_resolution_toggle_scene_flow",
+      "wire_resolution_to_clips_and_scene_export_apis",
+      "wire_resolution_to_export_workflows",
+      "support_resolution_in_pipeline_and_validation",
+      "update_ci_and_regression_tests"
     ],
-    "pending": [
-      "await_owner_round2_test_results"
-    ],
+    "pending": [],
     "verified_runs": [
       {
         "flow": "Mode 2 \u2014 Scene export",
@@ -21578,6 +21583,26 @@
         ]
       }
     ],
-    "notes": "Playback round 2 started. Investigating ClipForge output specs vs 720p variant I vs 1080p failing variants."
+    "notes": "Resolved: Added 1080p vs 900p (1600x900) toggle across web export UI and pipeline. All test pack releases deleted.",
+    "owner_verdict": {
+      "phone_1080p_limitation": true,
+      "cause": "Owner phone hardware decoder is unable to play 1080p 16:9 streams; issue is device-specific.",
+      "resolution_toggle": {
+        "options": [
+          "1080p",
+          "900p (1600x900)"
+        ],
+        "default": "1080p",
+        "persisted": "localStorage ('castcut_export_resolution')",
+        "flows_updated": [
+          "Faces Flow (web/faces/)",
+          "Scene Flow (web/scene/)"
+        ]
+      },
+      "test_releases_deleted": [
+        "playback-test-pack",
+        "playback-test-pack-round2"
+      ]
+    }
   }
 }

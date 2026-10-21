@@ -33,6 +33,7 @@ def main() -> None:
     ap.add_argument("--pad", type=float, default=None, help="pad override (s)")
     ap.add_argument("--audio-track", default=None, help="Audio track index (0-based audio_index)")
     ap.add_argument("--export-id", default=None, help="Unique export ID for hybrid project model")
+    ap.add_argument("--resolution", default=None, help="Export target resolution (1080p or 900p)")
     args = ap.parse_args()
 
     clips_dir = os.path.join(args.jobs_root, args.job_id, "clips")
@@ -137,12 +138,14 @@ def main() -> None:
     print(f"[clips] segments per character: {per_char_counts}", flush=True)
     print(f"[clips] total segments: {len(segments)}, duration: {total_cut_duration:.1f}s", flush=True)
 
+    chosen_resolution = args.resolution or selection.get("resolution") or "1080p"
+    print(f"[clips] Chosen resolution target: {chosen_resolution}", flush=True)
     # One shared literal ClipForge render -> terminal compression path.
     export_id = args.export_id or f"exp-{args.job_id}-clips"
     asset_name = f"castcut-export-{export_id}.mp4" if args.export_id else f"castcut-clips-{args.job_id}.mp4"
     final = os.path.join(args.work_dir, asset_name)
     verif = export_segments(src, segments, final, audio_track=chosen_audio_track,
-                            temp_dir=args.work_dir)
+                            resolution=chosen_resolution, temp_dir=args.work_dir)
     s_before = verif['size_before_bytes']
     s_after = verif["size_bytes"]
 
@@ -178,9 +181,10 @@ def main() -> None:
         "bitrate_bps": verif["bitrate_bps"],
         "effective_bitrate": f"{verif['bitrate_kbps']} kbps",
         "audio_track": chosen_audio_track,
+        "resolution": chosen_resolution,
         "audio_track_label": chosen_track_info.get("label") if chosen_track_info else ("No audio" if not has_audio else None),
         "asset_name": os.path.basename(final),
-        "encode_path": "Proven-playable mobile profile (variant I): H.264 Main@L4.1, 720p (<=921.6k px), 0 B-frames, mp42, faststart, AAC 128k stereo, <=2000 kbps",
+        "encode_path": f"Mobile profile: H.264 Main@L4.1, {chosen_resolution}, 0 B-frames, mp42, faststart, AAC 128k stereo, <=2000 kbps",
         "status": "done",
     }
 

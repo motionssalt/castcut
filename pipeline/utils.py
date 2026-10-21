@@ -18,9 +18,17 @@ EXPORT_CRF = "23"             # Established delivery quality
 EXPORT_MAXRATE = "1800k"      # Video-only VBV ceiling; rolling 10s headroom under 2000k
 EXPORT_BUFSIZE = "1800k"      # One-second VBV; no burst can escape rolling-window gate
 EXPORT_MAX_FPS = 30.0         # Capped to 30 fps; preserves <=30 fps (e.g. 23.976/24/25)
-EXPORT_MAX_WIDTH = 1280
-EXPORT_MAX_PIXELS = 921600       # At most 1080p; never upscales
-EXPORT_MAX_HEIGHT = 720
+EXPORT_MAX_WIDTH = 1920
+EXPORT_MAX_HEIGHT = 1080
+EXPORT_MAX_PIXELS = 2073600
+
+EXPORT_MAX_WIDTH_900P = 1600
+EXPORT_MAX_HEIGHT_900P = 900
+EXPORT_MAX_PIXELS_900P = 1440000
+
+EXPORT_MAX_WIDTH_720P = 1280
+EXPORT_MAX_HEIGHT_720P = 720
+EXPORT_MAX_PIXELS_720P = 921600
 EXPORT_TIMESCALE = "15360"     # Standardized video track timescale
 EXPORT_AUDIO_CODEC = "aac"
 EXPORT_AUDIO_PROFILE = "aac_low"
@@ -208,9 +216,9 @@ def check_no_editlist(path: str) -> bool:
     return not any(b['type']=='elst' for b in flatten_boxes(mp4_boxes(path)))
 
 
-def validate_export_playback_and_size(path: str, expect_audio: bool = True) -> dict:
+def validate_export_playback_and_size(path: str, expect_audio: bool = True, resolution: str = None) -> dict:
     from .export_checks import validate
-    return validate(path, expect_audio=expect_audio)
+    return validate(path, expect_audio=expect_audio, resolution=resolution)
 
 
 def verify_output_streams(path: str, expect_audio: bool) -> dict:
@@ -218,11 +226,11 @@ def verify_output_streams(path: str, expect_audio: bool) -> dict:
     return validate_export_playback_and_size(path, expect_audio=expect_audio)
 
 
-def encode_final_export(input_path, output_path, has_audio=True, **_legacy):
+def encode_final_export(input_path, output_path, has_audio=True, resolution='1080p', **_legacy):
     """Compatibility entry point for callers exporting one full-source segment."""
     from .clipforge_export import export_segments
     meta = probe_video(input_path)
-    return export_segments(input_path, [(0.0, meta['duration'])], output_path, audio_track=0)
+    return export_segments(input_path, [(0.0, meta['duration'])], output_path, audio_track=0 if has_audio else None, resolution=resolution)
 
 
 def human_size(n: int) -> str:

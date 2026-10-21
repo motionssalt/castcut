@@ -22,7 +22,8 @@ MIX_LIMITER_CEILING = 0.99
 
 def produce_merged_video(src: str | Path, plan: list[dict], vo_wavs: list[str],
                          dst: str | Path, music: str | Path | None,
-                         music_volume: float = MUSIC_VOLUME) -> None:
+                         music_volume: float = MUSIC_VOLUME,
+                         resolution: str = '1080p') -> None:
     """Cut every reconciled range from ``src``, retime per-cut video by its
     stretch factor, mute source audio, lay in the voiceover WAVs (padded to the
     cut length), concat everything, optionally mix ducked music under the
@@ -34,10 +35,15 @@ def produce_merged_video(src: str | Path, plan: list[dict], vo_wavs: list[str],
     from pipeline.export_checks import probe
     source_video=next(s for s in probe(src)['streams'] if s['codec_type']=='video')
     color=color_filter(source_video)
-    orig_w = int(source_video.get('width', 1280))
-    orig_h = int(source_video.get('height', 720))
-    max_w = 1280 if orig_w >= orig_h else 720
-    max_h = 720 if orig_w >= orig_h else 1280
+    orig_w = int(source_video.get('width', 1920))
+    orig_h = int(source_video.get('height', 1080))
+    res_str = str(resolution or '1080p').lower()
+    if res_str in ('900p', '900', '1600x900'):
+        max_w, max_h = (1600, 900) if orig_w >= orig_h else (900, 1600)
+    elif res_str in ('720p', '720', '1280x720'):
+        max_w, max_h = (1280, 720) if orig_w >= orig_h else (720, 1280)
+    else:
+        max_w, max_h = (1920, 1080) if orig_w >= orig_h else (1080, 1920)
     n = len(plan)
     cmd: list[str] = ["ffmpeg", "-y"]
 

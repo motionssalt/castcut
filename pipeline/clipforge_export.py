@@ -15,7 +15,7 @@ from .export_checks import probe, validate
 from .delivery_pass import VERSION as REBUILD_VERSION
 
 
-def export_segments(src, segments, output_path, audio_track=0, temp_dir=None):
+def export_segments(src, segments, output_path, audio_track=0, resolution='1080p', temp_dir=None):
     source = Path(src).resolve()
     output = Path(output_path).resolve()
     output.parent.mkdir(parents=True, exist_ok=True)
@@ -60,15 +60,15 @@ def export_segments(src, segments, output_path, audio_track=0, temp_dir=None):
                 plan.append({'start_seconds':start,'end_seconds':end,'stretch':1.0,
                              'frames':frames, 'audio_samples':round(seconds*48000), 'video_seconds':seconds})
             merged = work/'reference-merged.mp4'
-            render.produce_merged_video(source,plan,wavs,merged,music=None)
-            before, after, reduced = compress.compress(merged,output)
-            report = validate(output,expect_audio=True,source=source)
+            render.produce_merged_video(source,plan,wavs,merged,music=None,resolution=resolution)
+            before, after, reduced = compress.compress(merged,output,resolution=resolution)
+            report = validate(output,expect_audio=True,source=source,resolution=resolution)
             report.update({'rebuild_version': REBUILD_VERSION,
                            'video_input_boundary': 'direct joined MP4 -> ClipForge terminal re-encode; no raw-frame workaround',
                            'audio_input_boundary': 'chosen track joined as PCM, freshly encoded AAC-LC stereo 48000Hz 128k',
                            'source_audio_index':int(audio_track) if audio else None,
                            'source_audio_stream_index':audio[int(audio_track)]['index'] if audio else None,
-                           'audio_target_kbps':128, 'source_fps':str(Fraction(video['r_frame_rate'])),
+                           'audio_target_kbps':128, 'target_resolution':resolution, 'source_fps':str(Fraction(video['r_frame_rate'])),
                            'target_fps':str(fps), 'source_width':video['width'],'source_height':video['height'],
                            'segments':cuts,'join_times':[sum(e-s for s,e in cuts[:i]) for i in range(1,len(cuts))],
                            'reference_commit':'a05846de7c76a66ad42ba6fd37126514bc452167',
