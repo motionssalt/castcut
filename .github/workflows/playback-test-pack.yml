@@ -1,0 +1,36 @@
+name: Phone playback compatibility test pack
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: playback-test-pack
+  cancel-in-progress: false
+jobs:
+  pack:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      CLIPFORGE_READ_TOKEN: ${{ secrets.CLIPFORGE_READ_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install media inspection tools
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq ffmpeg
+          python -m pip install -q requests
+      - name: Build publish and verify phone test pack
+        run: python -m pipeline.playback_pack --publish
+      - name: Preserve test diagnostics even on failure
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: phone-playback-diagnostics-${{ github.run_id }}
+          path: |
+            work/playback-pack/*.json
+            work/playback-pack/*.txt
+            BUILD_STATE.json
