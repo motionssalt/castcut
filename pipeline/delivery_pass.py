@@ -65,7 +65,7 @@ def command(source,destination,*,safe=True):
         cmd[-3:-3]=['-vf',vf,'-r',str(fps),'-fps_mode','cfr',
             '-af',f'aresample=48000:async=1:first_pts=0,apad,atrim=duration={duration:.9f},asetpts=N/SR/TB+1024/SR/TB',
             '-avoid_negative_ts','make_zero','-color_range','tv','-colorspace','bt709',
-            '-color_primaries','bt709','-color_trc','bt709','-max_interleave_delta','100000']
+            '-color_primaries','bt709','-color_trc','bt709','-max_interleave_delta','0']
     return cmd
 
 
