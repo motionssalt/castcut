@@ -30,6 +30,10 @@ def produce_merged_video(src: str | Path, plan: list[dict], vo_wavs: list[str],
     if not plan:
         raise common.StageBError("produce_merged_video called with no cuts")
 
+    from pipeline.delivery_pass import color_filter
+    from pipeline.export_checks import probe
+    source_video=next(s for s in probe(src)['streams'] if s['codec_type']=='video')
+    color=color_filter(source_video)
     n = len(plan)
     cmd: list[str] = ["ffmpeg", "-y"]
 
@@ -56,11 +60,12 @@ def produce_merged_video(src: str | Path, plan: list[dict], vo_wavs: list[str],
         stretch = p["stretch"]
         parts.append(
             f"[{i}:v:0]"
-            f"setpts={stretch:.6f}*PTS,"
+            f"setpts={stretch:.6f}*(PTS-STARTPTS),"
             f"fps={SOURCE_FPS},"
             f"scale=w='min(1920,iw)':h='min(1080,ih)':force_original_aspect_ratio=decrease,"
             f"scale=trunc(iw/2)*2:trunc(ih/2)*2,"
-            f"format={TARGET_PIX_FMT},"
+            f"trim=end_frame={p.get('frames', round(p['video_seconds']*float(__import__('fractions').Fraction(SOURCE_FPS))))},"
+            f"setpts=PTS-STARTPTS,{color},"
             f"setsar=1"
             f"[v{i}]"
         )
@@ -117,6 +122,9 @@ def produce_merged_video(src: str | Path, plan: list[dict], vo_wavs: list[str],
         "-map", audio_map,
 
         # Video: H.264 High@L4.0, CRF 18, yuv420p — universally decodable.
+        "-r", SOURCE_FPS, "-fps_mode", "cfr",
+        "-color_range", "tv", "-colorspace", "bt709",
+        "-color_primaries", "bt709", "-color_trc", "bt709",
         "-c:v", "libx264",
         "-profile:v", X264_PROFILE,
         "-level:v", X264_LEVEL,
