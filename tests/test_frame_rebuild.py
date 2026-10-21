@@ -1,14 +1,14 @@
-"""Real fractional-rate MKV -> decoded frames/PCM -> reference MP4 regression."""
+"""Real fractional-rate MKV -> direct terminal encoder -> reference MP4 regression."""
 from fractions import Fraction
 import json
 import subprocess
 import pytest
 from pipeline.clipforge_export import export_segments
-from pipeline.frame_rebuild import frame_timescale, REBUILD_VERSION
+from pipeline.delivery_pass import timescale as frame_timescale, VERSION as REBUILD_VERSION
 from pipeline.export_checks import validate, probe, mp4_boxes, flatten_boxes
 
 
-@pytest.mark.parametrize('fps,timescale', [('30',15360),('24',15360),('24000/1001',384000),('30000/1001',1920000)])
+@pytest.mark.parametrize('fps,timescale', [('30',15360),('24',15360),('24000/1001',24000),('30000/1001',30000)])
 def test_exact_original_rate_clock(fps,timescale):
     assert frame_timescale(fps)==timescale
     assert (Fraction(timescale)/Fraction(fps)).denominator==1
@@ -26,10 +26,10 @@ def test_fractional_source_rebuilt_with_selected_audio_and_exact_ticks(tmp_path)
     assert report['rebuild_version']==REBUILD_VERSION
     assert report['source_audio_index']==1
     assert report['exact_frame_cadence']
-    assert report['video_sample_duration_ticks']==[16016]
+    assert report['video_sample_duration_ticks']==[1001]
     video=probe(destination)['streams'][0]
     assert video['r_frame_rate']==video['avg_frame_rate']=='24000/1001'
-    assert video['time_base']=='1/384000'
+    assert video['time_base']=='1/24000'
     assert report['all_packet_timestamps_contiguous']
     assert report['video_pts_equal_dts']
     assert report['video_peak_10s_kbps']<=2000
@@ -41,4 +41,8 @@ def test_fractional_source_rebuilt_with_selected_audio_and_exact_ticks(tmp_path)
     validate(destination,source=source)
     # No intermediate raw image forest / WAV / stale candidate remains.
     assert not list(tmp_path.glob('decoded-pcm-*'))
+    assert 'pipe:0' not in report['terminal_command']
+    assert 'rawvideo' not in report['terminal_command']
+    assert report['max_av_interleave_bytes']<=500000
+    assert video['color_space']=='bt709'
     assert not list(tmp_path.glob('*.compressing.mp4'))
