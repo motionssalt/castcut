@@ -30,7 +30,7 @@ def test_rate_clock_and_color_conversion_not_just_tags():
     assert timescale('24000/1001')==24000
     assert timescale('30000/1001')==30000
     assert timescale('24')==15360
-    assert timescale('25')==25
+    assert timescale('25')==25000
     assert 'tonemap=' in color_filter({'height':1080,'color_transfer':'smpte2084'})
     assert 'colorspace=' in color_filter({'height':1080,'color_transfer':'bt709','color_space':'bt470bg','color_primaries':'bt470bg'})
     assert 'out_color_matrix=bt709' in color_filter({'height':1080})
