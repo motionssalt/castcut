@@ -1,0 +1,15 @@
+{
+  "site": "https://castcut.pages.dev",
+  "asset_id": 661646057,
+  "size_bytes": 205605265,
+  "sha256": "8bab817258787540fd369b7e452339bce3c5d3484f1d36101c7e317515841eee",
+  "headers": {
+    "Content-Type": "video/mp4",
+    "Content-Length": "205605265",
+    "Content-Disposition": "attachment; filename=\"CastCut-661646057.mp4\"",
+    "X-Asset-SHA256": "8bab817258787540fd369b7e452339bce3c5d3484f1d36101c7e317515841eee",
+    "Accept-Ranges": "bytes"
+  },
+  "matches_release_and_job": true,
+  "physical_phone_tested": false
+}
