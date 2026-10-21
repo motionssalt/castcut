@@ -130,5 +130,8 @@ def main():
     if not a.clipforge:fetch_asset('motionssalt/clipforge',654439970,clipforge,os.environ.get('CLIPFORGE_READ_TOKEN'))
     variants=build(castcut,clipforge,out);url=publish(out,a.tag,variants) if a.publish else ''
     root=Path('BUILD_STATE.json');s=json.loads(root.read_text());state=s['playback_diagnosis'];state['last_updated']=datetime.datetime.now(datetime.timezone.utc).isoformat();state['test_pack']={'release':url,'tag':a.tag,'variants':variants,'workflow_run_id':os.environ.get('GITHUB_RUN_ID','local'),'controls':{'B_asset_id':654439970,'M_asset_id':661445503}};state['done'].append('Built compatibility pack with exact commands/probes and verified published bytes' if a.publish else 'Built compatibility pack locally');root.write_text(json.dumps(s,indent=2)+'\n')
+    if a.publish:
+        from .playback_state import commit
+        commit({'test_pack':state['test_pack']},'Record published phone compatibility pack commands probes and release readback')
     print('TEST PACK RELEASE: '+url,flush=True)
 if __name__=='__main__':main()
