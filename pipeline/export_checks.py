@@ -2,6 +2,7 @@
 from __future__ import annotations
 import hashlib
 import json
+import math
 import os
 import struct
 import subprocess
@@ -50,9 +51,9 @@ def flatten_boxes(items):
         yield from flatten_boxes(item.get('children', []))
 
 
-def packet_report(path, fps):
+def packet_report(path, fps, exact_cadence=False):
     result = subprocess.run(['ffprobe', '-v', 'error', '-show_packets', '-show_entries',
-                             'packet=stream_index,pts_time,dts_time,duration_time,size,flags',
+                             'packet=stream_index,pts,dts,duration,pts_time,dts_time,duration_time,size,flags',
                              '-of', 'json', str(path)], capture_output=True, text=True, check=True)
     packets = json.loads(result.stdout)['packets']
     by_stream = {}
@@ -96,13 +97,22 @@ def packet_report(path, fps):
             right += 1
         peak = max(peak, total * 8 / 10 / 1000)
         total -= sizes[left]
+    durations = sorted({int(p['duration']) for p in v})
+    if exact_cadence:
+        rational = Fraction(str(fps)).limit_denominator(1000000)
+        ticks = Fraction(math.lcm(15360, rational.numerator), 1) / rational
+        if ticks.denominator != 1 or durations != [int(ticks)]:
+            raise RuntimeError(f'Frame reconstruction requires one exact sample duration, got {durations}')
+        if any(int(p['pts']) != i * int(ticks) or int(p['dts']) != i * int(ticks) for i, p in enumerate(v)):
+            raise RuntimeError('Frame reconstruction timestamp clock drift')
     keyframes = [i for i, p in enumerate(v) if 'K' in p.get('flags', '')]
     if not keyframes or keyframes[0] != 0 or any(b-a != 60 for a,b in zip(keyframes,keyframes[1:])):
         raise RuntimeError('Reference fixed GOP 60 violated')
     return {'video_average_kbps': average, 'video_peak_10s_kbps': peak,
             'video_packets': len(v), 'audio_packets': len(by_stream.get(1, [])),
             'all_packet_timestamps_contiguous': True, 'video_pts_equal_dts': True,
-            'fixed_gop': 60, 'duration_video': duration}
+            'fixed_gop': 60, 'duration_video': duration,
+            'video_sample_duration_ticks': durations, 'exact_frame_cadence': len(durations) == 1}
 
 
 def rate_within_limit(path):
@@ -122,14 +132,18 @@ def validate(path, expect_audio=True, source=None):
         raise RuntimeError('Expected exactly one video and one audio track, with no extra streams')
     v = streams[0]
     expected = {'codec_name':'h264', 'codec_tag_string':'avc1', 'profile':'High', 'level':40,
-                'pix_fmt':'yuv420p', 'has_b_frames':0, 'time_base':'1/15360', 'sample_aspect_ratio':'1:1'}
+                'pix_fmt':'yuv420p', 'has_b_frames':0, 'sample_aspect_ratio':'1:1'}
     for k, value in expected.items():
         if v.get(k) != value:
             raise RuntimeError(f'ClipForge {k}: expected {value}, got {v.get(k)}')
     w, h = v['width'], v['height']
     if min(w,h) <= 0 or w > 1920 or h > 1080 or w%2 or h%2:
         raise RuntimeError('Resolution must be even and <=1920x1080')
-    fps = float(Fraction(v['r_frame_rate']))
+    rational_fps = Fraction(v['r_frame_rate'])
+    fps = float(rational_fps)
+    expected_timebase = Fraction(1, math.lcm(15360, rational_fps.numerator))
+    if Fraction(v['time_base']) != expected_timebase or Fraction(v['avg_frame_rate']) != rational_fps:
+        raise RuntimeError('Fractional source frame rate must have exact integer-tick MP4 timing')
     if not 0 < fps <= 30:
         raise RuntimeError('Frame rate must be original, capped at 30')
     if source:
@@ -153,7 +167,7 @@ def validate(path, expect_audio=True, source=None):
         raise RuntimeError('Reference MP4 top-level boxes/brand/faststart differ')
     if any(b['type'] in ('elst','edts','ctts') for b in flatten_boxes(boxes)):
         raise RuntimeError('Reference no-edit-list/no-B-frame MP4 structure violated')
-    r = packet_report(path, fps)
+    r = packet_report(path, fps, exact_cadence=True)
     if r['video_average_kbps'] > 2000 or r['video_peak_10s_kbps'] > 2000:
         raise RuntimeError(f'Video exceeds 2000 kbps: avg={r["video_average_kbps"]:.3f}, rolling10s={r["video_peak_10s_kbps"]:.3f}')
     decode = subprocess.run(['ffmpeg','-v','error','-xerror','-i',str(path),'-map','0','-f','null','-'],capture_output=True,text=True)
