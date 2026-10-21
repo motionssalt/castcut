@@ -17448,7 +17448,7 @@
   },
   "playback_round2": {
     "status": "done",
-    "last_updated": "2026-10-21T09:43:00Z",
+    "last_updated": "2026-10-21T09:51:30Z",
     "owner_results": {
       "played": [
         "B",
@@ -21581,6 +21581,20 @@
           "test_ladder_command_generation",
           "workflow_lint_no_heredocs_bash_n"
         ]
+      },
+      {
+        "flow": "CI (Tests, Lint, Selftest) with 1080p/900p resolution toggle",
+        "workflow_run_id": 39579957155,
+        "workflow_url": "https://github.com/motionssalt/castcut/actions/runs/39579957155",
+        "status": "success",
+        "conclusion": "success"
+      },
+      {
+        "flow": "Deploy site to Cloudflare Pages (with resolution toggle in UI)",
+        "workflow_run_id": 39579244279,
+        "workflow_url": "https://github.com/motionssalt/castcut/actions/runs/39579244279",
+        "status": "success",
+        "conclusion": "success"
       }
     ],
     "notes": "Resolved: Added 1080p vs 900p (1600x900) toggle across web export UI and pipeline. All test pack releases deleted.",
