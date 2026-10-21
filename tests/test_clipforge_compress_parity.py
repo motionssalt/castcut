@@ -1,4 +1,4 @@
-"""Keep the terminal pass literally upstream except the owner's rate ceiling."""
+"""Keep ClipForge encoder arguments; require the decoded-frame boundary."""
 from pathlib import Path
 from unittest.mock import patch
 
@@ -16,9 +16,13 @@ def test_terminal_command_matches_upstream_argument_order(tmp_path):
         commands.append(command.copy())
         Path(command[-1]).write_bytes(b'y' * 50)
 
+    def rebuilt(source, candidate, command):
+        encoded(command)
+
     upstream = upstream_module('compress')
     with patch.object(common, 'sh', side_effect=encoded), \
-         patch.object(upstream, '_validate'), patch.object(compress, '_validate'):
+         patch.object(upstream, '_validate'), patch.object(compress, '_validate'), \
+         patch('pipeline.frame_rebuild.encode_decoded_frames', side_effect=rebuilt):
         # Functions executed from the upstream namespace keep that globals dict.
         with patch.dict(upstream.compress.__globals__, {'_validate': lambda *args: None}):
             upstream.compress(source, destination)
@@ -37,27 +41,25 @@ def test_size_fallback_cannot_restore_an_over_limit_original(tmp_path):
     source.write_bytes(b'over-limit-original')
     candidate_bytes = b'constrained-candidate-larger-than-original'
 
-    def encoded(command):
-        Path(command[-1]).write_bytes(candidate_bytes)
+    def rebuilt(source, candidate, command):
+        Path(candidate).write_bytes(candidate_bytes)
 
-    with patch.object(common, 'sh', side_effect=encoded), \
-         patch.object(compress, '_validate'), \
-         patch('pipeline.export_checks.rate_within_limit', return_value=False):
+    with patch('pipeline.frame_rebuild.encode_decoded_frames', side_effect=rebuilt), \
+         patch.object(compress, '_validate'):
         compress.compress(source, destination)
     assert destination.read_bytes() == candidate_bytes
 
 
-def test_size_fallback_retains_only_an_already_valid_original(tmp_path):
+def test_size_fallback_never_restores_even_an_already_valid_original(tmp_path):
     source = tmp_path / 'merged.mp4'
     destination = tmp_path / 'final.mp4'
     original = b'already-valid-original'
     source.write_bytes(original)
 
-    def encoded(command):
-        Path(command[-1]).write_bytes(b'larger-constrained-delivery-candidate')
+    def rebuilt(source, candidate, command):
+        Path(candidate).write_bytes(b'larger-constrained-delivery-candidate')
 
-    with patch.object(common, 'sh', side_effect=encoded), \
-         patch.object(compress, '_validate'), \
-         patch('pipeline.export_checks.rate_within_limit', return_value=True):
+    with patch('pipeline.frame_rebuild.encode_decoded_frames', side_effect=rebuilt), \
+         patch.object(compress, '_validate'):
         compress.compress(source, destination)
-    assert destination.read_bytes() == original
+    assert destination.read_bytes() == b'larger-constrained-delivery-candidate'
