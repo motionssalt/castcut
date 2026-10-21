@@ -261,3 +261,61 @@ CastCut provides an automated end-to-end smoke test script and manually triggera
   ```
 - **GitHub Actions Workflow:**
   Trigger `.github/workflows/smoke-test.yml` from the GitHub Actions tab (`Smoke Test — Job Creation and Intake`) via `workflow_dispatch`.
+
+
+## Phone playback diagnosis (attempt 3)
+
+Both export flows call `pipeline.clipforge_export.export_segments`, join hard
+cuts with the selected audio, then run the direct terminal pass in
+`pipeline/delivery_pass.py`. The `reference_command` argument list is tested
+verbatim against the untouched ClipForge `pipeline/stage_b/compress.py` snapshot
+at `a05846de7c76a66ad42ba6fd37126514bc452167`. No raw-frame dump/pipe is used
+in this path; `frame_rebuild.py` is historical, inactive code.
+
+The owner policy adds constrained 1800k VBV (every 10-second video window must
+remain <=2000k), original fps capped at 30, no-upscale 1920x1080 bounds, one
+chosen AAC-LC stereo 48kHz 128k track, explicit zero timestamps and converted
+BT709 limited-range color. It does **not** replace the reference's explicit
+High@4.0, no-B-frame, GOP60, mp42, faststart or no-edit-list settings with Main:
+the owner gives those ClipForge flags priority. Source-fps clocks keep 15360
+where exact; fractional fps uses its numerator (24000/1001 ->24000), and
+25fps uses25000. No smaller-source fallback may bypass normalization.
+
+Prepublish gates check full decoding, streams, profile/level/pixel format,
+source-fps/no-upscale, sample-table cadence, contiguous nonnegative timestamps,
+A/V duration difference within a frame, interleaving <=500000 bytes, color,
+faststart/no fragments/edit lists and average/sliding10s video <=2000k. After
+upload, the entire release asset is downloaded and its SHA256 and byte size
+must match. Every normal export publishes `.mp4.sha256` and
+`.mp4.integrity.json` sidecars, and the export card shows exact bytes/hash.
+The real Cloudflare route has also been checked for byte-identical transfer,
+video/mp4 Content-Type, attachment disposition, length and Range206 resume.
+
+### Compatibility experiment
+
+Manually run **Phone playback compatibility test pack**
+(`.github/workflows/playback-test-pack.yml`). The repository secret
+`CLIPFORGE_READ_TOKEN` is required to download the private read-only ClipForge
+control. `GH_TOKEN` remains the normal scoped Actions token for CastCut writes.
+The workflow publishes `playback-test-pack` and records exact commands,
+ffprobe results, hashes, byte sizes and readback receipts in
+`BUILD_STATE.json.playback_diagnosis.test_pack`.
+
+C-L re-encode the same first10 seconds of an actual failed CastCut export,
+controlling source content while changing one feature against C. A applies
+the exact ClipForge command with the owner bitrate ceiling. B/M are untouched
+real good/bad controls; their 31s/114s lengths and larger sizes intentionally
+avoid modifying the controls. K2 tests mono, and additional N is the actual
+shipped default pass. F's automatic clock currently equals C's explicit clock;
+F cannot distinguish a clock hypothesis on this exact input/FFmpeg version.
+
+Download the whole files, without conversion. Test B, C, A, M first, then N,
+D, E, I, J, K, K2, F, G, H, L, in both the phone's normal player and the editing
+app. Send back `file | normal player yes/no | editor yes/no | error/notes`,
+with device/Android/app versions and actual downloaded size. Compare checksums
+before blaming a decoder. The release includes README, result table,
+SHA256SUMS, individual MP4s, detailed inspections and an unchanged-MP4 ZIP.
+
+Evidence and before/after diff tables live in `diagnostics/playback/`.
+No physical-phone playback or hardware-decoder result is claimed. A passing
+software decode/browser download is not proof of Android/editor compatibility.
