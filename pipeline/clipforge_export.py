@@ -12,6 +12,7 @@ from fractions import Fraction
 from pathlib import Path
 from .clipforge_vendor import render, compress, common
 from .export_checks import probe, validate
+from .frame_rebuild import REBUILD_VERSION
 
 
 def export_segments(src, segments, output_path, audio_track=0, temp_dir=None):
@@ -60,7 +61,10 @@ def export_segments(src, segments, output_path, audio_track=0, temp_dir=None):
             render.produce_merged_video(source,plan,wavs,merged,music=None)
             before, after, reduced = compress.compress(merged,output)
             report = validate(output,expect_audio=True,source=source)
-            report.update({'source_audio_index':int(audio_track) if audio else None,
+            report.update({'rebuild_version': REBUILD_VERSION,
+                           'video_input_boundary': 'uncompressed yuv420p frames, timestamps regenerated from original fps',
+                           'audio_input_boundary': 'decoded pcm_s16le stereo 48000 Hz, freshly encoded AAC 128k',
+                           'source_audio_index':int(audio_track) if audio else None,
                            'source_audio_stream_index':audio[int(audio_track)]['index'] if audio else None,
                            'audio_target_kbps':128, 'source_fps':str(Fraction(video['r_frame_rate'])),
                            'target_fps':str(fps), 'source_width':video['width'],'source_height':video['height'],
