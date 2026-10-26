@@ -1,0 +1,33 @@
+{
+  "version": 1,
+  "job_id": "job-1793044586773-3x8z",
+  "release_tag": "castcut-job-1793044586773-3x8z",
+  "content_type": "irl",
+  "duration": 1413.824,
+  "assets": [
+    {
+      "name": "00_READ_THIS_FIRST.txt",
+      "purpose": "agent_instructions"
+    },
+    {
+      "name": "scene_index.json",
+      "purpose": "scene_index"
+    },
+    {
+      "name": "transcript.json",
+      "purpose": "dialogue_transcript"
+    },
+    {
+      "name": "screenshots.zip",
+      "purpose": "scene_screenshots"
+    },
+    {
+      "name": "video_meta.json",
+      "purpose": "video_metadata"
+    },
+    {
+      "name": "manifest.json",
+      "purpose": "manifest"
+    }
+  ]
+}
