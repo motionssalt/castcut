@@ -1,0 +1,39 @@
+{
+  "version": 1,
+  "job_id": "job-1793044586773-3x8z",
+  "source_kind": "magnet",
+  "title": "Seddie ii",
+  "asset_name": "source.mkv",
+  "size_bytes": 778767574,
+  "duration": 1413.824,
+  "width": 1920,
+  "height": 1080,
+  "fps": 24.0,
+  "has_audio": true,
+  "audio_tracks": [
+    {
+      "audio_index": 0,
+      "stream_index": 1,
+      "language": "eng",
+      "language_name": "English",
+      "title": "",
+      "channels": 6,
+      "channel_layout": "5.1(side)",
+      "codec": "eac3",
+      "is_default": true,
+      "bitrate": 640000,
+      "label": "Track 1 \u00b7 ENG \u00b7 5.1(side) \u00b7 eac3 \u00b7 (Default)"
+    }
+  ],
+  "ingested_at_epoch": 1793044947,
+  "sources": [
+    "source.mkv"
+  ],
+  "selected_indices": [
+    146
+  ],
+  "asset_sizes": {
+    "source.mkv": 778767574
+  },
+  "video_in_release": true
+}
