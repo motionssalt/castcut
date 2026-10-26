@@ -5,12 +5,12 @@
   "content_type": "irl",
   "created_at_epoch": 1793044586,
   "created_at": "2026-10-26T19:56:26Z",
-  "updated_at": "2026-10-26T20:30:37Z",
-  "updated_at_epoch": 1793046637,
+  "updated_at": "2026-10-26T20:51:27Z",
+  "updated_at_epoch": 1793047887,
   "expires_at_epoch": 1793130986,
   "state": "ready",
   "message": "Project ready \u2014 required release assets verified.",
-  "workflow_run_url": "https://github.com/motionssalt/castcut/actions/runs/40395591458",
+  "workflow_run_url": "https://github.com/motionssalt/castcut/actions/runs/40399269907",
   "tasks": {
     "ingest": {
       "name": "Ingest",
