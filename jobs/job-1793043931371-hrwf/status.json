@@ -5,9 +5,11 @@
   "content_type": "irl",
   "created_at_epoch": 1793043931,
   "created_at": "2026-10-26T19:45:31Z",
-  "updated_at": "2026-10-26T19:45:31Z",
-  "updated_at_epoch": 1793043931,
+  "updated_at": "2026-10-26T19:45:59Z",
+  "updated_at_epoch": 1793043959,
   "expires_at_epoch": 1793130331,
   "state": "selecting",
-  "message": "Fetching torrent metadata (listing files — no content download)"
+  "message": "Fetching torrent metadata (listing files \u2014 no content download)",
+  "workflow_run_url": "https://github.com/motionssalt/castcut/actions/runs/40389594012",
+  "tasks": {}
 }
