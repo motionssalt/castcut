@@ -5,11 +5,11 @@
   "content_type": "irl",
   "created_at_epoch": 1793044586,
   "created_at": "2026-10-26T19:56:26Z",
-  "updated_at": "2026-10-26T20:09:53Z",
-  "updated_at_epoch": 1793045393,
+  "updated_at": "2026-10-26T20:15:28Z",
+  "updated_at_epoch": 1793045728,
   "expires_at_epoch": 1793130986,
-  "state": "analyzing",
-  "message": "",
+  "state": "ready",
+  "message": "Project ready \u2014 required release assets verified.",
   "workflow_run_url": "https://github.com/motionssalt/castcut/actions/runs/40391392719",
   "tasks": {
     "ingest": {
@@ -28,10 +28,10 @@
     },
     "scene": {
       "name": "Scene",
-      "state": "running",
-      "message": "IRL scene analysis running",
-      "updated_at": "2026-10-26T20:09:53Z",
-      "percent": 10
+      "state": "ready",
+      "message": "scene complete; release verified",
+      "updated_at": "2026-10-26T20:15:28Z",
+      "percent": 100
     }
   },
   "selected_files": [
@@ -43,5 +43,7 @@
   ],
   "release_tag": "castcut-job-1793044586773-3x8z",
   "video_in_release": true,
-  "release_verified": false
+  "release_verified": true,
+  "missing_assets": [],
+  "release_url": "https://github.com/motionssalt/castcut/releases/tag/castcut-job-1793044586773-3x8z"
 }
