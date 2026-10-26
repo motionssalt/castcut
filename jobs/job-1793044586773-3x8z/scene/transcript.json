@@ -1,0 +1,2519 @@
+{
+  "version": 1,
+  "source": "speech_recognition",
+  "language": "en",
+  "language_probability": 0.994,
+  "model": "faster-whisper/tiny",
+  "segments": [
+    {
+      "start": 7.02,
+      "end": 8.62,
+      "text": "Okay, Benson, let's do this thing."
+    },
+    {
+      "start": 8.62,
+      "end": 9.62,
+      "text": "It's the second."
+    },
+    {
+      "start": 9.62,
+      "end": 10.62,
+      "text": "Wow."
+    },
+    {
+      "start": 10.62,
+      "end": 12.02,
+      "text": "Ooh, yeah."
+    },
+    {
+      "start": 12.02,
+      "end": 17.5,
+      "text": "I'm getting bored."
+    },
+    {
+      "start": 18.5,
+      "end": 19.5,
+      "text": "Sit down, boy."
+    },
+    {
+      "start": 19.5,
+      "end": 23.36,
+      "text": "Okay."
+    },
+    {
+      "start": 23.36,
+      "end": 24.16,
+      "text": "You ready?"
+    },
+    {
+      "start": 24.16,
+      "end": 24.76,
+      "text": "Ready."
+    },
+    {
+      "start": 24.76,
+      "end": 25.36,
+      "text": "You ready?"
+    },
+    {
+      "start": 25.36,
+      "end": 26.16,
+      "text": "Call it."
+    },
+    {
+      "start": 26.16,
+      "end": 34.94,
+      "text": "On."
+    },
+    {
+      "start": 34.94,
+      "end": 35.74,
+      "text": "3.2 seconds."
+    },
+    {
+      "start": 35.74,
+      "end": 36.74,
+      "text": "Yeah!"
+    },
+    {
+      "start": 36.74,
+      "end": 39.14,
+      "text": "That's the longest it's ever taken for the baby."
+    },
+    {
+      "start": 39.14,
+      "end": 40.34,
+      "text": "Wow!"
+    },
+    {
+      "start": 40.34,
+      "end": 41.94,
+      "text": "Congratulations."
+    },
+    {
+      "start": 41.94,
+      "end": 42.54,
+      "text": "You."
+    },
+    {
+      "start": 42.54,
+      "end": 47.31,
+      "text": "Hey, Brad."
+    },
+    {
+      "start": 47.31,
+      "end": 48.31,
+      "text": "Hey, man."
+    },
+    {
+      "start": 48.31,
+      "end": 48.91,
+      "text": "Hey, Brad."
+    },
+    {
+      "start": 48.91,
+      "end": 49.91,
+      "text": "What's going on?"
+    },
+    {
+      "start": 49.91,
+      "end": 50.51,
+      "text": "I can see it."
+    },
+    {
+      "start": 50.51,
+      "end": 51.71,
+      "text": "So how you like it, Richmond?"
+    },
+    {
+      "start": 51.71,
+      "end": 53.11,
+      "text": "Good, pretty cool, so far."
+    },
+    {
+      "start": 53.11,
+      "end": 53.71,
+      "text": "Nice."
+    },
+    {
+      "start": 53.71,
+      "end": 54.71,
+      "text": "That's nice."
+    },
+    {
+      "start": 54.71,
+      "end": 56.71,
+      "text": "So our things working out with court on like Harley."
+    },
+    {
+      "start": 56.71,
+      "end": 57.71,
+      "text": "Oh."
+    },
+    {
+      "start": 57.71,
+      "end": 63.05,
+      "text": "He had to fire court."
+    },
+    {
+      "start": 63.05,
+      "end": 65.05,
+      "text": "Eat."
+    },
+    {
+      "start": 65.05,
+      "end": 67.05,
+      "text": "Why, what happened?"
+    },
+    {
+      "start": 67.05,
+      "end": 70.05,
+      "text": "Oh, he just turned out to be..."
+    },
+    {
+      "start": 70.05,
+      "end": 71.05,
+      "text": "But not the best."
+    },
+    {
+      "start": 71.05,
+      "end": 72.05,
+      "text": "He was dangerously stupid."
+    },
+    {
+      "start": 72.05,
+      "end": 73.05,
+      "text": "Yeah, he's stupid."
+    },
+    {
+      "start": 73.05,
+      "end": 74.05,
+      "text": "Yeah, he's stupid."
+    },
+    {
+      "start": 74.05,
+      "end": 76.05,
+      "text": "Well, hey, if you're still looking for some help with like Harley,"
+    },
+    {
+      "start": 76.05,
+      "end": 77.05,
+      "text": "I'd be happy if you were."
+    },
+    {
+      "start": 77.05,
+      "end": 78.05,
+      "text": "You still want to be our intern?"
+    },
+    {
+      "start": 78.05,
+      "end": 79.05,
+      "text": "Really?"
+    },
+    {
+      "start": 79.05,
+      "end": 80.05,
+      "text": "I'd love it."
+    },
+    {
+      "start": 80.05,
+      "end": 81.05,
+      "text": "Awesome."
+    },
+    {
+      "start": 81.05,
+      "end": 82.05,
+      "text": "Don't."
+    },
+    {
+      "start": 82.05,
+      "end": 83.05,
+      "text": "You're in."
+    },
+    {
+      "start": 83.05,
+      "end": 84.05,
+      "text": "And you still make footage, right?"
+    },
+    {
+      "start": 84.05,
+      "end": 85.05,
+      "text": "Oh, yeah."
+    },
+    {
+      "start": 86.05,
+      "end": 88.05,
+      "text": "In fact."
+    },
+    {
+      "start": 88.05,
+      "end": 90.39,
+      "text": "Five."
+    },
+    {
+      "start": 90.39,
+      "end": 91.39,
+      "text": "What?"
+    },
+    {
+      "start": 91.39,
+      "end": 96.71,
+      "text": "That one's mine."
+    },
+    {
+      "start": 96.71,
+      "end": 97.71,
+      "text": "Ooh."
+    },
+    {
+      "start": 97.71,
+      "end": 98.71,
+      "text": "Oh, I got it."
+    },
+    {
+      "start": 98.71,
+      "end": 100.71,
+      "text": "Oh, you got to make a load of this stuff for the lock-in."
+    },
+    {
+      "start": 100.71,
+      "end": 101.71,
+      "text": "From big load."
+    },
+    {
+      "start": 101.71,
+      "end": 102.71,
+      "text": "Oh, yeah."
+    },
+    {
+      "start": 102.71,
+      "end": 104.71,
+      "text": "What's a lock-in?"
+    },
+    {
+      "start": 104.71,
+      "end": 106.71,
+      "text": "Oh, every year at Ridgeway, they have this thing."
+    },
+    {
+      "start": 106.71,
+      "end": 108.71,
+      "text": "Where the students spend a whole Saturday night in school."
+    },
+    {
+      "start": 108.71,
+      "end": 110.71,
+      "text": "And we all finished our semester projects."
+    },
+    {
+      "start": 110.71,
+      "end": 111.71,
+      "text": "Everyone pulls in all night."
+    },
+    {
+      "start": 111.71,
+      "end": 112.71,
+      "text": "Sound the school?"
+    },
+    {
+      "start": 112.71,
+      "end": 113.71,
+      "text": "Yeah."
+    },
+    {
+      "start": 113.71,
+      "end": 114.71,
+      "text": "It's kind of fun."
+    },
+    {
+      "start": 114.71,
+      "end": 115.71,
+      "text": "Yeah, it's fun."
+    },
+    {
+      "start": 115.71,
+      "end": 116.71,
+      "text": "Unless you're up in the fall sleeping."
+    },
+    {
+      "start": 116.71,
+      "end": 118.71,
+      "text": "Sam, draw something on your forehead."
+    },
+    {
+      "start": 118.71,
+      "end": 121.7,
+      "text": "What did she draw on your forehead?"
+    },
+    {
+      "start": 121.7,
+      "end": 122.7,
+      "text": "You don't need to know."
+    },
+    {
+      "start": 122.7,
+      "end": 125.7,
+      "text": "But you forget about that already."
+    },
+    {
+      "start": 125.7,
+      "end": 126.7,
+      "text": "I can't."
+    },
+    {
+      "start": 126.7,
+      "end": 127.7,
+      "text": "You took pictures."
+    },
+    {
+      "start": 127.7,
+      "end": 131.7,
+      "text": "That'll live on the internet for ever."
+    },
+    {
+      "start": 131.7,
+      "end": 132.7,
+      "text": "Wouldn't that bad?"
+    },
+    {
+      "start": 132.7,
+      "end": 135.04,
+      "text": "Not that bad?"
+    },
+    {
+      "start": 135.04,
+      "end": 137.04,
+      "text": "Read the comments."
+    },
+    {
+      "start": 137.04,
+      "end": 141.64,
+      "text": "It was a pretty accurate drawing."
+    },
+    {
+      "start": 141.64,
+      "end": 146.64,
+      "text": "In five, four, three, two."
+    },
+    {
+      "start": 146.64,
+      "end": 209.82,
+      "text": "Look at us."
+    },
+    {
+      "start": 209.82,
+      "end": 210.82,
+      "text": "Now, back at Gibby."
+    },
+    {
+      "start": 210.82,
+      "end": 211.82,
+      "text": "Now, back at Gibby."
+    },
+    {
+      "start": 211.82,
+      "end": 215.82,
+      "text": "His hands are full of tuna fish salad."
+    },
+    {
+      "start": 215.82,
+      "end": 216.82,
+      "text": "Now, look down."
+    },
+    {
+      "start": 216.82,
+      "end": 220.15,
+      "text": "Back up."
+    },
+    {
+      "start": 220.15,
+      "end": 221.15,
+      "text": "Look at your window."
+    },
+    {
+      "start": 221.15,
+      "end": 222.15,
+      "text": "Think about cheese."
+    },
+    {
+      "start": 222.15,
+      "end": 223.15,
+      "text": "Stop thinking about cheese."
+    },
+    {
+      "start": 223.15,
+      "end": 225.15,
+      "text": "Your web show isn't as good as this web show."
+    },
+    {
+      "start": 225.15,
+      "end": 228.15,
+      "text": "But your web show can smell like this web show."
+    },
+    {
+      "start": 228.15,
+      "end": 232.15,
+      "text": "If you have a Gibby holding a large blob of tuna fish salad."
+    },
+    {
+      "start": 232.15,
+      "end": 234.15,
+      "text": "Oh, I'm on a cow."
+    },
+    {
+      "start": 234.15,
+      "end": 235.15,
+      "text": "Yeah."
+    },
+    {
+      "start": 235.15,
+      "end": 239.98,
+      "text": "Now, before we go, have a hand for our newest edition of iCarol."
+    },
+    {
+      "start": 239.98,
+      "end": 241.98,
+      "text": "A guy who helps us out for free."
+    },
+    {
+      "start": 241.98,
+      "end": 242.98,
+      "text": "That makes top notch fun."
+    },
+    {
+      "start": 242.98,
+      "end": 243.98,
+      "text": "Stay alone to iCarol."
+    },
+    {
+      "start": 243.98,
+      "end": 244.98,
+      "text": "We do end turn."
+    },
+    {
+      "start": 244.98,
+      "end": 245.98,
+      "text": "For us."
+    },
+    {
+      "start": 245.98,
+      "end": 248.98,
+      "text": "And so ends another edition of iCarol."
+    },
+    {
+      "start": 248.98,
+      "end": 258.14,
+      "text": "I think we all learned a little something tonight."
+    },
+    {
+      "start": 258.14,
+      "end": 259.14,
+      "text": "No, we didn't."
+    },
+    {
+      "start": 259.14,
+      "end": 260.14,
+      "text": "Oh, that's right."
+    },
+    {
+      "start": 260.14,
+      "end": 261.14,
+      "text": "We learned nothing."
+    },
+    {
+      "start": 261.14,
+      "end": 262.14,
+      "text": "We wasted your time."
+    },
+    {
+      "start": 262.14,
+      "end": 263.14,
+      "text": "But later, please."
+    },
+    {
+      "start": 263.14,
+      "end": 265.14,
+      "text": "Don't get the sweaty stuff."
+    },
+    {
+      "start": 265.14,
+      "end": 270.46,
+      "text": "And we are, could I need you?"
+    },
+    {
+      "start": 270.46,
+      "end": 271.46,
+      "text": "Yeah."
+    },
+    {
+      "start": 271.46,
+      "end": 272.46,
+      "text": "You sure?"
+    },
+    {
+      "start": 272.46,
+      "end": 274.46,
+      "text": "I like the little improv, you think?"
+    },
+    {
+      "start": 274.46,
+      "end": 275.46,
+      "text": "Great."
+    },
+    {
+      "start": 275.46,
+      "end": 276.46,
+      "text": "Sue."
+    },
+    {
+      "start": 276.46,
+      "end": 277.46,
+      "text": "Did I do okay?"
+    },
+    {
+      "start": 277.46,
+      "end": 278.46,
+      "text": "Yeah."
+    },
+    {
+      "start": 278.46,
+      "end": 280.46,
+      "text": "You, sir, aren't excellent assistant."
+    },
+    {
+      "start": 280.46,
+      "end": 282.46,
+      "text": "I'm just going to give out a lot of compliments."
+    },
+    {
+      "start": 282.46,
+      "end": 284.46,
+      "text": "Usually, it's insults followed by beatings."
+    },
+    {
+      "start": 284.46,
+      "end": 287.46,
+      "text": "Well, I'm, I'm psyched to be working with you guys."
+    },
+    {
+      "start": 287.46,
+      "end": 290.46,
+      "text": "Hey, can I get the recipe for this tuna salad ball?"
+    },
+    {
+      "start": 290.46,
+      "end": 292.46,
+      "text": "Absolutely."
+    },
+    {
+      "start": 292.46,
+      "end": 293.46,
+      "text": "Good."
+    },
+    {
+      "start": 293.46,
+      "end": 295.46,
+      "text": "I love this."
+    },
+    {
+      "start": 295.46,
+      "end": 297.46,
+      "text": "Hey, we should probably head back over to my place."
+    },
+    {
+      "start": 297.46,
+      "end": 299.46,
+      "text": "Get some more work done on our project."
+    },
+    {
+      "start": 299.46,
+      "end": 300.46,
+      "text": "Sure, let me grab my stuff."
+    },
+    {
+      "start": 300.46,
+      "end": 301.46,
+      "text": "All right."
+    },
+    {
+      "start": 301.46,
+      "end": 302.46,
+      "text": "What's your project?"
+    },
+    {
+      "start": 302.46,
+      "end": 303.46,
+      "text": "We're making an app for the pairpad."
+    },
+    {
+      "start": 303.46,
+      "end": 304.46,
+      "text": "Moved face, right?"
+    },
+    {
+      "start": 304.46,
+      "end": 305.46,
+      "text": "Uh-huh."
+    },
+    {
+      "start": 305.46,
+      "end": 307.46,
+      "text": "You just ordered the pairpad's camera for five seconds."
+    },
+    {
+      "start": 307.46,
+      "end": 308.46,
+      "text": "And it'll tell you what your mood is."
+    },
+    {
+      "start": 308.46,
+      "end": 309.46,
+      "text": "Really?"
+    },
+    {
+      "start": 309.46,
+      "end": 310.46,
+      "text": "That's so cool."
+    },
+    {
+      "start": 310.46,
+      "end": 312.46,
+      "text": "Did you use Trump's celery in this?"
+    },
+    {
+      "start": 312.46,
+      "end": 314.46,
+      "text": "Right on you."
+    },
+    {
+      "start": 314.46,
+      "end": 317.99,
+      "text": "Clever."
+    },
+    {
+      "start": 317.99,
+      "end": 319.99,
+      "text": "Can I work with you guys on your project?"
+    },
+    {
+      "start": 319.99,
+      "end": 323.66,
+      "text": "You're asking if you can help us?"
+    },
+    {
+      "start": 323.66,
+      "end": 325.66,
+      "text": "Yeah."
+    },
+    {
+      "start": 325.66,
+      "end": 327.66,
+      "text": "With a school project?"
+    },
+    {
+      "start": 327.66,
+      "end": 329.66,
+      "text": "I think it sounds really interesting."
+    },
+    {
+      "start": 329.66,
+      "end": 337.38,
+      "text": "Feels like Sam."
+    },
+    {
+      "start": 337.38,
+      "end": 341.07,
+      "text": "Smells like Sam."
+    },
+    {
+      "start": 341.07,
+      "end": 344.7,
+      "text": "Can I help with the project or what?"
+    },
+    {
+      "start": 344.7,
+      "end": 345.7,
+      "text": "Sure, you can help."
+    },
+    {
+      "start": 345.7,
+      "end": 346.7,
+      "text": "I'll bring the fudge."
+    },
+    {
+      "start": 346.7,
+      "end": 348.7,
+      "text": "I'll bring my mouth."
+    },
+    {
+      "start": 348.7,
+      "end": 359.05,
+      "text": "Yeah, kiddo."
+    },
+    {
+      "start": 359.05,
+      "end": 360.05,
+      "text": "You want to grab some dinner tonight?"
+    },
+    {
+      "start": 360.05,
+      "end": 362.05,
+      "text": "I thought you were hanging out with Sam."
+    },
+    {
+      "start": 363.05,
+      "end": 366.05,
+      "text": "I was supposed to, but she's going to see him move me with Freddie and Brad."
+    },
+    {
+      "start": 366.05,
+      "end": 368.05,
+      "text": "Sam wants to hang out with them?"
+    },
+    {
+      "start": 368.05,
+      "end": 369.05,
+      "text": "I know."
+    },
+    {
+      "start": 369.05,
+      "end": 370.05,
+      "text": "Weird, right?"
+    },
+    {
+      "start": 370.05,
+      "end": 371.05,
+      "text": "Yeah."
+    },
+    {
+      "start": 371.05,
+      "end": 372.05,
+      "text": "What's that for?"
+    },
+    {
+      "start": 372.05,
+      "end": 373.05,
+      "text": "Ah."
+    },
+    {
+      "start": 373.05,
+      "end": 379.05,
+      "text": "The fire department sent us a letter saying we've reached our maximum number of calls for the year."
+    },
+    {
+      "start": 379.05,
+      "end": 381.05,
+      "text": "So I bought this."
+    },
+    {
+      "start": 381.05,
+      "end": 382.05,
+      "text": "Nice."
+    },
+    {
+      "start": 382.05,
+      "end": 383.05,
+      "text": "Yeah."
+    },
+    {
+      "start": 383.05,
+      "end": 386.05,
+      "text": "And I just fixed an nozzle to make it extra powerful."
+    },
+    {
+      "start": 386.05,
+      "end": 388.05,
+      "text": "Gonna mount it on the wall over there."
+    },
+    {
+      "start": 388.05,
+      "end": 390.05,
+      "text": "Seems like a good place to mount it?"
+    },
+    {
+      "start": 390.05,
+      "end": 392.42,
+      "text": "Thanks."
+    },
+    {
+      "start": 392.42,
+      "end": 395.42,
+      "text": "Hey, so you know about this lock-in thing on Saturday night at Ridgeway."
+    },
+    {
+      "start": 395.42,
+      "end": 397.42,
+      "text": "We're all going to try to finish our school projects."
+    },
+    {
+      "start": 397.42,
+      "end": 398.42,
+      "text": "No, huh?"
+    },
+    {
+      "start": 398.42,
+      "end": 400.42,
+      "text": "Well, give me an idea."
+    },
+    {
+      "start": 400.42,
+      "end": 402.42,
+      "text": "Do you want to kind of cycle logical experiment?"
+    },
+    {
+      "start": 402.42,
+      "end": 403.42,
+      "text": "Will you be our test subject?"
+    },
+    {
+      "start": 403.42,
+      "end": 405.42,
+      "text": "I don't know."
+    },
+    {
+      "start": 405.42,
+      "end": 407.42,
+      "text": "Saturday nights I usually watch cops with soccer's grandmother,"
+    },
+    {
+      "start": 407.42,
+      "end": 408.42,
+      "text": "and I really need it."
+    },
+    {
+      "start": 408.42,
+      "end": 409.42,
+      "text": "Come on."
+    },
+    {
+      "start": 409.42,
+      "end": 410.42,
+      "text": "I'm okay."
+    },
+    {
+      "start": 410.42,
+      "end": 411.42,
+      "text": "Cool."
+    },
+    {
+      "start": 411.42,
+      "end": 412.42,
+      "text": "Now."
+    },
+    {
+      "start": 413.42,
+      "end": 415.42,
+      "text": "I need to show you how this works."
+    },
+    {
+      "start": 415.42,
+      "end": 417.42,
+      "text": "In case there's ever a fire, and I'm not home."
+    },
+    {
+      "start": 417.42,
+      "end": 418.42,
+      "text": "All right, film it."
+    },
+    {
+      "start": 418.42,
+      "end": 421.93,
+      "text": "See that paper cup right there?"
+    },
+    {
+      "start": 421.93,
+      "end": 422.93,
+      "text": "I see the cup."
+    },
+    {
+      "start": 422.93,
+      "end": 424.93,
+      "text": "I imagine I'm not home, and that cup is on fire."
+    },
+    {
+      "start": 424.93,
+      "end": 426.93,
+      "text": "You don't, just go."
+    },
+    {
+      "start": 426.93,
+      "end": 435.93,
+      "text": "Nope."
+    },
+    {
+      "start": 435.93,
+      "end": 437.93,
+      "text": "You just pull this thing in."
+    },
+    {
+      "start": 438.93,
+      "end": 440.93,
+      "text": "Point the nozzle, suchly."
+    },
+    {
+      "start": 440.93,
+      "end": 443.93,
+      "text": "And calmly squeeze this out of me."
+    },
+    {
+      "start": 443.93,
+      "end": 459.25,
+      "text": "And then you just put the extinguisher back in its wall bracket."
+    },
+    {
+      "start": 459.25,
+      "end": 466.74,
+      "text": "And just do this."
+    },
+    {
+      "start": 466.74,
+      "end": 468.74,
+      "text": "This is principal Franklin."
+    },
+    {
+      "start": 468.74,
+      "end": 469.74,
+      "text": "It's now 9 p.m."
+    },
+    {
+      "start": 469.74,
+      "end": 472.74,
+      "text": "and all exterior school doors have been locked."
+    },
+    {
+      "start": 472.74,
+      "end": 482.42,
+      "text": "You'll find a food card in the main hallway."
+    },
+    {
+      "start": 482.42,
+      "end": 485.42,
+      "text": "I wish you all good luck with your school projects."
+    },
+    {
+      "start": 485.42,
+      "end": 486.42,
+      "text": "Oh."
+    },
+    {
+      "start": 486.42,
+      "end": 487.42,
+      "text": "Warning."
+    },
+    {
+      "start": 487.42,
+      "end": 490.42,
+      "text": "If you fall asleep, the school does not responsible for anything"
+    },
+    {
+      "start": 490.42,
+      "end": 493.42,
+      "text": "that Sam Pucket might draw on your forehead."
+    },
+    {
+      "start": 493.42,
+      "end": 497.42,
+      "text": "Study hard and prosper."
+    },
+    {
+      "start": 497.42,
+      "end": 500.42,
+      "text": "So this is..."
+    },
+    {
+      "start": 500.42,
+      "end": 503.42,
+      "text": "A controlled sensory stimulus chamber."
+    },
+    {
+      "start": 503.42,
+      "end": 504.42,
+      "text": "Whoa!"
+    },
+    {
+      "start": 504.42,
+      "end": 506.42,
+      "text": "I have no idea what that means."
+    },
+    {
+      "start": 506.42,
+      "end": 509.42,
+      "text": "It's a box."
+    },
+    {
+      "start": 509.42,
+      "end": 511.42,
+      "text": "Get in it."
+    },
+    {
+      "start": 511.42,
+      "end": 512.42,
+      "text": "Whoa."
+    },
+    {
+      "start": 512.42,
+      "end": 513.42,
+      "text": "Wait."
+    },
+    {
+      "start": 513.42,
+      "end": 515.42,
+      "text": "I want to know what's going to happen after I'm in there."
+    },
+    {
+      "start": 516.42,
+      "end": 519.42,
+      "text": "Subject already being difficult."
+    },
+    {
+      "start": 519.42,
+      "end": 521.42,
+      "text": "I'm not being difficult."
+    },
+    {
+      "start": 521.42,
+      "end": 522.42,
+      "text": "I just want to know."
+    },
+    {
+      "start": 522.42,
+      "end": 523.42,
+      "text": "Listen."
+    },
+    {
+      "start": 523.42,
+      "end": 524.42,
+      "text": "You go in there."
+    },
+    {
+      "start": 524.42,
+      "end": 525.42,
+      "text": "We lock the door."
+    },
+    {
+      "start": 525.42,
+      "end": 527.42,
+      "text": "And then we're going to test your reactions to different kinds of stimuli."
+    },
+    {
+      "start": 527.42,
+      "end": 528.42,
+      "text": "Oh."
+    },
+    {
+      "start": 528.42,
+      "end": 529.42,
+      "text": "Do you realize?"
+    },
+    {
+      "start": 529.42,
+      "end": 533.11,
+      "text": "Oh."
+    },
+    {
+      "start": 533.11,
+      "end": 547.21,
+      "text": "I'm going to speak her own."
+    },
+    {
+      "start": 547.21,
+      "end": 549.21,
+      "text": "Why is there a mirror in here?"
+    },
+    {
+      "start": 549.21,
+      "end": 551.21,
+      "text": "And why can't I see out?"
+    },
+    {
+      "start": 551.21,
+      "end": 553.21,
+      "text": "It's one way glass."
+    },
+    {
+      "start": 553.21,
+      "end": 556.21,
+      "text": "So you can't see anything out here."
+    },
+    {
+      "start": 556.21,
+      "end": 569.86,
+      "text": "Start with various forms of stimulation."
+    },
+    {
+      "start": 569.86,
+      "end": 571.86,
+      "text": "Just react as you normally would."
+    },
+    {
+      "start": 571.86,
+      "end": 572.86,
+      "text": "Okay."
+    },
+    {
+      "start": 572.86,
+      "end": 573.86,
+      "text": "Turn your mic off."
+    },
+    {
+      "start": 573.86,
+      "end": 576.58,
+      "text": "Right."
+    },
+    {
+      "start": 576.58,
+      "end": 577.58,
+      "text": "Okay."
+    },
+    {
+      "start": 577.58,
+      "end": 578.58,
+      "text": "Give me."
+    },
+    {
+      "start": 578.58,
+      "end": 580.58,
+      "text": "Let's start with something only mildly irritating."
+    },
+    {
+      "start": 580.58,
+      "end": 583.58,
+      "text": "Play radio, do you go to the speakers inside the chamber?"
+    },
+    {
+      "start": 583.58,
+      "end": 590.66,
+      "text": "Coming up."
+    },
+    {
+      "start": 590.66,
+      "end": 591.66,
+      "text": "Please turn this off."
+    },
+    {
+      "start": 591.66,
+      "end": 592.66,
+      "text": "It's horrible."
+    },
+    {
+      "start": 592.66,
+      "end": 597.29,
+      "text": "Increasing the volume."
+    },
+    {
+      "start": 610.39,
+      "end": 611.39,
+      "text": "And music on."
+    },
+    {
+      "start": 611.39,
+      "end": 618.79,
+      "text": "Okay."
+    },
+    {
+      "start": 618.79,
+      "end": 619.79,
+      "text": "Tap the faces button."
+    },
+    {
+      "start": 619.79,
+      "end": 620.79,
+      "text": "Shit."
+    },
+    {
+      "start": 621.79,
+      "end": 622.79,
+      "text": "Okay."
+    },
+    {
+      "start": 622.79,
+      "end": 625.79,
+      "text": "Just let me sink the emotions matrix."
+    },
+    {
+      "start": 629.48,
+      "end": 630.48,
+      "text": "Hey, Sam."
+    },
+    {
+      "start": 630.48,
+      "end": 631.48,
+      "text": "Hey."
+    },
+    {
+      "start": 631.48,
+      "end": 632.48,
+      "text": "Oh, I got your camera."
+    },
+    {
+      "start": 632.48,
+      "end": 633.48,
+      "text": "Thank you."
+    },
+    {
+      "start": 633.48,
+      "end": 634.48,
+      "text": "Hard drive cables."
+    },
+    {
+      "start": 634.48,
+      "end": 636.48,
+      "text": "And I brought you guys chips."
+    },
+    {
+      "start": 636.48,
+      "end": 637.48,
+      "text": "And fresh welcome only."
+    },
+    {
+      "start": 637.48,
+      "end": 641.4,
+      "text": "That's awesome."
+    },
+    {
+      "start": 641.4,
+      "end": 646.3,
+      "text": "Wait."
+    },
+    {
+      "start": 646.3,
+      "end": 648.3,
+      "text": "Why'd you do that?"
+    },
+    {
+      "start": 648.3,
+      "end": 652.54,
+      "text": "Would you put in the glock?"
+    },
+    {
+      "start": 652.54,
+      "end": 656.14,
+      "text": "Something to make us sleep?"
+    },
+    {
+      "start": 656.14,
+      "end": 657.14,
+      "text": "No."
+    },
+    {
+      "start": 657.14,
+      "end": 659.14,
+      "text": "Then eat so."
+    },
+    {
+      "start": 659.14,
+      "end": 675.31,
+      "text": "Okay."
+    },
+    {
+      "start": 675.31,
+      "end": 676.31,
+      "text": "What's up with you?"
+    },
+    {
+      "start": 676.31,
+      "end": 677.31,
+      "text": "What do you mean?"
+    },
+    {
+      "start": 677.31,
+      "end": 682.66,
+      "text": "You have been nice and helpful and consider it all day."
+    },
+    {
+      "start": 682.66,
+      "end": 683.66,
+      "text": "What's your game?"
+    },
+    {
+      "start": 683.66,
+      "end": 684.66,
+      "text": "Okay."
+    },
+    {
+      "start": 684.66,
+      "end": 689.25,
+      "text": "Why don't we get on with the project?"
+    },
+    {
+      "start": 689.25,
+      "end": 691.62,
+      "text": "Okay."
+    },
+    {
+      "start": 691.62,
+      "end": 692.62,
+      "text": "Okay."
+    },
+    {
+      "start": 692.62,
+      "end": 693.62,
+      "text": "Okay."
+    },
+    {
+      "start": 693.62,
+      "end": 699.55,
+      "text": "Okay."
+    },
+    {
+      "start": 699.55,
+      "end": 700.55,
+      "text": "Is this baby ready for testing?"
+    },
+    {
+      "start": 700.55,
+      "end": 701.55,
+      "text": "Yep."
+    },
+    {
+      "start": 701.55,
+      "end": 703.55,
+      "text": "Just sit on that chair and stare into the peer pad."
+    },
+    {
+      "start": 703.55,
+      "end": 705.55,
+      "text": "I do like sitting and staring."
+    },
+    {
+      "start": 705.55,
+      "end": 709.28,
+      "text": "Go ahead and record."
+    },
+    {
+      "start": 709.28,
+      "end": 710.28,
+      "text": "All right."
+    },
+    {
+      "start": 710.28,
+      "end": 711.28,
+      "text": "Rolling."
+    },
+    {
+      "start": 711.28,
+      "end": 712.28,
+      "text": "Okay."
+    },
+    {
+      "start": 712.28,
+      "end": 715.28,
+      "text": "This is Freddie Benson proceeding with test number three of application mood face."
+    },
+    {
+      "start": 715.28,
+      "end": 716.28,
+      "text": "Subject Sam Pocket."
+    },
+    {
+      "start": 716.28,
+      "end": 717.28,
+      "text": "All right."
+    },
+    {
+      "start": 717.28,
+      "end": 720.28,
+      "text": "Sam just stare at the peer pad straight on and keep your head still."
+    },
+    {
+      "start": 720.28,
+      "end": 740.99,
+      "text": "Yep."
+    },
+    {
+      "start": 740.99,
+      "end": 741.99,
+      "text": "Can I move now?"
+    },
+    {
+      "start": 741.99,
+      "end": 742.99,
+      "text": "Uh."
+    },
+    {
+      "start": 742.99,
+      "end": 743.99,
+      "text": "Yeah."
+    },
+    {
+      "start": 743.99,
+      "end": 745.99,
+      "text": "So what's your mood?"
+    },
+    {
+      "start": 745.99,
+      "end": 746.99,
+      "text": "Ah."
+    },
+    {
+      "start": 746.99,
+      "end": 749.99,
+      "text": "It's, uh, it's inconclusive."
+    },
+    {
+      "start": 749.99,
+      "end": 750.99,
+      "text": "No reading?"
+    },
+    {
+      "start": 750.99,
+      "end": 751.99,
+      "text": "It was working this morning."
+    },
+    {
+      "start": 751.99,
+      "end": 752.99,
+      "text": "Yeah."
+    },
+    {
+      "start": 752.99,
+      "end": 760.18,
+      "text": "I'm going to see if Carly has any tissues."
+    },
+    {
+      "start": 760.18,
+      "end": 761.18,
+      "text": "It's experiment."
+    },
+    {
+      "start": 761.18,
+      "end": 764.9,
+      "text": "What is it?"
+    },
+    {
+      "start": 764.9,
+      "end": 765.9,
+      "text": "Tell me what it is."
+    },
+    {
+      "start": 765.9,
+      "end": 775.19,
+      "text": "I have the stink hose."
+    },
+    {
+      "start": 775.19,
+      "end": 776.19,
+      "text": "Really?"
+    },
+    {
+      "start": 776.19,
+      "end": 795.24,
+      "text": "Smooth face project going."
+    },
+    {
+      "start": 795.24,
+      "end": 796.24,
+      "text": "Listen."
+    },
+    {
+      "start": 796.24,
+      "end": 797.24,
+      "text": "What's wrong?"
+    },
+    {
+      "start": 797.24,
+      "end": 799.24,
+      "text": "You know how we've been wondering what's up with Sam?"
+    },
+    {
+      "start": 799.24,
+      "end": 800.24,
+      "text": "Yeah."
+    },
+    {
+      "start": 800.24,
+      "end": 802.24,
+      "text": "Why she's been wanting to hang with me and Brad all the time?"
+    },
+    {
+      "start": 802.24,
+      "end": 804.24,
+      "text": "Why she's been so nice to me and Brad."
+    },
+    {
+      "start": 804.24,
+      "end": 807.24,
+      "text": "So what'd you find out?"
+    },
+    {
+      "start": 807.24,
+      "end": 812.38,
+      "text": "I just didn't emotion test on her with our new app."
+    },
+    {
+      "start": 812.38,
+      "end": 813.38,
+      "text": "And?"
+    },
+    {
+      "start": 813.38,
+      "end": 814.38,
+      "text": "Her mood?"
+    },
+    {
+      "start": 814.38,
+      "end": 818.3,
+      "text": "And love?"
+    },
+    {
+      "start": 818.3,
+      "end": 819.3,
+      "text": "With Brad?"
+    },
+    {
+      "start": 819.3,
+      "end": 823.44,
+      "text": "Hey, Carly, check this out."
+    },
+    {
+      "start": 823.44,
+      "end": 825.44,
+      "text": "I turned the stink up to 11."
+    },
+    {
+      "start": 825.44,
+      "end": 826.44,
+      "text": "It's him's in love."
+    },
+    {
+      "start": 826.44,
+      "end": 849.82,
+      "text": "Hey, girl."
+    },
+    {
+      "start": 849.82,
+      "end": 850.82,
+      "text": "Hey."
+    },
+    {
+      "start": 850.82,
+      "end": 851.82,
+      "text": "Ham."
+    },
+    {
+      "start": 851.82,
+      "end": 852.82,
+      "text": "Uh-huh."
+    },
+    {
+      "start": 852.82,
+      "end": 853.82,
+      "text": "Extra ham."
+    },
+    {
+      "start": 853.82,
+      "end": 854.82,
+      "text": "Uh-huh."
+    },
+    {
+      "start": 854.82,
+      "end": 857.82,
+      "text": "So, how's your project going?"
+    },
+    {
+      "start": 857.82,
+      "end": 858.82,
+      "text": "Good, I think."
+    },
+    {
+      "start": 858.82,
+      "end": 861.82,
+      "text": "But I'm not sure because Benson freaked in right out the door a few minutes ago."
+    },
+    {
+      "start": 861.82,
+      "end": 866.6,
+      "text": "How's Brad?"
+    },
+    {
+      "start": 866.6,
+      "end": 868.6,
+      "text": "That's cool."
+    },
+    {
+      "start": 868.6,
+      "end": 869.6,
+      "text": "Hmm."
+    },
+    {
+      "start": 869.6,
+      "end": 870.6,
+      "text": "What'd you say?"
+    },
+    {
+      "start": 870.6,
+      "end": 877.11,
+      "text": "Very cool."
+    },
+    {
+      "start": 877.11,
+      "end": 878.11,
+      "text": "What do you mean?"
+    },
+    {
+      "start": 878.11,
+      "end": 882.77,
+      "text": "I love ham all of that."
+    },
+    {
+      "start": 882.77,
+      "end": 886.02,
+      "text": "You can't kiss and snuggle with him."
+    },
+    {
+      "start": 886.02,
+      "end": 890.61,
+      "text": "Oh."
+    },
+    {
+      "start": 890.61,
+      "end": 891.61,
+      "text": "Oh, ham."
+    },
+    {
+      "start": 891.61,
+      "end": 895.82,
+      "text": "Excuse me. I have to turn my back on you now."
+    },
+    {
+      "start": 895.82,
+      "end": 898.1,
+      "text": "Damn."
+    },
+    {
+      "start": 898.1,
+      "end": 899.1,
+      "text": "I know you will Brad."
+    },
+    {
+      "start": 899.1,
+      "end": 900.1,
+      "text": "It's exciting."
+    },
+    {
+      "start": 900.1,
+      "end": 901.1,
+      "text": "Okay."
+    },
+    {
+      "start": 901.1,
+      "end": 903.1,
+      "text": "Did you look fond of a tree or what?"
+    },
+    {
+      "start": 903.1,
+      "end": 906.1,
+      "text": "You want to know how I know you're in love with Brad?"
+    },
+    {
+      "start": 906.1,
+      "end": 907.1,
+      "text": "Sure."
+    },
+    {
+      "start": 907.1,
+      "end": 909.1,
+      "text": "And Freddie tested his mood face app on you."
+    },
+    {
+      "start": 909.1,
+      "end": 911.1,
+      "text": "It said in love."
+    },
+    {
+      "start": 911.1,
+      "end": 913.1,
+      "text": "Who says his app really works?"
+    },
+    {
+      "start": 913.1,
+      "end": 914.1,
+      "text": "Well, does it?"
+    },
+    {
+      "start": 914.1,
+      "end": 915.1,
+      "text": "No, it doesn't."
+    },
+    {
+      "start": 915.1,
+      "end": 916.1,
+      "text": "You know it does."
+    },
+    {
+      "start": 916.1,
+      "end": 917.1,
+      "text": "It works."
+    },
+    {
+      "start": 917.1,
+      "end": 919.63,
+      "text": "Good."
+    },
+    {
+      "start": 919.63,
+      "end": 921.63,
+      "text": "I'm going to go with my ham and peace."
+    },
+    {
+      "start": 921.63,
+      "end": 922.63,
+      "text": "You love the Brad."
+    },
+    {
+      "start": 922.63,
+      "end": 923.63,
+      "text": "Nobody, nobody, boo."
+    },
+    {
+      "start": 923.63,
+      "end": 924.63,
+      "text": "You can't bury your love and ham."
+    },
+    {
+      "start": 924.63,
+      "end": 925.63,
+      "text": "We're going to try."
+    },
+    {
+      "start": 925.63,
+      "end": 928.74,
+      "text": "Do you admit it?"
+    },
+    {
+      "start": 928.74,
+      "end": 929.74,
+      "text": "Did I?"
+    },
+    {
+      "start": 929.74,
+      "end": 930.74,
+      "text": "I figured."
+    },
+    {
+      "start": 930.74,
+      "end": 931.74,
+      "text": "Yeah."
+    },
+    {
+      "start": 931.74,
+      "end": 933.74,
+      "text": "She's just a little awkward about liking guys."
+    },
+    {
+      "start": 933.74,
+      "end": 934.74,
+      "text": "Oh, well."
+    },
+    {
+      "start": 934.74,
+      "end": 939.36,
+      "text": "This happened."
+    },
+    {
+      "start": 939.36,
+      "end": 940.36,
+      "text": "Why?"
+    },
+    {
+      "start": 940.36,
+      "end": 941.36,
+      "text": "Because Brad's awesome."
+    },
+    {
+      "start": 941.36,
+      "end": 943.36,
+      "text": "It's the first time since ever like the guy"
+    },
+    {
+      "start": 943.36,
+      "end": 945.36,
+      "text": "who's not disgusting."
+    },
+    {
+      "start": 945.36,
+      "end": 947.36,
+      "text": "Or heavily tattooed."
+    },
+    {
+      "start": 947.36,
+      "end": 949.36,
+      "text": "Or unfurl."
+    },
+    {
+      "start": 949.36,
+      "end": 951.36,
+      "text": "But if Sam won't even admit that she likes him,"
+    },
+    {
+      "start": 951.36,
+      "end": 952.36,
+      "text": "how are we going to get him?"
+    },
+    {
+      "start": 952.36,
+      "end": 953.36,
+      "text": "He's in the animal channel."
+    },
+    {
+      "start": 953.36,
+      "end": 961.22,
+      "text": "But the horses."
+    },
+    {
+      "start": 961.22,
+      "end": 965.21,
+      "text": "When they want to horses,"
+    },
+    {
+      "start": 965.21,
+      "end": 968.21,
+      "text": "you know, date."
+    },
+    {
+      "start": 968.21,
+      "end": 971.21,
+      "text": "They put him in the same barn together."
+    },
+    {
+      "start": 971.21,
+      "end": 976.86,
+      "text": "And then they like turn the barn lights down."
+    },
+    {
+      "start": 976.86,
+      "end": 978.86,
+      "text": "And you know what I'm talking about?"
+    },
+    {
+      "start": 978.86,
+      "end": 980.86,
+      "text": "Why are you making me see it?"
+    },
+    {
+      "start": 981.86,
+      "end": 983.86,
+      "text": "So we get Sam and Brad."
+    },
+    {
+      "start": 983.86,
+      "end": 984.86,
+      "text": "Take him to a barn."
+    },
+    {
+      "start": 984.86,
+      "end": 985.86,
+      "text": "Stop it."
+    },
+    {
+      "start": 985.86,
+      "end": 986.86,
+      "text": "It's important."
+    },
+    {
+      "start": 986.86,
+      "end": 988.86,
+      "text": "Help me do this."
+    },
+    {
+      "start": 988.86,
+      "end": 989.86,
+      "text": "We're Sam."
+    },
+    {
+      "start": 989.86,
+      "end": 990.86,
+      "text": "All right."
+    },
+    {
+      "start": 990.86,
+      "end": 991.86,
+      "text": "But if she gets mad at me."
+    },
+    {
+      "start": 991.86,
+      "end": 992.86,
+      "text": "Hey."
+    },
+    {
+      "start": 992.86,
+      "end": 993.86,
+      "text": "Hey."
+    },
+    {
+      "start": 993.86,
+      "end": 995.86,
+      "text": "Spencer, cute a little bit."
+    },
+    {
+      "start": 995.86,
+      "end": 996.86,
+      "text": "Please."
+    },
+    {
+      "start": 996.86,
+      "end": 997.86,
+      "text": "Please just clean it up."
+    },
+    {
+      "start": 997.86,
+      "end": 998.86,
+      "text": "We have something really important to do."
+    },
+    {
+      "start": 998.86,
+      "end": 999.86,
+      "text": "Come on."
+    },
+    {
+      "start": 999.86,
+      "end": 1001.86,
+      "text": "Sure."
+    },
+    {
+      "start": 1001.86,
+      "end": 1002.86,
+      "text": "Always make."
+    },
+    {
+      "start": 1002.86,
+      "end": 1003.86,
+      "text": "Give me clean the vomit."
+    },
+    {
+      "start": 1003.86,
+      "end": 1004.86,
+      "text": "I'll let the sensory steam in this chamber."
+    },
+    {
+      "start": 1004.86,
+      "end": 1014.32,
+      "text": "Do you learn to make fudge?"
+    },
+    {
+      "start": 1014.32,
+      "end": 1016.32,
+      "text": "Oh, my great grandma taught me."
+    },
+    {
+      "start": 1016.32,
+      "end": 1017.32,
+      "text": "She was a good woman, Brad."
+    },
+    {
+      "start": 1017.32,
+      "end": 1020.32,
+      "text": "She's still alive."
+    },
+    {
+      "start": 1020.32,
+      "end": 1021.32,
+      "text": "Even better."
+    },
+    {
+      "start": 1021.32,
+      "end": 1032.96,
+      "text": "I just saw a two-headed frog out in the courtyard."
+    },
+    {
+      "start": 1032.96,
+      "end": 1036.17,
+      "text": "Two heads."
+    },
+    {
+      "start": 1036.17,
+      "end": 1038.17,
+      "text": "On a frog."
+    },
+    {
+      "start": 1038.17,
+      "end": 1040.17,
+      "text": "Come on. I'll show you."
+    },
+    {
+      "start": 1040.17,
+      "end": 1042.17,
+      "text": "Yes. Follow, Freddie."
+    },
+    {
+      "start": 1042.17,
+      "end": 1050.7,
+      "text": "Don't go. Why not?"
+    },
+    {
+      "start": 1050.7,
+      "end": 1052.7,
+      "text": "We want to see the two-headed frog."
+    },
+    {
+      "start": 1052.7,
+      "end": 1053.7,
+      "text": "Ah."
+    },
+    {
+      "start": 1053.7,
+      "end": 1056.7,
+      "text": "Freddie exaggerated the number of heads."
+    },
+    {
+      "start": 1056.7,
+      "end": 1057.7,
+      "text": "I'm not coming back."
+    },
+    {
+      "start": 1057.7,
+      "end": 1075.26,
+      "text": "Just a one-headed frog."
+    },
+    {
+      "start": 1075.26,
+      "end": 1077.26,
+      "text": "Listen."
+    },
+    {
+      "start": 1077.26,
+      "end": 1079.26,
+      "text": "Listen, impressive."
+    },
+    {
+      "start": 1079.26,
+      "end": 1089.04,
+      "text": "It wears the blindfold if it wants to be fed."
+    },
+    {
+      "start": 1089.04,
+      "end": 1094.28,
+      "text": "I'm doing that accent. It's gripping me out."
+    },
+    {
+      "start": 1094.28,
+      "end": 1099.38,
+      "text": "I'll feed you."
+    },
+    {
+      "start": 1099.38,
+      "end": 1109.48,
+      "text": "Here's a bullet chowder and a spoon."
+    },
+    {
+      "start": 1109.48,
+      "end": 1111.48,
+      "text": "Are you sure we should do this?"
+    },
+    {
+      "start": 1111.48,
+      "end": 1112.48,
+      "text": "It's for science."
+    },
+    {
+      "start": 1112.48,
+      "end": 1115.48,
+      "text": "So what science ever done for me?"
+    },
+    {
+      "start": 1115.48,
+      "end": 1118.48,
+      "text": "Artificial sweeteners, a man on the moon."
+    },
+    {
+      "start": 1118.48,
+      "end": 1120.48,
+      "text": "Liquid soap."
+    },
+    {
+      "start": 1120.48,
+      "end": 1121.48,
+      "text": "Okay."
+    },
+    {
+      "start": 1121.48,
+      "end": 1125.34,
+      "text": "Put the chowder through the saw."
+    },
+    {
+      "start": 1125.34,
+      "end": 1128.06,
+      "text": "All right."
+    },
+    {
+      "start": 1128.06,
+      "end": 1129.06,
+      "text": "Okay, Spencer."
+    },
+    {
+      "start": 1129.06,
+      "end": 1132.06,
+      "text": "Now, just reach to your left and give your hand your bowl of chowder and a spoon."
+    },
+    {
+      "start": 1132.06,
+      "end": 1134.06,
+      "text": "About time."
+    },
+    {
+      "start": 1134.06,
+      "end": 1138.62,
+      "text": "Now, push the button."
+    },
+    {
+      "start": 1138.62,
+      "end": 1173.8,
+      "text": "Electricution."
+    },
+    {
+      "start": 1173.8,
+      "end": 1174.8,
+      "text": "Curbs."
+    },
+    {
+      "start": 1174.8,
+      "end": 1175.8,
+      "text": "Appetite."
+    },
+    {
+      "start": 1175.8,
+      "end": 1180.9,
+      "text": "Carly-shay."
+    },
+    {
+      "start": 1180.9,
+      "end": 1183.86,
+      "text": "Back in a sec."
+    },
+    {
+      "start": 1183.86,
+      "end": 1184.86,
+      "text": "Might be more than a sec."
+    },
+    {
+      "start": 1184.86,
+      "end": 1189.22,
+      "text": "Point here."
+    },
+    {
+      "start": 1189.22,
+      "end": 1190.22,
+      "text": "Where did you with Brad?"
+    },
+    {
+      "start": 1190.22,
+      "end": 1192.22,
+      "text": "That wasn't cool."
+    },
+    {
+      "start": 1192.22,
+      "end": 1193.22,
+      "text": "What?"
+    },
+    {
+      "start": 1193.22,
+      "end": 1197.22,
+      "text": "I know the whole two-headed frog thing was just to get me along with Brad."
+    },
+    {
+      "start": 1197.22,
+      "end": 1198.22,
+      "text": "Yeah."
+    },
+    {
+      "start": 1198.22,
+      "end": 1199.22,
+      "text": "I was hooking you up."
+    },
+    {
+      "start": 1199.22,
+      "end": 1201.22,
+      "text": "I don't need you to hook me up."
+    },
+    {
+      "start": 1201.22,
+      "end": 1202.22,
+      "text": "You love him."
+    },
+    {
+      "start": 1202.22,
+      "end": 1203.22,
+      "text": "I don't love him."
+    },
+    {
+      "start": 1203.22,
+      "end": 1206.59,
+      "text": "Pat said you do."
+    },
+    {
+      "start": 1206.59,
+      "end": 1209.16,
+      "text": "It's a stupid come different."
+    },
+    {
+      "start": 1209.16,
+      "end": 1212.59,
+      "text": "I haven't."
+    },
+    {
+      "start": 1212.59,
+      "end": 1217.53,
+      "text": "I'm pretty in Brad."
+    },
+    {
+      "start": 1217.53,
+      "end": 1218.53,
+      "text": "Do anything."
+    },
+    {
+      "start": 1218.53,
+      "end": 1220.53,
+      "text": "All of a sudden you want to tag along."
+    },
+    {
+      "start": 1220.53,
+      "end": 1223.53,
+      "text": "Brad's so nice."
+    },
+    {
+      "start": 1223.53,
+      "end": 1224.53,
+      "text": "He's polite."
+    },
+    {
+      "start": 1224.53,
+      "end": 1225.53,
+      "text": "He's smart."
+    },
+    {
+      "start": 1225.53,
+      "end": 1226.53,
+      "text": "He's got no warrants."
+    },
+    {
+      "start": 1226.53,
+      "end": 1230.54,
+      "text": "But you could times you guys could have together."
+    },
+    {
+      "start": 1230.54,
+      "end": 1234.18,
+      "text": "Don't you want a nice boyfriend?"
+    },
+    {
+      "start": 1234.18,
+      "end": 1236.52,
+      "text": "Oh, for it."
+    },
+    {
+      "start": 1236.52,
+      "end": 1237.52,
+      "text": "Make a move."
+    },
+    {
+      "start": 1237.52,
+      "end": 1240.83,
+      "text": "I just want you to be happy."
+    },
+    {
+      "start": 1240.83,
+      "end": 1246.39,
+      "text": "Then bake me a pie."
+    },
+    {
+      "start": 1246.39,
+      "end": 1251.94,
+      "text": "I love pie."
+    },
+    {
+      "start": 1251.94,
+      "end": 1252.94,
+      "text": "Give it."
+    },
+    {
+      "start": 1252.94,
+      "end": 1266.48,
+      "text": "You."
+    },
+    {
+      "start": 1267.48,
+      "end": 1269.48,
+      "text": "Carly's in here to find me."
+    },
+    {
+      "start": 1269.48,
+      "end": 1270.48,
+      "text": "Nope."
+    },
+    {
+      "start": 1270.48,
+      "end": 1273.48,
+      "text": "Oh, so you don't know we had a little argument."
+    },
+    {
+      "start": 1273.48,
+      "end": 1275.48,
+      "text": "She told me about your little argument."
+    },
+    {
+      "start": 1275.48,
+      "end": 1278.48,
+      "text": "I just said she didn't tell me to come find you."
+    },
+    {
+      "start": 1278.48,
+      "end": 1279.48,
+      "text": "Good."
+    },
+    {
+      "start": 1279.48,
+      "end": 1281.48,
+      "text": "But Carly's right."
+    },
+    {
+      "start": 1281.48,
+      "end": 1282.48,
+      "text": "Ah."
+    },
+    {
+      "start": 1282.48,
+      "end": 1285.48,
+      "text": "Brone all you want."
+    },
+    {
+      "start": 1285.48,
+      "end": 1289.48,
+      "text": "I don't care if your stupid pairpad app says about me being in love."
+    },
+    {
+      "start": 1289.48,
+      "end": 1291.48,
+      "text": "I'm not into Brad like that."
+    },
+    {
+      "start": 1292.48,
+      "end": 1295.48,
+      "text": "Lately, every time I tell you the Brad and I are doing something together,"
+    },
+    {
+      "start": 1295.48,
+      "end": 1297.48,
+      "text": "you want to come hang with us."
+    },
+    {
+      "start": 1297.48,
+      "end": 1298.48,
+      "text": "And that means I'm in love with him?"
+    },
+    {
+      "start": 1298.48,
+      "end": 1301.89,
+      "text": "Well, you hate me."
+    },
+    {
+      "start": 1301.89,
+      "end": 1302.89,
+      "text": "And I'm saying I hate you."
+    },
+    {
+      "start": 1302.89,
+      "end": 1306.2,
+      "text": "Yeah, you have."
+    },
+    {
+      "start": 1306.2,
+      "end": 1308.2,
+      "text": "Like 900 times."
+    },
+    {
+      "start": 1308.2,
+      "end": 1310.2,
+      "text": "I still have the birthday card you gave me."
+    },
+    {
+      "start": 1310.2,
+      "end": 1311.2,
+      "text": "It says happy birthday."
+    },
+    {
+      "start": 1311.2,
+      "end": 1313.2,
+      "text": "I hate you."
+    },
+    {
+      "start": 1313.2,
+      "end": 1315.2,
+      "text": "Hate Sam."
+    },
+    {
+      "start": 1315.2,
+      "end": 1318.77,
+      "text": "Just leave."
+    },
+    {
+      "start": 1318.77,
+      "end": 1319.77,
+      "text": "Fine."
+    },
+    {
+      "start": 1319.77,
+      "end": 1321.77,
+      "text": "Ali."
+    },
+    {
+      "start": 1321.77,
+      "end": 1322.77,
+      "text": "Bye."
+    },
+    {
+      "start": 1322.77,
+      "end": 1323.77,
+      "text": "Before I go."
+    },
+    {
+      "start": 1323.77,
+      "end": 1324.77,
+      "text": "That's it."
+    },
+    {
+      "start": 1324.77,
+      "end": 1328.77,
+      "text": "Get out of here before I do a double fist dance on your face."
+    },
+    {
+      "start": 1328.77,
+      "end": 1332.77,
+      "text": "You can threaten your double fist face dancing all you want."
+    },
+    {
+      "start": 1332.77,
+      "end": 1334.77,
+      "text": "But Carly's still right."
+    },
+    {
+      "start": 1334.77,
+      "end": 1338.77,
+      "text": "Look, I know it's scary for you to put your feelings out there."
+    },
+    {
+      "start": 1338.77,
+      "end": 1341.77,
+      "text": "Because you never know if the person you like is going to like you back."
+    },
+    {
+      "start": 1341.77,
+      "end": 1343.77,
+      "text": "Everyone feels that way."
+    },
+    {
+      "start": 1343.77,
+      "end": 1346.77,
+      "text": "But you never know what might happen if you don't..."
+    },
+    {
+      "start": 1346.77,
+      "end": 1374.91,
+      "text": "Sorry."
+    },
+    {
+      "start": 1374.91,
+      "end": 1408.04,
+      "text": "It's cool."
+    }
+  ]
+}
