@@ -5,8 +5,8 @@
   "content_type": "irl",
   "created_at_epoch": 1793044586,
   "created_at": "2026-10-26T19:56:26Z",
-  "updated_at": "2026-10-26T20:08:47Z",
-  "updated_at_epoch": 1793045327,
+  "updated_at": "2026-10-26T20:09:38Z",
+  "updated_at_epoch": 1793045378,
   "expires_at_epoch": 1793130986,
   "state": "analyzing",
   "message": "",
@@ -25,6 +25,12 @@
       "message": "faces assets uploaded; waiting for scene",
       "updated_at": "2026-10-26T20:08:47Z",
       "percent": 100
+    },
+    "scene": {
+      "name": "Scene",
+      "state": "queued",
+      "message": "Queued for analysis",
+      "updated_at": "2026-10-26T20:09:38Z"
     }
   },
   "selected_files": [
