@@ -1,0 +1,13 @@
+{
+  "job_id": "job-1793043931371-hrwf",
+  "title": "Seddie",
+  "torrent_name": "",
+  "content_type": "irl",
+  "created_at_epoch": 1793043931,
+  "created_at": "2026-10-26T19:45:31Z",
+  "updated_at": "2026-10-26T19:45:31Z",
+  "updated_at_epoch": 1793043931,
+  "expires_at_epoch": 1793130331,
+  "state": "selecting",
+  "message": "Fetching torrent metadata (listing files — no content download)"
+}
