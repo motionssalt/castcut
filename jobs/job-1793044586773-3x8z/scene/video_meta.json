@@ -1,0 +1,24 @@
+{
+  "duration": 1413.824,
+  "size_bytes": 778767574,
+  "width": 1920,
+  "height": 1080,
+  "fps": 24.0,
+  "vcodec": "hevc",
+  "has_audio": true,
+  "audio_tracks": [
+    {
+      "audio_index": 0,
+      "stream_index": 1,
+      "language": "eng",
+      "language_name": "English",
+      "title": "",
+      "channels": 6,
+      "channel_layout": "5.1(side)",
+      "codec": "eac3",
+      "is_default": true,
+      "bitrate": 640000,
+      "label": "Track 1 \u00b7 ENG \u00b7 5.1(side) \u00b7 eac3 \u00b7 (Default)"
+    }
+  ]
+}
