@@ -5,11 +5,11 @@
   "content_type": "irl",
   "created_at_epoch": 1793043931,
   "created_at": "2026-10-26T19:45:31Z",
-  "updated_at": "2026-10-26T19:45:59Z",
-  "updated_at_epoch": 1793043959,
+  "updated_at": "2026-10-26T19:53:01Z",
+  "updated_at_epoch": 1793044381,
   "expires_at_epoch": 1793130331,
-  "state": "selecting",
-  "message": "Fetching torrent metadata (listing files \u2014 no content download)",
+  "state": "select_failed",
+  "message": "Could not fetch torrent metadata \u2014 no seeds, unreachable trackers, or no video files. See the run log: https://github.com/motionssalt/castcut/actions/runs/40389594012",
   "workflow_run_url": "https://github.com/motionssalt/castcut/actions/runs/40389594012",
   "tasks": {}
 }
