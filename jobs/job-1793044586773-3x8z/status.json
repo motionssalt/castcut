@@ -5,8 +5,8 @@
   "content_type": "irl",
   "created_at_epoch": 1793044586,
   "created_at": "2026-10-26T19:56:26Z",
-  "updated_at": "2026-10-26T20:03:48Z",
-  "updated_at_epoch": 1793045028,
+  "updated_at": "2026-10-26T20:08:47Z",
+  "updated_at_epoch": 1793045327,
   "expires_at_epoch": 1793130986,
   "state": "analyzing",
   "message": "",
@@ -21,10 +21,10 @@
     },
     "faces": {
       "name": "Faces",
-      "state": "running",
-      "message": "IRL faces analysis running",
-      "updated_at": "2026-10-26T20:03:48Z",
-      "percent": 10
+      "state": "ready",
+      "message": "faces assets uploaded; waiting for scene",
+      "updated_at": "2026-10-26T20:08:47Z",
+      "percent": 100
     }
   },
   "selected_files": [
