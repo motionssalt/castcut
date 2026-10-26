@@ -5,8 +5,8 @@
   "content_type": "irl",
   "created_at_epoch": 1793044586,
   "created_at": "2026-10-26T19:56:26Z",
-  "updated_at": "2026-10-26T20:09:38Z",
-  "updated_at_epoch": 1793045378,
+  "updated_at": "2026-10-26T20:09:53Z",
+  "updated_at_epoch": 1793045393,
   "expires_at_epoch": 1793130986,
   "state": "analyzing",
   "message": "",
@@ -28,9 +28,10 @@
     },
     "scene": {
       "name": "Scene",
-      "state": "queued",
-      "message": "Queued for analysis",
-      "updated_at": "2026-10-26T20:09:38Z"
+      "state": "running",
+      "message": "IRL scene analysis running",
+      "updated_at": "2026-10-26T20:09:53Z",
+      "percent": 10
     }
   },
   "selected_files": [
