@@ -1,0 +1,15 @@
+Open this GitHub release: https://github.com/motionssalt/castcut/releases/tag/castcut-job-1793044586773-3x8z
+Download and read 00_READ_THIS_FIRST.txt FIRST, then inspect the evidence assets (scene_index.json, transcript.json, and screenshots.zip as needed).
+
+Project: Seddie ii
+Content type: LIVE-ACTION / REAL-WORLD (not anime). Focus on conversational beats and natural live pacing.
+
+Task:
+The user left the scene request EMPTY. Pick the single best, most coherent, and impactful scene or sequence from the video that carries the narrative.
+
+Rules:
+- Read 00_READ_THIS_FIRST.txt in the release before selecting any cuts.
+- screenshots.zip contains sheet_START-END.jpg: one 6-second source window, six consecutive frames in a 3x2 grid (left-to-right, top-to-bottom), up to 640px per panel, JPEG q5. Every panel burns its exact source timestamp HH:MM:SS.mmm. The final shorter window is evenly sampled into six panels. Use the visible action and panel timestamps for JSON start/end seconds, verify boundaries against scene_index.json and transcript.json; never use grid numbers as timestamps.
+- Produce exactly one production.json containing the selected segments.
+- Segments must be in chronological playback order with start and end timestamps within the source video.
+- Deliver the production JSON either as a downloadable .json file (recommended filename: castcut-scene-job-1793044586773-3x8z.json) if you can create files, or inside a single ```json code block (one block, valid JSON, nothing else inside it). If you include a short explanation, place it outside the file or code block.
