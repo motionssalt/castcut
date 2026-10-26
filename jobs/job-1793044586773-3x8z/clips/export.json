@@ -1,0 +1,1122 @@
+{
+  "version": 1,
+  "export_id": "exp-job-1793044586773-3x8z-clips-mvpqe9fw",
+  "project_id": "job-1793044586773-3x8z",
+  "job_id": "job-1793044586773-3x8z",
+  "type": "clips",
+  "label": "char2, char4",
+  "order": [
+    "char2",
+    "char4"
+  ],
+  "per_char_segments": {
+    "char2": 60,
+    "char4": 57
+  },
+  "total_segments": 117,
+  "total_duration": 837.0,
+  "size_before_bytes": 656659108,
+  "size_after_bytes": 199879054,
+  "size_bytes": 199879054,
+  "size_before_human": "626.2 MB",
+  "size_after_human": "190.6 MB",
+  "size_human": "190.6 MB",
+  "bitrate_kbps": 1911.192,
+  "video_bitrate_kbps": 1777.063,
+  "bitrate_bps": 1911192,
+  "effective_bitrate": "1911.192 kbps",
+  "audio_track": 0,
+  "resolution": "900p",
+  "audio_track_label": "Track 1 \u00b7 ENG \u00b7 5.1(side) \u00b7 eac3 \u00b7 (Default)",
+  "asset_name": "castcut-export-exp-job-1793044586773-3x8z-clips-mvpqe9fw.mp4",
+  "encode_path": "Mobile profile: H.264 Main@L4.1, 900p, 0 B-frames, mp42, faststart, AAC 128k stereo, <=2000 kbps",
+  "status": "done",
+  "ok": true,
+  "sha256": "b576280e51749cb00fd143b67f26ef2e518cf97ed129c7b32a1e9d1fe61dd87a",
+  "video_peak_10s_kbps": 1910.1416000000002,
+  "video_average_kbps": 1777.063074989218,
+  "mb_per_minute": 14.333938566060649,
+  "reference_commit": "a05846de7c76a66ad42ba6fd37126514bc452167",
+  "delivery": {
+    "asset_id": 679505948,
+    "asset_name": "castcut-export-exp-job-1793044586773-3x8z-clips-mvpqe9fw.mp4",
+    "sha256": "b576280e51749cb00fd143b67f26ef2e518cf97ed129c7b32a1e9d1fe61dd87a",
+    "size_bytes": 199879054,
+    "runner_release_download_identical": true,
+    "browser_download_url": "https://github.com/motionssalt/castcut/releases/download/castcut-job-1793044586773-3x8z/castcut-export-exp-job-1793044586773-3x8z-clips-mvpqe9fw.mp4"
+  },
+  "checks": {
+    "ok": true,
+    "sha256": "b576280e51749cb00fd143b67f26ef2e518cf97ed129c7b32a1e9d1fe61dd87a",
+    "duration": 836.667688,
+    "size_bytes": 199879054,
+    "size_human": "190.62 MiB",
+    "mb_per_minute": 14.333938566060649,
+    "bitrate_bps": 1911192,
+    "bitrate_kbps": 1911.192,
+    "video_bitrate_kbps": 1777.063,
+    "max_av_interleave_bytes": 167306,
+    "video_average_kbps": 1777.063074989218,
+    "video_peak_10s_kbps": 1910.1416000000002,
+    "video_packets": 20080,
+    "audio_packets": 39219,
+    "all_packet_timestamps_contiguous": true,
+    "video_pts_equal_dts": true,
+    "fixed_gop": 60,
+    "duration_video": 836.666667,
+    "video_sample_duration_ticks": [
+      640
+    ],
+    "exact_frame_cadence": true,
+    "vcodec": "h264",
+    "profile": "Main",
+    "level": 41,
+    "width": 1600,
+    "height": 900,
+    "fps": 24.0,
+    "audio_streams": 1,
+    "audio_codec": "aac",
+    "audio_channels": 2,
+    "audio_lang": "und",
+    "faststart": true,
+    "has_elst": false,
+    "full_decode_passed": true,
+    "mp4_boxes": [
+      {
+        "type": "ftyp",
+        "offset": 0,
+        "size": 32,
+        "major_brand": "mp42"
+      },
+      {
+        "type": "moov",
+        "offset": 32,
+        "size": 423312,
+        "children": [
+          {
+            "type": "mvhd",
+            "offset": 40,
+            "size": 108
+          },
+          {
+            "type": "trak",
+            "offset": 148,
+            "size": 162549,
+            "children": [
+              {
+                "type": "tkhd",
+                "offset": 156,
+                "size": 92
+              },
+              {
+                "type": "mdia",
+                "offset": 248,
+                "size": 162449,
+                "children": [
+                  {
+                    "type": "mdhd",
+                    "offset": 256,
+                    "size": 32
+                  },
+                  {
+                    "type": "hdlr",
+                    "offset": 288,
+                    "size": 45
+                  },
+                  {
+                    "type": "minf",
+                    "offset": 333,
+                    "size": 162364,
+                    "children": [
+                      {
+                        "type": "vmhd",
+                        "offset": 341,
+                        "size": 20
+                      },
+                      {
+                        "type": "dinf",
+                        "offset": 361,
+                        "size": 36,
+                        "children": [
+                          {
+                            "type": "dref",
+                            "offset": 369,
+                            "size": 28
+                          }
+                        ]
+                      },
+                      {
+                        "type": "stbl",
+                        "offset": 397,
+                        "size": 162300,
+                        "children": [
+                          {
+                            "type": "stsd",
+                            "offset": 405,
+                            "size": 208
+                          },
+                          {
+                            "type": "stts",
+                            "offset": 613,
+                            "size": 24
+                          },
+                          {
+                            "type": "stss",
+                            "offset": 637,
+                            "size": 1356
+                          },
+                          {
+                            "type": "stsc",
+                            "offset": 1993,
+                            "size": 28
+                          },
+                          {
+                            "type": "stsz",
+                            "offset": 2021,
+                            "size": 80340
+                          },
+                          {
+                            "type": "stco",
+                            "offset": 82361,
+                            "size": 80336
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "trak",
+            "offset": 162697,
+            "size": 260549,
+            "children": [
+              {
+                "type": "tkhd",
+                "offset": 162705,
+                "size": 92
+              },
+              {
+                "type": "mdia",
+                "offset": 162797,
+                "size": 260449,
+                "children": [
+                  {
+                    "type": "mdhd",
+                    "offset": 162805,
+                    "size": 32
+                  },
+                  {
+                    "type": "hdlr",
+                    "offset": 162837,
+                    "size": 45
+                  },
+                  {
+                    "type": "minf",
+                    "offset": 162882,
+                    "size": 260364,
+                    "children": [
+                      {
+                        "type": "smhd",
+                        "offset": 162890,
+                        "size": 16
+                      },
+                      {
+                        "type": "dinf",
+                        "offset": 162906,
+                        "size": 36,
+                        "children": [
+                          {
+                            "type": "dref",
+                            "offset": 162914,
+                            "size": 28
+                          }
+                        ]
+                      },
+                      {
+                        "type": "stbl",
+                        "offset": 162942,
+                        "size": 260304,
+                        "children": [
+                          {
+                            "type": "stsd",
+                            "offset": 162950,
+                            "size": 126
+                          },
+                          {
+                            "type": "stts",
+                            "offset": 163076,
+                            "size": 272
+                          },
+                          {
+                            "type": "stsc",
+                            "offset": 163348,
+                            "size": 22612
+                          },
+                          {
+                            "type": "stsz",
+                            "offset": 185960,
+                            "size": 156896
+                          },
+                          {
+                            "type": "stco",
+                            "offset": 342856,
+                            "size": 80336
+                          },
+                          {
+                            "type": "sgpd",
+                            "offset": 423192,
+                            "size": 26
+                          },
+                          {
+                            "type": "sbgp",
+                            "offset": 423218,
+                            "size": 28
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "udta",
+            "offset": 423246,
+            "size": 98
+          }
+        ]
+      },
+      {
+        "type": "free",
+        "offset": 423344,
+        "size": 8
+      },
+      {
+        "type": "mdat",
+        "offset": 423352,
+        "size": 199455702
+      }
+    ],
+    "streams": [
+      {
+        "index": 0,
+        "codec_name": "h264",
+        "codec_long_name": "H.264 / AVC / MPEG-4 AVC / MPEG-4 part 10",
+        "profile": "Main",
+        "codec_type": "video",
+        "codec_tag_string": "avc1",
+        "codec_tag": "0x31637661",
+        "width": 1600,
+        "height": 900,
+        "coded_width": 1600,
+        "coded_height": 900,
+        "closed_captions": 0,
+        "film_grain": 0,
+        "has_b_frames": 0,
+        "sample_aspect_ratio": "1:1",
+        "display_aspect_ratio": "16:9",
+        "pix_fmt": "yuv420p",
+        "level": 41,
+        "color_range": "tv",
+        "color_space": "bt709",
+        "color_transfer": "bt709",
+        "color_primaries": "bt709",
+        "chroma_location": "left",
+        "field_order": "progressive",
+        "refs": 1,
+        "is_avc": "true",
+        "nal_length_size": "4",
+        "id": "0x1",
+        "r_frame_rate": "24/1",
+        "avg_frame_rate": "24/1",
+        "time_base": "1/15360",
+        "start_pts": 0,
+        "start_time": "0.000000",
+        "duration_ts": 12851200,
+        "duration": "836.666667",
+        "bit_rate": "1777063",
+        "bits_per_raw_sample": "8",
+        "nb_frames": "20080",
+        "extradata_size": 43,
+        "disposition": {
+          "default": 1,
+          "dub": 0,
+          "original": 0,
+          "comment": 0,
+          "lyrics": 0,
+          "karaoke": 0,
+          "forced": 0,
+          "hearing_impaired": 0,
+          "visual_impaired": 0,
+          "clean_effects": 0,
+          "attached_pic": 0,
+          "timed_thumbnails": 0,
+          "non_diegetic": 0,
+          "captions": 0,
+          "descriptions": 0,
+          "metadata": 0,
+          "dependent": 0,
+          "still_image": 0
+        },
+        "tags": {
+          "language": "und",
+          "handler_name": "VideoHandler",
+          "vendor_id": "[0][0][0][0]",
+          "encoder": "Lavc60.31.102 libx264"
+        }
+      },
+      {
+        "index": 1,
+        "codec_name": "aac",
+        "codec_long_name": "AAC (Advanced Audio Coding)",
+        "profile": "LC",
+        "codec_type": "audio",
+        "codec_tag_string": "mp4a",
+        "codec_tag": "0x6134706d",
+        "sample_fmt": "fltp",
+        "sample_rate": "48000",
+        "channels": 2,
+        "channel_layout": "stereo",
+        "bits_per_sample": 0,
+        "initial_padding": 0,
+        "id": "0x2",
+        "r_frame_rate": "0/0",
+        "avg_frame_rate": "0/0",
+        "time_base": "1/48000",
+        "start_pts": 0,
+        "start_time": "0.000000",
+        "duration_ts": 40160049,
+        "duration": "836.667687",
+        "bit_rate": "130082",
+        "nb_frames": "39219",
+        "extradata_size": 5,
+        "disposition": {
+          "default": 1,
+          "dub": 0,
+          "original": 0,
+          "comment": 0,
+          "lyrics": 0,
+          "karaoke": 0,
+          "forced": 0,
+          "hearing_impaired": 0,
+          "visual_impaired": 0,
+          "clean_effects": 0,
+          "attached_pic": 0,
+          "timed_thumbnails": 0,
+          "non_diegetic": 0,
+          "captions": 0,
+          "descriptions": 0,
+          "metadata": 0,
+          "dependent": 0,
+          "still_image": 0
+        },
+        "tags": {
+          "language": "und",
+          "handler_name": "SoundHandler",
+          "vendor_id": "[0][0][0][0]"
+        }
+      }
+    ],
+    "rebuild_version": "variant-i-720p-interim-default-v1",
+    "video_input_boundary": "direct joined MP4 -> ClipForge terminal re-encode; no raw-frame workaround",
+    "audio_input_boundary": "chosen track joined as PCM, freshly encoded AAC-LC stereo 48000Hz 128k",
+    "source_audio_index": 0,
+    "source_audio_stream_index": 1,
+    "audio_target_kbps": 128,
+    "target_resolution": "900p",
+    "source_fps": "24",
+    "target_fps": "24",
+    "source_width": 1920,
+    "source_height": 1080,
+    "segments": [
+      [
+        1.1,
+        9.4
+      ],
+      [
+        14.6,
+        17.9
+      ],
+      [
+        22.6,
+        27.9
+      ],
+      [
+        30.6,
+        34.9
+      ],
+      [
+        40.1,
+        42.9
+      ],
+      [
+        48.6,
+        84.9
+      ],
+      [
+        88.1,
+        93.4
+      ],
+      [
+        96.1,
+        101.4
+      ],
+      [
+        112.6,
+        114.9
+      ],
+      [
+        119.6,
+        121.9
+      ],
+      [
+        125.1,
+        127.4
+      ],
+      [
+        134.1,
+        140.4
+      ],
+      [
+        148.6,
+        149.9
+      ],
+      [
+        155.6,
+        174.4
+      ],
+      [
+        177.6,
+        179.4
+      ],
+      [
+        199.1,
+        206.9
+      ],
+      [
+        209.6,
+        233.4
+      ],
+      [
+        237.6,
+        248.4
+      ],
+      [
+        251.1,
+        272.4
+      ],
+      [
+        277.6,
+        286.4
+      ],
+      [
+        300.6,
+        305.4
+      ],
+      [
+        308.6,
+        310.9
+      ],
+      [
+        315.6,
+        325.9
+      ],
+      [
+        328.6,
+        348.9
+      ],
+      [
+        627.6,
+        637.4
+      ],
+      [
+        640.6,
+        677.4
+      ],
+      [
+        680.1,
+        707.4
+      ],
+      [
+        717.1,
+        728.4
+      ],
+      [
+        731.6,
+        737.4
+      ],
+      [
+        740.6,
+        742.4
+      ],
+      [
+        749.1,
+        751.9
+      ],
+      [
+        755.1,
+        757.9
+      ],
+      [
+        815.1,
+        822.4
+      ],
+      [
+        837.6,
+        839.9
+      ],
+      [
+        848.1,
+        863.4
+      ],
+      [
+        867.1,
+        868.9
+      ],
+      [
+        873.1,
+        908.4
+      ],
+      [
+        912.1,
+        914.4
+      ],
+      [
+        918.1,
+        927.4
+      ],
+      [
+        1011.6,
+        1022.9
+      ],
+      [
+        1033.6,
+        1035.4
+      ],
+      [
+        1043.1,
+        1054.9
+      ],
+      [
+        1060.6,
+        1062.9
+      ],
+      [
+        1068.1,
+        1081.9
+      ],
+      [
+        1178.6,
+        1185.4
+      ],
+      [
+        1190.1,
+        1215.9
+      ],
+      [
+        1220.6,
+        1223.9
+      ],
+      [
+        1226.6,
+        1228.4
+      ],
+      [
+        1231.1,
+        1249.4
+      ],
+      [
+        1258.6,
+        1262.4
+      ],
+      [
+        1266.1,
+        1273.9
+      ],
+      [
+        1278.6,
+        1292.4
+      ],
+      [
+        1300.1,
+        1306.9
+      ],
+      [
+        1312.1,
+        1319.4
+      ],
+      [
+        1322.1,
+        1329.4
+      ],
+      [
+        1332.1,
+        1335.4
+      ],
+      [
+        1339.1,
+        1341.4
+      ],
+      [
+        1344.1,
+        1347.4
+      ],
+      [
+        1359.6,
+        1363.9
+      ],
+      [
+        1369.6,
+        1375.4
+      ],
+      [
+        9.0,
+        15.0
+      ],
+      [
+        17.5,
+        23.0
+      ],
+      [
+        27.5,
+        31.0
+      ],
+      [
+        34.5,
+        40.5
+      ],
+      [
+        42.5,
+        49.0
+      ],
+      [
+        85.1,
+        86.9
+      ],
+      [
+        93.0,
+        96.5
+      ],
+      [
+        101.0,
+        102.4
+      ],
+      [
+        110.1,
+        112.4
+      ],
+      [
+        133.1,
+        134.5
+      ],
+      [
+        154.1,
+        155.4
+      ],
+      [
+        174.0,
+        178.0
+      ],
+      [
+        179.0,
+        186.9
+      ],
+      [
+        248.0,
+        248.9
+      ],
+      [
+        272.0,
+        278.0
+      ],
+      [
+        286.0,
+        292.4
+      ],
+      [
+        295.6,
+        301.0
+      ],
+      [
+        305.0,
+        305.9
+      ],
+      [
+        325.5,
+        329.0
+      ],
+      [
+        432.6,
+        433.9
+      ],
+      [
+        469.6,
+        470.9
+      ],
+      [
+        476.6,
+        477.9
+      ],
+      [
+        487.6,
+        489.4
+      ],
+      [
+        493.1,
+        498.4
+      ],
+      [
+        503.1,
+        505.4
+      ],
+      [
+        617.1,
+        619.9
+      ],
+      [
+        622.6,
+        626.9
+      ],
+      [
+        637.0,
+        641.0
+      ],
+      [
+        677.0,
+        680.5
+      ],
+      [
+        707.6,
+        717.5
+      ],
+      [
+        729.1,
+        730.9
+      ],
+      [
+        737.0,
+        741.0
+      ],
+      [
+        742.0,
+        749.5
+      ],
+      [
+        751.5,
+        754.9
+      ],
+      [
+        791.6,
+        815.5
+      ],
+      [
+        822.0,
+        829.9
+      ],
+      [
+        927.6,
+        943.4
+      ],
+      [
+        950.1,
+        963.9
+      ],
+      [
+        969.1,
+        973.9
+      ],
+      [
+        977.1,
+        993.9
+      ],
+      [
+        996.6,
+        1001.4
+      ],
+      [
+        1023.6,
+        1026.9
+      ],
+      [
+        1030.1,
+        1034.0
+      ],
+      [
+        1035.0,
+        1041.4
+      ],
+      [
+        1132.6,
+        1133.9
+      ],
+      [
+        1264.1,
+        1266.5
+      ],
+      [
+        1273.5,
+        1279.0
+      ],
+      [
+        1292.0,
+        1300.5
+      ],
+      [
+        1306.5,
+        1312.5
+      ],
+      [
+        1319.0,
+        1322.5
+      ],
+      [
+        1329.0,
+        1332.5
+      ],
+      [
+        1335.0,
+        1339.5
+      ],
+      [
+        1341.0,
+        1344.5
+      ],
+      [
+        1347.0,
+        1352.9
+      ],
+      [
+        1358.6,
+        1360.0
+      ],
+      [
+        1363.5,
+        1370.0
+      ],
+      [
+        1375.0,
+        1378.4
+      ]
+    ],
+    "join_times": [
+      8.3,
+      11.6,
+      16.9,
+      21.199999999999996,
+      23.999999999999993,
+      60.3,
+      65.60000000000001,
+      70.90000000000002,
+      73.20000000000003,
+      75.50000000000004,
+      77.80000000000005,
+      84.10000000000007,
+      85.40000000000008,
+      104.20000000000009,
+      106.0000000000001,
+      113.80000000000011,
+      137.6000000000001,
+      148.40000000000012,
+      169.7000000000001,
+      178.50000000000006,
+      183.3,
+      185.59999999999997,
+      195.89999999999992,
+      216.19999999999987,
+      225.99999999999983,
+      262.7999999999998,
+      290.09999999999974,
+      301.3999999999997,
+      307.19999999999965,
+      308.9999999999996,
+      311.79999999999956,
+      314.5999999999995,
+      321.89999999999947,
+      324.1999999999994,
+      339.4999999999994,
+      341.29999999999933,
+      376.5999999999993,
+      378.89999999999924,
+      388.1999999999992,
+      399.49999999999915,
+      401.29999999999933,
+      413.0999999999995,
+      415.3999999999997,
+      429.1999999999999,
+      436.00000000000006,
+      461.80000000000024,
+      465.1000000000004,
+      466.9000000000006,
+      485.2000000000008,
+      489.00000000000097,
+      496.80000000000115,
+      510.60000000000133,
+      517.4000000000016,
+      524.7000000000018,
+      532.0000000000019,
+      535.3000000000021,
+      537.6000000000023,
+      540.9000000000025,
+      545.2000000000027,
+      551.0000000000028,
+      557.0000000000028,
+      562.5000000000028,
+      566.0000000000028,
+      572.0000000000028,
+      578.5000000000028,
+      580.3000000000028,
+      583.8000000000028,
+      585.2000000000028,
+      587.5000000000028,
+      588.9000000000028,
+      590.2000000000029,
+      594.2000000000029,
+      602.1000000000029,
+      603.0000000000028,
+      609.0000000000028,
+      615.4000000000028,
+      620.8000000000028,
+      621.7000000000028,
+      625.2000000000028,
+      626.5000000000027,
+      627.8000000000027,
+      629.1000000000026,
+      630.9000000000026,
+      636.2000000000025,
+      638.5000000000025,
+      641.3000000000025,
+      645.6000000000024,
+      649.6000000000024,
+      653.1000000000024,
+      663.0000000000024,
+      664.8000000000023,
+      668.8000000000023,
+      676.3000000000023,
+      679.7000000000023,
+      703.6000000000023,
+      711.5000000000023,
+      727.3000000000022,
+      741.1000000000022,
+      745.9000000000021,
+      762.7000000000021,
+      767.500000000002,
+      770.8000000000021,
+      774.7000000000022,
+      781.1000000000023,
+      782.4000000000025,
+      784.8000000000026,
+      790.3000000000026,
+      798.8000000000026,
+      804.8000000000026,
+      808.3000000000026,
+      811.8000000000026,
+      816.3000000000026,
+      819.8000000000026,
+      825.7000000000027,
+      827.1000000000028,
+      833.6000000000028
+    ],
+    "reference_commit": "a05846de7c76a66ad42ba6fd37126514bc452167",
+    "path": "clipforge_vendor.render.produce_merged_video -> clipforge_vendor.compress.compress",
+    "terminal_command": [
+      "ffmpeg",
+      "-y",
+      "-i",
+      "/home/runner/work/castcut/castcut/work/clipforge-export-b3dtyzjv/reference-merged.mp4",
+      "-map",
+      "0:v:0",
+      "-map",
+      "0:a:0",
+      "-c:v",
+      "libx264",
+      "-profile:v",
+      "main",
+      "-level:v",
+      "4.1",
+      "-preset",
+      "medium",
+      "-b:v",
+      "1800k",
+      "-maxrate",
+      "1800k",
+      "-bufsize",
+      "1800k",
+      "-pix_fmt",
+      "yuv420p",
+      "-bf",
+      "0",
+      "-g",
+      "60",
+      "-keyint_min",
+      "60",
+      "-sc_threshold",
+      "0",
+      "-x264-params",
+      "force-cfr=1",
+      "-video_track_timescale",
+      "15360",
+      "-c:a",
+      "aac",
+      "-profile:a",
+      "aac_low",
+      "-b:a",
+      "128k",
+      "-ar",
+      "48000",
+      "-ac",
+      "2",
+      "-movflags",
+      "+faststart",
+      "-use_editlist",
+      "0",
+      "-brand",
+      "mp42",
+      "-map_metadata",
+      "-1",
+      "-map_chapters",
+      "-1",
+      "-sn",
+      "-dn",
+      "-ignore_unknown",
+      "-fflags",
+      "+genpts",
+      "-max_muxing_queue_size",
+      "9999",
+      "-vf",
+      "setpts=PTS-STARTPTS,fps=24,scale=w='min(1600,iw)':h='min(900,ih)':force_original_aspect_ratio=decrease,scale=trunc(iw/2)*2:trunc(ih/2)*2,colorspace=all=bt709:range=tv:format=yuv420p,setsar=1",
+      "-r",
+      "24",
+      "-vsync",
+      "cfr",
+      "-af",
+      "aresample=48000:async=1:first_pts=0,apad,atrim=duration=836.646354000,asetpts=N/SR/TB+1024/SR/TB",
+      "-avoid_negative_ts",
+      "make_zero",
+      "-color_range",
+      "tv",
+      "-colorspace",
+      "bt709",
+      "-color_primaries",
+      "bt709",
+      "-color_trc",
+      "bt709",
+      "-max_interleave_delta",
+      "0",
+      "-f",
+      "mp4",
+      "/home/runner/work/castcut/castcut/work/castcut-export-exp-job-1793044586773-3x8z-clips-mvpqe9fw.mp4.compressing.mp4"
+    ],
+    "policy_exceptions": [
+      "1800k VBV to enforce <=2000k video",
+      "original source fps/size caps and exact source-rate clock",
+      "AAC-LC stereo 128k re-encode",
+      "no original fallback"
+    ],
+    "size_before_bytes": 656659108,
+    "compressed": true
+  }
+}
