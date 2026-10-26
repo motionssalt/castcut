@@ -1,13 +1,13 @@
 {
   "version": 1,
-  "export_id": "exp-job-1793044586773-3x8z-clips-mvpp3tm5",
+  "export_id": "exp-job-1793044586773-3x8z-clips-mvpqe9fw",
   "order": [
-    "char2"
+    "char2",
+    "char4"
   ],
   "ignored": [
     "char1",
     "char3",
-    "char4",
     "char5",
     "char6",
     "char7",
